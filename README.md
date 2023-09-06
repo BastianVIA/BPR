@@ -1,6 +1,6 @@
 # BPR
 
-Contributers:
+Contributors:
 
 | Github navn  | Rigtige navn | VIA ID |
 | ------------- | ------------- | ------------- |
