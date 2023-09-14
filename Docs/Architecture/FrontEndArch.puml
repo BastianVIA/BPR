@@ -1,0 +1,17 @@
+﻿@startuml
+frame frontend {
+    View --> ViewModel
+    View <.. ViewModel : notifies
+    ViewModel --> Model
+    Model --> NSwagClient
+}
+
+frame backend {
+}
+
+NSwagClient ..> backend
+note right on link
+    RESTful
+end note
+
+@enduml
