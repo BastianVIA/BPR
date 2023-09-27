@@ -1,4 +1,5 @@
 using Backend.Database;
+using Backend.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
-        configuration.GetConnectionString("DefaultConnection")));
-
+        configuration.GetConnectionString("DatabaseConnection")));
 
 var app = builder.Build();
 
@@ -35,5 +35,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+
+var records = CSVHandler.ReadCSV("C:\\Users\\Administrator\\Desktop\\inputFiles\\firstFile.csv");
+CSVHandler.WriteCSV(records, "C:\\Users\\Administrator\\Desktop\\outputFiles\\secondFile.csv");
+
 
 app.Run();
