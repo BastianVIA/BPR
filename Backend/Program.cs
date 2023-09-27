@@ -37,6 +37,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-
+var records = CSVHandler.ReadCSV("C:\\Users\\Administrator\\Desktop\\inputFiles\\firstFile.csv");
+CSVHandler.WriteCSV(records, "C:\\Users\\Administrator\\Desktop\\outputFiles\\secondFile.csv");
 
 app.Run();
