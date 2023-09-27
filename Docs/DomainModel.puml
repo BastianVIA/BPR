@@ -1,0 +1,58 @@
+﻿@startuml
+class Actuator {
+    ActuatorId
+    ProductionOrderNumber
+    SerialNumber
+    ArticleNumber
+    ArticleName
+    Product
+    Configuration
+    CommunicationProtocol
+    CreatedTime
+}
+
+class Component{
+   Type
+   ArticleNumber
+   ArticleName
+   CurrentlyInstalled
+   InstalledTime
+}
+
+class PCBA {
+    Uid
+    ManufacturerNumber
+    ProductionOrderNumber
+    SerialNumber
+    ProductionDateCode
+    RevisionNumber
+    Software
+    ConfigNumber
+}
+
+class TestResult {
+    TestPassed
+    ErrorCode
+    CreatedTime
+}
+
+class TestLog {
+    Tester
+    Bay
+} 
+note right 
+More parameters to 
+come after investigation 
+end note
+
+
+Actuator --"*" Component : Contains >
+
+Actuator --"*" TestResult : Relates to <
+
+TestResult -- TestLog : Describes <
+Component <|-- PCBA
+
+hide circle
+hide methods
+@enduml
