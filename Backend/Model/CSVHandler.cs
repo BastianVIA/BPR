@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-
-namespace Backend.Model;
+﻿namespace Backend.Model;
 
 public class CSVHandler
 {
@@ -8,76 +6,64 @@ public class CSVHandler
     {
         var record = new CSVModel();
 
-        using (var reader = new StreamReader(filePath))
+        try
         {
-            while (!reader.EndOfStream)
+            using (var reader = new StreamReader(filePath))
             {
-                var line = reader.ReadLine();
-                var values = line.Split(';');
-
-                if (values.Length < 6) continue;
-
-                var key = values[4].Trim();
-                var value = values[5].Trim();
-                var LINTestPassed = values[3].Trim();
-
-                switch (key)
+                while (!reader.EndOfStream)
                 {
-                    case "Communication Protocol":
-                        record.CommunicationProtocol = value;
-                        break;
-                    case "WO Number":
-                        record.WorkOrderNumber = value;
-                        break;
-                    case "Serial Number":
-                        record.SerialNumber = value;
-                        break;
-                    case "Product":
-                        record.Product = value;
-                        break;
-                    case "Actuator ID":
-                        record.ActuatorID = value;
-                        break;
-                    case "UniqueID from Actuator":
-                        record.UId = value;
-                        break;
-                    case "From AxArtNo":
-                        record.ArticleNumber = value;
-                        break;
-                    case "From AxArtName":
-                        record.ArticleName = value;
-                        break;
-                    case "From AxConf":
-                        record.Configuration = value;
-                        break;
-                    case "LINTest has finished. EndOfTest":
-                        record.LINTestPassed = LINTestPassed ;
-                        break;
-                   
+                    var line = reader.ReadLine();
+                    var values = line.Split(';');
+
+                    if (values.Length < 6) continue;
+
+                    var key = values[4].Trim();
+                    var value = values[5].Trim();
+                    var LINTestPassed = values[3].Trim();
+
+                    switch (key)
+                    {
+                        case "Communication Protocol":
+                            record.CommunicationProtocol = value;
+                            break;
+                        case "WO Number":
+                            record.WorkOrderNumber = value;
+                            break;
+                        case "Serial Number":
+                            record.SerialNumber = value;
+                            break;
+                        case "Product":
+                            record.Product = value;
+                            break;
+                        case "Actuator ID":
+                            record.ActuatorId = value;
+                            break;
+                        case "UniqueID from Actuator":
+                            record.PCBAUid = value;
+                            break;
+                        case "From AxArtNo":
+                            record.ArticleNumber = value;
+                            break;
+                        case "From AxArtName":
+                            record.ArticleName = value;
+                            break;
+                        case "From AxConf":
+                            record.Configuration = value;
+                            break;
+                        case "LINTest has finished. EndOfTest":
+                            record.LINTestPassed = LINTestPassed;
+                            break;
+                    }
                 }
             }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error occurred while reading CSV file: {e.Message}");
+            throw;
         }
 
         return record;
     }
     
-    public static void WriteCSV(CSVModel record, string filePath)
-    {
-        if (!record.LINTestPassed.Contains("360")) return;
-        
-        using var writer = new StreamWriter(filePath);
-        writer.WriteLine("Communication Protocol;" + record.CommunicationProtocol);
-        writer.WriteLine("Work Order Number;" + record.WorkOrderNumber);
-        writer.WriteLine("Serial Number;" + record.SerialNumber);
-        writer.WriteLine("Product;" + record.Product);
-        writer.WriteLine("Actuator ID;" + record.ActuatorID);
-        writer.WriteLine("UID;" + record.UId);
-        writer.WriteLine("Article Number;" + record.ArticleNumber);
-        writer.WriteLine("Article Name;" + record.ArticleName);
-        writer.WriteLine("Configuration;" + record.Configuration);
-        writer.WriteLine("LINTest Passed Successfully;" + record.LINTestPassed);
-
-    }
-    
-
 }
