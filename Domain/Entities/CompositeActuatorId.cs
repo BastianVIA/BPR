@@ -2,8 +2,8 @@
 
 public class CompositeActuatorId
 {
-    public int WONo { get; }
-    public int SerialNo { get; }
+    public int WorkOrderNumber { get; }
+    public int SerialNumber { get; }
 
     private CompositeActuatorId()
     {
@@ -11,8 +11,8 @@ public class CompositeActuatorId
     
     private CompositeActuatorId(int woNo, int serialNo)
     {
-        WONo = woNo;
-        SerialNo = serialNo;
+        WorkOrderNumber = woNo;
+        SerialNumber = serialNo;
     }
 
     public static CompositeActuatorId From(int woNo, int serialNo)
