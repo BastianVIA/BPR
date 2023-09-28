@@ -2,7 +2,25 @@
 
 public class Actuator
 {
-    public int WorkOrderNumber { get; init; }
-    public int SerialNumber { get; init; }
-    public PCBA PCBA  { get; set; }
+    public int WorkOrderNumber { get; private set; }
+    public int SerialNumber { get; private set; }
+    public PCBA PCBA { get; } = new();
+
+    public Actuator WithWorkOrderNumber(int woNo)
+    {
+        WorkOrderNumber = woNo;
+        return this;
+    }
+    
+    public Actuator WithSerialNumber(int serialNo)
+    {
+        SerialNumber = serialNo;
+        return this;
+    }
+
+    public Actuator WithPCBAUid(int pcbaUid)
+    {
+        PCBA.PCBAUid = pcbaUid;
+        return this;
+    }
 }

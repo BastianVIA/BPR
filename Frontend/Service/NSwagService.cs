@@ -56,7 +56,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(string wONo, string serialNo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int wONo, int serialNo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (wONo == null)
                 throw new System.ArgumentNullException("wONo");
@@ -244,8 +244,8 @@ namespace Frontend.Service
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.19.0.0 (NJsonSchema v10.9.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetActuatorDetailsResponse
     {
-        [Newtonsoft.Json.JsonProperty("pcbaId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string PcbaId { get; set; }
+        [Newtonsoft.Json.JsonProperty("pcbaUid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int PcbaUid { get; set; }
 
     }
 
