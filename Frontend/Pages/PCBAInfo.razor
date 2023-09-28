@@ -5,19 +5,25 @@
 <h3>PCBAInfo</h3>
 
 <RadzenRow>
-    <RadzenColumn Size="2">
-        <RadzenFormField Text="WO Number" Style="width: 100%;">
-            <RadzenNumeric ShowUpDown="false" TValue="int" @bind-Value=@woNo Placeholder="WO Number" />
-        </RadzenFormField>
-    </RadzenColumn>
-    <RadzenColumn Size="2">
-        <RadzenFormField Text="Serial Number" Style="width: 100%;">
-            <RadzenNumeric ShowUpDown="false" TValue="int" @bind-Value=@serialNo Placeholder="Serial Number" />
-        </RadzenFormField>
-    </RadzenColumn>
-    <RadzenColumn>
-        <RadzenButton Click="@SearchActuator" Text="Search"></RadzenButton>
-    </RadzenColumn>
+    <RadzenTemplateForm TItem="Actuator" Data=@actuator Submit=@SearchActuator>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenLabel Text="WO Number"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="woNo" @bind-Value=@actuator.WorkOrderNumber class="w-100"/>
+                <RadzenRequiredValidator Component="woNo" Text="WO Number is required" Style="position: absolute"/>
+                <RadzenRegexValidator Component="woNo" Text="WO Number must be 8 digits" Pattern="\d{8}" Style="position: absolute"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="Serial Number"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="serialNo" @bind-Value=@actuator.SerialNumber class="w-100"/>
+                <RadzenRequiredValidator Component="serialNo" Text="Serial Number is required" Style="position: absolute"/>
+                <RadzenRegexValidator Component="serialNo" Text="Serial Number must be 1-4 digits" Pattern="[0-9]{1,4}" Style="position: absolute"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Search"></RadzenButton>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
 </RadzenRow>
 
 <RadzenRow>
@@ -25,14 +31,13 @@
 </RadzenRow>
 
 @code {
-
-    private int woNo;
-    private int serialNo;
     private int pcbaUid;
+
+    private Actuator actuator = new Actuator();
 
     private async Task SearchActuator()
     {
-        Actuator actuator = await ActuatorDetailsModel.GetActuatorDetails(woNo, serialNo);
+        actuator = await ActuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
         pcbaUid = actuator.PCBA.PCBAUid;
     }
 }
