@@ -21,6 +21,7 @@
 
 
     <ItemGroup>
+      <Folder Include="Database\" />
       <Folder Include="Migrations\" />
     </ItemGroup>
 
@@ -34,6 +35,7 @@
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
       <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\LINTest\LINTest.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using Backend.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 public class ApplicationDbContext : DbContext
 {
