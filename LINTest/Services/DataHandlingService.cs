@@ -1,7 +1,7 @@
 ﻿using Backend.Model;
 using Microsoft.Extensions.Logging;
 
-namespace Backend.Services;
+namespace LINTest.Services;
 
 public class DataHandlingService
 {
@@ -40,7 +40,7 @@ public class DataHandlingService
                 PCBAUid = pcbaUid
             };
 
-            _context.ActuatorModel.Add(actuator);
+            // _context.ActuatorModel.Add(actuator);
             _context.SaveChanges();
         }
         catch (Exception e)
