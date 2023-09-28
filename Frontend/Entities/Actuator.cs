@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Frontend.Entities;
+﻿namespace Frontend.Entities;
 
 public class Actuator
 {
