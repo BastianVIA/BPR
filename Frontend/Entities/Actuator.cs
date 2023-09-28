@@ -1,8 +1,10 @@
-﻿namespace Frontend.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Frontend.Entities;
 
 public class Actuator
 {
-    public int WorkOrderNumber { get; init; }
-    public int SerialNumber { get; init; }
+    public int WorkOrderNumber { get; set; }
+    public int SerialNumber { get; set; }
     public PCBA PCBA  { get; set; }
 }
