@@ -11,7 +11,28 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Network" />
+      <Folder Include="Data\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="Shared\NavMenu.razor" />
+      <Content Remove="Pages\Index.razor" />
+      <Content Remove="Pages\Counter.razor" />
+      <Content Remove="Pages\FetchData.razor" />
+      <Content Remove="Pages\Error.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Data\WeatherForecastService.cs" />
+      <Compile Remove="Pages\Error.cshtml.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Radzen.Blazor" Version="4.15.14" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\" />
     </ItemGroup>
 
 </Project>

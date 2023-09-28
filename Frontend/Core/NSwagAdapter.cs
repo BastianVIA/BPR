@@ -15,12 +15,12 @@ public class NSwagAdapter : INetworkAdapter
         _client = new Client(uri, httpClient);
     }
 
-    public async Task<GetActuatorDetailsResponse> GetActuatorDetails(string workOrderNr, string serialNr)
+    public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int workOrderNr, int serialNr)
     {
         //var response = await _client.GetActuatorDetailsAsync(workOrderNr, serialNr);
         //return response;
         Console.WriteLine("does it works: " + _client.BaseUrl);
-        return new GetActuatorDetailsResponse() { PcbaId = "eaeeaea"};
+        return new GetActuatorDetailsResponse() { PcbaId = "1234"};
     }
     
     

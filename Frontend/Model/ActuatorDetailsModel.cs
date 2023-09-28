@@ -7,23 +7,24 @@ namespace Frontend.Model;
 public class ActuatorDetailsModel : IActuatorDetailsModel
 {
     private INetworkAdapter _network;
+    private Actuator actuator;
     
     public ActuatorDetailsModel(INetworkAdapter network)
     {
         _network = network;
     }
 
-    public async Task<Actuator> GetActuatorDetails(string woNo, string serialNo)
+    public async Task<Actuator> GetActuatorDetails(int woNo, int serialNo)
     {
+        actuator = new Actuator { WONo = woNo, SerialNo = serialNo, PCBA = new PCBA()};
         var networkResponse = await _network.GetActuatorDetails(woNo, serialNo);
-        var toReturn = toEntity(networkResponse);
-        Console.WriteLine(toReturn.PcbaId);
-        return toReturn;
+        UpdateActuatorWithResponse(networkResponse);
+        return actuator;
     }
 
-    public Actuator toEntity(GetActuatorDetailsResponse response)
+    public void UpdateActuatorWithResponse(GetActuatorDetailsResponse response)
     {
-        return new Actuator(response.PcbaId);
+        actuator.PCBA.UID = Int32.Parse(response.PcbaId);
     }
     
     

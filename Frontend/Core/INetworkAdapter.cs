@@ -4,5 +4,5 @@ namespace Frontend.Core;
 
 public interface INetworkAdapter
 {
-     Task<GetActuatorDetailsResponse> GetActuatorDetails(string workOrderNr, string serialNr);
+     Task<GetActuatorDetailsResponse> GetActuatorDetails(int workOrderNr, int serialNr);
 }
