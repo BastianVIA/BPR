@@ -1,8 +1,6 @@
 using BuildingBlocks;
 using Infrastructure.Configuration;
-
 using Backend.Database;
-using Backend.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
