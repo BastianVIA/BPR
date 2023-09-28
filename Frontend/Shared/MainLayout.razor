@@ -1,19 +1,39 @@
 ﻿@inherits LayoutComponentBase
 
 <PageTitle>Frontend</PageTitle>
+<RadzenDialog/>
+<RadzenNotification/>
+<RadzenContextMenu/>
+<RadzenTooltip/>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
+<RadzenLayout>
+    
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)"/>
+            <RadzenLabel Text="LINAK"/>
+        </RadzenStack>
+    </RadzenHeader>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+    <RadzenSidebar Style="width:auto">
+        <RadzenPanelMenu DisplayStyle="@(sidebarExpanded?MenuItemDisplayStyle.IconAndText:MenuItemDisplayStyle.Icon)">
+            <RadzenPanelMenuItem Text="Home" Icon="home" Path=""/>
+            <RadzenPanelMenuItem Text="PCBA" Icon="pageview" Path="PCBAInfo"/>
+        </RadzenPanelMenu>
+    </RadzenSidebar>
+    
+    <RadzenBody @ref="body">
+        <ChildContent>
+            <RadzenContentContainer Name="main">
+                @Body
+            </RadzenContentContainer>
+        </ChildContent>
+    </RadzenBody>
+    
+</RadzenLayout>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+@code{
+    protected RadzenBody body;
+
+    bool sidebarExpanded = true;
+}

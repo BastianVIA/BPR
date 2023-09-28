@@ -1,0 +1,39 @@
+@page "/PCBAInfo"
+@using Frontend.Entities
+@using Frontend.Model
+@inject IActuatorDetailsModel ActuatorDetailsModel
+<h3>PCBAInfo</h3>
+
+
+<RadzenRow>
+    <RadzenColumn Size="2">
+        <RadzenFormField Text="WO Number" Style="width: 100%;">
+            <RadzenNumeric ShowUpDown="false" TValue="int" @bind-Value=@woNo Placeholder="WO Number" />
+        </RadzenFormField>
+    </RadzenColumn>
+    <RadzenColumn Size="2">
+        <RadzenFormField Text="Serial Number" Style="width: 100%;">
+            <RadzenNumeric ShowUpDown="false" TValue="int" @bind-Value=@serialNo Placeholder="Serial Number" />
+        </RadzenFormField>
+    </RadzenColumn>
+    <RadzenColumn>
+        <RadzenButton Click="@SearchActuator" Text="Search"></RadzenButton>
+    </RadzenColumn>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenText>@pcbaUid</RadzenText>
+</RadzenRow>
+
+@code {
+
+    private int woNo;
+    private int serialNo;
+    private int pcbaUid;
+
+    private async Task SearchActuator()
+    {
+        Actuator actuator = await ActuatorDetailsModel.GetActuatorDetails(woNo, serialNo);
+        pcbaUid = actuator.PCBA.PCBAUid;
+    }
+}

@@ -9,7 +9,7 @@ package frontend {
 package backend {
 }
 
-NSwagClient ..> backend
+NSwagClient ..> "*" backend
 note right on link
     RESTful
 end note
