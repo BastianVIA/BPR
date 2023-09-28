@@ -4,17 +4,17 @@ namespace Application.GetActuatorDetails;
 
 public class GetActuatorDetailsQuery : IQuery<GetActuatorDetailsDto>
 {
-    internal string WONo { get; }
-    internal string SerialNo { get; }
+    internal int WorkOrderNumber { get; }
+    internal int SerialNumber { get; }
 
-    private GetActuatorDetailsQuery(string woNo, string serialNo)
+    private GetActuatorDetailsQuery(int woNo, int serialNo)
     {
-        WONo = woNo;
-        SerialNo = serialNo;
+        WorkOrderNumber = woNo;
+        SerialNumber = serialNo;
     }
 
-    public static GetActuatorDetailsQuery Create(string WONo, string SerialNo)
+    public static GetActuatorDetailsQuery Create(int woNo, int serialNo)
     {
-        return new GetActuatorDetailsQuery(WONo, SerialNo);
+        return new GetActuatorDetailsQuery(woNo, serialNo);
     }
 }

@@ -19,7 +19,7 @@ public class GetActuatorDetailsController : ControllerBase
     [Route("api/GetActuatorDetails/{WONo}/{SerialNo}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorDetailsResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAsync(string WONo, string SerialNo, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAsync(int WONo, int SerialNo, CancellationToken cancellationToken)
     {
         var query = GetActuatorDetailsQuery.Create(WONo, SerialNo);
         var result = await _bus.Send(query, cancellationToken);
@@ -28,16 +28,15 @@ public class GetActuatorDetailsController : ControllerBase
     
     public class GetActuatorDetailsResponse
     {
-
-        public string PCBAId { get; }
-        public GetActuatorDetailsResponse(string PCBAId)
+        public int PCBAUid { get; }
+        public GetActuatorDetailsResponse(int pcbaUid)
         {
-            this.PCBAId = PCBAId;
+            PCBAUid = pcbaUid;
         }
 
         internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
         {
-            return new GetActuatorDetailsResponse(result.PCBAId);
+            return new GetActuatorDetailsResponse(result.PCBAUId);
         }
     }
 }

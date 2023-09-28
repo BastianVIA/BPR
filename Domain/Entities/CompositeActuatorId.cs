@@ -2,27 +2,22 @@
 
 public class CompositeActuatorId
 {
-    public string WONo { get; }
-    public string SerialNo { get; }
+    public int WONo { get; }
+    public int SerialNo { get; }
 
     private CompositeActuatorId()
     {
     }
     
-    private CompositeActuatorId(string woNo, string serialNo)
+    private CompositeActuatorId(int woNo, int serialNo)
     {
         WONo = woNo;
         SerialNo = serialNo;
     }
 
-    public static CompositeActuatorId From(string WONo, string SerialNo)
+    public static CompositeActuatorId From(int woNo, int serialNo)
     {
-        if (string.IsNullOrEmpty(WONo) || string.IsNullOrEmpty(SerialNo))
-        {
-            throw new ArgumentException($"{nameof(WONo)} or {nameof(SerialNo)} not valid");
-        }
-
-        return new CompositeActuatorId(WONo, SerialNo);
+        return new CompositeActuatorId(woNo, serialNo);
     }
     
 }
