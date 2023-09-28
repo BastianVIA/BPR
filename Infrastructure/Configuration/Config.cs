@@ -1,4 +1,5 @@
 ﻿using Application;
+using BuildingBlocks.Infrastructure.Database;
 using Microsoft.Extensions.DependencyInjection;
 using BuildingBlocks.Registration;
 using Domain.Repositories;
@@ -11,6 +12,11 @@ public static class Config
     {
         services.AddCommandAndQueryHandlers(AssemblyReference.Assembly);
         services.AddScoped<IActuatorRepository, ActuatorRepository>();
+        
+        services.AddEntityDbSet<ActuatorModel>(entity =>
+        {
+            entity.HasKey(a => new {a.WorkOrderNumber, a.SerialNumber});
+        });
         return services;
     }
 }

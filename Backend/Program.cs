@@ -27,9 +27,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(
-        configuration.GetConnectionString("DatabaseConnection")));
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+ //   options.UseSqlServer(
+  //      configuration.GetConnectionString("DatabaseConnection")));
 
 builder.Services.AddLINTestServices();
 
