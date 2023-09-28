@@ -1,13 +1,18 @@
+using Frontend.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Frontend.Data;
+using Frontend.Model;
+using Frontend.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.SetupBackendConnection();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<IActuatorDetailsModel, ActuatorDetailsModel>();
 
 var app = builder.Build();
 

@@ -1,5 +1,7 @@
 ﻿@page "/counter"
-
+@using Frontend.Core
+@using Frontend.Model
+@inject IActuatorDetailsModel Model
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
@@ -13,7 +15,7 @@
 
     private void IncrementCount()
     {
-        currentCount++;
+        
     }
 
 }
