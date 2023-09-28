@@ -16,7 +16,7 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
 
     public async Task<Actuator> GetActuatorDetails(int woNo, int serialNo)
     {
-        actuator = new Actuator { WONo = woNo, SerialNo = serialNo, PCBA = new PCBA()};
+        actuator = new Actuator { WorkOrderNumber = woNo, SerialNumber = serialNo, PCBA = new PCBA()};
         var networkResponse = await _network.GetActuatorDetails(woNo, serialNo);
         UpdateActuatorWithResponse(networkResponse);
         return actuator;
@@ -24,7 +24,7 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
 
     public void UpdateActuatorWithResponse(GetActuatorDetailsResponse response)
     {
-        actuator.PCBA.UID = Int32.Parse(response.PcbaId);
+        actuator.PCBA.PCBAUid = Int32.Parse(response.PcbaId);
     }
     
     

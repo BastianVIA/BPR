@@ -22,18 +22,18 @@
 </RadzenRow>
 
 <RadzenRow>
-    <RadzenText>@PCBAUid</RadzenText>
+    <RadzenText>@pcbaUid</RadzenText>
 </RadzenRow>
 
 @code {
 
     private int woNo;
     private int serialNo;
-    private int PCBAUid;
+    private int pcbaUid;
 
     private async Task SearchActuator()
     {
         Actuator actuator = await ActuatorDetailsModel.GetActuatorDetails(woNo, serialNo);
-        PCBAUid = actuator.PCBA.UID;
+        pcbaUid = actuator.PCBA.PCBAUid;
     }
 }

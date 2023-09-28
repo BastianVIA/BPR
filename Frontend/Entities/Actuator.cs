@@ -2,7 +2,7 @@
 
 public class Actuator
 {
-    public int WONo { get; set; }
-    public int SerialNo { get; set; }
+    public int WorkOrderNumber { get; set; }
+    public int SerialNumber { get; set; }
     public PCBA PCBA  { get; set; }
 }
