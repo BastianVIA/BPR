@@ -1,0 +1,11 @@
+@using Frontend.Entities
+
+<RadzenLabel Text="WO Number"/>
+<RadzenNumeric ShowUpDown="false" style="display: block" Name="woNo" @bind-Value=@Actuator.WorkOrderNumber class="w-100"/>
+<RadzenRequiredValidator Component="woNo" Text="WO Number is required" Style="position: absolute"/>
+<RadzenRegexValidator Component="woNo" Text="WO Number must be 8 digits" Pattern="\d{8}" Style="position: absolute"/>
+
+@code {
+    [Parameter]
+    public Actuator Actuator { get; set; }
+}
