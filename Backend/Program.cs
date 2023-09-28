@@ -1,5 +1,6 @@
+using BuildingBlocks;
+using Infrastructure.Configuration;
 using Backend.Database;
-using Backend.Model;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,12 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 // Add services to the container.
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+
+builder.Services.AddCore();
+
+builder.Services.AddActuatorServices();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
