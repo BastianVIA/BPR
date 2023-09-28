@@ -1,0 +1,61 @@
+﻿@startuml
+
+package TraceApp <<node>> #lightblue {
+
+}
+
+package LINTest <<node>> {
+  class TestResult {
+    PCBAUid
+    CurrentlyInstalled
+    InstalledTime
+    TestPassed
+    ErrorCode
+    CreatedTime
+    Tester
+    Bay
+  }
+  note right
+  from csv file
+  
+  More parameters to 
+  come after investigation 
+  end note
+}
+
+package TECHLINEFlash <<node>> {
+  class PCBADetails {
+    Uid
+    ManufacturerNumber
+    ProductionOrderNumber
+    SerialNumber
+    ProductionDateCode
+    RevisionNumber
+    Software
+    ConfigNumber
+  }
+  note right 
+  from db 
+  end note
+}
+
+
+package Axapta <<node>> {
+    class ComponentDATA {
+      Type
+      ArticleNumber
+      ArticleName
+    }
+    note right 
+    TBD
+    end note
+}
+
+
+TraceApp --> LINTest
+TraceApp --> TECHLINEFlash
+TraceApp --> Axapta
+
+hide methods
+hide circle
+@enduml
