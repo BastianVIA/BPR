@@ -26,7 +26,5 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
     {
         actuator.PCBA.PCBAUid = Int32.Parse(response.PcbaId);
     }
-    
-    
 }
 
