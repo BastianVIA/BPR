@@ -17,9 +17,7 @@ public class NSwagAdapter : INetworkAdapter
 
     public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo)
     {
-        //var response = await _client.GetActuatorDetailsAsync(workOrderNr, serialNr);
-        //return response;
-        Console.WriteLine("does it works: " + _client.BaseUrl);
-        return new GetActuatorDetailsResponse() { PcbaId = "1234"};
+        var response = await _client.GetActuatorDetailsAsync(woNo, serialNo);
+        return response;
     }
 }
