@@ -12,6 +12,4 @@ public class CSVModel
         public string ArticleName { get; set; }
         public string Configuration { get; set; }
         public string LINTestPassed { get; set; }
-
-
 }

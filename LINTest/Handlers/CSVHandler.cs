@@ -65,5 +65,4 @@ public class CSVHandler
 
         return record;
     }
-    
 }
