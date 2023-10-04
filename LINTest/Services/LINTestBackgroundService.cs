@@ -8,8 +8,7 @@ namespace LINTest.Services;
 public class LINTestBackgroundService : BackgroundService
 {
     private ICommandBus _commandBus;
-
-
+    
     public LINTestBackgroundService(ICommandBus commandBus)
     {
         _commandBus = commandBus;

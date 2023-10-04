@@ -7,5 +7,4 @@ public class ActuatorModel
     public int SerialNumber { get; set; } //PPK
     
     public int PCBAUid { get; set; }
-    
 }

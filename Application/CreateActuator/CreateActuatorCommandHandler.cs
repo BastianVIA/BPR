@@ -25,6 +25,5 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
             Console.WriteLine(e);
             throw;
         }
-
     }
 }
