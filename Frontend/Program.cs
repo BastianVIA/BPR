@@ -1,8 +1,13 @@
+using Frontend.Events;
 using Frontend.Model;
+using Frontend.Service;
 using Radzen;
 using Frontend.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IAlertMessages, AlertMessages>();
+builder.Services.AddSingleton<IAlertService, AlertService>();
 
 builder.Services.SetupBackendConnection();
 builder.Services.AddValidationSettings(builder);
@@ -12,6 +17,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddScoped<IActuatorDetailsModel, ActuatorDetailsModel>();
+
 
 var app = builder.Build();
 
