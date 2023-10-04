@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure;
 
-public class ActuatorModel 
+public class ActuatorModel
 {
     public int WorkOrderNumber { get; set; } //PPK
 

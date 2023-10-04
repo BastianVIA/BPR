@@ -15,8 +15,17 @@ public class GetActuatorDetailsQueryHandler : IQueryHandler<GetActuatorDetailsQu
 
     public async Task<GetActuatorDetailsDto> Handle(GetActuatorDetailsQuery request, CancellationToken cancellationToken)
     {
-        var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-        var actuator = await _actuatorRepository.GetActuator(actuatorId);
-        return GetActuatorDetailsDto.From(actuator);
+        try
+        {
+            var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
+            var actuator = await _actuatorRepository.GetActuator(actuatorId);
+            return GetActuatorDetailsDto.From(actuator);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
     }
 }

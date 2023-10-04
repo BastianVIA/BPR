@@ -1,13 +1,30 @@
-﻿using System.Collections.Concurrent;
-using System.Runtime.CompilerServices;
-using BuildingBlocks.Application;
+﻿using BuildingBlocks.Application;
+using Domain.Entities;
+using Domain.Repositories;
 
 namespace Application.CreateActuator;
 
-public class CreateActuatorCommandHandler:ICommandHandler<CreateActuatorCommand>
+public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorCommand>
 {
+    private IActuatorRepository _actuatorRepository;
+
+    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository)
+    {
+        _actuatorRepository = actuatorRepository;
+    }
+
     public async Task Handle(CreateActuatorCommand request, CancellationToken cancellationToken)
     {
-        Console.WriteLine("serial : " + request.SerialNumber + " WorkOrder no :" + request.WorkOrderNumber + " PCBA Id: " + request.PCBAUid);
+        try
+        {
+            var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
+            var actuator = Actuator.Create(actuatorId, request.PCBAUid);
+            await _actuatorRepository.CreateActuator(actuator);
+        } catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
     }
 }

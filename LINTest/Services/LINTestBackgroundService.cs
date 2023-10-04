@@ -1,11 +1,11 @@
 ﻿using Application.CreateActuator;
 using Backend.Model;
 using BuildingBlocks.Application;
-
-namespace Backend.Services;
 using Microsoft.Extensions.Hosting;
 
-public class LINTestBackgroundService: BackgroundService
+namespace LINTest.Services;
+
+public class LINTestBackgroundService : BackgroundService
 {
     private ICommandBus _commandBus;
 
@@ -19,21 +19,20 @@ public class LINTestBackgroundService: BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            
-            var filePath = "C:\\Users\\Administrator\\Desktop\\inputFiles\\firstFile.csv";
-            var csvModel = CSVHandler.ReadCSV(filePath);
-            var command = CreateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
-                int.Parse(csvModel.SerialNumber), int.Parse(csvModel.PCBAUid));
-          await  _commandBus.Send(command, stoppingToken);
-            
-          
-           // Console.WriteLine("read from csv file " + csvModel.PCBAUid);
-        
-            // dataService.SaveData(csvModel);
-           // Console.WriteLine("Data saved successfully.");
+            try
+            {
+                var filePath = "../LINTest/firstFile.csv"; 
+                var csvModel = CSVHandler.ReadCSV(filePath);
+                var command = CreateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
+                    int.Parse(csvModel.SerialNumber), int.Parse(csvModel.PCBAUid));
+                await _commandBus.Send(command, stoppingToken);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
-            await Task.Delay(TimeSpan.FromMinutes(0.1));
+            await Task.Delay(TimeSpan.FromMinutes(10));
         }
-       
     }
 }

@@ -24,7 +24,6 @@ public class CreateActuatorCommand:ICommand
     
     public static CreateActuatorCommand Create(int woNo, int serialNo, int pcbaUid)
     {
-
         return new CreateActuatorCommand(woNo, serialNo, pcbaUid);
     }
 }
