@@ -1,7 +1,7 @@
 ﻿@startuml
 class Actuator {
     ActuatorId
-    ProductionOrderNumber
+    WorkOrderNumber
     SerialNumber
     ArticleNumber
     ArticleName
@@ -22,7 +22,7 @@ class Component{
 class PCBA {
     Uid
     ManufacturerNumber
-    ProductionOrderNumber
+    WorkOrderNumber
     SerialNumber
     ProductionDateCode
     RevisionNumber

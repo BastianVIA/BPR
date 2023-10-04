@@ -1,0 +1,43 @@
+@page "/PCBAInfo"
+@using Frontend.Entities
+@using Frontend.Model
+@inject IActuatorDetailsModel ActuatorDetailsModel
+<h3>PCBAInfo</h3>
+
+<RadzenRow>
+    <RadzenTemplateForm TItem="Actuator" Data=@actuator Submit=@SearchActuator>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenLabel Text="WO Number"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="woNo" @bind-Value=@actuator.WorkOrderNumber class="w-100"/>
+                <RadzenRequiredValidator Component="woNo" Text="WO Number is required" Style="position: absolute"/>
+                <RadzenRegexValidator Component="woNo" Text="WO Number must be 8 digits" Pattern="\d{8}" Style="position: absolute"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="Serial Number"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="serialNo" @bind-Value=@actuator.SerialNumber class="w-100"/>
+                <RadzenRequiredValidator Component="serialNo" Text="Serial Number is required" Style="position: absolute"/>
+                <RadzenRegexValidator Component="serialNo" Text="Serial Number must be 1-4 digits" Pattern="[0-9]{1,4}" Style="position: absolute"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Search"></RadzenButton>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenText>@pcbaUid</RadzenText>
+</RadzenRow>
+
+@code {
+    private int pcbaUid;
+
+    private Actuator actuator = new Actuator();
+
+    private async Task SearchActuator()
+    {
+        actuator = await ActuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
+        pcbaUid = actuator.PCBA.PCBAUid;
+    }
+}
