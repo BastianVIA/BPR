@@ -12,7 +12,7 @@ public class Actuator : Entity
     {
     }
     
-    private Actuator(CompositeActuatorId actuatorId, int pcbaUid)
+    public Actuator(CompositeActuatorId actuatorId, int pcbaUid)
     {
         ActuatorId = actuatorId;
         PCBAUId = pcbaUid;

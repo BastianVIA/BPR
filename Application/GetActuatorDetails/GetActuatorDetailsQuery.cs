@@ -7,6 +7,10 @@ public class GetActuatorDetailsQuery : IQuery<GetActuatorDetailsDto>
     internal int WorkOrderNumber { get; }
     internal int SerialNumber { get; }
 
+    private GetActuatorDetailsQuery()
+    {
+    }
+    
     private GetActuatorDetailsQuery(int woNo, int serialNo)
     {
         WorkOrderNumber = woNo;
@@ -15,6 +19,6 @@ public class GetActuatorDetailsQuery : IQuery<GetActuatorDetailsDto>
 
     public static GetActuatorDetailsQuery Create(int woNo, int serialNo)
     {
-        return new GetActuatorDetailsQuery(woNo, serialNo);
+        return new GetActuatorDetailsQuery(woNo, serialNo); 
     }
 }

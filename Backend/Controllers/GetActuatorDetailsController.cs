@@ -16,12 +16,12 @@ public class GetActuatorDetailsController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetActuatorDetails/{WONo}/{SerialNo}")]
+    [Route("api/GetActuatorDetails/{woNo}/{serialNo}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorDetailsResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAsync(int WONo, int SerialNo, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAsync(int woNo, int serialNo, CancellationToken cancellationToken)
     {
-        var query = GetActuatorDetailsQuery.Create(WONo, SerialNo);
+        var query = GetActuatorDetailsQuery.Create(woNo, serialNo);
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorDetailsResponse.From(result));
     }

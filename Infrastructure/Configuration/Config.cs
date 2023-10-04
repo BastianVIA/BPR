@@ -10,7 +10,8 @@ public static class Config
     public static IServiceCollection AddActuatorServices(this IServiceCollection services)
     {
         services.AddCommandAndQueryHandlers(AssemblyReference.Assembly);
-        services.AddScoped<IActuatorRepository, ActuatorRepository>();
+        services.AddSingleton<IActuatorRepository, ActuatorRepository>();
+        
         return services;
     }
 }
