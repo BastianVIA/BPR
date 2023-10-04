@@ -2,8 +2,8 @@
 
 public class Actuator
 {
-    public int WorkOrderNumber { get; private set; }
-    public int SerialNumber { get; private set; }
+    public int WorkOrderNumber { get; set; }
+    public int SerialNumber { get; set; }
     public PCBA PCBA { get; } = new();
 
     public Actuator WithWorkOrderNumber(int woNo)

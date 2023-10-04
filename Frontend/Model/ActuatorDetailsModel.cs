@@ -17,12 +17,10 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
     {
         var networkResponse = await _network.GetActuatorDetails(woNo, serialNo);
         var actuator = new Actuator()
-            .WithSerialNumber(serialNo)
             .WithWorkOrderNumber(woNo)
+            .WithSerialNumber(serialNo)
             .WithPCBAUid(networkResponse.PcbaUid);
         return actuator;
     }
-
-
 }
 
