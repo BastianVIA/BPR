@@ -4,19 +4,15 @@ using LINTest;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Manually configure Configuration object
-var configuration = new ConfigurationBuilder() // TODO: tjek om det her er nødvendigt
-    .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
-    .AddEnvironmentVariables()
-    .Build();
+
+
+builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // Add services to the container.
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 
-builder.Services.AddCore(configuration);
+builder.Services.AddCore(builder.Configuration);
 
 builder.Services.AddActuatorServices();
 
