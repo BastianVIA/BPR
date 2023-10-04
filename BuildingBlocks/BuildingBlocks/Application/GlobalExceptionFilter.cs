@@ -18,8 +18,9 @@ public class GlobalExceptionFilter : IAsyncExceptionFilter
 
     public async Task OnExceptionAsync(ExceptionContext context)
     {
-        _logger.LogError($"An Exception occurred of type: {context.Exception.GetType()}, with message: {context.Exception.Message}");
-        
+        _logger.LogError(
+            $"An Exception occurred of type: {context.Exception.GetType()}, with message: {context.Exception.Message}");
+
         context.ExceptionHandled = true;
         context.Result = exceptionParser(context.Exception);
         await context.Result.ExecuteResultAsync(context);
@@ -30,36 +31,39 @@ public class GlobalExceptionFilter : IAsyncExceptionFilter
     {
         var response = new ObjectResult("An error occurred.");
 
-        if (exception is DbUpdateException)
+        switch (exception)
         {
-            response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            response.Value = "An error occurred while contacting the database.";
+            case DbUpdateException _:
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Value = "An error occurred while contacting the database.";
+                break;
+
+            case KeyNotFoundException keyNotFoundException:
+                response.StatusCode = (int)HttpStatusCode.NotFound;
+                response.Value = keyNotFoundException.Message;
+                break;
+
+            case UnauthorizedAccessException unauthorizedAccessException:
+                response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                response.Value = unauthorizedAccessException.Message;
+                break;
+
+            case ValidationException validationException:
+                response.StatusCode = (int)HttpStatusCode.BadRequest;
+                response.Value = validationException.Message;
+                break;
+
+            case NullReferenceException _:
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Value = "A null reference exception occurred.";
+                break;
+
+            default:
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Value = exception.Message;
+                break;
         }
-        else if (exception is KeyNotFoundException)
-        {
-            response.StatusCode = (int)HttpStatusCode.NotFound;
-            response.Value = exception.Message;
-        }
-        else if (exception is UnauthorizedAccessException)
-        {
-            response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            response.Value = exception.Message;
-        }
-        else if (exception is ValidationException)
-        {
-            response.StatusCode = (int)HttpStatusCode.BadRequest;
-            response.Value = exception.Message;
-        }
-        else if (exception is NullReferenceException)
-        {
-            response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            response.Value = "A null reference exception occurred.";
-        }
-        else
-        {
-            response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            response.Value = exception.Message;
-        }
+
 
         return response;
     }
