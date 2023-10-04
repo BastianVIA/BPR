@@ -9,8 +9,8 @@ public class GetActuatorDetailsQuery : IQuery<GetActuatorDetailsDto>
 
     private GetActuatorDetailsQuery()
     {
-        
     }
+    
     private GetActuatorDetailsQuery(int woNo, int serialNo)
     {
         WorkOrderNumber = woNo;

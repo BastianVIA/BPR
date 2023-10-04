@@ -11,7 +11,6 @@ public class CreateActuatorCommand:ICommand
 
     private CreateActuatorCommand()
     {
-        
     }
     
     private CreateActuatorCommand(int woNo, int serialNo, int pcbaUid)

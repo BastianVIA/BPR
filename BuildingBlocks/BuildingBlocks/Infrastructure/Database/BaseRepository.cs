@@ -19,6 +19,5 @@ public class BaseRepository<TEntity> where TEntity : class
     {
         _dbContext.Set<TEntity>().Add(entity);
         await _dbContext.SaveChangesAsync();
-
     }
 }

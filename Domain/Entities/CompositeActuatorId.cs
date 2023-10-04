@@ -17,8 +17,7 @@ public class CompositeActuatorId
 
     public static CompositeActuatorId From(int woNo, int serialNo)
     {
-        //WoNo == 8 lang.
-        
+        //put validation , fx WoNo == 8 lang.
         return new CompositeActuatorId(woNo, serialNo);
     }
     

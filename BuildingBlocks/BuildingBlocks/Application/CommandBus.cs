@@ -16,5 +16,4 @@ public class CommandBus : ICommandBus
     {
         await sender.Send(command, cancellation);
     }
-
 }

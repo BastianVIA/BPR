@@ -26,6 +26,5 @@ public class GetActuatorDetailsQueryHandler : IQueryHandler<GetActuatorDetailsQu
             Console.WriteLine(e);
             throw;
         }
-
     }
 }
