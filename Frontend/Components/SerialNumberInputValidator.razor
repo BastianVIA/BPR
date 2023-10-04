@@ -1,11 +1,25 @@
 @using Frontend.Entities
+@using Microsoft.Extensions.Options
+@using Frontend.Config
+@inject IOptions<ValidationSettings> Validation
 
 <RadzenLabel Text="Serial Number"/>
 <RadzenNumeric ShowUpDown="false" style="display: block" Name="serialNo" @bind-Value=@Actuator.SerialNumber class="w-100"/>
 <RadzenRequiredValidator Component="serialNo" Text="Serial Number is required" Style="position: absolute"/>
-<RadzenRegexValidator Component="serialNo" Text="Serial Number must be 1-4 digits" Pattern="[0-9]{1,4}" Style="position: absolute"/>
+<RadzenRegexValidator Component="serialNo" Text=@RegexText Pattern=@RegexPattern Style="position: absolute"/>
 
 @code {
     [Parameter]
     public Actuator Actuator { get; set; }
+    public string RegexText { get; private set; }
+    public string RegexPattern { get; private set; }
+
+    protected override void OnInitialized()
+    {
+        var minLength = Validation.Value.SerialNumberMinLength;
+        var maxLength = Validation.Value.SerialNumberMaxLength;
+
+        RegexText = $"Serial Number must be {minLength}-{maxLength} digits";
+        RegexPattern = $"(?!0)\\d{{{minLength},{maxLength}}}";
+    }
 }

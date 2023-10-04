@@ -1,13 +1,11 @@
-using Frontend.Core;
-
 using Frontend.Model;
 using Radzen;
-using Frontend.Model;
 using Frontend.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.SetupBackendConnection();
+builder.Services.AddValidationSettings(builder);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
