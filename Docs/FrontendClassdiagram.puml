@@ -1,0 +1,91 @@
+@startuml
+
+package "Pages (view, viewmodel)"{
+    class PCBAInfo{
+        -int pcbaUid
+        -Actuator actuator
+        -SearchActuator() : Task
+    }
+}
+
+package "Components"{
+    class SerialNumberInputValidator{
+        +string RegexText
+        +string RegexPattern
+        +OnInitialized() : void
+    }
+    
+    class WorkOrderNumberInputValidator{
+        +string RegexText
+        +string RegexPattern
+        +OnInitialized() : void
+    }
+}
+
+package "Entities"{
+    class Actuator{
+        +int WorkOrderNumber
+        +int SerialNumber
+    }
+    
+    class PCBA{
+    +int PCBAUid
+    }
+    
+    Actuator --> PCBA
+}
+
+package "Model"{
+    interface IActuatorDetailsModel{
+        +GetActuatorDetails(int woNo, int serialNo) : Task<Actuator>
+    }
+    
+    class ActuatorDetailsModel{
+        +ActuatorDetailsModel(INetworkAdapter network)
+    }
+    
+    IActuatorDetailsModel <|-- ActuatorDetailsModel
+}
+
+package "Core"{
+    interface INetworkAdapter{
+        +GetActuatorDetails(int woNo, int serialNo) : Task<GetActuatorDetailsResponse>
+    }
+    
+    class NSwagAdapter{
+        +NSwagAdapter(IHttpClientFactory clientFactory, IConfiguration configuration)
+    }
+    
+    INetworkAdapter <|-- NSwagAdapter
+}
+
+package "Service"{
+    package "NSwagService"{
+        class Client{
+            -string _baseUrl
+            -HttpClient _httpClient
+            -JsonSerializerSettings _settings      
+            +Client(string baseUrl, HttpClient httpClient) 
+            +GetActuatorDetailsAsync(int wONo, int serialNo, CancellationToken cancellationToken) : Task<GetActuatorDetailsResponse>
+        }
+        
+        class GetActuatorDetailsResponse{
+         +int PcbaUid
+        }
+        
+        Client --> GetActuatorDetailsResponse
+    }
+}
+
+PCBAInfo --> Actuator
+PCBAInfo --> IActuatorDetailsModel
+PCBAInfo ..> SerialNumberInputValidator : includes
+PCBAInfo ..> WorkOrderNumberInputValidator : includes
+ActuatorDetailsModel --> INetworkAdapter
+NSwagAdapter --> Client
+Client ..> backend
+note right on link
+    RESTful
+end note
+
+@enduml
