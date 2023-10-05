@@ -2,34 +2,33 @@
 
 package "Pages (view, viewmodel)"{
     class PCBAInfo{
-        -int pcbaUid
-        -Actuator actuator
+        -pcbaUid : int
         -SearchActuator() : Task
     }
 }
 
 package "Components"{
     class SerialNumberInputValidator{
-        +string RegexText
-        +string RegexPattern
+        +RegexText : string
+        +RegexPattern : string
         +OnInitialized() : void
     }
     
     class WorkOrderNumberInputValidator{
-        +string RegexText
-        +string RegexPattern
+        +RegexText : string
+        +RegexPattern : string
         +OnInitialized() : void
     }
 }
 
 package "Entities"{
     class Actuator{
-        +int WorkOrderNumber
-        +int SerialNumber
+        +WorkOrderNumber : int
+        +SerialNumber : int
     }
     
     class PCBA{
-    +int PCBAUid
+    +PCBAUid : int
     }
     
     Actuator --> PCBA
@@ -62,15 +61,15 @@ package "Core"{
 package "Service"{
     package "NSwagService"{
         class Client{
-            -string _baseUrl
-            -HttpClient _httpClient
-            -JsonSerializerSettings _settings      
+            -_baseUrl : string
+            -_httpClient : HttpClient
+            -_settings : JsonSerializerSettings      
             +Client(string baseUrl, HttpClient httpClient) 
             +GetActuatorDetailsAsync(int wONo, int serialNo, CancellationToken cancellationToken) : Task<GetActuatorDetailsResponse>
         }
         
         class GetActuatorDetailsResponse{
-         +int PcbaUid
+         +PcbaUid : int
         }
         
         Client --> GetActuatorDetailsResponse
