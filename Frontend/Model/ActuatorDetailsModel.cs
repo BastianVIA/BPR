@@ -1,7 +1,5 @@
-﻿using Frontend.Core;
-using Frontend.Entities;
-using Frontend.Events;
-using Frontend.Service;
+﻿using Frontend.Entities;
+using Frontend.NSwagServiceAdapter;
 
 namespace Frontend.Model;
 

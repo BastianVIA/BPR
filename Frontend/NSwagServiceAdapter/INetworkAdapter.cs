@@ -1,6 +1,6 @@
 ﻿using Frontend.Service;
 
-namespace Frontend.Core;
+namespace Frontend.NSwagServiceAdapter;
 
 public interface INetworkAdapter
 {

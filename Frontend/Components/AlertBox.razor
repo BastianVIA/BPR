@@ -17,14 +17,17 @@
 
 @code {
     private Alert? Alert { get; set; } = null;
-    // private bool _visibility;
     private int _alertTimeSeconds = 5;
     private CancellationTokenSource? _cancelAlert;
 
     protected override void OnInitialized()
     {
         AlertService.OnAlertEvent += HandleAlert;
-
+    }
+    
+    public void Dispose()
+    {
+        AlertService.OnAlertEvent -= HandleAlert;
     }
 
     private void HandleAlert(Alert alert)
@@ -33,16 +36,7 @@
         StateHasChanged();
         HideAlertTimer();
     }
-
-
-
-    public void Dispose()
-    {
-        AlertService.OnAlertEvent -= HandleAlert;
-    }
-
     
-
     private void HideAlertTimer()
     {
         _cancelAlert?.Cancel();
@@ -57,6 +51,4 @@
             }
         });
     }
-
-
 }

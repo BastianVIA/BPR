@@ -1,5 +1,4 @@
-﻿
-using Frontend.Core;
+﻿using Frontend.NSwagServiceAdapter;
 
 namespace Frontend.ServiceExtensions;
 

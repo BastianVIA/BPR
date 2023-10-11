@@ -1,9 +1,7 @@
-﻿
-using Frontend.Events;
-using Frontend.Model;
+﻿using Frontend.Events;
 using Frontend.Service;
 
-namespace Frontend.Core;
+namespace Frontend.NSwagServiceAdapter;
 
 public class NSwagAdapter : INetworkAdapter
 {
