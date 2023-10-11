@@ -1,8 +1,14 @@
-﻿namespace Frontend.Events;
+﻿using Radzen;
+
+namespace Frontend.Events;
 
 public class Alert
 {
-    public bool IsSuccessful { get; set; }
     public string Message { get; set; }
-    public AlertType Type { get; set; }
+    public AlertStyle Style { get; set; }
+
+    public static Alert Create(string message, AlertStyle style)
+    {
+        return new Alert { Message = message, Style = style};
+    }
 }
