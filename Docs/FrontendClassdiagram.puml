@@ -84,7 +84,7 @@ package "Model" {
 }
 
 package "Networking" {
-    interface INetworkAdapter {
+    interface INetwork {
         +GetActuatorDetails(woNo : int, serialNo : int) : Task<GetActuatorDetailsResponse>
     }
     
@@ -92,7 +92,7 @@ package "Networking" {
         +NSwagAdapter(clientFactory : IHttpClientFactory, configuration : IConfiguration)
     }
     
-    INetworkAdapter <|.. NSwagAdapter
+    INetwork <|.. NSwagAdapter
 }
 
 package "Service" {
@@ -167,7 +167,7 @@ Pages.ViewModel.PCBAInfo ..> Components.SerialNumberInputValidator : <<includes>
 Pages.ViewModel.PCBAInfo ..> Components.WorkOrderNumberInputValidator : <<includes>>
 Components.SerialNumberInputValidator ..> Components.CodeBehind.SerialNumberInputValidator : inherits
 Components.WorkOrderNumberInputValidator ..> Components.CodeBehind.WorkOrderNumberInputValidator : inherits
-ActuatorDetailsModel --> INetworkAdapter : -_network
+ActuatorDetailsModel --> INetwork : -_network
 NSwagAdapter --> Client : -_client
 AlertService --> Events.IAlertMessages : -_messages
 NSwagAdapter --> IAlertService : -_alertService
