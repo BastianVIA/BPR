@@ -58,7 +58,7 @@ package "Entities" {
         +PCBAUid : int
     }
     
-    Actuator o-- PCBA
+    Actuator o-- PCBA : +PCBA
 }
 
 package "Model" {
@@ -99,24 +99,24 @@ package "Service" {
             +PcbaUid : int
         }
         
-        Client --> GetActuatorDetailsResponse
-        
-        interface IAlertService {
-            +FireEvent(type : AlertType)
-        }
-        
-        class AlertService {
-            +AlertService(messages : IAlertMessages)
-        }
-        
-        IAlertService <|.. AlertService
-        
-        class AlertAction <<delegate>> {}
-        class OnAlertAction <<event>> {}
-        
-        AlertService --> AlertAction
-        AlertService --> OnAlertAction
+        Client ..> GetActuatorDetailsResponse
     }
+    
+    interface IAlertService {
+        +FireEvent(type : AlertType)
+    }
+    
+    class AlertService {
+        +AlertService(messages : IAlertMessages)
+    }
+    
+    IAlertService <|.. AlertService
+    
+    class AlertAction <<delegate>> {}
+    class OnAlertAction <<event>> {}
+    
+    AlertService --> AlertAction : +AlertAction
+    AlertService --> OnAlertAction : +OnAlertAction
 }
 
 package "Events" {
@@ -145,14 +145,14 @@ package "Events" {
     AlertMessages ..> Alert : <<creates>>
 }
 
-PCBAInfo --> Actuator
-PCBAInfo --> IActuatorDetailsModel
+PCBAInfo --> Actuator : -actuator
+PCBAInfo --> IActuatorDetailsModel : +ActuatorDetailsModel
 PCBAInfo ..> SerialNumberInputValidator : <<includes>>
 PCBAInfo ..> WorkOrderNumberInputValidator : <<includes>>
-ActuatorDetailsModel --> INetworkAdapter
-NSwagAdapter --> Client
-AlertService --> Events.IAlertMessages
-NSwagAdapter --> IAlertService
+ActuatorDetailsModel --> INetworkAdapter : -_network
+NSwagAdapter --> Client : -_client
+AlertService --> Events.IAlertMessages : -_messages
+NSwagAdapter --> IAlertService : -_alertService
 Client ..> backend
 note right on link
     RESTful
