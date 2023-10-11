@@ -21,14 +21,17 @@
     </RadzenTemplateForm>
 </RadzenRow>
 
-<RadzenRow>
-    <RadzenText>@pcbaUid</RadzenText>
-</RadzenRow>
+@if (actuator != null)
+{
+    <RadzenRow>
+        <RadzenText>@pcbaUid</RadzenText>
+    </RadzenRow>
+}
 
 @code {
     private int pcbaUid;
 
-    private Actuator actuator = new Actuator();
+    private Actuator actuator = new ();
 
     private async Task SearchActuator()
     {
