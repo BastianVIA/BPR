@@ -16,10 +16,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await Add(FromDomain(actuator));
     }
 
-    public async Task<Actuator> GetActuator(CompositeActuatorId actuatorId)
+    public async Task<Actuator> GetActuator(CompositeActuatorId id)
     {
         var actuatorModel = await Query().FirstAsync(a =>
-            a.WorkOrderNumber == actuatorId.WorkOrderNumber && a.SerialNumber == actuatorId.SerialNumber);
+            a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
 
         return ToDomain(actuatorModel);
     }
@@ -34,9 +34,9 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
     {
         var actuatorModel = new ActuatorModel()
         {
-            WorkOrderNumber = actuator.ActuatorId.WorkOrderNumber,
-            SerialNumber = actuator.ActuatorId.SerialNumber,
-            PCBAUid = actuator.PCBAUId
+            WorkOrderNumber = actuator.Id.WorkOrderNumber,
+            SerialNumber = actuator.Id.SerialNumber,
+            PCBAUid = actuator.PCBAUid
         };
         return actuatorModel;
     }
