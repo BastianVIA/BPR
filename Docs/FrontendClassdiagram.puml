@@ -178,5 +178,8 @@ end note
 Program ..> IActuatorDetailsModel
 Program ..> IAlertMessages
 Program ..> IAlertService
+Pages.ViewModel.PCBAInfo --|> ComponentBase
+Components.CodeBehind.SerialNumberInputValidator --|> ComponentBase
+Components.CodeBehind.WorkOrderNumberInputValidator --|> ComponentBase
 
 @enduml
