@@ -18,18 +18,25 @@ public class NSwagAdapter : INetworkAdapter
         _alertService = alertService;
     }
 
-    public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo)
+    private async Task<T> Send<T>(Func<Task<T>> action)
     {
+        T response = default!;
         try
         {
-            var response = await _client.GetActuatorDetailsAsync(woNo, serialNo);
-            _alertService.FireEvent(AlertType.ActuatorDetailsSuccess);
-            return response;
+            response = await action();
         }
-        catch (Exception e)
+        catch (ApiException e)
         {
             Console.WriteLine(e);
-            throw;
+            _alertService.FireEvent(e.StatusCode == 404 ? AlertType.ActuatorDetailsFailure : AlertType.NetworkError);
         }
+        return response;
     }
+
+    public async Task<GetActuatorDetailsResponse?> GetActuatorDetails(int woNo, int serialNo)
+    {
+        var response = await Send(async () => await _client.GetActuatorDetailsAsync(woNo, serialNo));
+        return response;
+    }
+    
 }
