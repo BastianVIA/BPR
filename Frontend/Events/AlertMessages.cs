@@ -8,9 +8,9 @@ public class AlertMessages : IAlertMessages
         Alert.Create("Successfully found actuator details", AlertStyle.Success);
 
     public Alert ActuatorDetailsFailure() =>
-        Alert.Create($"Could not find actuator", AlertStyle.Danger);
+        Alert.Create("Could not find actuator", AlertStyle.Danger);
 
     public Alert NetworkError() =>
-        Alert.Create("Encountered network error", AlertStyle.Danger);
+        Alert.Create("Unknown network error", AlertStyle.Danger);
 
 }

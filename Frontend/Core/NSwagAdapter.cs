@@ -30,7 +30,6 @@ public class NSwagAdapter : INetworkAdapter
             Console.WriteLine(e);
             _alertService.FireEvent(e.StatusCode == 404 ? AlertType.ActuatorDetailsFailure : AlertType.NetworkError);
         }
-
         return response;
     }
     
