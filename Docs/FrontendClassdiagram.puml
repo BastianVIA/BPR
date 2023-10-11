@@ -149,7 +149,7 @@ PCBAInfo --> Actuator : -actuator
 PCBAInfo --> IActuatorDetailsModel : +ActuatorDetailsModel
 PCBAInfo ..> SerialNumberInputValidator : <<includes>>
 PCBAInfo ..> WorkOrderNumberInputValidator : <<includes>>
-ActuatorDetailsModel --> INetworkAdapter : +NetworkAdapter
+ActuatorDetailsModel --> INetworkAdapter : -_network
 NSwagAdapter --> Client : -_client
 AlertService --> Events.IAlertMessages : -_messages
 NSwagAdapter --> IAlertService : -_alertService
