@@ -1,16 +1,16 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-package NSwagServiceAdapter {
-    interface INetworkAdapter {
+package Networking {
+    interface INetwork {
         +GetActuatorDetails(woNo : int, serialNo : int) : Task<GetActuatorDetailsResponse>
     }
     
-    class NSwagAdapter {
-        +NSwagAdapter(clientFactory : IHttpClientFactory, configuration : IConfiguration)
+    class NSwagProxy {
+        +NSwagProxy(clientFactory : IHttpClientFactory, configuration : IConfiguration)
     }
     
-    INetworkAdapter <|.. NSwagAdapter
+    INetwork <|.. NSwagProxy
 }
 package "Pages (view, viewmodel)" {
     class PCBAInfo {
@@ -51,8 +51,8 @@ package "Service" {
 }
 
 Models --> INetworkAdapter
-NSwagAdapter --> Client : -_client
-NSwagAdapter --> IAlertService
+NSwagProxy --> Client : -_client
+NSwagProxy --> IAlertService
 PCBAInfo ..> AlertService : Listens to
 
 package Backend{
