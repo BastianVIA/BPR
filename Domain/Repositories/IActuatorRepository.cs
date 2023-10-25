@@ -6,5 +6,5 @@ namespace Domain.Repositories;
 public interface IActuatorRepository
 {
     Task CreateActuator(Actuator actuator);
-    Task<Actuator> GetActuator(CompositeActuatorId actuatorId);
+    Task<Actuator> GetActuator(CompositeActuatorId id);
 }

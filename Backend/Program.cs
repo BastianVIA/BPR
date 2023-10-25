@@ -10,7 +10,6 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // Add services to the container.
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
 
 builder.Services.AddCore(builder.Configuration);
 

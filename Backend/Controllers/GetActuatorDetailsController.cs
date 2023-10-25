@@ -29,7 +29,8 @@ public class GetActuatorDetailsController : ControllerBase
     public class GetActuatorDetailsResponse
     {
         public int PCBAUid { get; }
-        public GetActuatorDetailsResponse(int pcbaUid)
+        private GetActuatorDetailsResponse() {}
+        private GetActuatorDetailsResponse(int pcbaUid)
         {
             PCBAUid = pcbaUid;
         }
