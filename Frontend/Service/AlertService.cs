@@ -20,10 +20,6 @@ public class AlertService : IAlertService
         var invoked = method.Invoke(_messages, null);
         
         if (invoked is Alert alert)
-            OnAlertEvent?.Invoke(alert);
+            OnAlertEvent.Invoke(alert);
     }
-
-    
-
-
 }

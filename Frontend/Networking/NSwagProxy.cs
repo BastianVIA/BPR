@@ -30,5 +30,4 @@ public class NSwagProxy : INetworkAdapter
         }
         return response;
     }
-    
 }
