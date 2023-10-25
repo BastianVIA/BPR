@@ -1,18 +1,17 @@
 @page "/PCBAInfo"
 @using Frontend.Entities
-@using Frontend.Model
 @using Frontend.Components
-@inject IActuatorDetailsModel ActuatorDetailsModel
+@inherits PCBAInfoBase
 <h3>PCBAInfo</h3>
 
 <RadzenRow>
     <RadzenTemplateForm TItem="Actuator" Data=@actuator Submit=@SearchActuator>
         <RadzenRow>
             <RadzenColumn>
-                <WorkOrderNumberInputValidator Actuator="@actuator"/>
+               <WorkOrderNumberInputValidator Actuator="@actuator"/>
             </RadzenColumn>
             <RadzenColumn>
-                <SerialNumberInputValidator Actuator="@actuator"/>
+               <SerialNumberInputValidator Actuator="@actuator"/>
             </RadzenColumn>
             <RadzenColumn>
                 <RadzenButton ButtonType="ButtonType.Submit" Text="Search"></RadzenButton>
@@ -22,17 +21,12 @@
 </RadzenRow>
 
 <RadzenRow>
-    <RadzenText>@pcbaUid</RadzenText>
-</RadzenRow>
-
-@code {
-    private int pcbaUid;
-
-    private Actuator actuator = new Actuator();
-
-    private async Task SearchActuator()
+    @if (pcbaUid > 0)
     {
-        actuator = await ActuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
-        pcbaUid = actuator.PCBA.PCBAUid;
+        <RadzenCard Style="max-width: 420px; margin-top: 30px">
+            <RadzenText>WO: @actuator.WorkOrderNumber</RadzenText>
+            <RadzenText>Serial: @actuator.SerialNumber</RadzenText>
+            <RadzenText>PCBAUid: @pcbaUid</RadzenText>
+        </RadzenCard>
     }
-}
+</RadzenRow>

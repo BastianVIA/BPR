@@ -1,10 +1,7 @@
-﻿
-using Frontend.Model;
-using Frontend.Service;
+﻿using Frontend.Service;
+namespace Frontend.Networking;
 
-namespace Frontend.Core;
-
-public class NSwagAdapter : INetworkAdapter
+public class NSwagAdapter : INetwork
 {
     private readonly Client _client;
 

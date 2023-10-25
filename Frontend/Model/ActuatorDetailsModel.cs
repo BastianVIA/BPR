@@ -1,14 +1,14 @@
-﻿using Frontend.Core;
-using Frontend.Entities;
+﻿using Frontend.Entities;
+using Frontend.Networking;
 using Frontend.Service;
 
 namespace Frontend.Model;
 
 public class ActuatorDetailsModel : IActuatorDetailsModel
 {
-    private INetworkAdapter _network;
+    private INetwork _network;
 
-    public ActuatorDetailsModel(INetworkAdapter network)
+    public ActuatorDetailsModel(INetwork network)
     {
         _network = network;
     }

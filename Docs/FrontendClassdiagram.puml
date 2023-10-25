@@ -23,29 +23,39 @@ package "Shared" {
     }
 }
 
-package "Pages (view, viewmodel)" {
-    class Home {}
-    class PCBAInfo {
-        -pcbaUid : int
-        -SearchActuator() : Task
+package "Pages" {
+    package "View" {
+        class PCBAInfo <<page>> {}
+    }
+    package "ViewModel" {
+        class PCBAInfo {
+            -pcbaUid : int
+            -SearchActuator() : Task
+        }
+        note right
+            Code behind
+        end note
     }
 }
 
-MainLayout ..> PCBAInfo
-MainLayout ..> Home
+class ComponentBase {}
 
 package "Components" {
-    class SerialNumberInputValidator {
-        +RegexText : string
-        +RegexPattern : string
-        +OnInitialized() : void
+    package "CodeBehind" {
+        class SerialNumberInputValidator {
+            +RegexText : string
+            +RegexPattern : string
+            +OnInitialized() : void
+        }
+        
+        class WorkOrderNumberInputValidator {
+            +RegexText : string
+            +RegexPattern : string
+            +OnInitialized() : void
+        }
     }
-    
-    class WorkOrderNumberInputValidator {
-        +RegexText : string
-        +RegexPattern : string
-        +OnInitialized() : void
-    }
+    class SerialNumberInputValidator {}
+    class WorkOrderNumberInputValidator {}
 }
 
 package "Entities" {
@@ -73,8 +83,8 @@ package "Model" {
     IActuatorDetailsModel <|.. ActuatorDetailsModel
 }
 
-package "NSwagServiceAdapter" {
-    interface INetworkAdapter {
+package "Networking" {
+    interface INetwork {
         +GetActuatorDetails(woNo : int, serialNo : int) : Task<GetActuatorDetailsResponse>
     }
     
@@ -82,7 +92,7 @@ package "NSwagServiceAdapter" {
         +NSwagAdapter(clientFactory : IHttpClientFactory, configuration : IConfiguration)
     }
     
-    INetworkAdapter <|.. NSwagAdapter
+    INetwork <|.. NSwagAdapter
 }
 
 package "Service" {
@@ -145,20 +155,31 @@ package "Events" {
     AlertMessages ..> Alert : <<creates>>
 }
 
-PCBAInfo --> Actuator : -actuator
-PCBAInfo --> IActuatorDetailsModel : +ActuatorDetailsModel
-PCBAInfo ..> SerialNumberInputValidator : <<includes>>
-PCBAInfo ..> WorkOrderNumberInputValidator : <<includes>>
-ActuatorDetailsModel --> INetworkAdapter : -_network
+package Backend <<Node>> {
+    class RestAPI {} 
+}
+
+Shared.MainLayout ..> Pages.View.PCBAInfo : includes
+Pages.View.PCBAInfo ..> Pages.ViewModel.PCBAInfo : inherits
+Pages.ViewModel.PCBAInfo --> Actuator : -actuator
+Pages.ViewModel.PCBAInfo --> IActuatorDetailsModel : +ActuatorDetailsModel
+Pages.ViewModel.PCBAInfo ..> Components.SerialNumberInputValidator : <<includes>>
+Pages.ViewModel.PCBAInfo ..> Components.WorkOrderNumberInputValidator : <<includes>>
+Components.SerialNumberInputValidator ..> Components.CodeBehind.SerialNumberInputValidator : inherits
+Components.WorkOrderNumberInputValidator ..> Components.CodeBehind.WorkOrderNumberInputValidator : inherits
+ActuatorDetailsModel --> INetwork : -_network
 NSwagAdapter --> Client : -_client
 AlertService --> Events.IAlertMessages : -_messages
 NSwagAdapter --> IAlertService : -_alertService
-Client ..> backend
+Client ..> Backend
 note right on link
     RESTful
 end note
 Program ..> IActuatorDetailsModel
 Program ..> IAlertMessages
 Program ..> IAlertService
+Pages.ViewModel.PCBAInfo --|> ComponentBase
+Components.CodeBehind.SerialNumberInputValidator --|> ComponentBase
+Components.CodeBehind.WorkOrderNumberInputValidator --|> ComponentBase
 
 @enduml
