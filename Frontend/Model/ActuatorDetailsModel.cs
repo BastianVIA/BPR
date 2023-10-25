@@ -5,8 +5,8 @@ namespace Frontend.Model;
 
 public class ActuatorDetailsModel : IActuatorDetailsModel
 {
-    private INetworkAdapter _network;
-    public ActuatorDetailsModel(INetworkAdapter network)
+    private INetwork _network;
+    public ActuatorDetailsModel(INetwork network)
     {
         _network = network;
     }

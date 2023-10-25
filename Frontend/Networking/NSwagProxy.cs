@@ -3,7 +3,7 @@ using Frontend.Service;
 
 namespace Frontend.Networking;
 
-public class NSwagProxy : INetworkAdapter
+public class NSwagProxy : INetwork
 {
     private readonly Client _client;
     private IAlertService _alertService;
