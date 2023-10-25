@@ -7,7 +7,7 @@ package Networking {
     }
     
     class NSwagProxy {
-        +NSwagProxy(clientFactory : IHttpClientFactory, configuration : IConfiguration)
+        +NSwagProxy(clientFactory : IHttpClientFactory, configuration : IConfiguration, alertService : IAlertService)
     }
     
     INetwork <|.. NSwagProxy
@@ -45,12 +45,13 @@ package "Service" {
             
             }
     interface IAlertService {
+        + FireEvent(type : AlertType) : void
     }
     
     IAlertService <|.. AlertService
 }
 
-Models --> INetworkAdapter
+Models --> INetwork
 NSwagProxy --> Client : -_client
 NSwagProxy --> IAlertService
 PCBAInfo ..> AlertService : Listens to
