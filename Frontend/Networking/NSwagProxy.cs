@@ -1,14 +1,14 @@
 ﻿using Frontend.Events;
 using Frontend.Service;
 
-namespace Frontend.NSwagServiceAdapter;
+namespace Frontend.Networking;
 
-public class NSwagAdapter : INetworkAdapter
+public class NSwagProxy : INetworkAdapter
 {
     private readonly Client _client;
     private IAlertService _alertService;
 
-    public NSwagAdapter(IHttpClientFactory clientFactory, IConfiguration configuration, IAlertService alertService)
+    public NSwagProxy(IHttpClientFactory clientFactory, IConfiguration configuration, IAlertService alertService)
     {
         var uri = configuration.GetSection("BackendApiSettings:Uri").Value;
         var httpClient = clientFactory.CreateClient("BackendApi");

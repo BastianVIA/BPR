@@ -1,5 +1,5 @@
 ﻿using Frontend.Entities;
-using Frontend.NSwagServiceAdapter;
+using Frontend.Networking;
 
 namespace Frontend.Model;
 
