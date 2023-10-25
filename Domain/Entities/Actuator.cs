@@ -5,23 +5,23 @@ namespace Domain.Entities;
 
 public class Actuator : Entity
 {
-    public CompositeActuatorId ActuatorId { get; private set; }
-    public int PCBAUId { get; private set; }
+    public CompositeActuatorId Id { get; private set; }
+    public int PCBAUid { get; private set; }
 
     private Actuator()
     {
     }
     
-    public Actuator(CompositeActuatorId actuatorId, int pcbaUid)
+    public Actuator(CompositeActuatorId id, int pcbaUid)
     {
-        ActuatorId = actuatorId;
-        PCBAUId = pcbaUid;
+        Id = id;
+        PCBAUid = pcbaUid;
     }
 
-    public static Actuator Create(CompositeActuatorId compositeActuatorId, int pcbaUid)
+    public static Actuator Create(CompositeActuatorId id, int pcbaUid)
     {
-        var actuator = new Actuator(compositeActuatorId, pcbaUid);
-        actuator.AddDomainEvent(new ActuatorCreatedDomainEvent(actuator.ActuatorId));
+        var actuator = new Actuator(id, pcbaUid);
+        actuator.AddDomainEvent(new ActuatorCreatedDomainEvent(actuator.Id));
         return actuator;
     }
 

@@ -5,10 +5,10 @@ namespace Domain.Events;
 
 public class ActuatorCreatedDomainEvent : DomainEvent
 {
-    public CompositeActuatorId ActuatorId { get; }
+    public CompositeActuatorId Id { get; }
 
-    public ActuatorCreatedDomainEvent(CompositeActuatorId actuatorId)
+    public ActuatorCreatedDomainEvent(CompositeActuatorId id)
     {
-        ActuatorId = actuatorId;
+        Id = id;
     }
 }

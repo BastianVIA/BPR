@@ -2,6 +2,6 @@
 
 namespace BuildingBlocks.Application;
 
-public interface IQuery<out T> : IRequest<T>
+public interface IQuery<out TResponse> : IRequest<TResponse>
 {
 }
