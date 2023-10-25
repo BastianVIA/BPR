@@ -2,7 +2,7 @@
 
 namespace Frontend.Networking;
 
-public interface INetworkAdapter
+public interface INetwork
 {
-     Task<GetActuatorDetailsResponse?> GetActuatorDetails(int woNo, int serialNo);
+     Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo);
 }
