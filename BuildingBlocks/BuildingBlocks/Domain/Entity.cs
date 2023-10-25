@@ -4,9 +4,9 @@ public abstract class Entity
 {
     private readonly List<IDomainEvent> _domainEvents = new();
 
-    protected void AddDomainEvent(IDomainEvent eventItem)
+    protected void AddDomainEvent(IDomainEvent domainEvent)
     {
-        _domainEvents.Add(eventItem);
+        _domainEvents.Add(domainEvent);
     }
 
     
