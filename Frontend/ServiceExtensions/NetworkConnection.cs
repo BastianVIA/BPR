@@ -7,7 +7,7 @@ public static class NetworkConnection
     public static IServiceCollection SetupBackendConnection(this IServiceCollection services)
     {
         services.AddHttpClient();
-        services.AddSingleton<INetwork, NSwagAdapter>();
+        services.AddSingleton<INetwork, NSwagProxy>();
         
         return services;
     }

@@ -1,0 +1,54 @@
+﻿@namespace Frontend.Components
+@using Frontend.Events
+@using Frontend.Service
+@implements IDisposable
+
+@if (Alert != null)
+{
+    <div id="alert-container">
+        <RadzenAlert Style="width: 95%" AlertStyle="@Alert.Style">
+            <ChildContent>
+                @Alert.Message
+            </ChildContent>
+        </RadzenAlert>
+    </div>
+}
+
+
+@code {
+    private Alert? Alert { get; set; } = null;
+    private int _alertTimeSeconds = 5;
+    private CancellationTokenSource? _cancelAlert;
+
+    protected override void OnInitialized()
+    {
+        AlertService.OnAlertEvent += HandleAlert;
+    }
+    
+    public void Dispose()
+    {
+        AlertService.OnAlertEvent -= HandleAlert;
+    }
+
+    private void HandleAlert(Alert alert)
+    {
+        Alert = alert;
+        StateHasChanged();
+        HideAlertTimer();
+    }
+    
+    private void HideAlertTimer()
+    {
+        _cancelAlert?.Cancel();
+        _cancelAlert = new CancellationTokenSource();
+        var cancelToken = _cancelAlert.Token;
+        Task.Delay(_alertTimeSeconds * 1000, cancelToken).ContinueWith(_ =>
+        {
+            if (!cancelToken.IsCancellationRequested)
+            {
+                Alert = null;
+                InvokeAsync(StateHasChanged);
+            }
+        });
+    }
+}
