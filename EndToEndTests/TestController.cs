@@ -77,9 +77,6 @@ public class TestController
     {
         _backendProcess.Kill();
         _frontendProcess.Kill();
-        // _frontendProcess.WaitForExit();
-        //
-        // Environment.Exit(0);
     }
 
     public void TestDone()
