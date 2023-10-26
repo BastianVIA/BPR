@@ -9,7 +9,7 @@ public class TestController
     
     private Process _frontendProcess;
     private Process _backendProcess;
-    public static int _testRemaining = 0;
+    private static int _testRemaining = 0;
     public static TestController Instance
     {
         get

@@ -15,7 +15,6 @@ public class GetActuatorTests : PageTest
     [SetUp]
     public async Task Setup()
     {
-        var rem = TestController._testRemaining;
         await Page.GotoAsync("localhost:5002/PCBAInfo");
     }
 

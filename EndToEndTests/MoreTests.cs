@@ -13,7 +13,6 @@ public class MoreTests
     [SetUp]
     public void Setup()
     {
-        var rem = TestController._testRemaining;
         Console.WriteLine();
     }
 
