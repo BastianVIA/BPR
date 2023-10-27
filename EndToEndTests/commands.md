@@ -1,4 +1,4 @@
-﻿# Commands for E2E tests
+﻿# Kommandoer til E2E tests
 
 #### Kør alle test:
 ```bash
