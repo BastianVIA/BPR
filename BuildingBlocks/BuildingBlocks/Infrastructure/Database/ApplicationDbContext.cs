@@ -12,5 +12,6 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ActuatorModel>().HasKey(a => new { a.WorkOrderNumber, a.SerialNumber });
+        modelBuilder.Entity<PCBAModel>().HasKey(p => p.PCBAUid);
     }
 }

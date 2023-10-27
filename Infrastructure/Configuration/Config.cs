@@ -11,6 +11,7 @@ public static class Config
     {
         services.AddCommandAndQueryHandlers(AssemblyReference.Assembly);
         services.AddSingleton<IActuatorRepository, ActuatorRepository>();
+        services.AddSingleton<IPCBARepository, PCBARepository>();
         
         return services;
     }
