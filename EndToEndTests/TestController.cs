@@ -9,7 +9,7 @@ public class TestController
     
     private Process _frontendProcess;
     private Process _backendProcess;
-    private static int _testRemaining = 0;
+    private static int _testRemaining;
     public static TestController Instance
     {
         get
@@ -47,30 +47,25 @@ public class TestController
 
     private void StartFrontend()
     {
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = "dotnet",
-            Arguments = "run --project ..\\..\\..\\..\\Frontend",
-            UseShellExecute = false,
-            //RedirectStandardOutput = true, // Enable redirection of standard output
-            CreateNoWindow = false,
-            WorkingDirectory = AppContext.BaseDirectory
-        };
+        ProcessStartInfo startInfo = GetStartInfo("Frontend");
         _frontendProcess = Process.Start(startInfo);
     }
 
     private void StartBackend()
     {
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        ProcessStartInfo startInfo = GetStartInfo("Backend");
+        _backendProcess = Process.Start(startInfo);
+    }
+    
+    private ProcessStartInfo GetStartInfo(string project)
+    {
+        return new ProcessStartInfo
         {
             FileName = "dotnet",
-            Arguments = "run --project ..\\..\\..\\..\\Backend",
+            Arguments = $"run --project ..\\..\\..\\..\\{project}",
             UseShellExecute = false,
-            //RedirectStandardOutput = true, // Enable redirection of standard output
-            CreateNoWindow = false,
             WorkingDirectory = AppContext.BaseDirectory
         };
-        _backendProcess = Process.Start(startInfo);
     }
 
     private void KillProcesses()
