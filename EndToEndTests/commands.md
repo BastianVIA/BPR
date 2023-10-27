@@ -1,11 +1,5 @@
 ﻿# Commands for E2E tests
 
-#### Installer drivers:
-Installerer de nødvendige browser drivers, som **Playwright** bruger til at køre tests.
-```bash
-bin/Debug/net7.0/playwright.ps1 install
-```
-
 #### Kør alle test:
 ```bash
 dotnet test
