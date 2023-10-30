@@ -6,10 +6,9 @@ namespace EndToEndTests;
 public class TestController
 {
     private static TestController? _instance;
-    
-    private Process _frontendProcess;
-    private Process _backendProcess;
     private static int _testRemaining;
+    private Process? _frontendProcess;
+    private Process? _backendProcess;
     public static TestController Instance
     {
         get
@@ -18,7 +17,6 @@ public class TestController
             {
                 _instance = new TestController();
             }
-
             return _instance;
         }
     }
@@ -31,14 +29,15 @@ public class TestController
 
     private void SetRemainingTests()
     {
-        Assembly assembly = Assembly.LoadFrom("EndToEndTests.dll");
+        var assembly = Assembly.LoadFrom("EndToEndTests.dll");
         var methods = assembly.GetTypes()
             .SelectMany(t => t.GetMethods()
-                .Where(m => m.GetCustomAttributes(typeof(TestAttribute), false).Any()))
+                .Where(m => m.GetCustomAttributes(typeof(TestAttribute), false)
+                    .Any()))
             .ToArray().Length;
         _testRemaining = methods;
     }
-
+    
     private void StartProcesses()
     {
         StartFrontend();
@@ -47,13 +46,13 @@ public class TestController
 
     private void StartFrontend()
     {
-        ProcessStartInfo startInfo = GetStartInfo("Frontend");
+        var startInfo = GetStartInfo("Frontend");
         _frontendProcess = Process.Start(startInfo);
     }
 
     private void StartBackend()
     {
-        ProcessStartInfo startInfo = GetStartInfo("Backend");
+        var startInfo = GetStartInfo("Backend");
         _backendProcess = Process.Start(startInfo);
     }
     
@@ -70,8 +69,8 @@ public class TestController
 
     private void KillProcesses()
     {
-        _backendProcess.Kill();
-        _frontendProcess.Kill();
+        _backendProcess!.Kill();
+        _frontendProcess!.Kill();
     }
 
     public void TestDone()
@@ -82,5 +81,4 @@ public class TestController
             KillProcesses();
         }
     }
-
 }
