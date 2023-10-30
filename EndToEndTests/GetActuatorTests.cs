@@ -5,7 +5,7 @@ namespace EndToEndTests;
 
 public class GetActuatorTests : PageTest
 {
-    private TestController _testController;
+    private TestController? _testController;
     [OneTimeSetUp]
     public void Init()
     {
@@ -21,7 +21,7 @@ public class GetActuatorTests : PageTest
     [TearDown]
     public void Teardown()
     {
-        _testController.TestDone();
+        _testController!.TestDone();
     }
 
     [Test]
