@@ -10,7 +10,7 @@ builder.Services.AddSingleton<IAlertMessages, AlertMessages>();
 builder.Services.AddSingleton<IAlertService, AlertService>();
 
 builder.Services.SetupBackendConnection();
-builder.Services.AddValidationSettings(builder);
+await builder.Services.AddValidationSettings();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
