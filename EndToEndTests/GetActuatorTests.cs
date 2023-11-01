@@ -17,16 +17,6 @@ public class GetActuatorTests : PageTest
     {
         await Page.GotoAsync("localhost:5002/PCBAInfo");
     }
-    
-    [Test]
-    public async Task GetActuatorInfo_ShouldReturnPCBAUid_WhenFound()
-    {
-        await Page.Locator("input[name=\"woNo\"]").FillAsync("30912893");
-        await Page.Locator("input[name=\"serialNo\"]").FillAsync("1");
-
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
-        await Expect(Page.GetByText("PCBAUid")).ToContainTextAsync("656690");
-    }
 
     [TearDown]
     public void Teardown()
@@ -116,5 +106,13 @@ public class GetActuatorTests : PageTest
         await Expect(container.Filter(new() {HasText = "Could not find actuator"})).ToBeVisibleAsync();
     }
     
-    
+    [Test]
+    public async Task GetActuatorInfo_ShouldReturnPCBAUid_WhenFound()
+    {
+        await Page.Locator("input[name=\"woNo\"]").FillAsync("30912893");
+        await Page.Locator("input[name=\"serialNo\"]").FillAsync("1");
+
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
+        await Expect(Page.GetByText("PCBAUid")).ToContainTextAsync("656690");
+    }
 }
