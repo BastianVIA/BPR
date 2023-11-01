@@ -11,6 +11,7 @@ builder.Services.AddSingleton<IAlertService, AlertService>();
 
 builder.Services.SetupBackendConnection();
 await builder.Services.AddValidationSettings();
+builder.Services.AddModels();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
