@@ -18,7 +18,7 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
         try
         {
             var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-            var actuator = Actuator.Create(actuatorId, request.PCBAUid);
+            var actuator = Actuator.Create(actuatorId, request.PCBA);
             await _actuatorRepository.CreateActuator(actuator);
         } catch (Exception e)
         {

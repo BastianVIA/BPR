@@ -4,17 +4,17 @@ namespace Application.CreatePCBA;
 
 public class CreatePCBACommand : ICommand
 {
-    internal int PCBAUid { get; }
+    internal string Uid { get; }
     
-    internal int? ManufacturerNumber { get; }
+    internal int ManufacturerNumber { get; }
 
-    private CreatePCBACommand(int pcbaUid, int? manufacturerNo)
+    private CreatePCBACommand(string pcbaUid, int manufacturerNo)
     {
-        PCBAUid = pcbaUid;
+        Uid = pcbaUid;
         ManufacturerNumber = manufacturerNo;
     }
 
-    public static CreatePCBACommand Create(int pcbaUid, int? manufacturerNo)
+    public static CreatePCBACommand Create(string pcbaUid, int manufacturerNo)
     {
         return new CreatePCBACommand(pcbaUid, manufacturerNo);
     }

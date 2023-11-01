@@ -24,7 +24,7 @@ public class LINTestBackgroundService : BackgroundService
                 var filePath = "../LINTest/firstFile.csv"; 
                 var csvModel = CSVHandler.ReadCSV(filePath);
                 var command = CreateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
-                    int.Parse(csvModel.SerialNumber), int.Parse(csvModel.PCBAUid));
+                    int.Parse(csvModel.SerialNumber), csvModel.PCBAUid);
                 await _commandBus.Send(command, stoppingToken);
             }
             catch (Exception e)

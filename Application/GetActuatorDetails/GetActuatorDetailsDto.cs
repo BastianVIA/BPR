@@ -4,15 +4,31 @@ namespace Application.GetActuatorDetails;
 
 public class GetActuatorDetailsDto
 {
-    public int PCBAUId { get; }
+    public PCBADto PCBADto { get; }
     
     private GetActuatorDetailsDto(){}
-    private GetActuatorDetailsDto(int PCBAUid)
+    private GetActuatorDetailsDto(PCBADto pcbaDto)
     {
-        PCBAUId = PCBAUid;
+        PCBADto = pcbaDto;
     }
     internal static GetActuatorDetailsDto From(Actuator actuator)
     {
-        return new GetActuatorDetailsDto(actuator.PCBAUid);
+        PCBADto pcbaDto = PCBADto.From(actuator.PCBA.Uid, actuator.PCBA.ManufacturerNumber);
+        return new GetActuatorDetailsDto(pcbaDto);
+    }
+}
+
+public class PCBADto
+{
+    public string UId { get; set; }
+    public int ManufacturerNumber { get; set; }
+
+    internal static PCBADto From(string pcbaUid, int manufacturerNo)
+    {
+        return new PCBADto
+        {
+            UId = pcbaUid,
+            ManufacturerNumber = manufacturerNo
+        };
     }
 }

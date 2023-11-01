@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+
 namespace Infrastructure;
 
 public class PCBAModel
 {
-    public int PCBAUid { get; set; }
-
-    public int? ManufacturerNumber { get; set; }
+    [Key]
+    public string Uid { get; set; }
+    public int ManufacturerNumber { get; set; }
 }

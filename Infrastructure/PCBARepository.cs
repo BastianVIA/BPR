@@ -16,23 +16,23 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
         await Add(FromDomain(pcba));
     }
 
-    public async Task<PCBA> GetPCBA(int id)
+    public async Task<PCBA> GetPCBA(string id)
     {
-        var pcbaModel = await Query().FirstAsync(p => p.PCBAUid == id);
+        var pcbaModel = await Query().FirstAsync(p => p.Uid == id);
 
         return ToDomain(pcbaModel);
     }
     
     private PCBA ToDomain(PCBAModel pcbaModel)
     {
-        return new PCBA(pcbaModel.PCBAUid, pcbaModel.ManufacturerNumber);
+        return new PCBA(pcbaModel.Uid, pcbaModel.ManufacturerNumber);
     }
     
     private PCBAModel FromDomain(PCBA pcba)
     {
         var pcbaModel = new PCBAModel()
         {
-           PCBAUid = pcba.PCBAUid,
+           Uid = pcba.Uid,
            ManufacturerNumber = pcba.ManufacturerNumber
         };
         return pcbaModel;
