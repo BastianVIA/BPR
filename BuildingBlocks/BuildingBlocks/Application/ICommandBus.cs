@@ -2,5 +2,5 @@
 
 public interface ICommandBus
 {
-    Task Send(ICommand command,CancellationToken cancellation);
+    Task Send(ICommand command, CancellationToken cancellation);
 }
