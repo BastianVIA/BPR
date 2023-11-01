@@ -21,12 +21,13 @@
 </RadzenRow>
 
 <RadzenRow>
-    @if (pcbaUid > 0)
+    
+    @if (actuator.PCBA.PCBAUid > 0 )
     {
         <RadzenCard Style="max-width: 420px; margin-top: 30px">
             <RadzenText>WO: @actuator.WorkOrderNumber</RadzenText>
             <RadzenText>Serial: @actuator.SerialNumber</RadzenText>
-            <RadzenText>PCBAUid: @pcbaUid</RadzenText>
+            <RadzenText>PCBAUid: @actuator.PCBA.PCBAUid</RadzenText>
         </RadzenCard>
     }
 </RadzenRow>

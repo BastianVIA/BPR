@@ -8,7 +8,7 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
     private INetwork _network;
     public ActuatorDetailsModel(INetwork network)
     {
-        _network = network;
+        _network = network ?? throw new ArgumentNullException(nameof(network));
     }
     
     public async Task<Actuator> GetActuatorDetails(int woNo, int serialNo)
