@@ -2,36 +2,41 @@
 using Backend.Model;
 using BuildingBlocks.Application;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace LINTest.Services;
 
 public class LINTestBackgroundService : BackgroundService
 {
-    private ICommandBus _commandBus;
-    
-    public LINTestBackgroundService(ICommandBus commandBus)
+    private readonly IServiceProvider _serviceProvider;
+
+    public LINTestBackgroundService(IServiceProvider serviceProvider)
     {
-        _commandBus = commandBus;
+        _serviceProvider = serviceProvider;
     }
 
     protected async override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
         {
+            using var scope = _serviceProvider.CreateScope();
+
+            var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
             try
             {
-                var filePath = "../LINTest/firstFile.csv"; 
+                var filePath = "../LINTest/firstFile.csv";
                 var csvModel = CSVHandler.ReadCSV(filePath);
                 var command = CreateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
                     int.Parse(csvModel.SerialNumber), int.Parse(csvModel.PCBAUid));
-                await _commandBus.Send(command, stoppingToken);
+                await commandBus.Send(command, stoppingToken);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            await Task.Delay(TimeSpan.FromMinutes(10));
+            await Task.Delay(TimeSpan.FromSeconds(7));
         }
     }
 }
