@@ -3,11 +3,11 @@ using Microsoft.Playwright.NUnit;
 
 namespace EndToEndTests;
 
-public class GetPCBAForActuatorTests : PageTest
+public class GetPcbaForActuatorTests : PageTest
 {
-    private TestController? _testController;
-    [OneTimeSetUp]
-    public void Init()
+    private TestController _testController;
+
+    public GetPcbaForActuatorTests()
     {
         _testController = TestController.Instance;
     }
@@ -21,7 +21,7 @@ public class GetPCBAForActuatorTests : PageTest
     [TearDown]
     public void Teardown()
     {
-        _testController!.TestDone();
+        _testController.TestDone();
     }
 
     [Test]
@@ -71,15 +71,7 @@ public class GetPCBAForActuatorTests : PageTest
     }
     
     [Test]
-    public async Task GetPCBAForActuator_ShouldNotifyError_WhenSerialNumberIsLessThan4Digits()
-    {
-        await Page.Locator("input[name=\"serialNo\"]").FillAsync("123");
-        await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
-        await Expect(Page.GetByText("Serial Number must be 1-4 digits")).ToBeHiddenAsync();
-    }
-    
-    [Test]
-    public async Task GetPCBAForActuator_ShouldNotifyError_WhenSerialNumberIs4Digits()
+    public async Task GetPCBAForActuator_ShouldAcceptInput_WhenSerialNumberIs4Digits()
     {
         await Page.Locator("input[name=\"serialNo\"]").FillAsync("1234");
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
@@ -87,14 +79,21 @@ public class GetPCBAForActuatorTests : PageTest
     }
     
     [Test]
-    public async Task GetPCBAForActuator_ShouldAcceptInput_WhenSerialNumberIs1Digit()
+    public async Task GetPCBAForActuator_ShouldAcceptInput_WhenSerialNumberIsLessThan4Digits()
     {
-        await Page.Locator("input[name=\"woNo\"]").FillAsync("1");
+        await Page.Locator("input[name=\"serialNo\"]").FillAsync("123");
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
         await Expect(Page.GetByText("Serial Number must be 1-4 digits")).ToBeHiddenAsync();
     }
     
-
+    [Test]
+    public async Task GetPCBAForActuator_ShouldAcceptInput_WhenSerialNumberIs1Digit()
+    {
+        await Page.Locator("input[name=\"serialNo\"]").FillAsync("1");
+        await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
+        await Expect(Page.GetByText("Serial Number must be 1-4 digits")).ToBeHiddenAsync();
+    }
+    
     [Test]
     public async Task GetPCBAForActuator_ShouldNotifyError_WhenNotFound()
     {
