@@ -9,7 +9,7 @@ public class GetPcbaForActuatorTests : PageTest
 
     public GetPcbaForActuatorTests()
     {
-        _testController = TestController.Instance;
+        _testController = new TestController();
     }
 
     [SetUp]

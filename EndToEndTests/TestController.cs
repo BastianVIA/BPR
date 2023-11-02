@@ -4,28 +4,11 @@ namespace EndToEndTests;
 
 public class TestController
 {
-    private static readonly object _lock = new();
-    private static TestController? _instance;
     private static int _testRemaining;
     private Process? _frontendProcess;
     private Process? _backendProcess;
-
-    public static TestController Instance
-    {
-        get
-        {
-            lock (_lock)
-            {
-                if (_instance == null)
-                {
-                    _instance = new TestController();
-                }
-                return _instance;
-            }
-        }
-    }
-
-    private TestController()
+    
+    public TestController()
     {
         SetRemainingTests();
         try
