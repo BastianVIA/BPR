@@ -40,7 +40,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var actuatorId = CompositeActuatorId.From(actuatorModel.WorkOrderNumber, actuatorModel.SerialNumber);
         return new Actuator(actuatorId, actuatorModel.PCBAUid);
     }
-
+    
     private ActuatorModel FromDomain(Actuator actuator)
     {
         var actuatorModel = new ActuatorModel()
