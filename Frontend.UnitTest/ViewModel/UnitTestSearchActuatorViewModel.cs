@@ -1,4 +1,5 @@
-﻿using NSubstitute.ExceptionExtensions;
+﻿using Microsoft.VisualBasic;
+using NSubstitute.ExceptionExtensions;
 
 namespace Frontend.UnitTest;
 
@@ -10,7 +11,7 @@ using Frontend.Entities;
 using Frontend.Model;
 using AutoFixture;
 
-public class UnitTestViewModel
+public class UnitTestSearchActuatorViewModel
 {
     private readonly Fixture _fixture = new();
 
@@ -115,6 +116,6 @@ public class UnitTestViewModel
         await component.SearchActuator();
 
         // Assert
-        mockActuatorDetailsModel.Received(1).GetActuatorDetails(1, Arg.Any<int>());
+       await mockActuatorDetailsModel.Received(1).GetActuatorDetails(1, Arg.Any<int>());
     }
 }
