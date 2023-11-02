@@ -20,8 +20,13 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task<Actuator> GetActuator(CompositeActuatorId id)
     {
-        var actuatorModel = await Query().FirstAsync(a =>
+        var actuatorModel = await Query().FirstOrDefaultAsync(a =>
             a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
+        if (actuatorModel == null)
+        {
+            throw new KeyNotFoundException(
+                $"Could not find Actuator with WorkOrderNumber: {id.WorkOrderNumber} and SerialNumber: {id.SerialNumber}");
+        }
 
         return ToDomain(actuatorModel);
     }

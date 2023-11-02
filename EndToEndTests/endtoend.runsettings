@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <Playwright>
+    <BrowserName>chromium</BrowserName>
+    <LaunchOptions>
+      <Headless>false</Headless>
+      <SlowMo>0</SlowMo>
+      <Channel>chrome</Channel>
+    </LaunchOptions>
+  </Playwright>
+  <TestRunParameters>
+      <Parameter name="baseUrl" value="http://localhost:5002/" />
+  </TestRunParameters>
+</RunSettings>

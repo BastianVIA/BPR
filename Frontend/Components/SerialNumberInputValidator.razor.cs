@@ -7,7 +7,7 @@ namespace Frontend.Components;
 
 public class SerialNumberInputValidatorBase : ComponentBase
 {
-    [Inject] IOptions<ValidationSettings> Validation { get; set; }
+    [Inject] ValidationSettings Validation { get; set; }
     
     [Parameter]
     public Actuator Actuator { get; set; }
@@ -17,8 +17,8 @@ public class SerialNumberInputValidatorBase : ComponentBase
 
     protected override void OnInitialized()
     {
-        var minLength = Validation.Value.SerialNumberMinLength;
-        var maxLength = Validation.Value.SerialNumberMaxLength;
+        var minLength = Validation.SerialNumberMinLength;
+        var maxLength = Validation.SerialNumberMaxLength;
 
         RegexText = $"Serial Number must be {minLength}-{maxLength} digits";
         RegexPattern = $"(?!0)\\d{{{minLength},{maxLength}}}";

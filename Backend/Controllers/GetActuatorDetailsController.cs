@@ -19,7 +19,8 @@ public class GetActuatorDetailsController : ControllerBase
     [HttpGet()]
     [Route("api/GetActuatorDetails/{woNo}/{serialNo}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorDetailsResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(int woNo, int serialNo, CancellationToken cancellationToken)
     {
         var query = GetActuatorDetailsQuery.Create(woNo, serialNo);
