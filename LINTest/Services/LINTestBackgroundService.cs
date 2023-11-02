@@ -1,6 +1,6 @@
-﻿using Application.CreateActuator;
+using Application.CreateOrUpdateActuator;
+using Backend.Model;
 using BuildingBlocks.Application;
-using LINTest.Handlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -26,7 +26,7 @@ public class LINTestBackgroundService : BackgroundService
             {
                 var filePath = "../LINTest/firstFile.csv"; 
                 var csvModel = CSVHandler.ReadCSV(filePath);
-                var command = CreateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
+                var command = CreateOrUpdateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
                     int.Parse(csvModel.SerialNumber), csvModel.PCBAUid);
                 await _commandBus.Send(command, CancellationToken.None);
             }

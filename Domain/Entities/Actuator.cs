@@ -25,4 +25,9 @@ public class Actuator : Entity
         return actuator;
     }
 
+    public void UpdatePCBAUid(int pcbaUid)
+    {
+        PCBAUid = pcbaUid;
+        AddDomainEvent(new ActuatorPCBAUidChangedDomainEvent(Id));
+    }
 }
