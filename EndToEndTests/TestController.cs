@@ -1,59 +1,59 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
 
 namespace EndToEndTests;
 
 public class TestController
 {
-    private static TestController? _instance;
-    private static int _testRemaining;
+    private int _testRemaining;
     private Process? _frontendProcess;
     private Process? _backendProcess;
-    public static TestController Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new TestController();
-            }
-            return _instance;
-        }
-    }
-
-    private TestController()
+    
+    public TestController()
     {
         SetRemainingTests();
-        StartProcesses();
+        try
+        {
+            StartProcesses();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            Environment.Exit(0);
+        }
     }
 
     private void SetRemainingTests()
     {
-        var assembly = Assembly.LoadFrom("EndToEndTests.dll");
-        var methods = assembly.GetTypes()
-            .SelectMany(t => t.GetMethods()
-                .Where(m => m.GetCustomAttributes(typeof(TestAttribute), false)
-                    .Any()))
-            .ToArray().Length;
-        _testRemaining = methods;
+        _testRemaining = NUnit.Framework.Internal.TestExecutionContext
+            .CurrentContext.CurrentTest.TestCaseCount;
     }
     
     private void StartProcesses()
     {
-        StartFrontend();
         StartBackend();
+        StartFrontend();
     }
 
     private void StartFrontend()
     {
         var startInfo = GetStartInfo("Frontend");
-        _frontendProcess = Process.Start(startInfo);
+        _frontendProcess = Process.Start(startInfo)!;
+        Thread.Sleep(500);
+        if (_frontendProcess.HasExited)
+        {
+            throw new Exception("Frontend could not start");
+        }
     }
 
     private void StartBackend()
     {
         var startInfo = GetStartInfo("Backend");
-        _backendProcess = Process.Start(startInfo);
+        _backendProcess = Process.Start(startInfo)!;
+        Thread.Sleep(500);
+        if (_backendProcess.HasExited)
+        {
+            throw new Exception("Backend could not start");
+        }
     }
     
     private ProcessStartInfo GetStartInfo(string project)

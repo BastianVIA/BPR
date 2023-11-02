@@ -1,8 +1,10 @@
-﻿namespace BuildingBlocks.Infrastructure.Database;
+﻿using BuildingBlocks.Exceptions;
+using Microsoft.EntityFrameworkCore;
+
+namespace BuildingBlocks.Infrastructure.Database;
 
 public class BaseRepository<TEntity> where TEntity : class
 {
-
     private ApplicationDbContext _dbContext;
 
     public BaseRepository(ApplicationDbContext dbContext)
@@ -17,7 +19,20 @@ public class BaseRepository<TEntity> where TEntity : class
 
     public async Task Add(TEntity entity, CancellationToken token = default)
     {
-        _dbContext.Set<TEntity>().Add(entity);
+        try
+        {
+            _dbContext.Set<TEntity>().Add(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (DbUpdateException e)
+        {
+            throw new AlreadyExistingException();
+        }
+    }
+
+    public async Task Update(TEntity entity, CancellationToken token = default)
+    {
+        _dbContext.Set<TEntity>().Update(entity);
         await _dbContext.SaveChangesAsync();
     }
 }
