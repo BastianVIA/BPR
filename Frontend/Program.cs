@@ -17,8 +17,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddRadzenComponents();
 
-builder.Services.AddScoped<IActuatorDetailsModel, ActuatorDetailsModel>();
-
 
 var app = builder.Build();
 
