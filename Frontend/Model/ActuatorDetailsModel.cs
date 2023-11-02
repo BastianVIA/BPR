@@ -1,5 +1,6 @@
 ﻿using Frontend.Entities;
 using Frontend.Networking;
+using Frontend.Service;
 
 namespace Frontend.Model;
 
@@ -11,20 +12,18 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
         _network = network;
     }
     
-    public async Task<Actuator> GetActuatorDetails(int woNo, int serialNo)
+    public async Task<Actuator?> GetActuatorDetails(int woNo, int serialNo)
     {
-        var actuator = new Actuator();
         var networkResponse = await _network.GetActuatorDetails(woNo, serialNo);
+            
         if (networkResponse is null)
         {
-            return actuator;
+            return null;
         }
-
-        actuator
+        return new Actuator()
             .WithWorkOrderNumber(woNo)
             .WithSerialNumber(serialNo)
             .WithPCBAUid(networkResponse.PcbaUid);
-        return actuator;
     }
 }
 

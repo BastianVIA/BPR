@@ -11,7 +11,8 @@ public static class Config
     {
         services.AddCommandAndQueryHandlers(AssemblyReference.Assembly);
         services.AddSingleton<IActuatorRepository, ActuatorRepository>();
-        
+        // services.AddScoped<IActuatorRepository, ActuatorRepository>();
+
         return services;
     }
 }
