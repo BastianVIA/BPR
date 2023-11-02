@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Infrastructure.Database;
+﻿using BuildingBlocks.Exceptions;
+using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,11 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         }
 
         return ToDomain(actuatorModel);
+    }
+
+    public async Task UpdateActuator(Actuator actuator)
+    {
+        await Update(FromDomain(actuator));
     }
 
     private Actuator ToDomain(ActuatorModel actuatorModel)
