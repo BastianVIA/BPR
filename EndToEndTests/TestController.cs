@@ -24,7 +24,8 @@ public class TestController
 
     private void SetRemainingTests()
     {
-        _testRemaining = NUnit.Framework.Internal.TestExecutionContext.CurrentContext.CurrentTest.TestCaseCount;
+        _testRemaining = NUnit.Framework.Internal.TestExecutionContext
+            .CurrentContext.CurrentTest.TestCaseCount;
     }
     
     private void StartProcesses()
