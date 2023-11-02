@@ -1,4 +1,5 @@
 using BuildingBlocks;
+using BuildingBlocks.Application;
 using Infrastructure.Configuration;
 using LINTest;
 
@@ -23,6 +24,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddLINTestServices();
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionFilter>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
