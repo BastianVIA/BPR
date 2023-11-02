@@ -4,7 +4,7 @@ namespace EndToEndTests;
 
 public class TestController
 {
-    private static int _testRemaining;
+    private int _testRemaining;
     private Process? _frontendProcess;
     private Process? _backendProcess;
     
