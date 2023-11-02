@@ -1,13 +1,12 @@
 using Frontend.Config;
 using Frontend.Entities;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Options;
 
 namespace Frontend.Components;
 
 public class WorkOrderNumberInputValidatorBase : ComponentBase
 {
-    [Inject] IOptions<ValidationSettings> Validation { get; set; }
+    [Inject] ValidationSettings Validation { get; set; }
     
     [Parameter]
     public Actuator Actuator { get; set; }
@@ -16,7 +15,7 @@ public class WorkOrderNumberInputValidatorBase : ComponentBase
     
     protected override void OnInitialized()
     {
-        var length = Validation.Value.WorkOrderNumberLength;
+        var length = Validation.WorkOrderNumberLength;
         RegexText = $"WO Number must be {length} digits";
         RegexPattern = $"\\d{{{length}}}";
     }
