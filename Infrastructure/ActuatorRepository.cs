@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Infrastructure.Database;
+﻿using BuildingBlocks.Exceptions;
+using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,20 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task<Actuator> GetActuator(CompositeActuatorId id)
     {
-        var actuatorModel = await Query().FirstAsync(a =>
+        var actuatorModel = await Query().FirstOrDefaultAsync(a =>
             a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
+        if (actuatorModel == null)
+        {
+            throw new KeyNotFoundException(
+                $"Could not find Actuator with WorkOrderNumber: {id.WorkOrderNumber} and SerialNumber: {id.SerialNumber}");
+        }
 
         return ToDomain(actuatorModel);
+    }
+
+    public async Task UpdateActuator(Actuator actuator)
+    {
+        await Update(FromDomain(actuator));
     }
 
     private Actuator ToDomain(ActuatorModel actuatorModel)

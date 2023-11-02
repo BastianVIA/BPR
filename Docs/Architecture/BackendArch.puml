@@ -1,0 +1,57 @@
+﻿@startuml
+
+
+package BuildingBlocks {
+      package Domain {
+      }
+      package Infrastructure {
+      }
+    package Application {
+        class IQuerybus {}
+    }
+
+}
+
+package Slices {
+ 
+   package Actuator {
+        package Application {
+        }
+        package Domain {
+        }
+        package Infrastructure {
+        }
+   }
+  package Service {
+        package LINTest {} 
+   }
+    Actuator.Application ..> Actuator.Infrastructure
+    Actuator.Application ..> Actuator.Domain
+    Actuator.Infrastructure ..> Actuator.Domain
+}
+
+
+package Backend {
+    class Program {
+        main()
+    }
+    package Controllers {
+    }
+}
+
+package external {
+    package MediatR {}
+}
+
+Backend ..> Slices
+
+Backend.Controllers  -> BuildingBlocks.Application.IQuerybus : Sender request >
+BuildingBlocks.Application.IQuerybus -> external.MediatR : Sender request >
+
+external.MediatR -> Slices.Actuator.Application : Sender request 
+
+Slices.Actuator.Application ..> BuildingBlocks.Application
+Slices.Actuator.Domain ..> BuildingBlocks.Domain
+Slices.Actuator.Infrastructure ..> BuildingBlocks.Infrastructure
+
+@enduml
