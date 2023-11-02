@@ -8,7 +8,7 @@ public class CreateActuatorCommand:ICommand
    
     internal int WorkOrderNumber { get; }
     internal int SerialNumber { get; }
-    internal PCBA PCBA { get; }
+    internal string PCBAUid { get; }
 
     private CreateActuatorCommand()
     {
@@ -18,7 +18,7 @@ public class CreateActuatorCommand:ICommand
     {
         WorkOrderNumber = woNo;
         SerialNumber = serialNo;
-        PCBA = new PCBA(pcbaUid, 0);
+        PCBAUid = pcbaUid;
     }
 
     public static CreateActuatorCommand Create(int woNo, int serialNo, string pcbaUid)

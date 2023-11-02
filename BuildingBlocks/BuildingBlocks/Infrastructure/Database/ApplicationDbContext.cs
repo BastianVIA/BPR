@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<ActuatorModel> Actuators { get; set; } 
-    //public DbSet<PCBAModel> PCBAs { get; set; }
+    public DbSet<PCBAModel> PCBAs { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {

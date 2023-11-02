@@ -18,7 +18,11 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 
     public async Task<PCBA> GetPCBA(string id)
     {
-        var pcbaModel = await Query().FirstAsync(p => p.Uid == id);
+        var pcbaModel = await Query().AsNoTracking().FirstAsync(p => p.Uid == id);
+        if (pcbaModel == null)
+        {
+            //throw new KeyNotFoundException
+        }
 
         return ToDomain(pcbaModel);
     }

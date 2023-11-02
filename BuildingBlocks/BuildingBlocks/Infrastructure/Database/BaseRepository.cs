@@ -1,9 +1,11 @@
-﻿namespace BuildingBlocks.Infrastructure.Database;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace BuildingBlocks.Infrastructure.Database;
 
 public class BaseRepository<TEntity> where TEntity : class
 {
 
-    private ApplicationDbContext _dbContext;
+    protected ApplicationDbContext _dbContext;
 
     public BaseRepository(ApplicationDbContext dbContext)
     {

@@ -13,7 +13,9 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task CreateActuator(Actuator actuator)
     {
-        await Add(FromDomain(actuator));
+        var actuatorModel = FromDomain(actuator);
+        _dbContext.Entry(actuatorModel.PCBA).State = EntityState.Unchanged;
+        await Add(actuatorModel);
     }
 
     public async Task<Actuator> GetActuator(CompositeActuatorId id)
