@@ -33,7 +33,7 @@
     private void HandleAlert(Alert alert)
     {
         Alert = alert;
-        StateHasChanged();
+        InvokeAsync(StateHasChanged);
         HideAlertTimer();
     }
     
