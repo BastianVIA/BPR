@@ -3,7 +3,7 @@ using Backend.Model;
 using BuildingBlocks.Application;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using LINTest.Handlers;
 
 namespace LINTest.Services;
 
@@ -28,7 +28,7 @@ public class LINTestBackgroundService : BackgroundService
                 var filePath = "../LINTest/firstFile.csv";
                 var csvModel = CSVHandler.ReadCSV(filePath);
                 var command = CreateOrUpdateActuatorCommand.Create(int.Parse(csvModel.WorkOrderNumber),
-                    int.Parse(csvModel.SerialNumber), int.Parse(csvModel.PCBAUid));
+                    int.Parse(csvModel.SerialNumber), csvModel.PCBAUid);
                 await commandBus.Send(command, stoppingToken);
             }
             catch (Exception e)

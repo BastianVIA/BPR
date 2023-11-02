@@ -36,7 +36,7 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
                     b.HasIndex("PCBAUid");
 
-                    b.ToTable("Actuators");
+                    b.ToTable("Actuators", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.PCBAModel", b =>
@@ -49,7 +49,7 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
                     b.HasKey("Uid");
 
-                    b.ToTable("PCBAs");
+                    b.ToTable("PCBAs", (string)null);
                 });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>

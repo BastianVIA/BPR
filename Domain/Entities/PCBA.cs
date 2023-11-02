@@ -5,7 +5,7 @@ namespace Domain.Entities;
 
 public class PCBA : Entity
 {
-    public string Uid { get; private set; }
+    public string Uid { get; set; }
 
     public int ManufacturerNumber { get; private set; }
 

@@ -11,7 +11,7 @@ public static class Config
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
-                configuration.GetConnectionString("DatabaseConnection")), ServiceLifetime.Singleton);
+                configuration.GetConnectionString("DatabaseConnection")).EnableSensitiveDataLogging());
 
         services.AddTransient<IQueryBus, QueryBus>();
         services.AddTransient<ICommandBus, CommandBus>();

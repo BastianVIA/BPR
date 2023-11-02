@@ -19,14 +19,31 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
     {
         try
         {
+            var pcba = await GetPCBA(request.PCBAUid);
             var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-            var pcba = await _pcbaRepository.GetPCBA(request.PCBAUid);
             var actuator = Actuator.Create(actuatorId, pcba);
             await _actuatorRepository.CreateActuator(actuator);
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
         }
+    }
+
+    private async Task<PCBA> GetPCBA(string pcbaUid)
+    {
+        var pcba = new PCBA(pcbaUid, 0);
+        try
+        {
+            pcba = await _pcbaRepository.GetPCBA(pcbaUid);
+        }
+        catch (KeyNotFoundException e)
+        {
+            await _pcbaRepository.CreatePCBA(pcba);
+            pcba = await _pcbaRepository.GetPCBA(pcbaUid);
+        }
+
+        return pcba;
     }
 }

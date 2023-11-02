@@ -24,6 +24,7 @@ public class BaseRepository<TEntity> where TEntity : class
         {
             _dbContext.Set<TEntity>().Add(entity);
             await _dbContext.SaveChangesAsync();
+            _dbContext.ChangeTracker.Clear();
         }
         catch (DbUpdateException e)
         {

@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Exceptions;
-using BuildingBlocks.Infrastructure.Database;
+﻿using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +33,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task UpdateActuator(Actuator actuator)
     {
-        await Update(FromDomain(actuator));
+        var actuatorFromDb = await Query().FirstOrDefaultAsync(a =>
+            a.WorkOrderNumber == actuator.Id.WorkOrderNumber && a.SerialNumber == actuator.Id.SerialNumber);
+        actuatorFromDb.PCBA = FromDomain(actuator).PCBA;
+        await Update(actuatorFromDb);
     }
 
     private Actuator ToDomain(ActuatorModel actuatorModel)
