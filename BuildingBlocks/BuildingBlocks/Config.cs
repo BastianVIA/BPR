@@ -9,7 +9,6 @@ public static class Config
 {
     public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
     {
-
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 configuration.GetConnectionString("DatabaseConnection")), ServiceLifetime.Singleton);
