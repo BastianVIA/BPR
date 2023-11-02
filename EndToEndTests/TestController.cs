@@ -4,7 +4,7 @@ namespace EndToEndTests;
 
 public class TestController
 {
-    private static int _testRemaining;
+    private int _testRemaining;
     private Process? _frontendProcess;
     private Process? _backendProcess;
     
@@ -24,7 +24,8 @@ public class TestController
 
     private void SetRemainingTests()
     {
-        _testRemaining = NUnit.Framework.Internal.TestExecutionContext.CurrentContext.CurrentTest.TestCaseCount;
+        _testRemaining = NUnit.Framework.Internal.TestExecutionContext
+            .CurrentContext.CurrentTest.TestCaseCount;
     }
     
     private void StartProcesses()

@@ -2,7 +2,6 @@
 
 public enum AlertType
 {
-    ActuatorDetailsSuccess,
     ActuatorDetailsFailure,
     NetworkError
 }

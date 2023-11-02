@@ -6,13 +6,31 @@ namespace Frontend.Pages;
 
 public class PCBAInfoBase : ComponentBase
 {
-    [Inject] private IActuatorDetailsModel ActuatorDetailsModel { get; set; }
-    protected int pcbaUid;
-    protected Actuator actuator = new();
+    [Inject]
+    public IActuatorDetailsModel _actuatorDetailsModel { get; set; }
+    
+    public Actuator actuator = new();
 
-    protected async Task SearchActuator()
+    
+    public PCBAInfoBase()
     {
-        actuator = await ActuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
-        pcbaUid = actuator.PCBA.PCBAUid;
     }
+    
+    public PCBAInfoBase(IActuatorDetailsModel actuatorDetailsModel)
+    {
+        _actuatorDetailsModel = actuatorDetailsModel ?? throw new ArgumentNullException(nameof(actuatorDetailsModel));
+    }
+    
+   
+    public async Task SearchActuator()
+    {
+        if (_actuatorDetailsModel == null) 
+            throw new InvalidOperationException("ActuatorDetailsModel has not been initialized.");
+
+        if (actuator == null) 
+            throw new InvalidOperationException("Actuator is null.");
+
+        actuator = await _actuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
+    }
+
 }
