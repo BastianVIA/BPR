@@ -1,104 +1,107 @@
 ﻿using Application.CreateActuator;
 using Backend.Model;
 using BuildingBlocks.Application;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
-namespace LINTest.Services
+namespace LINTest.Services;
+
+public class LINTestBackgroundService : BackgroundService
 {
-    public class LINTestBackgroundService : BackgroundService
+    private int runIntervalInSeconds;
+    private readonly IServiceProvider _serviceProvider;
+    private DateTime? _lastProcessedDateTime;
+    private readonly string _folderPath = "C:/Users/Administrator/Desktop/CSVLogs";
+    private readonly string _lastProcessedDateTimePath = "../LINTest/lastTimeForProcessedData.json";
+    private readonly DateTime _initialDateTime = new DateTime(2021, 11, 1, 8, 0, 0);
+
+    public LINTestBackgroundService(IServiceProvider serviceProvider, IConfiguration configuration)
     {
-        private readonly IServiceProvider _serviceProvider;
-        private DateTime? _lastProcessedDateTime;
-        private readonly string _folderPath = "C:/Users/Administrator/Desktop/CSVLogs"; 
-        private readonly string _lastProcessedDateTimePath = "../LINTest/lastTimeForProcessedData.json";
-        private readonly DateTime _initialDateTime = new DateTime(2021, 11, 1, 8, 0, 0);
+        var linTestConfig = configuration.GetSection("LINTest");
+        runIntervalInSeconds = linTestConfig.GetValue<int>("RunIntervalInSeconds");
+        _serviceProvider = serviceProvider;
+        LoadLastProcessedDateTime();
+    }
 
-        public LINTestBackgroundService(IServiceProvider serviceProvider)
+    private void LoadLastProcessedDateTime()
+    {
+        if (File.Exists(_lastProcessedDateTimePath))
         {
-            _serviceProvider = serviceProvider;
-            LoadLastProcessedDateTime();
+            var jsonData = File.ReadAllText(_lastProcessedDateTimePath);
+            _lastProcessedDateTime = JsonConvert.DeserializeObject<DateTime?>(jsonData);
         }
+    }
 
-        private void LoadLastProcessedDateTime()
+    private void SaveLastProcessedDateTime(DateTime datetime)
+    {
+        var jsonData = JsonConvert.SerializeObject(datetime, Formatting.Indented);
+        File.WriteAllText(_lastProcessedDateTimePath, jsonData);
+    }
+
+    protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        DateTime referenceTime = _lastProcessedDateTime.HasValue ? _lastProcessedDateTime.Value : _initialDateTime;
+
+        while (!stoppingToken.IsCancellationRequested)
         {
-            if (File.Exists(_lastProcessedDateTimePath))
+            using var scope = _serviceProvider.CreateScope();
+            var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
+
+            DateTime mostRecentFileDateTime = referenceTime;
+
+            try
             {
-                var jsonData = File.ReadAllText(_lastProcessedDateTimePath);
-                _lastProcessedDateTime = JsonConvert.DeserializeObject<DateTime?>(jsonData);
-            }
-        }
+                var allFiles = Directory.GetFiles(_folderPath, "*.csv");
 
-        private void SaveLastProcessedDateTime(DateTime datetime)
-        {
-            var jsonData = JsonConvert.SerializeObject(datetime, Formatting.Indented);
-            File.WriteAllText(_lastProcessedDateTimePath, jsonData);
-        }
-
-        protected async override Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            DateTime referenceTime = _lastProcessedDateTime.HasValue ? _lastProcessedDateTime.Value : _initialDateTime;
-
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                using var scope = _serviceProvider.CreateScope();
-                var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
-
-                DateTime mostRecentFileDateTime = referenceTime;
-
-                try
+                foreach (var filePath in allFiles)
                 {
-                    var allFiles = Directory.GetFiles(_folderPath, "*.csv");
+                    var fileDateTime = File.GetCreationTime(filePath);
 
-                    foreach (var filePath in allFiles)
+                    if (fileDateTime > referenceTime)
                     {
-                        var fileDateTime = File.GetCreationTime(filePath);
+                        var csvModel = CSVHandler.ReadCSV(filePath);
 
-                        if (fileDateTime > referenceTime)
+                        if (string.IsNullOrEmpty(csvModel.WorkOrderNumber) ||
+                            string.IsNullOrEmpty(csvModel.SerialNumber) ||
+                            string.IsNullOrEmpty(csvModel.PCBAUid))
                         {
-                            var csvModel = CSVHandler.ReadCSV(filePath);
+                            Console.WriteLine($"Invalid data in file: {filePath}");
+                            continue;
+                        }
 
-                            if (string.IsNullOrEmpty(csvModel.WorkOrderNumber) || 
-                                string.IsNullOrEmpty(csvModel.SerialNumber) || 
-                                string.IsNullOrEmpty(csvModel.PCBAUid))
-                            {
-                                Console.WriteLine($"Invalid data in file: {filePath}");
-                                continue;
-                            }
+                        if (!int.TryParse(csvModel.WorkOrderNumber, out int workOrderNumber) ||
+                            !int.TryParse(csvModel.SerialNumber, out int serialNumber) ||
+                            !int.TryParse(csvModel.PCBAUid, out int pcbaUid))
+                        {
+                            Console.WriteLine($"Invalid numeric data in file: {filePath}");
+                            continue;
+                        }
 
-                            if (!int.TryParse(csvModel.WorkOrderNumber, out int workOrderNumber) || 
-                                !int.TryParse(csvModel.SerialNumber, out int serialNumber) || 
-                                !int.TryParse(csvModel.PCBAUid, out int pcbaUid))
-                            {
-                                Console.WriteLine($"Invalid numeric data in file: {filePath}");
-                                continue;
-                            }
+                        var command = CreateActuatorCommand.Create(workOrderNumber, serialNumber, pcbaUid);
+                        await commandBus.Send(command, stoppingToken);
 
-                            var command = CreateActuatorCommand.Create(workOrderNumber, serialNumber, pcbaUid);
-                            await commandBus.Send(command, stoppingToken);
-
-                            if (fileDateTime > mostRecentFileDateTime)
-                            {
-                                mostRecentFileDateTime = fileDateTime;
-                            }
+                        if (fileDateTime > mostRecentFileDateTime)
+                        {
+                            mostRecentFileDateTime = fileDateTime;
                         }
                     }
-
-                    if (mostRecentFileDateTime > referenceTime)
-                    {
-                        SaveLastProcessedDateTime(mostRecentFileDateTime);
-                        _lastProcessedDateTime = mostRecentFileDateTime;
-                        referenceTime = mostRecentFileDateTime; 
-                    }
                 }
-                catch (Exception e)
+
+                if (mostRecentFileDateTime > referenceTime)
                 {
-                    Console.WriteLine(e);
+                    SaveLastProcessedDateTime(mostRecentFileDateTime);
+                    _lastProcessedDateTime = mostRecentFileDateTime;
+                    referenceTime = mostRecentFileDateTime;
                 }
-
-                await Task.Delay(TimeSpan.FromMinutes(5));
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(runIntervalInSeconds));
         }
     }
 }
