@@ -30,4 +30,16 @@ public class NSwagProxy : INetwork
         }
         return response;
     }
+
+    public async Task<ConfigurationResponse> GetConfiguration()
+    {
+        try
+        {
+            return await _client.ConfigurationAsync();
+        }
+        catch (ApiException e)
+        {
+            throw new NullReferenceException();
+        }
+    }
 }

@@ -1,4 +1,5 @@
 using Frontend.Events;
+using Frontend.Model;
 using Frontend.Service;
 using Radzen;
 using Frontend.ServiceExtensions;
@@ -9,14 +10,12 @@ builder.Services.AddSingleton<IAlertMessages, AlertMessages>();
 builder.Services.AddSingleton<IAlertService, AlertService>();
 
 builder.Services.SetupBackendConnection();
-builder.Services.AddValidationSettings(builder);
+await builder.Services.AddValidationSettings();
 builder.Services.AddModels();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddRadzenComponents();
-
-
 
 
 var app = builder.Build();
