@@ -2,6 +2,7 @@ using BuildingBlocks;
 using BuildingBlocks.Application;
 using Infrastructure.Configuration;
 using LINTest;
+using LINTest.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,11 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddLINTestServices();
+builder.Services.AddLINTestServices(builder.Configuration);
+
+builder.Services.Configure<FileProcessorOptions>(builder.Configuration.GetSection("FileProcessor"));
+
+builder.Services.Configure<StateManagerOptions>(builder.Configuration.GetSection("StateManager"));
 
 var app = builder.Build();
 
