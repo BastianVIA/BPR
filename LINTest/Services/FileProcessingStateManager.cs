@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using LINTest.Services;
 
-public class StateManager
+public class FileProcessingStateManager
 {
     private readonly string _lastProcessedDateTimePath;
 
-    public StateManager(StateManagerOptions options)
+    public FileProcessingStateManager(StateManagerOptions options)
     {
         _lastProcessedDateTimePath = options.LastProcessedDateTimePath ?? throw new ArgumentNullException(nameof(options.LastProcessedDateTimePath));
     }

@@ -1,11 +1,21 @@
 ﻿using Application.CreateActuator;
+using Application.CreateOrUpdateActuator;
 using Backend.Model;
 using BuildingBlocks.Application;
+using Microsoft.Extensions.Logging;
 
 namespace LINTest.Services;
 
 public class CsvDataService
 {
+    private readonly ILogger<CsvDataService> _logger;
+
+    
+    public CsvDataService(ILogger<CsvDataService> logger)
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+    
     public async Task ProcessCsvData(string filePath, ICommandBus commandBus, CancellationToken stoppingToken)
     {
         var csvModel = CSVHandler.ReadCSV(filePath); 
@@ -22,7 +32,7 @@ public class CsvDataService
             string.IsNullOrEmpty(csvModel.SerialNumber) ||
             string.IsNullOrEmpty(csvModel.PCBAUid))
         {
-            Console.WriteLine($"Invalid data in file: {filePath}");
+            _logger.LogWarning("Invalid data in file: {FilePath}", filePath);
             return false;
         }
 
@@ -30,7 +40,7 @@ public class CsvDataService
             !int.TryParse(csvModel.SerialNumber, out _) ||
             !int.TryParse(csvModel.PCBAUid, out _))
         {
-            Console.WriteLine($"Invalid numeric data in file: {filePath}");
+            _logger.LogWarning("Invalid numeric data in file: {FilePath}", filePath);
             return false;
         }
 
@@ -39,7 +49,7 @@ public class CsvDataService
 
     private async Task SendCommandAsync(CSVModel csvModel, ICommandBus commandBus, CancellationToken stoppingToken)
     {
-        var command = CreateActuatorCommand.Create(
+        var command = CreateOrUpdateActuatorCommand.Create(
             int.Parse(csvModel.WorkOrderNumber),
             int.Parse(csvModel.SerialNumber),
             int.Parse(csvModel.PCBAUid));

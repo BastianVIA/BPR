@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BuildingBlocks.Application;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace LINTest.Services
 {
@@ -11,25 +13,36 @@ namespace LINTest.Services
         private readonly FileProcessor _fileProcessor;
         private readonly CsvDataService _csvDataService;
         private readonly IServiceProvider _serviceProvider;
-        private readonly StateManager _stateManager;
+        private readonly FileProcessingStateManager _fileProcessingStateManager;
+        private readonly FileProcessorOptions _fileProcessorOptions;
+        private readonly StateManagerOptions _stateManagerOptions;
+        private readonly ILogger<LINTestBackgroundService> _logger;
 
 
         public LINTestBackgroundService(
             IServiceProvider serviceProvider,
-            IConfiguration configuration,
-            FileProcessorOptions fileProcessorOptions,
-            StateManagerOptions stateManagerOptions)
+            IConfiguration configuration, CsvDataService csvDataService, FileProcessor fileProcessor,
+            FileProcessingStateManager fileProcessingStateManager,
+            IOptions<FileProcessorOptions> fileProcessorOptions,
+            IOptions<StateManagerOptions> stateManagerOptions,ILogger<LINTestBackgroundService> logger)
+
+
         {
+            _logger = logger;
             _serviceProvider = serviceProvider;
+            _csvDataService = csvDataService;
+            _fileProcessor = fileProcessor;
+            _fileProcessingStateManager = fileProcessingStateManager;
+            _fileProcessorOptions = fileProcessorOptions.Value;
+            _stateManagerOptions = stateManagerOptions.Value;
+
             _configManager = new ConfigurationManager(configuration);
-            _fileProcessor = new FileProcessor(fileProcessorOptions);
-            _csvDataService = new CsvDataService();
-            _stateManager = new StateManager(stateManagerOptions);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            DateTime lastProcessedFileTime = _stateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
+            DateTime lastProcessedFileTime =
+                _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -51,36 +64,35 @@ namespace LINTest.Services
                 {
                     try
                     {
-                        Console.WriteLine($"Processing file: {file.Path}, created at {file.CreationTime}");
+                        _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
                         await _csvDataService.ProcessCsvData(file.Path, commandBus, stoppingToken);
 
                         lastProcessedFileTime = file.CreationTime;
-                        _stateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
+                        _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Error processing file {file.Path}: {ex.Message}");
+                        _logger.LogError(ex, $"Error processing file {file.Path}");
                     }
                 }
 
                 if (filesToProcess.Any())
                 {
-                    Console.WriteLine("All new files have been processed.");
+                    _logger.LogInformation("All new files have been processed.");
                 }
                 else
                 {
-                    Console.WriteLine("No new files to process.");
+                    _logger.LogInformation("No new files to process.");
                 }
 
                 if (stoppingToken.IsCancellationRequested)
                 {
-                    Console.WriteLine("Cancellation requested before delay, stopping the service.");
+                    _logger.LogInformation("Cancellation requested before delay, stopping the service.");
                     return;
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
             }
         }
-        
     }
 }

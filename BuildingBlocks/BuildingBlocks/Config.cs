@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace BuildingBlocks;
-
 public static class Config
 {
     public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
@@ -12,7 +11,6 @@ public static class Config
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
                 configuration.GetConnectionString("DatabaseConnection")));
-
         services.AddTransient<IQueryBus, QueryBus>();
         services.AddTransient<ICommandBus, CommandBus>();
         return services;

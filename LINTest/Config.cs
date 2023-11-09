@@ -3,23 +3,25 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LINTest;
-
 public static class Config
 {
     public static IServiceCollection AddLINTestServices(this IServiceCollection services, IConfiguration configuration)
     {
+        
         var fileProcessorOptions = new FileProcessorOptions();
         configuration.GetSection("FileProcessor").Bind(fileProcessorOptions);
-        
-        services.AddSingleton(fileProcessorOptions);
 
+        services.AddSingleton(fileProcessorOptions);
         var stateManagerOptions = new StateManagerOptions();
         configuration.GetSection("StateManager").Bind(stateManagerOptions);
+        
+
         services.AddSingleton(stateManagerOptions);
-
         services.AddHostedService<LINTestBackgroundService>();
-
+        
+        services.AddSingleton<FileProcessor>();
+        services.AddSingleton<CsvDataService>();
+        services.AddSingleton<FileProcessingStateManager>();
         return services;
     }
-
 }
