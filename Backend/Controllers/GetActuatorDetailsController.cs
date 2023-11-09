@@ -41,4 +41,4 @@ public class GetActuatorDetailsController : ControllerBase
             return new GetActuatorDetailsResponse(result.PCBAUId);
         }
     }
-}
+    }
