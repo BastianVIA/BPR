@@ -15,11 +15,14 @@ public class Scheduler : IScheduler
 
     public async Task PublishEvents()
     {
-        var eventsToPublish = eventQueue.ToArray();
-        eventQueue.Clear();
-        foreach (var domainEvent in eventsToPublish)
+        while (eventQueue.Count > 0)
         {
-            await _mediator.Publish(domainEvent);
+            var eventsToPublish = eventQueue.ToArray();
+            eventQueue.Clear();
+            foreach (var domainEvent in eventsToPublish)
+            {
+                await _mediator.Publish(domainEvent);
+            }
         }
     }
 
