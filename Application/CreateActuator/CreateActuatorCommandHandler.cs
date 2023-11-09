@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.Application;
+using BuildingBlocks.Infrastructure.Database.Transaction;
 using Domain.Entities;
 using Domain.Repositories;
 
@@ -8,27 +9,22 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
 {
     private IActuatorRepository _actuatorRepository;
     private IPCBARepository _pcbaRepository;
+    private IDbTransaction _dbTransaction;
 
-    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository)
+    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository, IDbTransaction dbTransaction)
     {
         _actuatorRepository = actuatorRepository;
         _pcbaRepository = pcbaRepository;
+        _dbTransaction = dbTransaction;
     }
 
     public async Task Handle(CreateActuatorCommand request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var pcba = await GetPCBA(request.PCBAUid);
-            var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-            var actuator = Actuator.Create(actuatorId, pcba);
-            await _actuatorRepository.CreateActuator(actuator);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        var pcba = await GetPCBA(request.PCBAUid);
+        var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
+        var actuator = Actuator.Create(actuatorId, pcba);
+        await _actuatorRepository.CreateActuator(actuator);
+        await _dbTransaction.CommitAsync(cancellationToken);
     }
 
     private async Task<PCBA> GetPCBA(string pcbaUid)

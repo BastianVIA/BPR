@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Infrastructure.Database;
+﻿using BuildingBlocks.Infrastructure;
+using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -7,20 +8,21 @@ namespace Infrastructure;
 
 public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorRepository
 {
-    public ActuatorRepository(ApplicationDbContext dbContext) : base(dbContext)
+    public ActuatorRepository(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler)
     {
     }
 
     public async Task CreateActuator(Actuator actuator)
     {
+        var pcba = await getPcbaModel(actuator.PCBA.Uid);
         var actuatorModel = FromDomain(actuator);
-        _dbContext.Entry(actuatorModel.PCBA).State = EntityState.Unchanged;
-        await Add(actuatorModel);
+        actuatorModel.PCBA = pcba;
+        await AddAsync(actuatorModel, actuator.GetDomainEvents());
     }
 
     public async Task<Actuator> GetActuator(CompositeActuatorId id)
     {
-        var actuatorModel = await Query().FirstOrDefaultAsync(a =>
+        var actuatorModel = await Query().Include(model => model.PCBA).FirstOrDefaultAsync(a =>
             a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
         if (actuatorModel == null)
         {
@@ -33,10 +35,12 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task UpdateActuator(Actuator actuator)
     {
-        var actuatorFromDb = await Query().FirstOrDefaultAsync(a =>
+        var actuatorFromDb = await Query().Include(model => model.PCBA).FirstAsync(a =>
             a.WorkOrderNumber == actuator.Id.WorkOrderNumber && a.SerialNumber == actuator.Id.SerialNumber);
-        actuatorFromDb.PCBA = FromDomain(actuator).PCBA;
-        await Update(actuatorFromDb);
+        var pcba = await getPcbaModel(actuator.PCBA.Uid);
+
+        actuatorFromDb.PCBA = pcba;
+        await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
     private Actuator ToDomain(ActuatorModel actuatorModel)
@@ -61,5 +65,16 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             PCBA = pcbaModel
         };
         return actuatorModel;
+    }
+
+    private async Task<PCBAModel> getPcbaModel(string uid)
+    {
+        var pcba = QueryOtherLocal<PCBAModel>().FirstOrDefault(m => m.Uid == uid);
+        if (pcba == null)
+        {
+            pcba = await QueryOther<PCBAModel>().FirstAsync(m => m.Uid == uid);
+        }
+
+        return pcba;
     }
 }

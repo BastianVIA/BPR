@@ -1,4 +1,4 @@
-using Application.CreateOrUpdateActuator;
+﻿using Application.CreateOrUpdateActuator;
 using Backend.Model;
 using BuildingBlocks.Application;
 using Microsoft.Extensions.Hosting;
@@ -36,7 +36,7 @@ public class LINTestBackgroundService : BackgroundService
                 Console.WriteLine(e);
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(7));
+            await Task.Delay(TimeSpan.FromSeconds(700));
         }
     }
 }

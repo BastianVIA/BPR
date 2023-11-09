@@ -1,3 +1,4 @@
+using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
@@ -7,19 +8,13 @@ namespace Infrastructure;
 
 public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 {
-    public PCBARepository(ApplicationDbContext dbContext) : base(dbContext)
+    public PCBARepository(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler)
     {
     }
 
     public async Task CreatePCBA(PCBA pcba)
     {
-        var existingEntity = _dbContext.Set<PCBAModel>().Local.FirstOrDefault(e => e.Uid == pcba.Uid);
-        if (existingEntity != null)
-        {
-            _dbContext.Entry(existingEntity).State = EntityState.Detached;
-            _dbContext.Entry(pcba).State = EntityState.Added;
-        }
-        await Add(FromDomain(pcba));
+        await AddAsync(FromDomain(pcba), pcba.GetDomainEvents());
     }
 
     public async Task<PCBA> GetPCBA(string id)
@@ -35,7 +30,7 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 
     public async Task UpdatePCBA(PCBA pcba)
     {
-        await Update(FromDomain(pcba));
+        await UpdateAsync(FromDomain(pcba), pcba.GetDomainEvents());
     }
 
     private PCBA ToDomain(PCBAModel pcbaModel)
