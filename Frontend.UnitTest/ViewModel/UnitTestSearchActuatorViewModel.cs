@@ -1,15 +1,9 @@
-﻿using Microsoft.VisualBasic;
+﻿using Frontend.Entities;
+using Frontend.Model;
+using Frontend.Pages;
 using NSubstitute.ExceptionExtensions;
 
-namespace Frontend.UnitTest;
-
-using Xunit;
-using NSubstitute;
-using System.Threading.Tasks;
-using Frontend.Pages;
-using Frontend.Entities;
-using Frontend.Model;
-using AutoFixture;
+namespace Frontend.UnitTest.ViewModel;
 
 public class UnitTestSearchActuatorViewModel
 {

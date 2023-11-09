@@ -1,5 +1,5 @@
-﻿using Frontend.Events;
-using Frontend.Service;
+﻿using Frontend.Service;
+using Frontend.Service.AlertService;
 
 namespace Frontend.Networking;
 

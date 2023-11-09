@@ -1,6 +1,4 @@
-﻿using Frontend.Events;
-
-namespace Frontend.Service;
+﻿namespace Frontend.Service.AlertService;
 
 public interface IAlertService
 {

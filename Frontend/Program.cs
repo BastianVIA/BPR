@@ -1,6 +1,4 @@
-using Frontend.Events;
-using Frontend.Model;
-using Frontend.Service;
+using Frontend.Service.AlertService;
 using Radzen;
 using Frontend.ServiceExtensions;
 
