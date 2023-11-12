@@ -1,6 +1,8 @@
-﻿namespace Frontend.Service.AlertService;
+﻿using Radzen;
+
+namespace Frontend.Service.AlertService;
 
 public interface IAlertService
 {
-    void FireEvent(AlertType type);
+    void FireEvent(AlertStyle style, string message);
 }

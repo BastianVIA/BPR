@@ -1,22 +1,24 @@
-﻿namespace Frontend.Service.AlertService;
+﻿using Radzen;
+
+namespace Frontend.Service.AlertService;
 
 public class AlertService : IAlertService
 {
     public delegate void AlertAction(Alert alert);
-    public static event AlertAction OnAlertEvent;
-    private IAlertMessages _messages;
+    public static event AlertAction? OnAlertEvent;
     
-    public AlertService(IAlertMessages messages)
+    private void Invoke(Alert alert)
     {
-       _messages = messages;
+        OnAlertEvent?.Invoke(alert);
     }
-    
-    public void FireEvent(AlertType type)
+
+    public void FireEvent(AlertStyle style, string message)
     {
-        var method = _messages.GetType().GetMethod($"{type.ToString()}");
-        var invoked = method.Invoke(_messages, null);
-    
-        if (invoked is Alert alert)
-            OnAlertEvent?.Invoke(alert); 
+        var alert = new Alert
+        {
+            Message = message,
+            Style = AlertStyle.Danger
+        };
+        Invoke(alert);
     }
 }

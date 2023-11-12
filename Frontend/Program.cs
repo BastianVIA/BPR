@@ -4,7 +4,6 @@ using Frontend.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IAlertMessages, AlertMessages>();
 builder.Services.AddSingleton<IAlertService, AlertService>();
 
 builder.Services.SetupBackendConnection();
