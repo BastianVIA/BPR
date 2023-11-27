@@ -1,4 +1,6 @@
-﻿namespace Backend.Model;
+﻿using Backend.Model;
+
+namespace LINTest.Handlers;
 
 public class CSVHandler
 {
@@ -30,6 +32,9 @@ public class CSVHandler
                             record.WorkOrderNumber = value;
                             break;
                         case "Serial Number":
+                            record.SerialNumber = value;
+                            break;
+                        case "Serial from PLC":
                             record.SerialNumber = value;
                             break;
                         case "Product":

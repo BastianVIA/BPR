@@ -1,7 +1,9 @@
 ﻿using BuildingBlocks.Application;
-using Microsoft.Extensions.DependencyInjection;
+using BuildingBlocks.Infrastructure;
+using BuildingBlocks.Infrastructure.Database.Transaction;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BuildingBlocks;
 
@@ -11,8 +13,10 @@ public static class Config
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
-                configuration.GetConnectionString("DatabaseConnection")), ServiceLifetime.Singleton);
+                configuration.GetConnectionString("DatabaseConnection")).EnableSensitiveDataLogging());
 
+        services.AddScoped<IScheduler, Scheduler>();
+        services.AddScoped<IDbTransaction, DbTransaction>();
         services.AddTransient<IQueryBus, QueryBus>();
         services.AddTransient<ICommandBus, CommandBus>();
         return services;

@@ -9,5 +9,8 @@ public abstract class Entity
         _domainEvents.Add(domainEvent);
     }
 
-    
+    public IList<IDomainEvent> GetDomainEvents()
+    {
+        return _domainEvents;
+    }
 }

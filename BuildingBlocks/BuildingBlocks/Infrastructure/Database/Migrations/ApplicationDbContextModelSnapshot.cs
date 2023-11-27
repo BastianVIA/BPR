@@ -28,12 +28,39 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("PCBAUid")
-                        .HasColumnType("int");
+                    b.Property<string>("PCBAUid")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("WorkOrderNumber", "SerialNumber");
 
-                    b.ToTable("Actuators");
+                    b.HasIndex("PCBAUid");
+
+                    b.ToTable("Actuators", (string)null);
+                });
+
+            modelBuilder.Entity("Infrastructure.PCBAModel", b =>
+                {
+                    b.Property<string>("Uid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ManufacturerNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Uid");
+
+                    b.ToTable("PCBAs", (string)null);
+                });
+
+            modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
+                {
+                    b.HasOne("Infrastructure.PCBAModel", "PCBA")
+                        .WithMany()
+                        .HasForeignKey("PCBAUid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PCBA");
                 });
 #pragma warning restore 612, 618
         }

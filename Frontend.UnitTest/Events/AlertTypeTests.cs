@@ -1,4 +1,4 @@
-﻿using Frontend.Events;
+﻿using Frontend.Service.AlertService;
 
 namespace Frontend.UnitTest.Events;
 

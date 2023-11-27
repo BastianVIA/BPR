@@ -1,6 +1,6 @@
 ﻿using Radzen;
 
-namespace Frontend.Events;
+namespace Frontend.Service.AlertService;
 
 public class Alert
 {

@@ -1,5 +1,6 @@
 ﻿using Application.GetActuatorDetails;
 using BuildingBlocks.Application;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -29,16 +30,16 @@ public class GetActuatorDetailsController : ControllerBase
     
     public class GetActuatorDetailsResponse
     {
-        public int PCBAUid { get; }
+        public PCBA PCBA { get; }
         private GetActuatorDetailsResponse() {}
-        private GetActuatorDetailsResponse(int pcbaUid)
+        private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo)
         {
-            PCBAUid = pcbaUid;
+            PCBA = new PCBA(uid: pcbaUid, manufacturerNo: manufacturerNo);
         }
 
         internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
         {
-            return new GetActuatorDetailsResponse(result.PCBAUId);
+            return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber);
         }
     }
     }
