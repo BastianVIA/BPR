@@ -15,11 +15,11 @@ public class GetActuatorFromPCBAController : ControllerBase
     }
     
     [HttpGet()]
-    [Route("api/GetActuatorFromPCBA/{uid}/{manufacturerNo?}")]
+    [Route("api/GetActuatorFromPCBA/{uid}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorFromPCBAResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync(string uid, int? manufacturerNo, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAsync([FromRoute] string uid,[FromQuery] int? manufacturerNo, CancellationToken cancellationToken)
     {
         //var query = ;
         //var result = await _bus.Send(query, cancellationToken);
