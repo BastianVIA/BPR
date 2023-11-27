@@ -20,14 +20,14 @@ public class GetActuatorDetailsDto
 
 public class PCBADto
 {
-    public string UId { get; set; }
+    public string Uid { get; set; }
     public int ManufacturerNumber { get; set; }
 
     internal static PCBADto From(string pcbaUid, int manufacturerNo)
     {
         return new PCBADto
         {
-            UId = pcbaUid,
+            Uid = pcbaUid,
             ManufacturerNumber = manufacturerNo
         };
     }

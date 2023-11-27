@@ -26,15 +26,5 @@ public class CreatePCBACommandHandler : ICommandHandler<CreatePCBACommand>
             var pcba = await _pcbaRepository.GetPCBA(request.Uid);
             await _pcbaRepository.UpdatePCBA(pcba);
         }
-        
-        // try
-        // {
-        //     var pcba = new PCBA(request.Uid, request.ManufacturerNumber);
-        //     await _pcbaRepository.CreatePCBA(pcba);
-        // } catch (Exception e)
-        // {
-        //     Console.WriteLine(e);
-        //     throw;
-        // }
     }
 }

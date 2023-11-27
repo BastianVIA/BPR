@@ -39,7 +39,7 @@ public class GetActuatorDetailsController : ControllerBase
 
         internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
         {
-            return new GetActuatorDetailsResponse(result.PCBADto.UId, result.PCBADto.ManufacturerNumber);
+            return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber);
         }
     }
 }
