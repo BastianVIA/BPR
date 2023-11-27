@@ -1,6 +1,6 @@
-﻿using Frontend.Events;
+﻿using Frontend.Service.AlertService;
 
-namespace Frontend.UnitTest;
+namespace Frontend.UnitTest.Events;
 
 public class UnitTestAlertMessage
 {
