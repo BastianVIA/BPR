@@ -1,16 +1,11 @@
 ﻿using Application.GetActuatorDetails;
 using AutoFixture;
-using AutoFixture.AutoNSubstitute;
-using PolymorphicContracts;
 using Backend.Controllers;
 using BuildingBlocks.Application;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
-using NSubstitute.ReturnsExtensions;
-using PolymorphicContracts.AutoFixture;
 
 namespace Backend.Tests.Controllers;
 
@@ -54,6 +49,21 @@ public class GetActuatorDetailsControllerTests
         await Assert.ThrowsAsync<KeyNotFoundException>(() => 
             _controller.GetAsync(woNo, serialNo, CancellationToken.None));
     }
-    
-    
+
+    [Fact]
+    public async Task GetAsync_ReturnsCorrectResponseType_WhenCalled()
+    {
+        var woNo = _fixture.Create<int>();
+        var serialNo = _fixture.Create<int>();
+        var actuator = _fixture.Create<Actuator>();
+
+        var dto  = GetActuatorDetailsDto.From(actuator);
+        _bus.Send(Arg.Any<GetActuatorDetailsQuery>(), Arg.Any<CancellationToken>())
+            .Returns(dto);
+
+        var result = await _controller.GetAsync(woNo, serialNo, CancellationToken.None) as ObjectResult;
+        var response = result.Value;
+        Assert.NotNull(result);
+        Assert.IsType<GetActuatorDetailsController.GetActuatorDetailsResponse>(response);
+    }
 }

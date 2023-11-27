@@ -1,6 +1,4 @@
-﻿using AutoFixture;
-using AutoFixture.AutoNSubstitute;
-using Backend.Controllers;
+﻿using Backend.Controllers;
 using Backend.Tests.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +7,6 @@ namespace Backend.Tests.Controllers;
 
 public class GetConfigurationControllerTests
 {
-    private Fixture _fixture = new();
-
     private IConfiguration _configuration = GetConfig.GetTestConfig();
     private GetConfigurationController _controller;
 
