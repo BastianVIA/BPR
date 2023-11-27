@@ -41,6 +41,7 @@ public class ActuatorRepositoryTests
     [Fact]
     public async Task Create_ShouldNotAddActuator_WhenAddFails()
     {
+        Assert.Fail("Not Implemented");
         var actuator = _fixture.Create<Domain.Entities.Actuator>();
         await _repository.CreateActuator(actuator);
 
@@ -48,6 +49,7 @@ public class ActuatorRepositoryTests
         
         await _repository.CreateActuator(actuator);
         Assert.Equal(before, _dbContext.Actuators.Count());
+        
     }
 
     [Fact]
@@ -102,5 +104,6 @@ public class ActuatorRepositoryTests
         });
         await _dbContext.SaveChangesAsync();
         
+        Assert.Fail("Not implemented");
     }
 }
