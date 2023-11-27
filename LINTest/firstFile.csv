@@ -20,7 +20,7 @@
 08.06.23 / 15:36:20;#1;STEP;80;Show Initializing EOS IN.;;
 08.06.23 / 15:36:20;#1;STEP;90;Read WO Number from Actuator.;;
 08.06.23 / 15:36:20;#1;INFO;90;WO from Actuator;30912893;
-08.06.23 / 15:36:20;#1;INFO;90;UniqueID from Actuator;656690;
+08.06.23 / 15:36:20;#1;INFO;90;UniqueID from Actuator;1111;
 08.06.23 / 15:36:20;#1;STEP;100;Read SW Version from Actuator.;;
 08.06.23 / 15:36:20;#1;INFO;100;SW Actuator;SW01050007V3-1;
 08.06.23 / 15:36:20;#1;STEP;110;Compare WONumber, SWVersion, PCB.;;
