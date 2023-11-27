@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Application;
+﻿using Application.GetActuatorFromPCBA;
+using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -16,28 +17,33 @@ public class GetActuatorFromPCBAController : ControllerBase
     
     [HttpGet()]
     [Route("api/GetActuatorFromPCBA/{uid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorFromPCBAResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetActuatorFromPCBAActuator>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync([FromRoute] string uid,[FromQuery] int? manufacturerNo, CancellationToken cancellationToken)
     {
-        //var query = ;
-        //var result = await _bus.Send(query, cancellationToken);
-        return Ok(GetActuatorFromPCBAResponse.From());
+        var query = GetActuatorFromPCBAQuery.Create(uid, manufacturerNo);
+        var result = await _bus.Send(query, cancellationToken);
+        List<GetActuatorFromPCBAActuator> toReturn = new();
+        foreach (var resultActuator in result.Actuators)
+        {
+            toReturn.Add(GetActuatorFromPCBAActuator.From(resultActuator));
+        }
+        return Ok(toReturn);
     }
 
 }
 
-public class GetActuatorFromPCBAResponse
+public class GetActuatorFromPCBAActuator
 {
     public int WorkOrderNumber { get; }
     public int SerialNumber { get; }
     public string Uid { get; }
     public int ManufacturerNumber { get; }
-    
-    private GetActuatorFromPCBAResponse(){}
 
-    private GetActuatorFromPCBAResponse(int woNo, int serialNo, string uid, int manufacturerNo)
+    private GetActuatorFromPCBAActuator() { }
+
+    private GetActuatorFromPCBAActuator(int woNo, int serialNo, string uid, int manufacturerNo)
     {
         WorkOrderNumber = woNo;
         SerialNumber = serialNo;
@@ -45,8 +51,13 @@ public class GetActuatorFromPCBAResponse
         ManufacturerNumber = manufacturerNo;
     }
 
-    internal static GetActuatorFromPCBAResponse From()
+    internal static GetActuatorFromPCBAActuator From(GetActuatorFromPCBAActuatordto actuator)
     {
-        return new GetActuatorFromPCBAResponse();
+        return new GetActuatorFromPCBAActuator(
+            actuator.WorkOrderNumber,
+            actuator.SerialNumber,
+            actuator.Uid,
+            actuator.ManufacturerNumber
+            );
     }
 }
