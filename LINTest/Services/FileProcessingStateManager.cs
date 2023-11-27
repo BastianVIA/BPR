@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
-using LINTest.Services;
+
+namespace LINTest.Services;
 
 public class FileProcessingStateManager
 {

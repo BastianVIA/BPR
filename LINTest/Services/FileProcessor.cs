@@ -1,5 +1,6 @@
-﻿using LINTest.Services;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+
+namespace LINTest.Services;
 
 public class FileProcessor
 {
@@ -64,13 +65,13 @@ public class FileProcessor
                 return DateTime.MinValue;
             }
 
-            var creationTime = File.GetCreationTime(filePath);
-            _logger.LogInformation($"Creation time for file '{filePath}' is {creationTime}.");
-            return creationTime;
+            var lastWriteTime = File.GetLastWriteTime(filePath);
+            _logger.LogInformation($"Last Updated time for file '{filePath}' is {lastWriteTime}.");
+            return lastWriteTime;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"An error occurred while attempting to get the creation time for file '{filePath}'.");
+            _logger.LogError(ex, $"An error occurred while attempting to get the last write time for file '{filePath}'.");
             throw;
         }
     }

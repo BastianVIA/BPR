@@ -5,94 +5,94 @@ using BuildingBlocks.Application;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace LINTest.Services
+namespace LINTest.Services;
+
+public class LINTestBackgroundService : BackgroundService
 {
-    public class LINTestBackgroundService : BackgroundService
+    private readonly ConfigurationManager _configManager;
+    private readonly FileProcessor _fileProcessor;
+    private readonly CsvDataService _csvDataService;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly FileProcessingStateManager _fileProcessingStateManager;
+    private readonly ILogger<LINTestBackgroundService> _logger;
+
+    public LINTestBackgroundService(
+        IServiceProvider serviceProvider,
+        CsvDataService csvDataService, FileProcessor fileProcessor,
+        FileProcessingStateManager fileProcessingStateManager, ILogger<LINTestBackgroundService> logger,
+        ConfigurationManager configurationManager)
     {
-        private readonly ConfigurationManager _configManager;
-        private readonly FileProcessor _fileProcessor;
-        private readonly CsvDataService _csvDataService;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly FileProcessingStateManager _fileProcessingStateManager;
-        private readonly FileProcessorOptions _fileProcessorOptions;
-        private readonly StateManagerOptions _stateManagerOptions;
-        private readonly ILogger<LINTestBackgroundService> _logger;
+        _logger = logger;
+        _serviceProvider = serviceProvider;
+        _csvDataService = csvDataService;
+        _fileProcessor = fileProcessor;
+        _fileProcessingStateManager = fileProcessingStateManager;
+        _configManager = configurationManager;
+    }
 
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        DateTime lastProcessedFileTime =
+            _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
 
-        public LINTestBackgroundService(
-            IServiceProvider serviceProvider,
-            IConfiguration configuration, CsvDataService csvDataService, FileProcessor fileProcessor,
-            FileProcessingStateManager fileProcessingStateManager,
-            IOptions<FileProcessorOptions> fileProcessorOptions,
-            IOptions<StateManagerOptions> stateManagerOptions,ILogger<LINTestBackgroundService> logger)
-
-
+        while (!stoppingToken.IsCancellationRequested)
         {
-            _logger = logger;
-            _serviceProvider = serviceProvider;
-            _csvDataService = csvDataService;
-            _fileProcessor = fileProcessor;
-            _fileProcessingStateManager = fileProcessingStateManager;
-            _fileProcessorOptions = fileProcessorOptions.Value;
-            _stateManagerOptions = stateManagerOptions.Value;
+            using var scope = _serviceProvider.CreateScope();
+            var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
 
-            _configManager = new ConfigurationManager(configuration);
-        }
+            var allFiles = _fileProcessor.GetCsvFiles();
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            DateTime lastProcessedFileTime =
-                _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
+            var numberOfFilesProcessed =
+                await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, commandBus);
 
-            while (!stoppingToken.IsCancellationRequested)
+            if (numberOfFilesProcessed >= 0)
             {
-                using var scope = _serviceProvider.CreateScope();
-                var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
+                _logger.LogInformation("All new files have been processed. Count:" + numberOfFilesProcessed);
+            }
+            else
+            {
+                _logger.LogInformation("No new files to process.");
+            }
 
-                var allFiles = _fileProcessor.GetCsvFiles();
+            if (stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Cancellation requested before delay, stopping the service.");
+                return;
+            }
 
-                var filesToProcess = allFiles.Select(filePath => new
-                    {
-                        Path = filePath,
-                        CreationTime = _fileProcessor.GetFileCreationTime(filePath)
-                    })
-                    .Where(file => file.CreationTime > lastProcessedFileTime)
-                    .OrderBy(file => file.CreationTime)
-                    .ToList();
+            await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
+        }
+    }
 
-                foreach (var file in filesToProcess)
-                {
-                    try
-                    {
-                        _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
-                        await _csvDataService.ProcessCsvData(file.Path, commandBus, stoppingToken);
+    private async Task<int> ProcessingFiles(CancellationToken stoppingToken, string[] allFiles,
+        DateTime lastProcessedFileTime,
+        ICommandBus commandBus)
+    {
+        var filesToProcess = allFiles.Select(filePath => new
+            {
+                Path = filePath,
+                CreationTime = _fileProcessor.GetFileCreationTime(filePath)
+            })
+            .Where(file => file.CreationTime > lastProcessedFileTime)
+            .OrderBy(file => file.CreationTime)
+            .ToList();
 
-                        lastProcessedFileTime = file.CreationTime;
-                        _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError(ex, $"Error processing file {file.Path}");
-                    }
-                }
+        foreach (var file in filesToProcess)
+        {
+            try
+            {
+                _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
+                await _csvDataService.ProcessCsvData(file.Path, commandBus, stoppingToken);
 
-                if (filesToProcess.Any())
-                {
-                    _logger.LogInformation("All new files have been processed.");
-                }
-                else
-                {
-                    _logger.LogInformation("No new files to process.");
-                }
-
-                if (stoppingToken.IsCancellationRequested)
-                {
-                    _logger.LogInformation("Cancellation requested before delay, stopping the service.");
-                    return;
-                }
-
-                await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
+                lastProcessedFileTime = file.CreationTime;
+                _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error processing file {file.Path}");
             }
         }
+
+        return filesToProcess.Count;
     }
 }

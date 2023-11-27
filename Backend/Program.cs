@@ -14,19 +14,11 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 // Add services to the container.
 
 builder.Services.AddCore(builder.Configuration);
-
 builder.Services.AddActuatorServices();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddLINTestServices(builder.Configuration);
-
-builder.Services.Configure<FileProcessorOptions>(builder.Configuration.GetSection("FileProcessor"));
-
-builder.Services.Configure<StateManagerOptions>(builder.Configuration.GetSection("StateManager"));
 
 var app = builder.Build();
 

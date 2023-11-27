@@ -2,6 +2,7 @@
 using Application.CreateOrUpdateActuator;
 using Backend.Model;
 using BuildingBlocks.Application;
+using LINTest.Handlers;
 using Microsoft.Extensions.Logging;
 
 namespace LINTest.Services;
@@ -52,7 +53,7 @@ public class CsvDataService
         var command = CreateOrUpdateActuatorCommand.Create(
             int.Parse(csvModel.WorkOrderNumber),
             int.Parse(csvModel.SerialNumber),
-            int.Parse(csvModel.PCBAUid));
+            csvModel.PCBAUid);
         await commandBus.Send(command, stoppingToken);
     }
 }
