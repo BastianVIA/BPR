@@ -14,12 +14,13 @@ using AutoFixture;
 public class UnitTestSearchActuatorViewModel
 {
     private readonly Fixture _fixture = new();
+    private IActuatorDetailsModel mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
+    
 
     [Fact]
     public async Task SearchActuator_SetsActuatorAndPcbaUidCorrectly()
     {
         // Arrange
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
         var expectedActuator = _fixture.Create<Actuator>().WithPCBAUid(_fixture.Create<int>());
 
         mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
@@ -39,7 +40,7 @@ public class UnitTestSearchActuatorViewModel
     public async Task SearchActuator_HandlesNullActuatorCorrectly()
     {
         // Arrange
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
+        mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
         mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
             .Returns((Actuator)null);
 
@@ -57,7 +58,7 @@ public class UnitTestSearchActuatorViewModel
     public async Task SearchActuator_HandlesExceptionsCorrectly()
     {
         // Arrange
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
+        mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
         mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
             .Throws(new Exception("Error fetching details"));
 
@@ -66,7 +67,7 @@ public class UnitTestSearchActuatorViewModel
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => component.SearchActuator());
     }
-    
+
 
     [Fact]
     public async Task SearchActuator_MultipleCalls_DontInterfere()
@@ -74,7 +75,7 @@ public class UnitTestSearchActuatorViewModel
         // Arrange
         var firstActuator = _fixture.Create<Actuator>();
         var secondActuator = _fixture.Create<Actuator>();
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
+         mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
 
         mockActuatorDetailsModel.GetActuatorDetails(1, Arg.Any<int>()).Returns(firstActuator);
         mockActuatorDetailsModel.GetActuatorDetails(2, Arg.Any<int>()).Returns(secondActuator);
@@ -105,7 +106,7 @@ public class UnitTestSearchActuatorViewModel
     {
         // Arrange
         var firstActuator = _fixture.Create<Actuator>();
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
+        mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
 
         mockActuatorDetailsModel.GetActuatorDetails(1, Arg.Any<int>()).Returns(firstActuator);
 
@@ -116,6 +117,6 @@ public class UnitTestSearchActuatorViewModel
         await component.SearchActuator();
 
         // Assert
-       await mockActuatorDetailsModel.Received(1).GetActuatorDetails(1, Arg.Any<int>());
+        await mockActuatorDetailsModel.Received(1).GetActuatorDetails(1, Arg.Any<int>());
     }
 }

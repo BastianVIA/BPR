@@ -4,6 +4,7 @@ namespace Frontend.UnitTest.Events;
 
 public class AlertTypeTests
 {
+    
 
     [Fact]
     public void AlertType_ActuatorDetailsFailure_HasDefinedAlertMessage()

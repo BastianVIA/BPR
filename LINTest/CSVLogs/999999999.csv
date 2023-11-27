@@ -1,0 +1,106 @@
+13.09.23 / 08:18:43;;;;********** New Test Started **********;Version of LINTest: 11.1.1.0
+13.09.23 / 08:18:43;#2;TESTER;0;Tester;LASPRD-C0197V60, LA36 Pre-Tester Auto-Cell, 2022-032, LINTest 11.1.1.0
+13.09.23 / 08:18:43;#2;INFO;0;Bay;2
+13.09.23 / 08:18:43;#2;PROTOCOL;0;Communication Protocol;CANBUS_ZEROPOINT_PROTOCOL
+13.09.23 / 08:18:43;#2;INFO;0;WO Number;31471156
+13.09.23 / 08:18:43;#2;INFO;0;Serial Number;61
+13.09.23 / 08:18:43;#2;INFO;0;Product;LA36 CANBus
+13.09.23 / 08:18:43;#2;STEP;10;Nominal Power.;
+13.09.23 / 08:18:47;#2;STEP;20;Connect Violet pin for communication.;
+13.09.23 / 08:18:47;#2;STEP;30;Start Bus communication 100ms continual.;
+13.09.23 / 08:18:47;#2;STEP;30;Looks like Actuator;Connected
+13.09.23 / 08:18:47;#2;STEP;40;SetForcePositionLost for Run Max. Speed;
+13.09.23 / 08:18:47;#2;INFO;40;SetForcePositionLost;DONE
+13.09.23 / 08:18:49;#2;INFO;999;Clear CustomerCurrentCutOffIn;0.0
+13.09.23 / 08:18:49;#2;INFO;999;Clear CustomerCurrentCutOffOut;0.0
+13.09.23 / 08:18:49;#2;INFO;999;Clear CustomerCurrentCutOff;DONE
+13.09.23 / 08:18:49;#2;INFO;999;Current scalefactor;6845
+13.09.23 / 08:18:49;#2;INFO;999;wCustomerCurrenCutOffIn should be;0
+13.09.23 / 08:18:49;#2;INFO;999;GetSetCustomerCurrentLimitIn() from actuator;0
+13.09.23 / 08:18:49;#2;INFO;999;wCustomerCurrenCutOffOut should be;0
+13.09.23 / 08:18:49;#2;INFO;999;GetSetCustomerCurrentLimitOut() from actuator;0
+13.09.23 / 08:18:50;#2;INFO;40;ClearCustomerCurrentCutOffs();DONE
+13.09.23 / 08:18:50;#2;STEP;40;Find BusLink *.ini Files.;
+13.09.23 / 08:18:50;#2;INFO;40;Actuator ID;LA36CA4
+13.09.23 / 08:18:51;#2;STEP;50;Timeout after 3 sec., indicate 'Ingen LIN kommunikation.;
+13.09.23 / 08:18:53;#2;STEP;60;Open the right *.ini file.;
+13.09.23 / 08:18:53;#2;INFO;60;LA36CA4.ini;file found
+13.09.23 / 08:18:53;#2;STEP;70;Read SW nummer from Actuator.;
+13.09.23 / 08:18:53;#2;STEP;80;Show Initializing EOS IN.;
+13.09.23 / 08:18:53;#2;STEP;90;Read WO Number from Actuator.;
+13.09.23 / 08:18:53;#2;INFO;90;WO from Actuator;31471156
+13.09.23 / 08:18:53;#2;INFO;90;UniqueID from Actuator;1040848
+13.09.23 / 08:18:53;#2;STEP;100;Read SW Version from Actuator.;
+13.09.23 / 08:18:53;#2;INFO;100;SW Actuator;SW01050004V3-2
+13.09.23 / 08:18:53;#2;STEP;110;Compare WONumber, SWVersion, PCB.;
+13.09.23 / 08:18:53;#2;INFO;110;Query WO SQL Table Ax_Data;
+13.09.23 / 08:18:53;#2;INFO;110;From Ax_Software;SW01050004V3-2
+13.09.23 / 08:18:53;#2;INFO;110;From AxArtNo;362182-04
+13.09.23 / 08:18:53;#2;INFO;110;From AxArtName;362C42+BX10016X
+13.09.23 / 08:18:53;#2;INFO;110;From AxConf;10SW36CFGA00189
+13.09.23 / 08:18:53;#2;INFO;110;From AxPCBA;10CS36BUSB10-F-2
+13.09.23 / 08:18:54;#2;STEP;120;Run out.;
+13.09.23 / 08:18:58;#2;STEP;120;Ran Out For 2 s;DONE
+13.09.23 / 08:18:58;#2;STEP;130;Read EOS IN status. if not 0 'EOS IN error'. Not for ZeroPoint.;
+13.09.23 / 08:18:58;#2;INFO;999;ServoPosition w/o ZeroPoint;312.71 mm
+13.09.23 / 08:18:58;#2;INFO;999;Running to Zero Point;
+13.09.23 / 08:19:05;#2;INFO;999;Reached Zero Point;DONE
+13.09.23 / 08:19:06;#2;STEP;140;Stop 200ms/Run In.;
+13.09.23 / 08:19:30;#2;STEP;150;Run to EOS IN.;
+13.09.23 / 08:19:30;#2;INFO;999;Min Servo Position;293.91 mm
+13.09.23 / 08:19:30;#2;INFO;999;CalibratedEOSInPosition BID mechanically;PASSED
+13.09.23 / 08:19:30;#2;INFO;999;Writing dwZPointCalibrationOffset;439
+13.09.23 / 08:19:30;#2;STEP;140;SetZPointCalibrationOffset;DONE
+13.09.23 / 08:19:31;#2;STEP;160;Read EOS IN Status. Not for ZeroPoint.;
+13.09.23 / 08:19:32;#2;STEP;220;Show: Initializing EOS Out.;
+13.09.23 / 08:19:32;#2;STEP;230;Run to EOS OUT.;
+13.09.23 / 08:19:51;#2;STEP;240;Read EOS OUT Status. if not 1 'EOS ud ikke aktiv'. Not for ZeroPoint.;
+13.09.23 / 08:19:51;#2;STEP;240;Mechanical EOS OUT found;
+13.09.23 / 08:19:51;#2;INFO;999;Max Servo Position;402.93 mm
+13.09.23 / 08:19:51;#2;INFO;999;Min Servo Position;293.91 mm
+13.09.23 / 08:19:51;#2;INFO;999;Servo Stroke;109.01 mm
+13.09.23 / 08:19:51;#2;INFO;999;Margin Mechanical EOS Out;2.00 mm
+13.09.23 / 08:19:51;#2;INFO;999;Margin Mechanical EOS In;2.00 mm
+13.09.23 / 08:19:51;#2;INFO;999;Build In;300.00 mm
+13.09.23 / 08:19:51;#2;INFO;999;Offset;-27.50 mm
+13.09.23 / 08:19:51;#2;INFO;999;Stroke;100.00 mm
+13.09.23 / 08:19:51;#2;STEP;355;EndPosition;0.00 mm
+13.09.23 / 08:19:51;#2;INFO;999;Max Out Servo Margin;400.93 mm
+13.09.23 / 08:19:51;#2;INFO;999;CalibratedEOSOutPosition;100.52 mm
+13.09.23 / 08:19:51;#2;INFO;999;CalibratedEOSOutPosition;Is inside physical Stroke
+13.09.23 / 08:19:51;#2;INFO;999;dwZPointCalibrationHallShiftsAtLearn;911
+13.09.23 / 08:19:51;#2;INFO;999;Min In Servo Margin;295.91 mm
+13.09.23 / 08:19:51;#2;INFO;999;CalibratedEOSInPosition from ZeroPoint;48.44 mm
+13.09.23 / 08:19:51;#2;INFO;999;CalibratedEOSInPosition;Is inside physical Stroke
+13.09.23 / 08:19:51;#2;INFO;999;dwZPointCalibrationOffset;439
+13.09.23 / 08:19:51;#2;INFO;999;Margin/Dist.MechEOSToCal.EOS;6.09 mm
+13.09.23 / 08:19:51;#2;INFO;999;Min. Margin;2.00 mm
+13.09.23 / 08:19:51;#2;INFO;999;MaxOutCalibratedServoPosition;400.00 mm
+13.09.23 / 08:19:51;#2;INFO;999;Writing dwZPointCalibrationHallShiftsAtLearn;911
+13.09.23 / 08:19:51;#2;INFO;999;SetZPointCalibrationHallShiftsAtLearn;DONE
+13.09.23 / 08:20:00;#2;STEP;280;Compare BusLink and Servo Movement and PLC-command 'EOS OUT Signal and Voltage OK'. Not for ZeroPoint.;
+13.09.23 / 08:20:02;#2;STEP;285;Start PLC check Servo Stroke,.;
+13.09.23 / 08:20:02;#2;STEP;290;Show: Initializing EOS out OK. For ZeroPoint, found MekEOS.;
+13.09.23 / 08:20:02;#2;STEP;300;If Single/OneHall, No Feedback go to step 310 else step 280.  Not for ZeroPoint.;
+13.09.23 / 08:20:03;#2;STEP;310;Run to SetPoint for Pulltest;
+13.09.23 / 08:20:03;#2;INFO;999;SetCustomerCurrentCutOffs();DONE
+13.09.23 / 08:20:03;#2;STEP;320;Min Servo Position;321.41  mm
+13.09.23 / 08:20:03;#2;STEP;320;Max Servo Position;430.43  mm
+13.09.23 / 08:20:03;#2;INFO;320;Min Buslink Position;-54.51 mm
+13.09.23 / 08:20:03;#2;INFO;320;Max Buslink Position;103.50 mm
+13.09.23 / 08:20:03;#2;INFO;320;Current Buslink Pos.;100.52 mm
+13.09.23 / 08:20:03;#2;INFO;320;Tolerance 1/2 Stroke;4.00 mm
+13.09.23 / 08:20:03;#2;INFO;320;Spec. Servo Position Min.;46.01 mm
+13.09.23 / 08:20:03;#2;INFO;320;Current Buslink Position;100.52 mm
+13.09.23 / 08:20:03;#2;INFO;320;Spec. Servo Position Max.;54.01 mm
+13.09.23 / 08:20:15;#2;STEP;320;Read new LIN-position.;
+13.09.23 / 08:20:16;#2;STEP;320;Buslink Stroke;103.50 mm
+13.09.23 / 08:20:16;#2;STEP;320;Min. BusLink Position;0.00 mm
+13.09.23 / 08:20:16;#2;INFO;999;ServoCalibratedEOSOut;100.02 mm
+13.09.23 / 08:20:16;#2;INFO;999;ServoPosition EndOfTest;299.42 mm
+13.09.23 / 08:20:16;#2;INFO;999;Servo Stroke Calibrated;100.60 mm
+13.09.23 / 08:20:16;#2;STEP;359;Stop stroke measurement, 0% FbSignal.;
+13.09.23 / 08:20:16;#2;STEP;359;Stroke measurement stopped;
+13.09.23 / 08:20:17;#2;STEP;340;CANBus Verification;
+13.09.23 / 08:20:17;#2;STEP;340;CANBus Verification disabled, see Actuatur SW;
+13.09.23 / 08:20:17;#2;STEP;360;LINTest has finished. EndOfTest;
