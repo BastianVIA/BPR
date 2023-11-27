@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<ActuatorModel> Actuators { get; set; } 
+    public DbSet<PCBAModel> PCBAs { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
@@ -12,5 +13,6 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ActuatorModel>().HasKey(a => new { a.WorkOrderNumber, a.SerialNumber });
+        modelBuilder.Entity<PCBAModel>().HasKey(p => p.Uid);
     }
 }
