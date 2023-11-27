@@ -49,7 +49,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var pcba = new PCBA(uid: actuatorModel.PCBA.Uid, manufacturerNo: actuatorModel.PCBA.ManufacturerNumber);
         return new Actuator(actuatorId, pcba);
     }
-
+    
     private ActuatorModel FromDomain(Actuator actuator)
     {
         var pcbaModel = new PCBAModel()
