@@ -2,9 +2,9 @@
 
 public class ActuatorModel
 {
-    public int WorkOrderNumber { get; set; } //PPK
-
-    public int SerialNumber { get; set; } //PPK
+    public int WorkOrderNumber { get; set; }
     
-    public int PCBAUid { get; set; }
+    public int SerialNumber { get; set; }
+    
+    public PCBAModel PCBA { get; set; }
 }
