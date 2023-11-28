@@ -73,7 +73,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var pcba = QueryOtherLocal<PCBAModel>().FirstOrDefault(m => m.Uid == uid);
         if (pcba == null)
         {
-            pcba = QueryOther<PCBAModel>().FirstOrDefault(m => m.Uid == uid);
+            pcba = QueryOther<PCBAModel>().First(m => m.Uid == uid);
         }
 
         return pcba;

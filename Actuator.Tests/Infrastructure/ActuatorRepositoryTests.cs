@@ -35,9 +35,12 @@ public class ActuatorRepositoryTests
             Uid = actuator.PCBA.Uid,
             ManufacturerNumber = actuator.PCBA.ManufacturerNumber
         });
+        // Repository needs an existing PCBA. Save changes to make sure the pcba can be fetched by EFcore.
+        // Actuator repo does not create PCBA if it does not exist.
         await _dbContext.SaveChangesAsync();
-        
         await _repository.CreateActuator(model);
+        
+        // Saving changes, so the count of actuators can be fetched
         await _dbContext.SaveChangesAsync();
         
         var countAfter = _dbContext.Actuators.Count();
