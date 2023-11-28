@@ -1,4 +1,4 @@
-﻿using Frontend.Events;
+﻿using Frontend.Exceptions;
 using Frontend.Service;
 
 namespace Frontend.Networking;
@@ -6,40 +6,38 @@ namespace Frontend.Networking;
 public class NSwagProxy : INetwork
 {
     private readonly Client _client;
-    private IAlertService _alertService;
-
-    public NSwagProxy(IHttpClientFactory clientFactory, IConfiguration configuration, IAlertService alertService)
+    public NSwagProxy(IHttpClientFactory clientFactory, IConfiguration configuration)
     {
         var uri = configuration.GetSection("BackendApiSettings:Uri").Value;
         var httpClient = clientFactory.CreateClient("BackendApi");
         _client = new Client(uri, httpClient);
-        _alertService = alertService;
     }
-    
-    public async Task<GetActuatorDetailsResponse?> GetActuatorDetails(int woNo, int serialNo)
+
+    private async Task<T> Send<T>(Func<Task<T>> func)
     {
-        GetActuatorDetailsResponse? response = null;
         try
         {
-            response = await _client.GetActuatorDetailsAsync(woNo, serialNo);
+            return await func();
         }
-        catch (ApiException e)
+        catch (ApiException<ProblemDetails> e)
         {
             Console.WriteLine(e);
-            _alertService.FireEvent(e.StatusCode == 404 ? AlertType.ActuatorDetailsFailure : AlertType.NetworkError);
+            throw new NetworkException(e.Result.Detail);
         }
-        return response;
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Message);
+        }
+    }
+
+    public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo)
+    {
+        return await Send(async () => await _client.GetActuatorDetailsAsync(woNo, serialNo));
     }
 
     public async Task<ConfigurationResponse> GetConfiguration()
     {
-        try
-        {
-            return await _client.ConfigurationAsync();
-        }
-        catch (ApiException e)
-        {
-            throw new NullReferenceException();
-        }
+        return await Send(async () => await _client.ConfigurationAsync());
     }
 }

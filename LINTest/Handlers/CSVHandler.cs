@@ -34,6 +34,9 @@ public class CSVHandler
                         case "Serial Number":
                             record.SerialNumber = value;
                             break;
+                        case "Serial from PLC":
+                            record.SerialNumber = value;
+                            break;
                         case "Product":
                             record.Product = value;
                             break;

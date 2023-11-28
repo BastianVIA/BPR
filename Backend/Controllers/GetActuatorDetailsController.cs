@@ -42,4 +42,4 @@ public class GetActuatorDetailsController : ControllerBase
             return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber);
         }
     }
-}
+    }

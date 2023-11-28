@@ -2,10 +2,7 @@
 using Frontend.Networking;
 using Frontend.Service;
 
-namespace Frontend.UnitTest;
-
-using Xunit;
-using NSubstitute;
+namespace Frontend.UnitTest.Model;
 
 public class UnitTestSearchActuatorModel
 {
