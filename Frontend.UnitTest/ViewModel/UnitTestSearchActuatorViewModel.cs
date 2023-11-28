@@ -8,24 +8,29 @@ namespace Frontend.UnitTest.ViewModel;
 public class UnitTestSearchActuatorViewModel
 {
     private readonly Fixture _fixture = new();
+    private readonly IActuatorDetailsModel _mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
+    private readonly PCBAInfoBase _viewModel;
+
+    public UnitTestSearchActuatorViewModel()
+    {
+        _viewModel = new PCBAInfoBase(_mockActuatorDetailsModel);
+    }
 
     [Fact]
     public async Task SearchActuator_SetsActuatorAndPcbaUidCorrectly()
     {
         // Arrange
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
         var expectedActuator = _fixture.Create<Actuator>().WithPCBAUid(_fixture.Create<int>());
 
-        mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
+        _mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
             .Returns(expectedActuator);
-        var component = new PCBAInfoBase(mockActuatorDetailsModel);
 
         // Act
-        await component.SearchActuator();
+        await _viewModel.SearchActuator();
 
         // Assert
 
-        Assert.Equal(expectedActuator.WorkOrderNumber, component.actuator.WorkOrderNumber);
+        Assert.Equal(expectedActuator.WorkOrderNumber, _viewModel.actuator.WorkOrderNumber);
     }
 
 
@@ -33,17 +38,15 @@ public class UnitTestSearchActuatorViewModel
     public async Task SearchActuator_HandlesNullActuatorCorrectly()
     {
         // Arrange
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
-        mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
-            .Returns((Actuator)null);
+        _mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
+            .ReturnsNull();
 
-        var component = new PCBAInfoBase(mockActuatorDetailsModel);
 
         // Act
-        await component.SearchActuator();
+        await _viewModel.SearchActuator();
 
         // Assert
-        Assert.Null(component.actuator);
+        Assert.Null(_viewModel.actuator);
     }
 
 
@@ -51,16 +54,14 @@ public class UnitTestSearchActuatorViewModel
     public async Task SearchActuator_HandlesExceptionsCorrectly()
     {
         // Arrange
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
-        mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
-            .Throws(new Exception("Error fetching details"));
+        _mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
+            .Throws<Exception>();
 
-        var component = new PCBAInfoBase(mockActuatorDetailsModel);
 
         // Act & Assert
-        await Assert.ThrowsAsync<Exception>(() => component.SearchActuator());
+        await Assert.ThrowsAsync<Exception>(() => _viewModel.SearchActuator());
     }
-    
+
 
     [Fact]
     public async Task SearchActuator_MultipleCalls_DontInterfere()
@@ -68,19 +69,17 @@ public class UnitTestSearchActuatorViewModel
         // Arrange
         var firstActuator = _fixture.Create<Actuator>();
         var secondActuator = _fixture.Create<Actuator>();
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
 
-        mockActuatorDetailsModel.GetActuatorDetails(1, Arg.Any<int>()).Returns(firstActuator);
-        mockActuatorDetailsModel.GetActuatorDetails(2, Arg.Any<int>()).Returns(secondActuator);
+        _mockActuatorDetailsModel.GetActuatorDetails(1, Arg.Any<int>()).Returns(firstActuator);
+        _mockActuatorDetailsModel.GetActuatorDetails(2, Arg.Any<int>()).Returns(secondActuator);
 
-        var component = new PCBAInfoBase(mockActuatorDetailsModel);
 
         // Act
         async Task ActuatorSearch(int workOrderNumber, Actuator expectedActuator)
         {
-            component.actuator.WorkOrderNumber = workOrderNumber;
-            await component.SearchActuator();
-            var result = component.actuator;
+            _viewModel.actuator.WorkOrderNumber = workOrderNumber;
+            await _viewModel.SearchActuator();
+            var result = _viewModel.actuator;
 
             // Assert
             Assert.Equal(expectedActuator.WorkOrderNumber, result.WorkOrderNumber);
@@ -99,17 +98,15 @@ public class UnitTestSearchActuatorViewModel
     {
         // Arrange
         var firstActuator = _fixture.Create<Actuator>();
-        var mockActuatorDetailsModel = Substitute.For<IActuatorDetailsModel>();
 
-        mockActuatorDetailsModel.GetActuatorDetails(1, Arg.Any<int>()).Returns(firstActuator);
+        _mockActuatorDetailsModel.GetActuatorDetails(1, Arg.Any<int>()).Returns(firstActuator);
 
-        var component = new PCBAInfoBase(mockActuatorDetailsModel);
 
         // Act
-        component.actuator.WorkOrderNumber = 1;
-        await component.SearchActuator();
+        _viewModel.actuator.WorkOrderNumber = 1;
+        await _viewModel.SearchActuator();
 
         // Assert
-       await mockActuatorDetailsModel.Received(1).GetActuatorDetails(1, Arg.Any<int>());
+        await _mockActuatorDetailsModel.Received(1).GetActuatorDetails(1, Arg.Any<int>());
     }
 }
