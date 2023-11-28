@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Infrastructure;
+﻿using System.Runtime.CompilerServices;
+using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
@@ -72,7 +73,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var pcba = QueryOtherLocal<PCBAModel>().FirstOrDefault(m => m.Uid == uid);
         if (pcba == null)
         {
-            pcba = await QueryOther<PCBAModel>().FirstAsync(m => m.Uid == uid);
+            pcba = QueryOther<PCBAModel>().FirstOrDefault(m => m.Uid == uid);
         }
 
         return pcba;
