@@ -4,8 +4,7 @@ namespace Frontend.Service.AlertService;
 
 public class AlertService : IAlertService
 {
-    public delegate void AlertAction(Alert alert);
-    public static event AlertAction? OnAlertEvent;
+    public static event Action<Alert>? OnAlertEvent;
     
     private void Invoke(Alert alert)
     {
