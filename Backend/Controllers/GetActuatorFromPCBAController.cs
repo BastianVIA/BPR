@@ -31,7 +31,6 @@ public class GetActuatorFromPCBAController : ControllerBase
         }
         return Ok(toReturn);
     }
-
 }
 
 public class GetActuatorFromPCBAActuator

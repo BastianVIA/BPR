@@ -6,9 +6,7 @@ public class GetActuatorFromPCBADto
 {
     public List<GetActuatorFromPCBAActuatordto> Actuators = new();
 
-    private GetActuatorFromPCBADto()
-    {
-    }
+    private GetActuatorFromPCBADto() { }
 
     private GetActuatorFromPCBADto(List<GetActuatorFromPCBAActuatordto> actuators)
     {
