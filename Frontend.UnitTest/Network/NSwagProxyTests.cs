@@ -25,6 +25,83 @@ public class NSwagProxyTests
     }
 
     [Fact]
+    public async Task GetActuatorDetails_ReturnsGetActuatorResponse_OnSuccess()
+    {
+        var woNo = _fixture.Create<int>();
+        var serialNumber = _fixture.Create<int>();
+
+        var expected = _fixture.Create<GetActuatorDetailsResponse>();
+
+        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+            .Returns(expected);
+        
+        var result = _network.GetActuatorDetails(woNo, serialNumber);
+        Assert.NotNull(result);
+        Assert.IsType<GetActuatorDetailsResponse>(result);
+    }
+    
+    [Fact]
+    public async Task GetActuatorDetails_ThrowsNetworkException_OnApiException()
+    {
+        var woNo = _fixture.Create<int>();
+        var serialNumber = _fixture.Create<int>();
+
+        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+            .ThrowsAsync<ApiException>();
+
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+    }
+    
+    [Fact]
+    public async Task GetActuatorDetails_ThrowsNetworkException_OnException()
+    {
+        var woNo = _fixture.Create<int>();
+        var serialNumber = _fixture.Create<int>();
+
+        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+            .ThrowsAsync<Exception>();
+
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+    }
+
+    [Fact]
+    public async Task GetConfiguration_ReturnsGetConfigurationResponse_OnSuccess()
+    {
+        var expected = _fixture.Create<ConfigurationResponse>();
+
+        _client.ConfigurationAsync(Arg.Any<CancellationToken>())
+            .Returns(expected);
+        
+        var result = await _network.GetConfiguration();
+        Assert.NotNull(result);
+        Assert.IsType<ConfigurationResponse>(result);
+    }
+    
+    [Fact]
+    public async Task GetConfiguration_ThrowsNetworkException_OnApiException()
+    {
+        var woNo = _fixture.Create<int>();
+        var serialNumber = _fixture.Create<int>();
+
+        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+            .ThrowsAsync<ApiException>();
+
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+    }
+    
+    [Fact]
+    public async Task GetConfiguration_ThrowsNetworkException_OnException()
+    {
+        var woNo = _fixture.Create<int>();
+        var serialNumber = _fixture.Create<int>();
+
+        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+            .ThrowsAsync<Exception>();
+
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+    }
+
+    [Fact]
     public async Task GetActuatorFromPCBA_ReturnsListOfGetActuatorFromPCBAActuator_OnSuccess()
     {
         var request = _fixture.Create<string>();
