@@ -1,6 +1,9 @@
 using Frontend.Entities;
+using Frontend.Exceptions;
 using Frontend.Model;
+using Frontend.Service.AlertService;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Frontend.Pages;
 
@@ -10,27 +13,29 @@ public class PCBAInfoBase : ComponentBase
     public IActuatorDetailsModel _actuatorDetailsModel { get; set; }
     
     public Actuator actuator = new();
-
     
+    [Inject]
+    private IAlertService _alertService { get; set; }
     public PCBAInfoBase()
     {
     }
     
     public PCBAInfoBase(IActuatorDetailsModel actuatorDetailsModel)
     {
-        _actuatorDetailsModel = actuatorDetailsModel ?? throw new ArgumentNullException(nameof(actuatorDetailsModel));
+        _actuatorDetailsModel = actuatorDetailsModel;
     }
     
-   
     public async Task SearchActuator()
     {
-        if (_actuatorDetailsModel == null) 
-            throw new InvalidOperationException("ActuatorDetailsModel has not been initialized.");
-
-        if (actuator == null) 
-            throw new InvalidOperationException("Actuator is null.");
-
-        actuator = await _actuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
+        try
+        {
+            actuator = await _actuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
+        }
+        catch (NetworkException e)
+        {
+            Console.WriteLine(e);
+            _alertService.FireEvent(AlertStyle.Danger, e.Message);
+        }
     }
 
 }
