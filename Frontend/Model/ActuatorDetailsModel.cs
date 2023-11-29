@@ -1,6 +1,5 @@
 ﻿using Frontend.Entities;
 using Frontend.Networking;
-using Frontend.Service;
 
 namespace Frontend.Model;
 
@@ -18,7 +17,7 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
         return new Actuator()
             .WithWorkOrderNumber(woNo)
             .WithSerialNumber(serialNo)
-            .WithPCBAUid(networkResponse.PcbaUid);
+            .WithPCBAUid(networkResponse.Pcba.Uid);
     }
 
     public Task<List<Actuator>> GetActuatorsByUid(string uid)

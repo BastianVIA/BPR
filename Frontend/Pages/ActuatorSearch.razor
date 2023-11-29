@@ -4,11 +4,11 @@
 <h3>ActuatorInfo</h3>
 
 <RadzenRow>
-    <RadzenTemplateForm TItem="string" Data=@Uid Submit=@SearchPcba>
+    <RadzenTemplateForm TItem="string" Data=@SearchUid Submit=@SearchActuators>
         <RadzenRow>
             <RadzenColumn>
               <RadzenLabel Text="PCBA Uid"/>
-              <RadzenText ShowUpDown="false" style="display: block" Name="pcbaUid" @bind-Value=@Uid class="w-100"/>
+              <RadzenText ShowUpDown="false" style="display: block" Name="pcbaUid" @bind-Value=@SearchUid class="w-100"/>
             </RadzenColumn>
             <RadzenColumn>
                 <RadzenButton ButtonType="ButtonType.Submit" Text="Search"></RadzenButton>

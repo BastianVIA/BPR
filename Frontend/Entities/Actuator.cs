@@ -18,7 +18,7 @@ public class Actuator
         return this;
     }
 
-    public Actuator WithPCBAUid(int pcbaUid)
+    public Actuator WithPCBAUid(string pcbaUid)
     {
         PCBA.PCBAUid = pcbaUid;
         return this;
