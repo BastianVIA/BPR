@@ -24,6 +24,5 @@ public class GetActuatorFromPCBAQueryHandler : IQueryHandler<GetActuatorFromPCBA
             Console.WriteLine(e);
             throw;
         }
- 
     }
 }
