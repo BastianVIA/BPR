@@ -5,7 +5,7 @@ namespace Frontend.Networking;
 
 public class NSwagProxy : INetwork
 {
-    private readonly Client _client;
+    private readonly IClient _client;
     public NSwagProxy(IHttpClientFactory clientFactory, IConfiguration configuration)
     {
         var uri = configuration.GetSection("BackendApiSettings:Uri").Value;
