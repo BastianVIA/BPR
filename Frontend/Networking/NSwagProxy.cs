@@ -40,4 +40,9 @@ public class NSwagProxy : INetwork
     {
         return await Send(async () => await _client.ConfigurationAsync());
     }
+
+    public async Task<ICollection<GetActuatorFromPCBAActuator>> GetActuatorFromPCBA(string pcbaUid, int? manufacturerNumber = null)
+    {
+        return await Send(async () => await _client.GetActuatorFromPCBAAsync(pcbaUid, manufacturerNumber));
+    }
 }

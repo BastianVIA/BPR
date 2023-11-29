@@ -20,7 +20,7 @@ public class ActuatorInfoTests
     {
         var expected = new List<Actuator>();
 
-        _model.GetActuatorsByUid(Arg.Any<string>())
+        _model.GetActuatorsByPCBA(Arg.Any<string>())
             .Returns(expected);
         
         await _viewModel.SearchActuators();
@@ -36,7 +36,7 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>()
         };
 
-        _model.GetActuatorsByUid(Arg.Any<string>())
+        _model.GetActuatorsByPCBA(Arg.Any<string>())
             .Returns(expected);
         
         await _viewModel.SearchActuators();
@@ -49,12 +49,13 @@ public class ActuatorInfoTests
     public async Task SearchActuators_ShouldReturnActuatorWithExactUid_WhenMatchFound()
     {
         var expectedUid = _fixture.Create<string>();
-        _viewModel.SearchUid = expectedUid;
+        _viewModel.SearchActuator.PCBA.PCBAUid = expectedUid;
         var expectedList = new List<Actuator>
         {
             _fixture.Create<Actuator>().WithPCBAUid(expectedUid)
         };
-        _model.GetActuatorsByUid(expectedUid)
+        
+        _model.GetActuatorsByPCBA(expectedUid)
             .Returns(expectedList);
         
         await _viewModel.SearchActuators();
@@ -67,7 +68,7 @@ public class ActuatorInfoTests
     {
         var expectedList = _fixture.CreateMany<Actuator>().ToList();
 
-        _model.GetActuatorsByUid(Arg.Any<string>())
+        _model.GetActuatorsByPCBA(Arg.Any<string>())
             .Returns(expectedList);
 
         await _viewModel.SearchActuators();
@@ -80,7 +81,7 @@ public class ActuatorInfoTests
     public async Task SearchActuators_ShouldReturnManyCorrectActuators_WhenMultipleMatchesFound()
     {
         var expectedUid = _fixture.Create<string>();
-        _viewModel.SearchUid = expectedUid;
+        _viewModel.SearchActuator.PCBA.PCBAUid = expectedUid;
 
         var expectedList = new List<Actuator>
         {
@@ -89,7 +90,7 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>().WithPCBAUid(expectedUid)
         };
         
-        _model.GetActuatorsByUid(expectedUid)
+        _model.GetActuatorsByPCBA(expectedUid)
             .Returns(expectedList);
 
         await _viewModel.SearchActuators();

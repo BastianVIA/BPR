@@ -1,6 +1,9 @@
 ﻿using Frontend.Entities;
+using Frontend.Exceptions;
 using Frontend.Model;
+using Frontend.Service.AlertService;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Frontend.Pages;
 
@@ -8,7 +11,12 @@ public class ActuatorInfoBase : ComponentBase
 {
     [Inject] 
     public IActuatorSearchModel ActuatorModel { get; set; }
-    public string SearchUid { get; set; }
+    
+    [Inject]
+    public IAlertService AlertService { get; set; }
+
+    // Radzen needs a class to specify the data object
+    public Actuator SearchActuator { get; set; } = new();
     public List<Actuator> actuators = new();
 
     // Blazor page needs an empty constructor
@@ -26,11 +34,16 @@ public class ActuatorInfoBase : ComponentBase
     {
         try
         {
-            actuators = await ActuatorModel.GetActuatorsByUid(SearchUid);
+            actuators = await ActuatorModel.GetActuatorsByPCBA(SearchActuator.PCBA.PCBAUid);
         }
-        catch (Exception e)
+        catch (KeyNotFoundException e)
         {
             Console.WriteLine(e);
+            AlertService.FireEvent(AlertStyle.Warning, $"No actuators was with the PCBA Uid: {SearchActuator.PCBA.PCBAUid}");
+        }
+        catch (NetworkException e)
+        {
+            AlertService.FireEvent(AlertStyle.Danger, e.Message);
         }
     }
 }

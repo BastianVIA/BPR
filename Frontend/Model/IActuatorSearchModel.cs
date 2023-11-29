@@ -4,5 +4,5 @@ namespace Frontend.Model;
 
 public interface IActuatorSearchModel
 {
-    public Task<List<Actuator>> GetActuatorsByUid(string uid);
+    public Task<List<Actuator>> GetActuatorsByPCBA(string uid, int? manufacturerNumber = null);
 }
