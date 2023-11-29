@@ -43,6 +43,39 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
+    public async Task<List<Actuator>> GetActuatorsWithFilter(int? requestItemNumber, int? requestManufacturerNumber,
+        int? requestProductionDateCode)
+    {
+        var actuatorFromDb = Query().Include(model => model.PCBA).AsQueryable();
+        // if (requestItemNumber != null)
+        // {
+        //     actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNo == requestItemNumber);
+        // }
+        if (requestManufacturerNumber != null)
+        {
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNumber);
+        }
+
+        // if (requestProductionDateCode != null)
+        // {
+        //     actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.productionDateCode == requestProductionDateCode);
+        // }
+        var actuatorModel = await actuatorFromDb.ToListAsync();
+        return ToDomain(actuatorModel);
+    }
+
+
+    private List<Actuator> ToDomain(List<ActuatorModel> actuatorModels)
+    {
+        List<Actuator> domainActuators = new();
+        foreach (var actuatorModel in actuatorModels)
+        {
+            domainActuators.Add(ToDomain(actuatorModel));
+        }
+
+        return domainActuators;
+    }
+
     private Actuator ToDomain(ActuatorModel actuatorModel)
     {
         var actuatorId = CompositeActuatorId.From(actuatorModel.WorkOrderNumber, actuatorModel.SerialNumber);
@@ -57,7 +90,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             Uid = actuator.PCBA.Uid,
             ManufacturerNumber = actuator.PCBA.ManufacturerNumber
         };
-        
+
         var actuatorModel = new ActuatorModel()
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,

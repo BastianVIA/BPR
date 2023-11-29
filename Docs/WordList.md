@@ -13,7 +13,7 @@
 | Type                      | type               | string   |             |
 | CurrentlyInstalled        | currentlyInstalled | bool     |             |
 | InstalledTime             | installedTime      | DateTime |             |
-| PCBAUid                   | pcbaUid            | int      |             |
+| PCBAUid                   | pcbaUid            | string   |             |
 | ManufacturerNumber        | manufacturerNo     | int      |             |
 | ProductionDateCode        | productionDateCode | int      |             |
 | RevisionNumber            | revisionNo         | string   |             |
@@ -23,4 +23,5 @@
 | ErrorCode                 | errorCode          | N/A      |             |
 | Tester                    | tester             | string   |             |
 | Bay                       | bay                | int      |             |
+| ItemNumber                | itemNo             | int      |             |
 
