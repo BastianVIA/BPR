@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Infrastructure;
+﻿using System.Runtime.CompilerServices;
+using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
