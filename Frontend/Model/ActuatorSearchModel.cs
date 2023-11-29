@@ -24,7 +24,6 @@ public class ActuatorSearchModel : IActuatorSearchModel
                  ManufacturerNumber = entry.ManufacturerNumber
              }
          }).ToList();
-        if (!(list.Count > 0)) throw new KeyNotFoundException();
         return list;
     }
 }

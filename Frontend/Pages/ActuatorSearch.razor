@@ -17,15 +17,14 @@
     </RadzenTemplateForm>
 </RadzenRow>
 
-@if (actuators.Count > 0) {
-    <RadzenRow>
-        <RadzenDataGrid TItem="Actuator" Data="@actuators">
-            <Columns>
-                <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number"></RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"></RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>
-    </RadzenRow>
-}
+<RadzenRow>
+    <RadzenDataGrid TItem="Actuator" Data="@actuators" FilterMode="FilterMode.Advanced" Style="--rz-grid-header-text-transform: none; --rz-grid-header-font-size: 20px;">
+        <Columns>
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID" >
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"></RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</RadzenRow>

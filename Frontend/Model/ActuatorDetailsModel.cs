@@ -19,10 +19,5 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
             .WithSerialNumber(serialNo)
             .WithPCBAUid(networkResponse.Pcba.Uid);
     }
-
-    public Task<List<Actuator>> GetActuatorsByUid(string uid)
-    {
-        throw new NotImplementedException();
-    }
 }
 
