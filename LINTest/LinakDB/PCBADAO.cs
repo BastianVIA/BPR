@@ -7,7 +7,7 @@ public class PCBADAO : IPCBADAO
 {
     string linakDbConnectionString = "Server=localhost;Database=LINAK-DB;Trusted_Connection=True;TrustServerCertificate=True;";
 
-    public PCBAModel GetPCBA(string woNo, int serialNo)
+    public PCBAModel GetPCBA(string uid)
     {
         PCBAModel pcbaToReturn = new PCBAModel();
         
@@ -15,9 +15,7 @@ public class PCBADAO : IPCBADAO
         {
             connection.ConnectionString = linakDbConnectionString;
             
-            string query = "SELECT p.* FROM PCBAs p " +
-                           "INNER JOIN Actuators a ON p.Uid = a.PCBAUid " +
-                           "WHERE a.WorkOrderNumber = '" + woNo + "' AND a.SerialNumber = " + serialNo;
+            string query = "SELECT * FROM PCBAs WHERE Uid = '" + uid + "'";
             
             SqlCommand command = new SqlCommand(query, connection);
             connection.Open();

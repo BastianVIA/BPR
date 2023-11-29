@@ -29,8 +29,8 @@ public class PCBA : Entity
     {
         Uid = uid;
         ManufacturerNumber = 0;
-        ItemNumber = "";
-        Software = "";
+        ItemNumber = "N/A";
+        Software = "N/A";
         ProductionDateCode = 0;
     }
 }

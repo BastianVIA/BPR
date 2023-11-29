@@ -30,7 +30,24 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 
     public async Task UpdatePCBA(PCBA pcba)
     {
-        await UpdateAsync(FromDomain(pcba), pcba.GetDomainEvents());
+        try
+        {
+            await UpdateAsync(FromDomain(pcba), pcba.GetDomainEvents());
+        }
+        catch (Exception e)
+        {
+            var localPcba = QueryOtherLocal<PCBAModel>().FirstOrDefault(m => m.Uid == pcba.Uid);
+            if (localPcba == null)
+            {
+                localPcba = await QueryOther<PCBAModel>().FirstAsync(m => m.Uid == pcba.Uid);
+            }
+            localPcba.ManufacturerNumber = pcba.ManufacturerNumber;
+            localPcba.ItemNumber = pcba.ItemNumber;
+            localPcba.Software = pcba.Software;
+            localPcba.ProductionDateCode = pcba.ProductionDateCode;
+            await UpdateAsync(localPcba, pcba.GetDomainEvents());
+        }
+        
     }
 
     private PCBA ToDomain(PCBAModel pcbaModel)

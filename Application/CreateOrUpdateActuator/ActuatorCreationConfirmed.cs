@@ -20,8 +20,8 @@ internal sealed class ActuatorCreationConfirmedDomainEventHandler : IDomainEvent
 
     public async Task Handle(ActuatorCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        var pcba = pcbadao.GetPCBA(notification.Id.WorkOrderNumber.ToString(), notification.Id.SerialNumber);
-        await pcbaRepository.CreatePCBA(ToDomain(pcba));
+        var pcba = pcbadao.GetPCBA(notification.PCBAUid);
+        await pcbaRepository.UpdatePCBA(ToDomain(pcba));
     }
 
     private PCBA ToDomain(PCBAModel pcbaModel)

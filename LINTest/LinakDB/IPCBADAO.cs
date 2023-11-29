@@ -4,5 +4,5 @@ namespace LINTest.LinakDB;
 
 public interface IPCBADAO
 {
-    public PCBAModel GetPCBA(string woNo, int serialNo);
+    public PCBAModel GetPCBA(string uid);
 }
