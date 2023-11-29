@@ -1,6 +1,4 @@
-﻿using Application.CreateActuator;
-using Application.CreateOrUpdateActuator;
-using Backend.Model;
+﻿using Backend.Model;
 using BuildingBlocks.Application;
 using LINTest.Handlers;
 using Microsoft.Extensions.Logging;
@@ -50,10 +48,10 @@ public class CsvDataService
 
     private async Task SendCommandAsync(CSVModel csvModel, ICommandBus commandBus, CancellationToken stoppingToken)
     {
-        var command = CreateOrUpdateActuatorCommand.Create(
-            int.Parse(csvModel.WorkOrderNumber),
-            int.Parse(csvModel.SerialNumber),
-            csvModel.PCBAUid);
-        await commandBus.Send(command, stoppingToken);
+        // var command = CreateOrUpdateActuatorCommand.Create(
+        //     int.Parse(csvModel.WorkOrderNumber),
+        //     int.Parse(csvModel.SerialNumber),
+        //     csvModel.PCBAUid);
+        // await commandBus.Send(command, stoppingToken);
     }
 }

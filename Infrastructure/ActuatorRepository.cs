@@ -47,7 +47,12 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
     private Actuator ToDomain(ActuatorModel actuatorModel)
     {
         var actuatorId = CompositeActuatorId.From(actuatorModel.WorkOrderNumber, actuatorModel.SerialNumber);
-        var pcba = new PCBA(uid: actuatorModel.PCBA.Uid, manufacturerNo: actuatorModel.PCBA.ManufacturerNumber);
+        var pcba = new PCBA(
+            uid: actuatorModel.PCBA.Uid, 
+            manufacturerNo: actuatorModel.PCBA.ManufacturerNumber, 
+            itemNumber: actuatorModel.PCBA.ItemNumber, 
+            software: actuatorModel.PCBA.Software, 
+            productionDateCode: actuatorModel.PCBA.ProductionDateCode);
         return new Actuator(actuatorId, pcba);
     }
     

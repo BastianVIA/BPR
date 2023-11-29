@@ -22,7 +22,7 @@ public class CreateOrUpdateActuatorCommandHandler : ICommandHandler<CreateOrUpda
     public async Task Handle(CreateOrUpdateActuatorCommand request, CancellationToken cancellationToken)
     {
         var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-        var pcba = new PCBA(request.PCBAUid, 0);
+        var pcba = new PCBA(request.PCBAUid);
         await CreatePCBAIfNotExists(pcba);
 
         try

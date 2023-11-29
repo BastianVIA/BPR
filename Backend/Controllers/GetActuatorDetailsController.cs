@@ -32,14 +32,19 @@ public class GetActuatorDetailsController : ControllerBase
     {
         public PCBA PCBA { get; }
         private GetActuatorDetailsResponse() {}
-        private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo)
+        private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo, string itemNumber, string software, int productionDateCode)
         {
-            PCBA = new PCBA(uid: pcbaUid, manufacturerNo: manufacturerNo);
+            PCBA = new PCBA(
+                uid: pcbaUid, 
+                manufacturerNo: manufacturerNo,
+                itemNumber: itemNumber,
+                software: software,
+                productionDateCode: productionDateCode);
         }
 
         internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
         {
-            return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber);
+            return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber, result.PCBADto.ItemNumber, result.PCBADto.Software, result.PCBADto.ProductionDateCode);
         }
     }
     }

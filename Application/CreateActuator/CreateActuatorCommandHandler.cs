@@ -29,7 +29,7 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
 
     private async Task<PCBA> GetPCBA(string pcbaUid)
     {
-        var pcba = new PCBA(pcbaUid, 0);
+        var pcba = new PCBA(pcbaUid);
         try
         {
             pcba = await _pcbaRepository.GetPCBA(pcbaUid);

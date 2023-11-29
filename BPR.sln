@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actuator", "Actuator", "{09766978-7157-4FF7-8CC5-83399DD3CE4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{2C57BD70-3247-4213-91E3-8F59762770F2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7DDECA38-2C1D-4A65-9E82-C4421A6422FC} = {7DDECA38-2C1D-4A65-9E82-C4421A6422FC}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{F63CB531-C844-406B-8FB2-45A0A9C7D622}"
 EndProject
