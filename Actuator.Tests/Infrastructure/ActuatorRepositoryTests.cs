@@ -125,7 +125,7 @@ public class ActuatorRepositoryTests
     }
     
     [Fact]
-    public async Task GetActuatorFromPCBA_ReturnsRightActuators_WhenActuatorsFound()
+    public async Task GetActuatorFromPCBA_ReturnsListWithRightActuator_WhenActuatorsFound()
     {
         var noOfActuatorsToCreate = 3;
         var expected = _fixture.CreateMany<Domain.Entities.Actuator>(noOfActuatorsToCreate).ToList();
