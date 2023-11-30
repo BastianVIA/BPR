@@ -11,6 +11,8 @@ public abstract class Entity
 
     public IList<IDomainEvent> GetDomainEvents()
     {
-        return _domainEvents;
+        var copyOfDomainEvents = new List<IDomainEvent>(_domainEvents);
+        _domainEvents.Clear();
+        return copyOfDomainEvents;
     }
 }
