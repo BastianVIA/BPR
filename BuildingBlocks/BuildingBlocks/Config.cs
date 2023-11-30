@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Application;
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database.Transaction;
+using BuildingBlocks.Integration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ public static class Config
                 configuration.GetConnectionString("DatabaseConnection")).EnableSensitiveDataLogging());
 
         services.AddScoped<IScheduler, Scheduler>();
+        services.AddScoped<IIntegrationEventPublisher, IntegrationEventPublisher>();
         services.AddScoped<IDbTransaction, DbTransaction>();
         services.AddTransient<IQueryBus, QueryBus>();
         services.AddTransient<ICommandBus, CommandBus>();

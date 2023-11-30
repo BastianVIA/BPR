@@ -1,9 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BuildingBlocks.Application;
+using BuildingBlocks.Integration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace LINTest.Services;
 
@@ -38,12 +36,12 @@ public class LINTestBackgroundService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             using var scope = _serviceProvider.CreateScope();
-            var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
+            var publisher = scope.ServiceProvider.GetRequiredService<IIntegrationEventPublisher>();
 
             var allFiles = _fileProcessor.GetCsvFiles();
 
             var numberOfFilesProcessed =
-                await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, commandBus);
+                await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
 
             if (numberOfFilesProcessed >= 0)
             {
@@ -66,7 +64,7 @@ public class LINTestBackgroundService : BackgroundService
 
     private async Task<int> ProcessingFiles(CancellationToken stoppingToken, string[] allFiles,
         DateTime lastProcessedFileTime,
-        ICommandBus commandBus)
+        IIntegrationEventPublisher publisher)
     {
         var filesToProcess = allFiles.Select(filePath => new
             {
@@ -82,7 +80,7 @@ public class LINTestBackgroundService : BackgroundService
             try
             {
                 _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
-                await _csvDataService.ProcessCsvData(file.Path, commandBus, stoppingToken);
+                await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
 
                 lastProcessedFileTime = file.CreationTime;
                 _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
