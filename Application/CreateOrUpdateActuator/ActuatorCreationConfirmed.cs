@@ -9,13 +9,13 @@ namespace Application.CreateOrUpdateActuator;
 
 internal sealed class ActuatorCreationConfirmedDomainEventHandler : IDomainEventListener<ActuatorCreatedDomainEvent>
 {
-    private readonly IPCBARepository pcbaRepository;
-    private readonly IPCBADAO pcbadao;
+    private readonly IPCBARepository _pcbaRepository;
+    private readonly IPCBAService _pcbadao;
 
-    public ActuatorCreationConfirmedDomainEventHandler(IPCBARepository pcbaRepository, IPCBADAO pcbadao)
+    public ActuatorCreationConfirmedDomainEventHandler(IPCBARepository pcbaRepository, IPCBAService pcbadao)
     {
-        this.pcbaRepository = pcbaRepository;
-        this.pcbadao = pcbadao;
+        _pcbaRepository = pcbaRepository;
+        _pcbadao = pcbadao;
     }
 
     public async Task Handle(ActuatorCreatedDomainEvent notification, CancellationToken cancellationToken)

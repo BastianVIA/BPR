@@ -23,7 +23,7 @@ public static class Config
         services.AddSingleton<FileProcessor>();
         services.AddSingleton<CsvDataService>();
         services.AddSingleton<FileProcessingStateManager>();
-        services.AddScoped<IPCBADAO, PCBADAO>();
+        services.AddScoped<IPCBAService, PCBADAO>();
         
         services.AddSingleton<FileProcessorOptions>(serviceProvider => 
             configuration.GetSection("LINTest:FileProcessor").Get<FileProcessorOptions>());

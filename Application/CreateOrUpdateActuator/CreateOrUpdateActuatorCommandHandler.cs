@@ -22,9 +22,7 @@ public class CreateOrUpdateActuatorCommandHandler : ICommandHandler<CreateOrUpda
     public async Task Handle(CreateOrUpdateActuatorCommand request, CancellationToken cancellationToken)
     {
         var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-        var pcba = new PCBA(request.PCBAUid);
-        await CreatePCBAIfNotExists(pcba);
-
+        var pcba = await _pcbaRepository.GetPCBA(request.PCBAUid);
         try
         {
             var actuator = await _actuatorRepository.GetActuator(actuatorId);
@@ -38,17 +36,5 @@ public class CreateOrUpdateActuatorCommandHandler : ICommandHandler<CreateOrUpda
         }
         
         await _dbTransaction.CommitAsync(cancellationToken);
-    }
-
-    private async Task CreatePCBAIfNotExists(PCBA pcba)
-    {
-        try
-        {
-            await _pcbaRepository.GetLocalPCBA(pcba.Uid);
-        }
-        catch (KeyNotFoundException e)
-        {
-            await _pcbaRepository.CreatePCBA(pcba);
-        }
     }
 }

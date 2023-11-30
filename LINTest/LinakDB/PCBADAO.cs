@@ -3,7 +3,7 @@ using Microsoft.Data.SqlClient;
 
 namespace LINTest.LinakDB;
 
-public class PCBADAO : IPCBADAO
+public class PCBADAO : IPCBAService
 {
     string linakDbConnectionString = "Server=localhost;Database=LINAK-DB;Trusted_Connection=True;TrustServerCertificate=True;";
 

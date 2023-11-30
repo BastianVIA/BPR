@@ -27,17 +27,6 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
         }
         return ToDomain(pcbaModel);
     }
-    
-    public async Task<PCBA> GetLocalPCBA(string id)
-    {
-        var pcbaModel = QueryOtherLocal<PCBAModel>().FirstOrDefault(p => p.Uid == id);
-        if (pcbaModel == null)
-        {
-            throw new KeyNotFoundException(
-                $"Could not find PCBA with Uid: {id}");
-        }
-        return ToDomain(pcbaModel);
-    }
 
     public async Task UpdatePCBA(PCBA pcba)
     {
@@ -45,7 +34,7 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
         if (pcbaToUpdate == null)
         {
             throw new KeyNotFoundException(
-                $"Could not find PCBA with Uid: {pcba.Uid}");
+                $"Could not find PCBA with Uid: {pcba.Uid} to update");
         }
         await UpdateAsync(FromDomain(pcba), pcba.GetDomainEvents());
     }

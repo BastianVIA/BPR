@@ -9,17 +9,17 @@ namespace Application.CreateOrUpdateActuator;
 public class ActuatorFound : IIntegrationEventListener<ActuatorFoundIntegrationEvent>
 {
     private ICommandBus _bus;
-    private readonly IPCBADAO pcbadao;
+    private readonly IPCBAService _pcbadao;
 
-    public ActuatorFound(ICommandBus bus, IPCBADAO pcbadao)
+    public ActuatorFound(ICommandBus bus, IPCBAService pcbadao)
     {
         _bus = bus;
-        this.pcbadao = pcbadao;
+        this._pcbadao = pcbadao;
     }
 
     public Task Handle(ActuatorFoundIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        var pcba = pcbadao.GetPCBA(notification.PCBAUid);
+        var pcba = _pcbadao.GetPCBA(notification.PCBAUid);
         var pcbaCommand = CreatePCBACommand.Create(pcba.Uid.ToString(), pcba.ManufacturerNumber, pcba.ItemNumber, pcba.Software,
             pcba.ProductionDateCode);
         _bus.Send(pcbaCommand, cancellationToken);
