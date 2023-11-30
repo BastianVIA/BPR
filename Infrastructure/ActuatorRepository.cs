@@ -44,7 +44,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
-    public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo)
+    public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo = null)
     {
         var query = Query().Include(model => model.PCBA).Where(model => model.PCBA.Uid == requestUid);
         if (requestManufacturerNo != null)

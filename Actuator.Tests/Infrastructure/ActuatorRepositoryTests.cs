@@ -149,7 +149,7 @@ public class ActuatorRepositoryTests
         
         await _dbContext.SaveChangesAsync();
 
-        var result = await _repository.GetActuatorsFromPCBAAsync("112233", null);
+        var result = await _repository.GetActuatorsFromPCBAAsync("112233");
         
         Assert.NotNull(result);
         Assert.Empty(result);
