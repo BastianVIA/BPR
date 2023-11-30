@@ -14,7 +14,4 @@ public class ActuatorFoundIntegrationEvent : IntegrationEvent
         SerailNumber = serailNumber;
         PCBAUid = pcbaUid;
     }
-    
-    
-
 }
