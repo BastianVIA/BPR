@@ -16,7 +16,7 @@ public class GetActuatorFromPCBAController : ControllerBase
 
     [HttpGet()]
     [Route("api/GetActuatorFromPCBA/{uid}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetActuatorFromPCBAResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorFromPCBAResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync([FromRoute] string uid, [FromQuery] int? manufacturerNo,
