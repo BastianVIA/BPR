@@ -44,7 +44,7 @@ public class CreateOrUpdateActuatorCommandHandler : ICommandHandler<CreateOrUpda
     {
         try
         {
-            await _pcbaRepository.GetPCBA(pcba.Uid);
+            await _pcbaRepository.GetLocalPCBA(pcba.Uid);
         }
         catch (KeyNotFoundException e)
         {
