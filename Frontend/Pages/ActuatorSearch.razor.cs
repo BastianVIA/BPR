@@ -20,10 +20,7 @@ public class ActuatorInfoBase : ComponentBase
     public List<Actuator> actuators = new();
 
     // Blazor page needs an empty constructor
-    public ActuatorInfoBase()
-    {
-        
-    }
+    public ActuatorInfoBase() { }
     
     // Overloaded constructor for unit testing
     public ActuatorInfoBase(IActuatorSearchModel model)

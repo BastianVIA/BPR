@@ -31,6 +31,7 @@ public class ActuatorInfoTests
     [Fact]
     public async Task SearchActuators_ShouldReturnOneActuator_WhenOneMatchFound()
     {
+        // Arrange
         var expected = new List<Actuator>
         {
             _fixture.Create<Actuator>()
@@ -39,8 +40,10 @@ public class ActuatorInfoTests
         _model.GetActuatorsByPCBA(Arg.Any<string>())
             .Returns(expected);
         
+        // Act
         await _viewModel.SearchActuators();
         
+        // Assert
         Assert.NotEmpty(_viewModel.actuators);
         Assert.True(_viewModel.actuators.Count == 1);
     }
@@ -48,6 +51,7 @@ public class ActuatorInfoTests
     [Fact]
     public async Task SearchActuators_ShouldReturnActuatorWithExactUid_WhenMatchFound()
     {
+        // Arrange
         var expectedUid = _fixture.Create<string>();
         _viewModel.SearchActuator.PCBA.PCBAUid = expectedUid;
         var expectedList = new List<Actuator>
@@ -58,7 +62,10 @@ public class ActuatorInfoTests
         _model.GetActuatorsByPCBA(expectedUid)
             .Returns(expectedList);
         
+        // Act
         await _viewModel.SearchActuators();
+        
+        // Assert
         Assert.NotEmpty(_viewModel.actuators);
         Assert.Equal(expectedUid, _viewModel.actuators.First().PCBA.PCBAUid);
     }
@@ -66,13 +73,16 @@ public class ActuatorInfoTests
     [Fact]
     public async Task SearchActuators_ShouldReturnManyActuators_WhenMultipleMatchesFound()
     {
+        // Arrange
         var expectedList = _fixture.CreateMany<Actuator>().ToList();
 
         _model.GetActuatorsByPCBA(Arg.Any<string>())
             .Returns(expectedList);
 
+        // Act
         await _viewModel.SearchActuators();
         
+        // Assert
         Assert.NotEmpty(_viewModel.actuators);
         Assert.True(_viewModel.actuators.Count > 1);
     }
@@ -80,6 +90,7 @@ public class ActuatorInfoTests
     [Fact]
     public async Task SearchActuators_ShouldReturnManyCorrectActuators_WhenMultipleMatchesFound()
     {
+        // Arrange
         var expectedUid = _fixture.Create<string>();
         _viewModel.SearchActuator.PCBA.PCBAUid = expectedUid;
 
@@ -93,8 +104,10 @@ public class ActuatorInfoTests
         _model.GetActuatorsByPCBA(expectedUid)
             .Returns(expectedList);
 
+        // Act
         await _viewModel.SearchActuators();
         
+        // Assert
         Assert.NotEmpty(_viewModel.actuators);
         foreach (var actuator in _viewModel.actuators)
         {
