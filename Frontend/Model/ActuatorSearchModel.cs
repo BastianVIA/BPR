@@ -14,7 +14,7 @@ public class ActuatorSearchModel : IActuatorSearchModel
     public async Task<List<Actuator>> GetActuatorsByPCBA(string uid, int? manufacturerNumber = null)
     {
         var response = await _network.GetActuatorFromPCBA(uid, manufacturerNumber);
-         var list = response.Select(entry => new Actuator
+         var list = response.Actuators.Select(entry => new Actuator
          {
              SerialNumber = entry.SerialNumber, 
              WorkOrderNumber = entry.WorkOrderNumber, 

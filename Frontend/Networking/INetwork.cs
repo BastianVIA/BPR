@@ -6,5 +6,5 @@ public interface INetwork
 {
      Task<ConfigurationResponse> GetConfiguration();
      Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo);
-     Task<ICollection<GetActuatorFromPCBAActuator>> GetActuatorFromPCBA(string pcbaUid, int? manufacturerNumber = null);
+     Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBA(string pcbaUid, int? manufacturerNumber = null);
 }

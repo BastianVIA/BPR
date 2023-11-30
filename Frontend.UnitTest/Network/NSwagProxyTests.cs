@@ -35,7 +35,7 @@ public class NSwagProxyTests
         _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
             .Returns(expected);
         
-        var result = _network.GetActuatorDetails(woNo, serialNumber);
+        var result = await _network.GetActuatorDetails(woNo, serialNumber);
         Assert.NotNull(result);
         Assert.IsType<GetActuatorDetailsResponse>(result);
     }
@@ -102,17 +102,17 @@ public class NSwagProxyTests
     }
 
     [Fact]
-    public async Task GetActuatorFromPCBA_ReturnsListOfGetActuatorFromPCBAActuator_OnSuccess()
+    public async Task GetActuatorFromPCBA_ReturnsGetActuatorFromPCBAResponse_OnSuccess()
     {
         var request = _fixture.Create<string>();
-        var expectedList = new List<GetActuatorFromPCBAActuator>();
+        var expectedResponse = _fixture.Create<GetActuatorFromPCBAResponse>();
 
         _client.GetActuatorFromPCBAAsync(Arg.Any<string>(), Arg.Any<int?>())
-            .Returns(expectedList);
+            .Returns(expectedResponse);
         
         var result= await _network.GetActuatorFromPCBA(request);
         Assert.NotNull(result);
-        Assert.IsType<List<GetActuatorFromPCBAActuator>>(result);
+        Assert.IsType<GetActuatorFromPCBAResponse>(result);
     }
 
     [Fact]

@@ -19,10 +19,12 @@ public class ActuatorSearchModelTests
     public async Task GetActuatorsByPCBA_ReturnsEmptyList_WhenNoMatchesFound()
     {
         var nonExistingUid = "THIsUiDDoesnOtEixst12345";
-        var expectedList = new List<GetActuatorFromPCBAActuator>();
+        var expectedResponse = _fixture.Build<GetActuatorFromPCBAResponse>()
+            .With(a => a.Actuators, new List<GetActuatorFromPCBAActuator>())
+            .Create();
 
         _network.GetActuatorFromPCBA(Arg.Any<string>(), Arg.Any<int?>())
-            .Returns(expectedList);
+            .Returns(expectedResponse);
 
         var result = await _model.GetActuatorsByPCBA(nonExistingUid);
         Assert.NotNull(result);
@@ -34,18 +36,20 @@ public class ActuatorSearchModelTests
     {
         var noOfActuators = 1;
         var expectedUid = _fixture.Create<string>();
-        var expectedList = _fixture.Build<GetActuatorFromPCBAActuator>()
-            .With(a => a.Uid, expectedUid)
-            .CreateMany(noOfActuators)
-            .ToList();
+        var expectedResponse = _fixture.Build<GetActuatorFromPCBAResponse>()
+            .With(a => a.Actuators, _fixture.Build<GetActuatorFromPCBAActuator>()
+                .With(actuator => actuator.Uid, expectedUid)
+                .CreateMany(noOfActuators)
+                .ToList())
+            .Create();
 
         _network.GetActuatorFromPCBA(Arg.Any<string>(), Arg.Any<int?>())
-            .Returns(expectedList);
+            .Returns(expectedResponse);
 
         var result = await _model.GetActuatorsByPCBA(expectedUid);
         Assert.NotEmpty(result);
         Assert.Single(result);
-        Assert.Equal(expectedList[0].Uid, result[0].PCBA.PCBAUid);
+        Assert.Equal(expectedResponse.Actuators.First().Uid, result[0].PCBA.PCBAUid);
 
         await _network.Received(1).GetActuatorFromPCBA(expectedUid, Arg.Any<int?>());
     }
@@ -55,13 +59,16 @@ public class ActuatorSearchModelTests
     {
         var noOfActuators = 3;
         var expectedUid = _fixture.Create<string>();
-        var expectedList = _fixture.Build<GetActuatorFromPCBAActuator>()
-            .With(a => a.Uid, expectedUid)
-            .CreateMany(noOfActuators)
-            .ToList();
+        var expectedReponse = _fixture.Build<GetActuatorFromPCBAResponse>()
+            .With(a => a.Actuators, _fixture.Build<GetActuatorFromPCBAActuator>()
+                .With(actuator => actuator.Uid, expectedUid)
+                .CreateMany(noOfActuators)
+                .ToList())
+            .Create();
+            
 
         _network.GetActuatorFromPCBA(Arg.Any<string>(), Arg.Any<int?>())
-            .Returns(expectedList);
+            .Returns(expectedReponse);
 
         var result = await _model.GetActuatorsByPCBA(expectedUid);
         Assert.NotNull(result);
