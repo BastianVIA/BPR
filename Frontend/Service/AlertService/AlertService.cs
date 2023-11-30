@@ -17,7 +17,7 @@ public class AlertService : IAlertService
         var alert = new Alert
         {
             Message = message,
-            Style = AlertStyle.Danger
+            Style = style
         };
         Invoke(alert);
     }
