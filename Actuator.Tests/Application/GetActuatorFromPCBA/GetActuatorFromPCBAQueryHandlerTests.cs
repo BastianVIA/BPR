@@ -32,9 +32,9 @@ public class GetActuatorFromPCBAQueryHandlerTests
         //Assert
         Assert.NotEmpty(result.Actuators);
         Assert.Equal(noOfActuatorsToReturn, result.Actuators.Count);
-        assertActuatorEqual(actuators[0], result.Actuators[0]);
-        assertActuatorEqual(actuators[1], result.Actuators[1]);
-        assertActuatorEqual(actuators[2], result.Actuators[2]);
+        AssertActuatorEqual(actuators[0], result.Actuators[0]);
+        AssertActuatorEqual(actuators[1], result.Actuators[1]);
+        AssertActuatorEqual(actuators[2], result.Actuators[2]);
         
     }
 
@@ -55,7 +55,7 @@ public class GetActuatorFromPCBAQueryHandlerTests
         Assert.Equal(noOfActuatorsToReturn, result.Actuators.Count);
     }
 
-    private void assertActuatorEqual(Domain.Entities.Actuator expected, GetActuatorFromPCBAActuatordto actual)
+    private void AssertActuatorEqual(Domain.Entities.Actuator expected, GetActuatorFromPCBAActuatordto actual)
     {
         Assert.Equal(expected.Id.WorkOrderNumber, actual.WorkOrderNumber);
         Assert.Equal(expected.Id.SerialNumber, actual.SerialNumber);

@@ -63,7 +63,7 @@ public class ActuatorRepositoryTests
         await _dbContext.SaveChangesAsync();
         
         var added = _dbContext.Actuators.First();
-
+        
         Assert.Equal(actuator.Id.SerialNumber, added.SerialNumber);
         Assert.Equal(actuator.Id.WorkOrderNumber, added.WorkOrderNumber);
         Assert.Equal(actuator.PCBA.Uid, added.PCBA.Uid);
