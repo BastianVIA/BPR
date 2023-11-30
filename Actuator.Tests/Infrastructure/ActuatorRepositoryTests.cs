@@ -63,7 +63,7 @@ public class ActuatorRepositoryTests
         await _dbContext.SaveChangesAsync();
         
         var added = _dbContext.Actuators.First();
-
+        
         Assert.Equal(actuator.Id.SerialNumber, added.SerialNumber);
         Assert.Equal(actuator.Id.WorkOrderNumber, added.WorkOrderNumber);
         Assert.Equal(actuator.PCBA.Uid, added.PCBA.Uid);
@@ -121,10 +121,38 @@ public class ActuatorRepositoryTests
         var result = await _repository.GetActuator(expected.Id);
         
         Assert.NotNull(result);
-        Assert.Equal(expected.Id.SerialNumber, result.Id.SerialNumber);
-        Assert.Equal(expected.Id.WorkOrderNumber, result.Id.WorkOrderNumber);
-        Assert.Equal(expected.PCBA.Uid, result.PCBA.Uid);
-        Assert.Equal(expected.PCBA.ManufacturerNumber, result.PCBA.ManufacturerNumber);
+        await AssertActuatorEquals(expected, result);
+    }
+    
+    [Fact]
+    public async Task GetActuatorFromPCBA_ReturnsListWithRightActuator_WhenActuatorsFound()
+    {
+        var noOfActuatorsToCreate = 3;
+        var expected = _fixture.CreateMany<Domain.Entities.Actuator>(noOfActuatorsToCreate).ToList();
+        await SetupMultipleActuators(expected);
+        
+        await _dbContext.SaveChangesAsync();
+
+        var result = await _repository.GetActuatorsFromPCBAAsync(expected[0].PCBA.Uid, expected[0].PCBA.ManufacturerNumber);
+        
+        Assert.NotNull(result);
+
+        await AssertActuatorEquals(expected[0], result[0]);
+    }
+
+    [Fact]
+    public async Task GetActuatorFromPCBA_ReturnsEmptyList_WhenNoActuatorsFound()
+    {
+        var noOfActuatorsToCreate = 0;
+        var expected = _fixture.CreateMany<Domain.Entities.Actuator>(noOfActuatorsToCreate).ToList();
+        await SetupMultipleActuators(expected);
+        
+        await _dbContext.SaveChangesAsync();
+
+        var result = await _repository.GetActuatorsFromPCBAAsync("112233");
+        
+        Assert.NotNull(result);
+        Assert.Empty(result);
     }
 
     [Fact]
@@ -167,7 +195,14 @@ public class ActuatorRepositoryTests
         var actuatorNotInDb = CreateActuator();
         await Assert.ThrowsAnyAsync<Exception>(() => _repository.UpdateActuator(actuatorNotInDb));
     }
-    
+
+    private async Task SetupMultipleActuators(List<Domain.Entities.Actuator> actuators)
+    {
+        foreach (var actuator in actuators)
+        {
+            await SetupActuator(actuator);
+        }
+    }
     private async Task SetupActuator(Domain.Entities.Actuator actuator)
     {
         _dbContext.Set<ActuatorModel>().Add(new ActuatorModel()
@@ -196,5 +231,14 @@ public class ActuatorRepositoryTests
     private Domain.Entities.Actuator CreateActuator()
     {
         return Domain.Entities.Actuator.Create(_fixture.Create<CompositeActuatorId>(), _fixture.Create<PCBA>());
+    }
+
+
+    private async Task AssertActuatorEquals(Domain.Entities.Actuator expected, Domain.Entities.Actuator actual)
+    {
+        Assert.Equal(expected.Id.SerialNumber, actual.Id.SerialNumber);
+        Assert.Equal(expected.Id.WorkOrderNumber, actual.Id.WorkOrderNumber);
+        Assert.Equal(expected.PCBA.Uid, actual.PCBA.Uid);
+        Assert.Equal(expected.PCBA.ManufacturerNumber, actual.PCBA.ManufacturerNumber);
     }
 }

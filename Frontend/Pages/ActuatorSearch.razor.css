@@ -1,0 +1,6 @@
+
+.grid-header {
+    --rz-grid-header-text-transform: none;
+    --rz-grid-header-font-size: 20px;
+    --rz-grid-header-font-weight: bold; /* hvorfor ikke virk*/
+}
