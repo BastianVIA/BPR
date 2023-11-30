@@ -32,14 +32,14 @@ public class LINTestBackgroundService : BackgroundService
     {
         DateTime lastProcessedFileTime =
             _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
-
+        
         while (!stoppingToken.IsCancellationRequested)
         {
             using var scope = _serviceProvider.CreateScope();
             var publisher = scope.ServiceProvider.GetRequiredService<IIntegrationEventPublisher>();
 
             var allFiles = _fileProcessor.GetCsvFiles();
-
+            
             var numberOfFilesProcessed =
                 await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
 

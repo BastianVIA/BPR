@@ -41,6 +41,12 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 
     public async Task UpdatePCBA(PCBA pcba)
     {
+        var pcbaToUpdate = Query().FirstOrDefault(p => p.Uid == pcba.Uid);
+        if (pcbaToUpdate == null)
+        {
+            throw new KeyNotFoundException(
+                $"Could not find PCBA with Uid: {pcba.Uid}");
+        }
         await UpdateAsync(FromDomain(pcba), pcba.GetDomainEvents());
     }
 
