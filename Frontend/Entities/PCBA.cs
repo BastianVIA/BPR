@@ -4,6 +4,4 @@ namespace Frontend.Entities;
 public class PCBA : Component
 {
     public int PCBAUid { get; set; }
-    
-    
 }
