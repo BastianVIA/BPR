@@ -6,7 +6,7 @@ namespace Frontend.Model;
 
 public class ActuatorDetailsModel : IActuatorDetailsModel
 {
-    private INetwork _network;
+    private readonly INetwork _network;
     public ActuatorDetailsModel(INetwork network)
     {
         _network = network;
@@ -18,7 +18,7 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
         return new Actuator()
             .WithWorkOrderNumber(woNo)
             .WithSerialNumber(serialNo)
-            .WithPCBAUid(networkResponse.PcbaUid);
+            .WithPCBAUid(networkResponse.Pcba.Uid);
     }
 }
 

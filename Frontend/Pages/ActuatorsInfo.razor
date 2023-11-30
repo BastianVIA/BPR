@@ -1,0 +1,56 @@
+﻿@page "/ActuatorsInfo"
+@using Frontend.Model
+@using Frontend.Entities
+@inherits ActuatorsInfoBase
+
+<h3>Actuators Information</h3>
+
+<RadzenRow>
+    <RadzenTemplateForm Data="@SearchActuator" TItem="Actuator" Submit=@SearchWithFilter>
+        <RadzenRow>
+            <RadzenLabel Text="Item Number Filter:" Style="margin-right: 10px;"/>
+            <RadzenNumeric ShowUpDown="false" Name="itemNumberFilter" @bind-Value=@SearchActuator.PCBA.ItemNumber class="mr-2"/>
+            <RadzenLabel Text="Manufacturer Number Filter:" Style="margin-right: 10px;"/>
+            <RadzenNumeric ShowUpDown="false" Name="manufacturerNumberFilter" @bind-Value=@SearchActuator.PCBA.ManufacturerNumber class="mr-2"/>
+            <RadzenLabel Text="Production Date Code Filter:" Style="margin-right: 10px;"/>
+            <RadzenNumeric ShowUpDown="false" Name="productionDateCodeFilter" @bind-Value=@SearchActuator.PCBA.ProductionDateCode class="mr-2"/>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Search" Style="width: auto; margin-left: 10px;"/>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+
+
+<RadzenDataGrid Data="@actuators" TItem="Actuator" AllowPaging="true" AllowSorting="true" PageSize="10" Style="margin-top: 20px;">
+    <Columns>
+        <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Sortable="true">
+            <HeaderTemplate>
+                <div class="bold-header">Work Order Number</div>
+            </HeaderTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Sortable="true">
+            <HeaderTemplate>
+                <div class="bold-header">Serial Number</div>
+            </HeaderTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="Item Number" Sortable="true">
+            <HeaderTemplate>
+                <div class="bold-header">Item Number</div>
+            </HeaderTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number" Sortable="true">
+            <HeaderTemplate>
+                <div class="bold-header">Manufacturer Number</div>
+            </HeaderTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="Production Date Code" Sortable="true">
+            <HeaderTemplate>
+                <div class="bold-header">Production Date Code</div>
+            </HeaderTemplate>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="PCBA UID" Sortable="true">
+            <HeaderTemplate>
+                <div class="bold-header">PCBA UID</div>
+            </HeaderTemplate>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

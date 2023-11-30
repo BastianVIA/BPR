@@ -17,6 +17,7 @@ public static class ValidationSettings
             settings.WorkOrderNumberLength = configFromBackend.ValidationSettings.WorkOrderNumberLength;
             settings.SerialNumberMinLength = configFromBackend.ValidationSettings.SerialNumberMinLength;
             settings.SerialNumberMaxLength = configFromBackend.ValidationSettings.SerialNumberMaxLength;
+            // settings.ItemNumberLength = configFromBackend.ValidationSettings.ItemNumberLength;
             return settings;
         });
         

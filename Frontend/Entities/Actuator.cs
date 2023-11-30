@@ -18,9 +18,27 @@ public class Actuator
         return this;
     }
 
-    public Actuator WithPCBAUid(int pcbaUid)
+    public Actuator WithPCBAUid(string pcbaUid)
     {
         PCBA.PCBAUid = pcbaUid;
+        return this;
+    }
+    
+    public Actuator WithPCBAItemNumber(int itemNo)
+    {
+        PCBA.ItemNumber = itemNo;
+        return this;
+    }
+    
+    public Actuator WithPCBAProductionDateCode(int productionDateCode)
+    {
+        PCBA.ProductionDateCode = productionDateCode;
+        return this;
+    }
+    
+    public Actuator WithPCBAManufacturerNumber(int manufacturerNo)
+    {
+        PCBA.ManufacturerNumber = manufacturerNo;
         return this;
     }
 }

@@ -22,7 +22,7 @@
 
 <RadzenRow>
     
-    @if (actuator.PCBA.PCBAUid > 0 )
+    @if (!string.IsNullOrEmpty( actuator.PCBA.PCBAUid) )
     {
         <RadzenCard Style="max-width: 420px; margin-top: 30px">
             <RadzenText>WO: @actuator.WorkOrderNumber</RadzenText>
