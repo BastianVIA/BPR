@@ -36,11 +36,6 @@ public class ActuatorInfoBase : ComponentBase
         {
             actuators = await ActuatorModel.GetActuatorsByPCBA(SearchActuator.PCBA.PCBAUid);
         }
-        catch (KeyNotFoundException e)
-        {
-            Console.WriteLine(e);
-            AlertService.FireEvent(AlertStyle.Warning, $"No actuators was with the PCBA Uid: {SearchActuator.PCBA.PCBAUid}");
-        }
         catch (NetworkException e)
         {
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
