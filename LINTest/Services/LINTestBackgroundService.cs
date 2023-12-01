@@ -68,20 +68,20 @@ public class LINTestBackgroundService : BackgroundService
         var filesToProcess = allFiles.Select(filePath => new
             {
                 Path = filePath,
-                CreationTime = _fileProcessor.GetFileCreationTime(filePath)
+                LastWriteTime = _fileProcessor.GetFileCreationTime(filePath)
             })
-            .Where(file => file.CreationTime > lastProcessedFileTime)
-            .OrderBy(file => file.CreationTime)
+            .Where(file => file.LastWriteTime > lastProcessedFileTime)
+            .OrderBy(file => file.LastWriteTime)
             .ToList();
 
         foreach (var file in filesToProcess)
         {
             try
             {
-                _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
+                _logger.LogInformation($"Processing file: {file.Path}, created at {file.LastWriteTime}");
                 await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
                 
-                _fileProcessingStateManager.SaveLastProcessedDateTime(file.CreationTime);
+                _fileProcessingStateManager.SaveLastProcessedDateTime(file.LastWriteTime);
             }
             catch (Exception ex)
             {
