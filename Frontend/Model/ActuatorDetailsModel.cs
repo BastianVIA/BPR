@@ -1,6 +1,5 @@
 ﻿using Frontend.Entities;
 using Frontend.Networking;
-using Frontend.Service;
 
 namespace Frontend.Model;
 

@@ -5,8 +5,7 @@ namespace Frontend.Networking;
 
 public class NSwagProxy : INetwork
 {
-    private readonly Client _client;
-
+    private readonly IClient _client;
     public NSwagProxy(IHttpClientFactory clientFactory, IConfiguration configuration)
     {
         var uri = configuration.GetSection("BackendApiSettings:Uri").Value;
@@ -40,6 +39,11 @@ public class NSwagProxy : INetwork
     public async Task<ConfigurationResponse> GetConfiguration()
     {
         return await Send(async () => await _client.ConfigurationAsync());
+    }
+
+    public async Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBA(string pcbaUid, int? manufacturerNumber = null)
+    {
+        return await Send(async () => await _client.GetActuatorFromPCBAAsync(pcbaUid, manufacturerNumber));
     }
 
     public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? itemNo, int? manufacturerNo,

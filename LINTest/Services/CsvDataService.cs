@@ -1,8 +1,7 @@
-﻿using Application.CreateActuator;
-using Application.CreateOrUpdateActuator;
 using Backend.Model;
-using BuildingBlocks.Application;
+using BuildingBlocks.Integration;
 using LINTest.Handlers;
+using LINTest.Integration;
 using Microsoft.Extensions.Logging;
 
 namespace LINTest.Services;
@@ -17,12 +16,12 @@ public class CsvDataService
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
     
-    public async Task ProcessCsvData(string filePath, ICommandBus commandBus, CancellationToken stoppingToken)
+    public async Task ProcessCsvData(string filePath, IIntegrationEventPublisher publisher, CancellationToken stoppingToken)
     {
         var csvModel = CSVHandler.ReadCSV(filePath); 
         if (IsValidCsvData(csvModel,filePath))
         {
-            await SendCommandAsync(csvModel, commandBus, stoppingToken);
+            await SendCommandAsync(csvModel, publisher, stoppingToken);
         }
     }
 
@@ -48,12 +47,12 @@ public class CsvDataService
         return true;
     }
 
-    private async Task SendCommandAsync(CSVModel csvModel, ICommandBus commandBus, CancellationToken stoppingToken)
+    private async Task SendCommandAsync(CSVModel csvModel, IIntegrationEventPublisher publisher, CancellationToken stoppingToken)
     {
-        var command = CreateOrUpdateActuatorCommand.Create(
+        var eventToSend = new ActuatorFoundIntegrationEvent(
             int.Parse(csvModel.WorkOrderNumber),
             int.Parse(csvModel.SerialNumber),
             csvModel.PCBAUid);
-        await commandBus.Send(command, stoppingToken);
+        await publisher.PublishAsync(eventToSend, stoppingToken);
     }
 }

@@ -1,0 +1,40 @@
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using Application.CreateOrUpdateActuator;
+using Application.CreatePCBA;
+using BuildingBlocks.Application;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Backend.Controllers;
+
+[ApiController]
+
+public class PostActuatorController : ControllerBase
+{
+    private readonly ICommandBus _bus;
+
+    public PostActuatorController(ICommandBus bus)
+    {
+        _bus = bus;
+    }
+    
+    [HttpPost()]
+    [Route("api/[controller]")]
+    [ProducesResponseType((int)HttpStatusCode.Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateAsync([FromBody] PostActuatorRequest request, CancellationToken cancellationToken)
+    {
+        var cmd = CreateOrUpdateActuatorCommand.Create(request.WorkOrderNumber, request.SerialNumber, request.PCBAUid);
+        await _bus.Send(cmd, cancellationToken);
+        return Ok();
+    }
+
+    public class PostActuatorRequest
+    {
+        public int WorkOrderNumber { get; set; }
+        public int SerialNumber { get; set; }
+        public string PCBAUid { get; set; }
+    }
+
+}
