@@ -1,0 +1,29 @@
+﻿@using Frontend.Entities
+@using Microsoft.AspNetCore.Components
+<RadzenTemplateForm TItem="Actuator" Data="@BindingObject" Submit="@OnSubmit">
+    <RadzenRow>
+        <RadzenColumn>
+          <RadzenLabel Text="PCBA Uid"/>
+          <RadzenTextBox style="display: block" Name="PcbaUid" @bind-Value="@BindingObject.PCBA.PCBAUid" class="w-100"/>
+        </RadzenColumn>
+        <RadzenColumn>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenTemplateForm>
+
+
+@code {
+
+    [Parameter]
+    public Actuator BindingObject { get; set; }
+    
+    [Parameter]
+    public Task OnSubmitEvent { get; set; }
+
+    private void OnSubmit()
+    {
+        OnSubmitEvent.Start();
+    }
+
+}

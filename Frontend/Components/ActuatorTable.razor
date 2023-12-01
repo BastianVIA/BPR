@@ -1,0 +1,19 @@
+﻿@using Frontend.Entities
+
+<RadzenDataGrid TItem="Actuator" Data="@Actuators" ColumnWidth="300px">
+    <Columns>
+        <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Frozen="true"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Frozen="true"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="ItemNumber Number"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="Production Date Code"/>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    [Parameter]
+    public List<Actuator> Actuators { get; set; } = new();
+
+}
