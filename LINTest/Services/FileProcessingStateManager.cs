@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LINTest.Models;
+using Newtonsoft.Json;
 
 namespace LINTest.Services;
 

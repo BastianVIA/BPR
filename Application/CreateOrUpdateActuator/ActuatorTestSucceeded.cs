@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Infrastructure.Database.Transaction;
+﻿using Application.CreatePCBAAndActuator;
+using BuildingBlocks.Infrastructure.Database.Transaction;
 using BuildingBlocks.Integration;
 using BuildingBlocks.Integration.Inbox;
 using LINTest.Integration;
@@ -18,7 +19,7 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
 
     public async Task Handle(ActuatorTestSucceededIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        var cmd = CreateOrUpdateActuatorCommand.Create(notification.WorkOrderNumber, notification.SerailNumber,
+        var cmd = CreatePCBAAndActuatorCommand.Create(notification.WorkOrderNumber, notification.SerailNumber,
             notification.PCBAUid);
         await _inbox.Add(InboxMessage.From(cmd, notification.Id));
         await _transaction.CommitAsync(cancellationToken);

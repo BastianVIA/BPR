@@ -68,11 +68,10 @@ public class LINTestBackgroundService : BackgroundService
         {
             try
             {
-                _logger.LogInformation($"Processing file: {file.Path}, created at {file.LastWriteTime}");
-                await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
-                
-                _fileProcessingStateManager.SaveLastProcessedDateTime(file.LastWriteTime);
+                _logger.LogInformation($"Processing file: {filesToProcess[i].Path}, last editied at {filesToProcess[i].LastWriteTime}");
                 await _csvDataService.ProcessCsvData(filesToProcess[i].Path, publisher, stoppingToken);
+                
+                _fileProcessingStateManager.SaveLastProcessedDateTime(filesToProcess[i].LastWriteTime);
             }
             catch (ServiceUnavailableException e)
             {
@@ -94,9 +93,6 @@ public class LINTestBackgroundService : BackgroundService
                     $"File at {filesToProcess[i].Path} has failed {consecutiveFails} consecutive times, we will therefore skip this file and not retry it. \n " +
                     $"Manuel intervention is needed for this file to be picked up by the system in the future");
             }
-
-            lastProcessedFileTime = filesToProcess[i].CreationTime;
-            _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
         }
         return filesToProcess.Count;
     }
