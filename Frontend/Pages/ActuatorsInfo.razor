@@ -8,6 +8,8 @@
 <RadzenRow>
     <RadzenTemplateForm Data="@SearchActuator" TItem="Actuator" Submit=@SearchWithFilter>
         <RadzenRow>
+            <RadzenLabel Text="PCBA Uid Filter:" Style="margin-right: 10px;"/>
+            <RadzenNumeric ShowUpDown="false" Name="pcbaUidFilter" @bind-Value=@SearchActuator.PCBA.PCBAUid class="mr-2"/>
             <RadzenLabel Text="Item Number Filter:" Style="margin-right: 10px;"/>
             <RadzenNumeric ShowUpDown="false" Name="itemNumberFilter" @bind-Value=@SearchActuator.PCBA.ItemNumber class="mr-2"/>
             <RadzenLabel Text="Manufacturer Number Filter:" Style="margin-right: 10px;"/>

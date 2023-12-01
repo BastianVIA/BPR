@@ -13,9 +13,9 @@ public class GetActuatorsWithFilterModel : IGetActuatorsWithFilterModel
     }
 
 
-    public async Task<List<Actuator>> GetActuatorWithFilter(int? itemNo, int? manufacturerNo, int? productionDateCode)
+    public async Task<List<Actuator>> GetActuatorWithFilter(string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode)
     {
-        var networkResponse = await _network.GetActuatorWithFilter(itemNo, manufacturerNo, productionDateCode);
+        var networkResponse = await _network.GetActuatorWithFilter( pcbaUid, itemNo, manufacturerNo, productionDateCode);
 
         var actuators = new List<Actuator>();
         foreach (var responseItem in networkResponse.Actuators)
@@ -23,7 +23,8 @@ public class GetActuatorsWithFilterModel : IGetActuatorsWithFilterModel
             var actuator = new Actuator()
                 .WithWorkOrderNumber(responseItem.WorkOrderNumber)
                 .WithSerialNumber(responseItem.SerialNumber)
-                .WithPCBAUid(responseItem.Pcba.PcbaUid).WithPCBAItemNumber(responseItem.Pcba.ItemNumber)
+                .WithPCBAUid(responseItem.Pcba.PcbaUid)
+                .WithPCBAItemNumber(responseItem.Pcba.ItemNumber)
                 .WithPCBAManufacturerNumber(responseItem.Pcba.ManufacturerNumber)
                 .WithPCBAProductionDateCode(responseItem.Pcba.ProductionDateCode);
 

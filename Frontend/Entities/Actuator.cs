@@ -24,7 +24,7 @@ public class Actuator
         return this;
     }
     
-    public Actuator WithPCBAItemNumber(int itemNo)
+    public Actuator WithPCBAItemNumber(string itemNo)
     {
         PCBA.ItemNumber = itemNo;
         return this;

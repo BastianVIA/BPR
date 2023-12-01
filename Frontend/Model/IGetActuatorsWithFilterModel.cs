@@ -4,7 +4,7 @@ namespace Frontend.Model;
 
 public interface IGetActuatorsWithFilterModel
 {
-    public Task<List<Actuator>> GetActuatorWithFilter(int? itemNo, int? manufacturerNo,
+    public Task<List<Actuator>> GetActuatorWithFilter(string? pcbaUid, string? itemNo, int? manufacturerNo,
         int? productionDateCode);
 
 }

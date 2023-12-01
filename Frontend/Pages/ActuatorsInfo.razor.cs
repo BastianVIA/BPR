@@ -6,7 +6,8 @@ namespace Frontend.Pages;
 
 public class ActuatorsInfoBase: ComponentBase
 {
-    private int? itemNumberFilter;
+    private string? pcbaUidFilter;
+    private string? itemNumberFilter;
     private int? manufacturerNumberFilter;
     private int? productionDateCodeFilter;
     public List<Actuator> actuators = new();
@@ -18,7 +19,7 @@ public class ActuatorsInfoBase: ComponentBase
 
     public async Task SearchWithFilter()
     {
-        actuators = await GetActuatorsWithFilter.GetActuatorWithFilter(SearchActuator.PCBA.ItemNumber, SearchActuator.PCBA.ManufacturerNumber, SearchActuator.PCBA.ProductionDateCode);
+        actuators = await GetActuatorsWithFilter.GetActuatorWithFilter(SearchActuator.PCBA.PCBAUid, SearchActuator.PCBA.ItemNumber, SearchActuator.PCBA.ManufacturerNumber, SearchActuator.PCBA.ProductionDateCode);
     }
 
 } 

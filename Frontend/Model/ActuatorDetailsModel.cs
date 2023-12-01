@@ -17,7 +17,8 @@ public class ActuatorDetailsModel : IActuatorDetailsModel
         return new Actuator()
             .WithWorkOrderNumber(woNo)
             .WithSerialNumber(serialNo)
-            .WithPCBAUid(networkResponse.Pcba.Uid);
+            .WithPCBAUid(networkResponse.Pcba.Uid)
+            .WithPCBAManufacturerNumber(networkResponse.Pcba.ManufacturerNumber);
     }
 }
 

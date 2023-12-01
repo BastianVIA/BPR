@@ -3,25 +3,28 @@
 namespace Application.GetActuatorsWithFilter;
 
 public class GetActuatorsWithFilterQuery: IQuery<GetActuatorsWithFilterDto>
-{    internal int? ItemNumber { get; }
+{    
+    internal string? PCBAUid { get; }
+    internal string? ItemNumber { get; }
     internal int? ManufacturerNumber { get; }
     internal int? ProductionDateCode { get; }
-    private GetActuatorsWithFilterQuery(int? itemNo, int? manufacturerNo, int? productionDateCode)
+    private GetActuatorsWithFilterQuery(string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode)
     {
+        PCBAUid = pcbaUid;
         ItemNumber = itemNo;
         ManufacturerNumber = manufacturerNo;
-        productionDateCode = productionDateCode;
+        ProductionDateCode = productionDateCode;
     }
 
     
-    public static GetActuatorsWithFilterQuery Create(int? itemNo, int? manufacturerNo, int? productionDateCode)
+    public static GetActuatorsWithFilterQuery Create(string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode)
     {
-        if (productionDateCode == null && manufacturerNo == null && productionDateCode == null )
+        if (productionDateCode == null && manufacturerNo == null && productionDateCode == null && pcbaUid ==null && itemNo ==null )
         {
             throw new ArgumentException("(Filter cannot all be empty");
         }
 
-        return new GetActuatorsWithFilterQuery(itemNo, manufacturerNo, productionDateCode);
+        return new GetActuatorsWithFilterQuery(pcbaUid, itemNo, manufacturerNo, productionDateCode);
 
     }
 }

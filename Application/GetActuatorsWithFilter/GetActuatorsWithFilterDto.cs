@@ -33,13 +33,16 @@ public class PCBADto
 {
     public string Uid { get; set; }
     public int ManufacturerNumber { get; set; }
-
+    public int ProductionDateCode { get; set; }
+    public string ItemNumber { get; set; }
     internal static PCBADto From(PCBA pcba)
     {
         return new PCBADto
         {
             Uid = pcba.Uid,
-            ManufacturerNumber = pcba.ManufacturerNumber
+            ManufacturerNumber = pcba.ManufacturerNumber,
+            ProductionDateCode = pcba.ProductionDateCode,
+            ItemNumber = pcba.ItemNumber
         };
     }
 }

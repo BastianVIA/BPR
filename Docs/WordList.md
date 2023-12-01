@@ -23,5 +23,5 @@
 | ErrorCode                 | errorCode          | N/A      |             |
 | Tester                    | tester             | string   |             |
 | Bay                       | bay                | int      |             |
-| ItemNumber                | itemNo             | int      |             |
+| ItemNumber                | itemNo             | string   |             |
 

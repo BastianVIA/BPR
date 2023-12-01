@@ -19,10 +19,10 @@ public class GetActuatorsWithFilterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync([FromQuery] int? itemNo, [FromQuery] int? manufacturerNo,
+    public async Task<IActionResult> GetAsync([FromQuery] string? pcbaUid, [FromQuery] string? itemNo, [FromQuery] int? manufacturerNo,
         [FromQuery] int? productionDateCode, CancellationToken cancellationToken)
     {
-        var query = GetActuatorsWithFilterQuery.Create(itemNo, manufacturerNo, productionDateCode);
+        var query = GetActuatorsWithFilterQuery.Create(pcbaUid, itemNo, manufacturerNo, productionDateCode);
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorWithFilterResponse.From(result));
     }
@@ -54,37 +54,24 @@ public class GetActuatorsWithFilterController : ControllerBase
 
     public class GetActuatorWithFilterPCBA
     {
-        public int ItemNumber { get; }
-        public int ManufacturerNumber { get; }
-        public int ProductionDateCode { get; }
         public string PCBAUid { get; }
+        public int ManufacturerNumber { get; }
+        public string ItemNumber { get; }
+        public int ProductionDateCode { get; }
+       
 
-        public GetActuatorWithFilterPCBA(int manufacturerNumber, string pcbaUid)
+        public GetActuatorWithFilterPCBA(string pcbaUid, int manufacturerNumber, string itemNumber, int productionDateCode)
         {
             ManufacturerNumber = manufacturerNumber;
             PCBAUid = pcbaUid;
+            ItemNumber = itemNumber;
+            ProductionDateCode = productionDateCode;
         }
 
         internal static GetActuatorWithFilterPCBA From(PCBADto result)
         {
-            return new GetActuatorWithFilterPCBA(result.ManufacturerNumber, result.Uid);
+            return new GetActuatorWithFilterPCBA(result.Uid,result.ManufacturerNumber, result.ItemNumber,result.ProductionDateCode);
         }
-
-        // TODO
-        // public GetActuatorWithFilterPCBA(int itemNo, int manufacturerNo, int productionDateCode, int pcbaUid)
-        // {
-        //     this.itemNo = itemNo;
-        //     this.manufacturerNo = manufacturerNo;
-        //     this.productionDateCode = productionDateCode;
-        //        this.pcbaUid = pcbauid;
-        // }
-
-
-        //
-        // internal static GetActuatorWithFilterPCBA From(PCBA result)
-        // {
-        //     return new GetActuatorWithFilterPCBA(result.itemNo, result.ManufacturerNumber, result.productionDateCode);
-        // }
     }
 
     public class GetActuatorWithFilterActuator

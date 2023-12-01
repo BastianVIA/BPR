@@ -44,37 +44,36 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
-    public async Task<List<Actuator>> GetActuatorsWithFilter(int? requestItemNumber, int? requestManufacturerNumber,
+    public async Task<List<Actuator>> GetActuatorsWithFilter(string? requestUid, string? requestItemNumber,
+        int? requestManufacturerNumber,
         int? requestProductionDateCode)
     {
         var actuatorFromDb = Query().Include(model => model.PCBA).AsQueryable();
-        // if (requestItemNumber != null)
-        // {
-        //     actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNo == requestItemNumber);
-        // }
+        
+        if (requestUid != null)
+        {
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.Uid == requestUid);
+        }
+
+        if (requestItemNumber != null)
+        {
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNumber == requestItemNumber);
+        }
+
         if (requestManufacturerNumber != null)
         {
             actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNumber);
         }
 
-        // if (requestProductionDateCode != null)
-        // {
-        //     actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.productionDateCode == requestProductionDateCode);
-        // }
+        if (requestProductionDateCode != null)
+        {
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ProductionDateCode == requestProductionDateCode);
+        }
+
         var actuatorModel = await actuatorFromDb.ToListAsync();
         return ToDomain(actuatorModel);
     }
 
-    private List<Actuator> ToDomain(List<ActuatorModel> actuatorModels)
-    {
-        List<Actuator> domainActuators = new();
-        foreach (var actuatorModel in actuatorModels)
-        {
-            domainActuators.Add(ToDomain(actuatorModel));
-        }
-
-        return domainActuators;
-    }
 
     public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo = null)
     {
@@ -88,6 +87,19 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         return ToDomain(result);
     }
 
+
+    private Actuator ToDomain(ActuatorModel actuatorModel)
+    {
+        var actuatorId = CompositeActuatorId.From(actuatorModel.WorkOrderNumber, actuatorModel.SerialNumber);
+        var pcba = new PCBA(
+            uid: actuatorModel.PCBA.Uid,
+            manufacturerNo: actuatorModel.PCBA.ManufacturerNumber,
+            itemNumber: actuatorModel.PCBA.ItemNumber,
+            software: actuatorModel.PCBA.Software,
+            productionDateCode: actuatorModel.PCBA.ProductionDateCode);
+        return new Actuator(actuatorId, pcba);
+    }
+
     private List<Actuator> ToDomain(List<ActuatorModel> actuatorModels)
     {
         List<Actuator> domainActuators = new();
@@ -97,17 +109,6 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         }
 
         return domainActuators;
-    }
-    private Actuator ToDomain(ActuatorModel actuatorModel)
-    {
-        var actuatorId = CompositeActuatorId.From(actuatorModel.WorkOrderNumber, actuatorModel.SerialNumber);
-        var pcba = new PCBA(
-            uid: actuatorModel.PCBA.Uid, 
-            manufacturerNo: actuatorModel.PCBA.ManufacturerNumber, 
-            itemNumber: actuatorModel.PCBA.ItemNumber, 
-            software: actuatorModel.PCBA.Software, 
-            productionDateCode: actuatorModel.PCBA.ProductionDateCode);
-        return new Actuator(actuatorId, pcba);
     }
 
     private ActuatorModel FromDomain(Actuator actuator)

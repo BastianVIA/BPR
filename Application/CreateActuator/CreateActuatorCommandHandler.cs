@@ -11,7 +11,8 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
     private IPCBARepository _pcbaRepository;
     private IDbTransaction _dbTransaction;
 
-    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository, IDbTransaction dbTransaction)
+    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository,
+        IDbTransaction dbTransaction)
     {
         _actuatorRepository = actuatorRepository;
         _pcbaRepository = pcbaRepository;
