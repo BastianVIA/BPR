@@ -29,17 +29,17 @@ public class AlertServiceTests
     {
         // Arrange
         var expectedAlert = _fixture.Create<Alert>();
-        AlertEventTestDouble mockListener = new ();
+        AlertEventTestDouble eventDouble = new ();
         
-        mockListener.Attach();
+        eventDouble.Attach();
         
         // Act
         _alertService.FireEvent(expectedAlert.Style, expectedAlert.Message);
 
         // Assert
-        Assert.True(mockListener.OnAlertEventInvoked);
-        Assert.Equal(expectedAlert.Style, mockListener.InvokedAlert.Style);
-        Assert.Equal(expectedAlert.Message, mockListener.InvokedAlert.Message);
+        Assert.True(eventDouble.OnAlertEventInvoked);
+        Assert.Equal(expectedAlert.Style, eventDouble.InvokedAlert.Style);
+        Assert.Equal(expectedAlert.Message, eventDouble.InvokedAlert.Message);
     }
 }
 
