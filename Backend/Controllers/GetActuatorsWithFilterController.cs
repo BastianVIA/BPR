@@ -52,14 +52,12 @@ public class GetActuatorsWithFilterController : ControllerBase
         }
     }
 
-
     public class GetActuatorWithFilterPCBA
     {
         public int ItemNumber { get; }
         public int ManufacturerNumber { get; }
         public int ProductionDateCode { get; }
         public string PCBAUid { get; }
-
 
         public GetActuatorWithFilterPCBA(int manufacturerNumber, string pcbaUid)
         {
@@ -95,7 +93,6 @@ public class GetActuatorsWithFilterController : ControllerBase
         public int SerialNumber { get; private set; }
 
         public GetActuatorWithFilterPCBA Pcba { get; private set; }
-
 
         internal static GetActuatorWithFilterActuator From(ActuatorDTO result)
         {

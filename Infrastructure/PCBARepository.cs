@@ -25,6 +25,7 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
             throw new KeyNotFoundException(
                 $"Could not find PCBA with Uid: {id}");
         }
+
         return ToDomain(pcbaModel);
     }
 
@@ -37,13 +38,13 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
     {
         return new PCBA(pcbaModel.Uid, pcbaModel.ManufacturerNumber);
     }
-    
+
     private PCBAModel FromDomain(PCBA pcba)
     {
         var pcbaModel = new PCBAModel()
         {
-           Uid = pcba.Uid,
-           ManufacturerNumber = pcba.ManufacturerNumber
+            Uid = pcba.Uid,
+            ManufacturerNumber = pcba.ManufacturerNumber
         };
         return pcbaModel;
     }

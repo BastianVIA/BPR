@@ -4,9 +4,8 @@ using Domain.Repositories;
 
 namespace Application.GetActuatorsWithFilter;
 
-public class GetActuatorsWithFilterQueryHandler : IQueryHandler<GetActuatorsWithFilterQuery,GetActuatorsWithFilterDto>
+public class GetActuatorsWithFilterQueryHandler : IQueryHandler<GetActuatorsWithFilterQuery, GetActuatorsWithFilterDto>
 {
-
     private readonly IActuatorRepository _actuatorRepository;
 
     public GetActuatorsWithFilterQueryHandler(IActuatorRepository actuatorRepository)
@@ -14,12 +13,13 @@ public class GetActuatorsWithFilterQueryHandler : IQueryHandler<GetActuatorsWith
         _actuatorRepository = actuatorRepository;
     }
 
-
-    public async Task<GetActuatorsWithFilterDto> Handle(GetActuatorsWithFilterQuery request, CancellationToken cancellationToken)
+    public async Task<GetActuatorsWithFilterDto> Handle(GetActuatorsWithFilterQuery request,
+        CancellationToken cancellationToken)
     {
         try
         {
-            var actuators = await _actuatorRepository.GetActuatorsWithFilter(request.ItemNumber, request.ManufacturerNumber, request.ProductionDateCode);
+            var actuators = await _actuatorRepository.GetActuatorsWithFilter(request.ItemNumber,
+                request.ManufacturerNumber, request.ProductionDateCode);
             return GetActuatorsWithFilterDto.From(actuators);
         }
         catch (Exception e)
@@ -27,6 +27,5 @@ public class GetActuatorsWithFilterQueryHandler : IQueryHandler<GetActuatorsWith
             Console.WriteLine(e);
             throw;
         }
-    
-            }
+    }
 }
