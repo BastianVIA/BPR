@@ -1,4 +1,4 @@
-﻿using Backend.Model;
+using Backend.Model;
 using BuildingBlocks.Integration;
 using LINTest.Handlers;
 using LINTest.Integration;
