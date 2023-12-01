@@ -4,19 +4,18 @@ using LINTest.Integration;
 
 namespace Application.CreateOrUpdateActuator;
 
-public class ActuatorFound : IIntegrationEventListener<ActuatorFoundIntegrationEvent>
+public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucceededIntegrationEvent>
 {
     private ICommandBus _bus;
 
-    public ActuatorFound(ICommandBus bus)
+    public ActuatorTestSucceeded(ICommandBus bus)
     {
         _bus = bus;
     }
 
-    public Task Handle(ActuatorFoundIntegrationEvent notification, CancellationToken cancellationToken)
+    public Task Handle(ActuatorTestSucceededIntegrationEvent notification, CancellationToken cancellationToken)
     {
         var cmd = CreateOrUpdateActuatorCommand.Create(notification.WorkOrderNumber, notification.SerailNumber,
             notification.PCBAUid);
-        return _bus.Send(cmd, cancellationToken);
-    }
+        return _bus.Send(cmd, cancellationToken);    }
 }
