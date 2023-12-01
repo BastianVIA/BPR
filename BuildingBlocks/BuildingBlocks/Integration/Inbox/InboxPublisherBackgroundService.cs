@@ -29,8 +29,7 @@ public class InboxPublisherBackgroundService : BackgroundService
             {
                 // We don't want the background service to stop while the application continues,
                 // so catching and logging.
-                // Should certainly have some extra checks for the reasons, to act on it.
-                _logger.LogError(ex, ex.Message, null!);
+                _logger.LogError(ex, ex.Message);
             }
 
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);

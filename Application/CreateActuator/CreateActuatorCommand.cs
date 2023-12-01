@@ -9,9 +9,7 @@ public class CreateActuatorCommand : ICommand
     public int SerialNumber { get; private set; }
     public string PCBAUid { get; private set; }
 
-    private CreateActuatorCommand()
-    {
-    }
+    private CreateActuatorCommand() { }
 
     private CreateActuatorCommand(int woNo, int serialNo, string pcbaUid)
     {

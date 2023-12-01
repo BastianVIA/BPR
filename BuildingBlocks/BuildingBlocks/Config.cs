@@ -15,7 +15,7 @@ public static class Config
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(
-                configuration.GetConnectionString("DatabaseConnection")));
+                configuration.GetConnectionString("DatabaseConnection")).EnableSensitiveDataLogging());
 
         services.AddScoped<IScheduler, Scheduler>();
         services.AddScoped<IIntegrationEventPublisher, IntegrationEventPublisher>();

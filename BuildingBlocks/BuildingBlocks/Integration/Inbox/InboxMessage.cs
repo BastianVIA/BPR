@@ -14,9 +14,7 @@ public class InboxMessage
     public int FailedAttempts { get; private set; }
     public string? FailureReason { get; private set; }
 
-    private InboxMessage()
-    {
-    }
+    private InboxMessage() { }
 
     private InboxMessage(Guid id, DateTime occurredOn, string messageType, string payload, Guid integrationEventId)
     {

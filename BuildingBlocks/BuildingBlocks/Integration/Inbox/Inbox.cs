@@ -9,9 +9,7 @@ namespace BuildingBlocks.Integration.Inbox;
 
 public class Inbox : BaseRepository<InboxMessageModel>, IInbox
 {
-    public Inbox(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler)
-    {
-    }
+    public Inbox(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler) { }
 
     public async Task Add(InboxMessage inboxMessage)
     {
