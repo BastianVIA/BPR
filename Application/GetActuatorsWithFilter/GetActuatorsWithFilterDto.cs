@@ -35,6 +35,7 @@ public class PCBADto
     public int ManufacturerNumber { get; set; }
     public int ProductionDateCode { get; set; }
     public string ItemNumber { get; set; }
+
     internal static PCBADto From(PCBA pcba)
     {
         return new PCBADto

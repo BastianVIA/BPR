@@ -18,7 +18,7 @@ public class GetActuatorsWithFilterQueryHandler : IQueryHandler<GetActuatorsWith
     {
         try
         {
-            var actuators = await _actuatorRepository.GetActuatorsWithFilter( request.PCBAUid, request.ItemNumber,
+            var actuators = await _actuatorRepository.GetActuatorsWithFilter(request.PCBAUid, request.ItemNumber,
                 request.ManufacturerNumber, request.ProductionDateCode);
             return GetActuatorsWithFilterDto.From(actuators);
         }

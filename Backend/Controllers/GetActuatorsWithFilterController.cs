@@ -19,7 +19,8 @@ public class GetActuatorsWithFilterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync([FromQuery] string? pcbaUid, [FromQuery] string? itemNo, [FromQuery] int? manufacturerNo,
+    public async Task<IActionResult> GetAsync([FromQuery] string? pcbaUid, [FromQuery] string? itemNo,
+        [FromQuery] int? manufacturerNo,
         [FromQuery] int? productionDateCode, CancellationToken cancellationToken)
     {
         var query = GetActuatorsWithFilterQuery.Create(pcbaUid, itemNo, manufacturerNo, productionDateCode);
@@ -58,9 +59,10 @@ public class GetActuatorsWithFilterController : ControllerBase
         public int ManufacturerNumber { get; }
         public string ItemNumber { get; }
         public int ProductionDateCode { get; }
-       
 
-        public GetActuatorWithFilterPCBA(string pcbaUid, int manufacturerNumber, string itemNumber, int productionDateCode)
+
+        public GetActuatorWithFilterPCBA(string pcbaUid, int manufacturerNumber, string itemNumber,
+            int productionDateCode)
         {
             ManufacturerNumber = manufacturerNumber;
             PCBAUid = pcbaUid;
@@ -70,7 +72,8 @@ public class GetActuatorsWithFilterController : ControllerBase
 
         internal static GetActuatorWithFilterPCBA From(PCBADto result)
         {
-            return new GetActuatorWithFilterPCBA(result.Uid,result.ManufacturerNumber, result.ItemNumber,result.ProductionDateCode);
+            return new GetActuatorWithFilterPCBA(result.Uid, result.ManufacturerNumber, result.ItemNumber,
+                result.ProductionDateCode);
         }
     }
 
