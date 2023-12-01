@@ -30,15 +30,14 @@ public class LINTestBackgroundService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        DateTime lastProcessedFileTime =
-            _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
-        
         while (!stoppingToken.IsCancellationRequested)
         {
+            DateTime lastProcessedFileTime =
+                _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
             using var scope = _serviceProvider.CreateScope();
             var publisher = scope.ServiceProvider.GetRequiredService<IIntegrationEventPublisher>();
 
-            var allFiles = _fileProcessor.GetCsvFiles();
+            var allFiles = _fileProcessor.GetCsvFiles(lastProcessedFileTime);
             
             var numberOfFilesProcessed =
                 await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
@@ -57,7 +56,7 @@ public class LINTestBackgroundService : BackgroundService
                 _logger.LogInformation("Cancellation requested before delay, stopping the service.");
                 return;
             }
-
+            
             await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
         }
     }
@@ -81,16 +80,14 @@ public class LINTestBackgroundService : BackgroundService
             {
                 _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
                 await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
-
-                lastProcessedFileTime = file.CreationTime;
-                _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
+                
+                _fileProcessingStateManager.SaveLastProcessedDateTime(file.CreationTime);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error processing file {file.Path}");
             }
         }
-
         return filesToProcess.Count;
     }
 }
