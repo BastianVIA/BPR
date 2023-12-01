@@ -1,5 +1,6 @@
 ﻿using LINTest.LinakDB;
 using LINTest.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +20,6 @@ public static class Config
         services.AddSingleton<ConfigurationManager>();
         services.AddSingleton(stateManagerOptions);
         services.AddHostedService<LINTestBackgroundService>();
-        
         services.AddSingleton<FileProcessor>();
         services.AddSingleton<CsvDataService>();
         services.AddSingleton<FileProcessingStateManager>();
@@ -30,7 +30,6 @@ public static class Config
 
         services.AddSingleton<StateManagerOptions>(serviceProvider => 
             configuration.GetSection("LINTest:StateManager").Get<StateManagerOptions>());
-
 
         return services;
     }
