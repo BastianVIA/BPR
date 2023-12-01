@@ -4,12 +4,12 @@ namespace Application.CreatePCBA;
 
 public class CreatePCBACommand : ICommand
 {
-    internal string Uid { get; }
+    public string Uid { get; private set; }
 
-    internal int ManufacturerNumber { get; private set; }
-    internal string ItemNumber { get; private set; }
-    internal string Software { get; private set; }
-    internal int ProductionDateCode { get; private set; }
+    public int ManufacturerNumber { get; private set; }
+    public string ItemNumber { get; private set; }
+    public string Software { get; private set; }
+    public int ProductionDateCode { get; private set; }
 
     private CreatePCBACommand(string pcbaUid, int manufacturerNo, string itemNumber, string software,
         int productionDateCode)

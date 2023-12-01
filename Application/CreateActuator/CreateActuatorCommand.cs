@@ -5,9 +5,9 @@ namespace Application.CreateActuator;
 
 public class CreateActuatorCommand : ICommand
 {
-    internal int WorkOrderNumber { get; private set; }
-    internal int SerialNumber { get; private set; }
-    internal string PCBAUid { get; private set; }
+    public int WorkOrderNumber { get; private set; }
+    public int SerialNumber { get; private set; }
+    public string PCBAUid { get; private set; }
 
     private CreateActuatorCommand()
     {
