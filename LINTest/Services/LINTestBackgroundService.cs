@@ -1,9 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BuildingBlocks.Application;
+using BuildingBlocks.Integration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace LINTest.Services;
 
@@ -32,18 +30,17 @@ public class LINTestBackgroundService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        DateTime lastProcessedFileTime =
-            _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
-
         while (!stoppingToken.IsCancellationRequested)
         {
+            DateTime lastProcessedFileTime =
+                _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
             using var scope = _serviceProvider.CreateScope();
-            var commandBus = scope.ServiceProvider.GetRequiredService<ICommandBus>();
+            var publisher = scope.ServiceProvider.GetRequiredService<IIntegrationEventPublisher>();
 
-            var allFiles = _fileProcessor.GetCsvFiles();
-
+            var allFiles = _fileProcessor.GetCsvFiles(lastProcessedFileTime);
+            
             var numberOfFilesProcessed =
-                await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, commandBus);
+                await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
 
             if (numberOfFilesProcessed >= 0)
             {
@@ -59,40 +56,38 @@ public class LINTestBackgroundService : BackgroundService
                 _logger.LogInformation("Cancellation requested before delay, stopping the service.");
                 return;
             }
-
+            
             await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
         }
     }
 
     private async Task<int> ProcessingFiles(CancellationToken stoppingToken, string[] allFiles,
         DateTime lastProcessedFileTime,
-        ICommandBus commandBus)
+        IIntegrationEventPublisher publisher)
     {
         var filesToProcess = allFiles.Select(filePath => new
             {
                 Path = filePath,
-                CreationTime = _fileProcessor.GetFileCreationTime(filePath)
+                LastWriteTime = _fileProcessor.GetFileCreationTime(filePath)
             })
-            .Where(file => file.CreationTime > lastProcessedFileTime)
-            .OrderBy(file => file.CreationTime)
+            .Where(file => file.LastWriteTime > lastProcessedFileTime)
+            .OrderBy(file => file.LastWriteTime)
             .ToList();
 
         foreach (var file in filesToProcess)
         {
             try
             {
-                _logger.LogInformation($"Processing file: {file.Path}, created at {file.CreationTime}");
-                await _csvDataService.ProcessCsvData(file.Path, commandBus, stoppingToken);
-
-                lastProcessedFileTime = file.CreationTime;
-                _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
+                _logger.LogInformation($"Processing file: {file.Path}, created at {file.LastWriteTime}");
+                await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
+                
+                _fileProcessingStateManager.SaveLastProcessedDateTime(file.LastWriteTime);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error processing file {file.Path}");
             }
         }
-
         return filesToProcess.Count;
     }
 }

@@ -19,23 +19,33 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 
     public async Task<PCBA> GetPCBA(string id)
     {
-        var pcbaModel = await Query().AsNoTracking().FirstOrDefaultAsync(p => p.Uid == id);
+        var pcbaModel = await Query()
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(p => p.Uid == id) 
+                        ?? QueryOtherLocal<PCBAModel>().FirstOrDefault(p => p.Uid == id);
+
         if (pcbaModel == null)
         {
-            throw new KeyNotFoundException(
-                $"Could not find PCBA with Uid: {id}");
+            throw new KeyNotFoundException($"Could not find PCBA with Uid: {id}");
         }
+
         return ToDomain(pcbaModel);
     }
 
     public async Task UpdatePCBA(PCBA pcba)
     {
+        var pcbaToUpdate = Query().FirstOrDefault(p => p.Uid == pcba.Uid);
+        if (pcbaToUpdate == null)
+        {
+            throw new KeyNotFoundException(
+                $"Could not find PCBA with Uid: {pcba.Uid} to update");
+        }
         await UpdateAsync(FromDomain(pcba), pcba.GetDomainEvents());
     }
 
     private PCBA ToDomain(PCBAModel pcbaModel)
     {
-        return new PCBA(pcbaModel.Uid, pcbaModel.ManufacturerNumber);
+        return new PCBA(pcbaModel.Uid, pcbaModel.ManufacturerNumber, pcbaModel.ItemNumber, pcbaModel.Software, pcbaModel.ProductionDateCode);
     }
     
     private PCBAModel FromDomain(PCBA pcba)
@@ -43,7 +53,10 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
         var pcbaModel = new PCBAModel()
         {
            Uid = pcba.Uid,
-           ManufacturerNumber = pcba.ManufacturerNumber
+           ManufacturerNumber = pcba.ManufacturerNumber,
+           ItemNumber = pcba.ItemNumber,
+           Software = pcba.Software,
+           ProductionDateCode = pcba.ProductionDateCode
         };
         return pcbaModel;
     }

@@ -21,7 +21,7 @@ public class Actuator : Entity
     public static Actuator Create(CompositeActuatorId id, PCBA pcba)
     {
         var actuator = new Actuator(id, pcba);
-        actuator.AddDomainEvent(new ActuatorCreatedDomainEvent(actuator.Id));
+        actuator.AddDomainEvent(new ActuatorCreatedDomainEvent(actuator.Id, pcba.Uid));
         return actuator;
     }
 

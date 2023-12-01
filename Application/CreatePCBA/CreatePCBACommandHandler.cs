@@ -16,15 +16,14 @@ public class CreatePCBACommandHandler : ICommandHandler<CreatePCBACommand>
     
     public async Task Handle(CreatePCBACommand request, CancellationToken cancellationToken)
     {
+        var pcba = new PCBA(request.Uid, request.ManufacturerNumber, request.ItemNumber, request.Software, request.ProductionDateCode);
         try
         {
-            var pcba = new PCBA(request.Uid, request.ManufacturerNumber);
-            await _pcbaRepository.CreatePCBA(pcba);
-        }
-        catch (AlreadyExistingException e)
-        {
-            var pcba = await _pcbaRepository.GetPCBA(request.Uid);
             await _pcbaRepository.UpdatePCBA(pcba);
+        }
+        catch (KeyNotFoundException e)
+        {
+            await _pcbaRepository.CreatePCBA(pcba);
         }
     }
 }

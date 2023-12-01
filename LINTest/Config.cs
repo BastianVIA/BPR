@@ -1,7 +1,7 @@
-﻿using LINTest.Services;
+﻿using LINTest.LinakDB;
+using LINTest.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Protocols;
 
 namespace LINTest;
 public static class Config
@@ -19,17 +19,16 @@ public static class Config
         services.AddSingleton<ConfigurationManager>();
         services.AddSingleton(stateManagerOptions);
         services.AddHostedService<LINTestBackgroundService>();
-        
         services.AddSingleton<FileProcessor>();
         services.AddSingleton<CsvDataService>();
         services.AddSingleton<FileProcessingStateManager>();
+        services.AddScoped<IPCBAService, PCBADAO>();
         
         services.AddSingleton<FileProcessorOptions>(serviceProvider => 
             configuration.GetSection("LINTest:FileProcessor").Get<FileProcessorOptions>());
 
         services.AddSingleton<StateManagerOptions>(serviceProvider => 
             configuration.GetSection("LINTest:StateManager").Get<StateManagerOptions>());
-
 
         return services;
     }
