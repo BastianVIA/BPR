@@ -8,4 +8,5 @@ public interface IActuatorRepository
     Task CreateActuator(Actuator actuator);
     Task<Actuator> GetActuator(CompositeActuatorId id);
     Task UpdateActuator(Actuator actuator);
+    Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo);
 }

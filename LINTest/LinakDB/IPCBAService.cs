@@ -2,7 +2,7 @@ using LINTest.Models;
 
 namespace LINTest.LinakDB;
 
-public interface IPCBADAO
+public interface IPCBAService
 {
     public PCBAModel GetPCBA(string uid);
 }

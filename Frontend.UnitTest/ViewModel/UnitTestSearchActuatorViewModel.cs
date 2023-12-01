@@ -20,7 +20,7 @@ public class UnitTestSearchActuatorViewModel
     public async Task SearchActuator_SetsActuatorAndPcbaUidCorrectly()
     {
         // Arrange
-        var expectedActuator = _fixture.Create<Actuator>().WithPCBAUid(_fixture.Create<int>());
+        var expectedActuator = _fixture.Create<Actuator>().WithPCBAUid(_fixture.Create<string>());
 
         _mockActuatorDetailsModel.GetActuatorDetails(Arg.Any<int>(), Arg.Any<int>())
             .Returns(expectedActuator);

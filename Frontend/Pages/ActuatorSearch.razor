@@ -1,0 +1,30 @@
+﻿@page "/ActuatorInfo"
+@using Frontend.Entities
+@inherits ActuatorInfoBase
+<h3>ActuatorInfo</h3>
+
+<RadzenRow>
+    <RadzenTemplateForm TItem="Actuator" Data="@SearchActuator" Submit="@SearchActuators">
+        <RadzenRow>
+            <RadzenColumn>
+              <RadzenLabel Text="PCBA Uid"/>
+              <RadzenTextBox style="display: block" Name="PcbaUid" @bind-Value="@SearchActuator.PCBA.PCBAUid" class="w-100"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenDataGrid TItem="Actuator" Data="@actuators" FilterMode="FilterMode.Advanced" Style="--rz-grid-header-text-transform: none; --rz-grid-header-font-size: 20px;">
+        <Columns>
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID" >
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"></RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</RadzenRow>

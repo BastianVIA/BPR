@@ -31,21 +31,19 @@ public class LINTestBackgroundService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        DateTime lastProcessedFileTime =
-            _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
-
         while (!stoppingToken.IsCancellationRequested)
         {
+            DateTime lastProcessedFileTime =
+                _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
             using var scope = _serviceProvider.CreateScope();
             var publisher = scope.ServiceProvider.GetRequiredService<IIntegrationEventPublisher>();
 
-            var allFiles = _fileProcessor.GetCsvFiles();
-
+            var allFiles = _fileProcessor.GetCsvFiles(lastProcessedFileTime);
+            
             var numberOfFilesProcessed =
                 await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
 
             _logger.LogInformation($"{numberOfFilesProcessed} new files have been processed.");
-
 
             await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
         }
@@ -60,16 +58,20 @@ public class LINTestBackgroundService : BackgroundService
         var filesToProcess = allFiles.Select(filePath => new
             {
                 Path = filePath,
-                CreationTime = _fileProcessor.GetFileCreationTime(filePath)
+                LastWriteTime = _fileProcessor.GetFileCreationTime(filePath)
             })
-            .Where(file => file.CreationTime > lastProcessedFileTime)
-            .OrderBy(file => file.CreationTime)
+            .Where(file => file.LastWriteTime > lastProcessedFileTime)
+            .OrderBy(file => file.LastWriteTime)
             .ToList();
 
         for (int i = 0; i < filesToProcess.Count; i++)
         {
             try
             {
+                _logger.LogInformation($"Processing file: {file.Path}, created at {file.LastWriteTime}");
+                await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
+                
+                _fileProcessingStateManager.SaveLastProcessedDateTime(file.LastWriteTime);
                 await _csvDataService.ProcessCsvData(filesToProcess[i].Path, publisher, stoppingToken);
             }
             catch (ServiceUnavailableException e)
@@ -96,7 +98,6 @@ public class LINTestBackgroundService : BackgroundService
             lastProcessedFileTime = filesToProcess[i].CreationTime;
             _fileProcessingStateManager.SaveLastProcessedDateTime(lastProcessedFileTime);
         }
-
         return filesToProcess.Count;
     }
 }

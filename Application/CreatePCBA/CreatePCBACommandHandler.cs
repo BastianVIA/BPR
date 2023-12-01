@@ -19,11 +19,11 @@ public class CreatePCBACommandHandler : ICommandHandler<CreatePCBACommand>
         var pcba = new PCBA(request.Uid, request.ManufacturerNumber, request.ItemNumber, request.Software, request.ProductionDateCode);
         try
         {
-            await _pcbaRepository.CreatePCBA(pcba);
-        }
-        catch (AlreadyExistingException e)
-        {
             await _pcbaRepository.UpdatePCBA(pcba);
+        }
+        catch (KeyNotFoundException e)
+        {
+            await _pcbaRepository.CreatePCBA(pcba);
         }
     }
 }

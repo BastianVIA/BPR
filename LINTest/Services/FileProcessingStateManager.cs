@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using LINTest.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace LINTest.Services;
 
@@ -18,7 +16,12 @@ public class FileProcessingStateManager
         if (File.Exists(_lastProcessedDateTimePath))
         {
             var jsonData = File.ReadAllText(_lastProcessedDateTimePath);
-            var lastProcessedData = JsonConvert.DeserializeObject<LastProcessedData>(jsonData);
+            var lastProcessedData = JsonConvert.DeserializeObject<LastProcessedData>(jsonData,
+                new JsonSerializerSettings()
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local
+
+                });
             if (lastProcessedData != null)
             {
                 return lastProcessedData.LastProcessedTime;
@@ -30,7 +33,11 @@ public class FileProcessingStateManager
     public void SaveLastProcessedDateTime(DateTime datetime)
     {
         var lastProcessed = new LastProcessedData(datetime);
-        var jsonData = JsonConvert.SerializeObject(lastProcessed, Formatting.Indented);
+        var jsonData = JsonConvert.SerializeObject(lastProcessed, Formatting.Indented, new JsonSerializerSettings()
+        {
+            DateTimeZoneHandling = DateTimeZoneHandling.Local
+ 
+        });
         File.WriteAllText(_lastProcessedDateTimePath, jsonData);
     }
 

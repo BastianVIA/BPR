@@ -19,18 +19,16 @@ public static class Config
         services.AddSingleton<ConfigurationManager>();
         services.AddSingleton(stateManagerOptions);
         services.AddHostedService<LINTestBackgroundService>();
-        
         services.AddSingleton<FileProcessor>();
         services.AddSingleton<CsvDataService>();
         services.AddSingleton<FileProcessingStateManager>();
-        services.AddScoped<IPCBADAO, PCBADAO>();
+        services.AddScoped<IPCBAService, PCBADAO>();
         
         services.AddSingleton<FileProcessorOptions>(serviceProvider => 
             configuration.GetSection("LINTest:FileProcessor").Get<FileProcessorOptions>());
 
         services.AddSingleton<StateManagerOptions>(serviceProvider => 
             configuration.GetSection("LINTest:StateManager").Get<StateManagerOptions>());
-
 
         return services;
     }
