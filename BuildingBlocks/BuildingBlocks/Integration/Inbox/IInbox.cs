@@ -6,6 +6,5 @@ public interface IInbox
 
     Task<IEnumerable<InboxMessage>> GetUnProcessedMessages();
 
-    Task Processed(IEnumerable<InboxMessage> messages);
-    Task Update(InboxMessage message);
+    Task Update(InboxMessage inboxMessage);
 }

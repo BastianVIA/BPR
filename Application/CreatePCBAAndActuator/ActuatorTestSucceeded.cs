@@ -1,10 +1,9 @@
-﻿using Application.CreatePCBAAndActuator;
-using BuildingBlocks.Infrastructure.Database.Transaction;
+﻿using BuildingBlocks.Infrastructure.Database.Transaction;
 using BuildingBlocks.Integration;
 using BuildingBlocks.Integration.Inbox;
 using LINTest.Integration;
 
-namespace Application.CreateOrUpdateActuator;
+namespace Application.CreatePCBAAndActuator;
 
 public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucceededIntegrationEvent>
 {

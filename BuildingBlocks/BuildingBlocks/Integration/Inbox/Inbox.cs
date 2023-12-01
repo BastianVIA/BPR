@@ -26,18 +26,13 @@ public class Inbox : BaseRepository<InboxMessageModel>, IInbox
         return ToDomain(messages);
     }
 
-    public async Task Processed(IEnumerable<InboxMessage> messages)
+    public async Task Update(InboxMessage inboxMessage)
     {
-        foreach (var inboxMessage in messages)
-        {
-            await UpdateValues(inboxMessage);
-        }
-    }
-
-    public async Task Update(InboxMessage message)
-    {
-        await UpdateValues(message);
-    }
+        var toUpdate = await Query().FirstAsync(model => model.Id == inboxMessage.Id);
+        toUpdate.ProcessedDate = inboxMessage.ProcessedDate;
+        toUpdate.FailedAttempts = inboxMessage.FailedAttempts;
+        toUpdate.FailureReason = inboxMessage.FailureReason;
+        await UpdateAsync(toUpdate, new List<IDomainEvent>());    }
 
     private InboxMessageModel FromDomain(InboxMessage inboxMessage)
     {
@@ -53,16 +48,7 @@ public class Inbox : BaseRepository<InboxMessageModel>, IInbox
             FailureReason = inboxMessage.FailureReason
         };
     }
-
-    private async Task UpdateValues(InboxMessage inboxMessage)
-    {
-        var toUpdate = await Query().FirstAsync(model => model.Id == inboxMessage.Id);
-        toUpdate.ProcessedDate = inboxMessage.ProcessedDate;
-        toUpdate.FailedAttempts = inboxMessage.FailedAttempts;
-        toUpdate.FailureReason = inboxMessage.FailureReason;
-        await UpdateAsync(toUpdate, new List<IDomainEvent>());
-    }
-
+    
     private IEnumerable<InboxMessage> ToDomain(IEnumerable<InboxMessageModel> inboxMessageModels)
     {
         List<InboxMessage> domainMessages = new();

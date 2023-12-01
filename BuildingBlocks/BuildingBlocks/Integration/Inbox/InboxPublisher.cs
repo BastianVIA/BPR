@@ -10,12 +10,14 @@ public class InboxPublisher
     private readonly IInbox _inbox;
     private readonly ISender _sender;
     private readonly ILogger<InboxPublisher> _logger;
+    private readonly IDbTransaction _dbTransaction;
 
-    public InboxPublisher(IInbox inbox, ISender sender, ILogger<InboxPublisher> logger)
+    public InboxPublisher(IInbox inbox, ISender sender, ILogger<InboxPublisher> logger, IDbTransaction dbTransaction)
     {
         _inbox = inbox;
         _sender = sender;
         _logger = logger;
+        _dbTransaction = dbTransaction;
     }
 
 
@@ -48,8 +50,10 @@ public class InboxPublisher
                 _logger.LogError(ex, "Deserialize InboxMessage {Id} failed", message.Id);
                 message.Failed("Deserialize Message Failed");
             }
+
+            await _inbox.Update(message);
+            await _dbTransaction.CommitAsync(cancellationToken);
         }
 
-        await _inbox.Processed(messages);
     }
 }
