@@ -65,7 +65,6 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         return ToDomain(actuatorModel);
     }
 
-
     private List<Actuator> ToDomain(List<ActuatorModel> actuatorModels)
     {
         List<Actuator> domainActuators = new();
@@ -83,7 +82,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var pcba = new PCBA(uid: actuatorModel.PCBA.Uid, manufacturerNo: actuatorModel.PCBA.ManufacturerNumber);
         return new Actuator(actuatorId, pcba);
     }
-    
+
     private ActuatorModel FromDomain(Actuator actuator)
     {
         var pcbaModel = new PCBAModel()
@@ -91,7 +90,6 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             Uid = actuator.PCBA.Uid,
             ManufacturerNumber = actuator.PCBA.ManufacturerNumber
         };
-
         var actuatorModel = new ActuatorModel()
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,

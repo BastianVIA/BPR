@@ -7,11 +7,9 @@ public class GetActuatorsWithFilterDto
 {
     public List<ActuatorDTO> ActuatorDtos { get; }
 
-
     private GetActuatorsWithFilterDto()
     {
     }
-
 
     private GetActuatorsWithFilterDto(List<ActuatorDTO> actuatorDtos)
     {
