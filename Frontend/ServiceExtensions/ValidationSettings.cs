@@ -12,13 +12,11 @@ public static class ValidationSettings
         services.AddScoped<Config.ValidationSettings>(serviceProvider =>
         {
             var settings = new Config.ValidationSettings();
-            settings.PCBAUidLenght = configFromBackend.ValidationSettings.PcbaUidLength;
             settings.WorkOrderNumberLength = configFromBackend.ValidationSettings.WorkOrderNumberLength;
             settings.SerialNumberMinLength = configFromBackend.ValidationSettings.SerialNumberMinLength;
             settings.SerialNumberMaxLength = configFromBackend.ValidationSettings.SerialNumberMaxLength;
-            settings.ItemNumberLength = configFromBackend.ValidationSettings.ItemNumberLength;
-            settings.ManufacturerNumberLength = configFromBackend.ValidationSettings.ManufacturerNumberLength;
-            settings.ProductionDateCodeLenght = configFromBackend.ValidationSettings.ProductionDateCodeLenght;
+            settings.ProductionDateCodeMinLenght = configFromBackend.ValidationSettings.ProductionDateCodeMinLength;
+            settings.ProductionDateCodeMaxLenght = configFromBackend.ValidationSettings.ProductionDateCodeMaxLength;
             return settings;
         });
         return services;

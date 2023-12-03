@@ -2,5 +2,3 @@
 
 <RadzenLabel Text="Manufacturer Number"/>
 <RadzenNumeric ShowUpDown="false" style="display: block" Name="Manufacturer Number" @bind-Value=@Actuator.PCBA.ManufacturerNumber class="w-100"/>
-<RadzenRequiredValidator Component="manufacturerNo" Text="ManufacturerNumber is required" Style="position: absolute"/>
-<RadzenRegexValidator Component="manufacturerNo" Text=@RegexText Pattern=@RegexPattern Style="position: absolute"/>

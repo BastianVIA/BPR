@@ -2,5 +2,4 @@
 
 <RadzenLabel Text="WO Number"/>
 <RadzenNumeric ShowUpDown="false" style="display: block" Name="woNo" @bind-Value=@Actuator.WorkOrderNumber class="w-100"/>
-<RadzenRequiredValidator Component="woNo" Text="WO Number is required" Style="position: absolute"/>
 <RadzenRegexValidator Component="woNo" Text=@RegexText Pattern=@RegexPattern Style="position: absolute"/>
