@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BuildingBlocks.Exceptions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BuildingBlocks.Integration;
 using Microsoft.Extensions.Logging;
@@ -42,23 +43,12 @@ public class LINTestBackgroundService : BackgroundService
             var numberOfFilesProcessed =
                 await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
 
-            if (numberOfFilesProcessed >= 0)
-            {
-                _logger.LogInformation("All new files have been processed. Count:" + numberOfFilesProcessed);
-            }
-            else
-            {
-                _logger.LogInformation("No new files to process.");
-            }
+            _logger.LogInformation($"{numberOfFilesProcessed} new files have been processed.");
 
-            if (stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Cancellation requested before delay, stopping the service.");
-                return;
-            }
-            
             await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
         }
+
+        _logger.LogError("BackgroundService LINTest stopped");
     }
 
     private async Task<int> ProcessingFiles(CancellationToken stoppingToken, string[] allFiles,
@@ -74,18 +64,34 @@ public class LINTestBackgroundService : BackgroundService
             .OrderBy(file => file.LastWriteTime)
             .ToList();
 
-        foreach (var file in filesToProcess)
+        for (int i = 0; i < filesToProcess.Count; i++)
         {
             try
             {
-                _logger.LogInformation($"Processing file: {file.Path}, created at {file.LastWriteTime}");
-                await _csvDataService.ProcessCsvData(file.Path, publisher, stoppingToken);
+                _logger.LogInformation($"Processing file: {filesToProcess[i].Path}, last editied at {filesToProcess[i].LastWriteTime}");
+                await _csvDataService.ProcessCsvData(filesToProcess[i].Path, publisher, stoppingToken);
                 
-                _fileProcessingStateManager.SaveLastProcessedDateTime(file.LastWriteTime);
+                _fileProcessingStateManager.SaveLastProcessedDateTime(filesToProcess[i].LastWriteTime);
+            }
+            catch (ServiceUnavailableException e)
+            {
+                _logger.LogWarning(e, $"Exception while transmitting event about testdata, Will try again next time service runs");
+                return i;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error processing file {file.Path}");
+                _fileProcessingStateManager.ProcessingFailed();
+                var consecutiveFails = _fileProcessingStateManager.GetNumberOfConsecutiveFails();
+                if (_configManager.MaxConsecutiveFailsBeforeGivingUp > consecutiveFails)
+                {
+                    _logger.LogWarning(ex,
+                        $"Error processing file {filesToProcess[i].Path}. It will be tried again, continuing from this point the next time the service runs");
+                    return i;
+                }
+
+                _logger.LogError(
+                    $"File at {filesToProcess[i].Path} has failed {consecutiveFails} consecutive times, we will therefore skip this file and not retry it. \n " +
+                    $"Manuel intervention is needed for this file to be picked up by the system in the future");
             }
         }
         return filesToProcess.Count;

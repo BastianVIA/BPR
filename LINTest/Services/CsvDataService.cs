@@ -1,4 +1,5 @@
 using Backend.Model;
+using BuildingBlocks.Exceptions;
 using BuildingBlocks.Integration;
 using LINTest.Handlers;
 using LINTest.Integration;
@@ -10,22 +11,41 @@ public class CsvDataService
 {
     private readonly ILogger<CsvDataService> _logger;
 
-    
+
     public CsvDataService(ILogger<CsvDataService> logger)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-    
-    public async Task ProcessCsvData(string filePath, IIntegrationEventPublisher publisher, CancellationToken stoppingToken)
+
+    public async Task ProcessCsvData(string filePath, IIntegrationEventPublisher publisher,
+        CancellationToken stoppingToken)
     {
-        var csvModel = CSVHandler.ReadCSV(filePath); 
-        if (IsValidCsvData(csvModel,filePath))
+        var csvModel = CSVHandler.ReadCSV(filePath);
+        var isValidCsvData = IsValidCsvData(csvModel, filePath);
+        try
         {
-            await SendCommandAsync(csvModel, publisher, stoppingToken);
+            if (!isValidCsvData)
+            {
+                await SendInvalidTestEventAsync(csvModel, publisher, stoppingToken);
+                _logger.LogError($"File with path {filePath} does not have valid CSV data");
+            }
+            else if (csvModel.LINTestPassed)
+            {
+                await SendTestSucceededEventAsync(csvModel, publisher, stoppingToken);
+            }
+            else
+            {
+                await SendTestFailedEventAsync(csvModel, publisher, stoppingToken);
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Error sending event");
+            throw new ServiceUnavailableException("Cannot contact service to save test results", e);
         }
     }
 
-  
+
     private bool IsValidCsvData(CSVModel csvModel, string filePath)
     {
         if (string.IsNullOrEmpty(csvModel.WorkOrderNumber) ||
@@ -47,9 +67,30 @@ public class CsvDataService
         return true;
     }
 
-    private async Task SendCommandAsync(CSVModel csvModel, IIntegrationEventPublisher publisher, CancellationToken stoppingToken)
+    private async Task SendTestFailedEventAsync(CSVModel csvModel, IIntegrationEventPublisher publisher,
+        CancellationToken stoppingToken)
     {
-        var eventToSend = new ActuatorFoundIntegrationEvent(
+        var eventToSend = new ActuatorTestFailedIntegrationEvent(
+            int.Parse(csvModel.WorkOrderNumber),
+            int.Parse(csvModel.SerialNumber),
+            csvModel.PCBAUid);
+        await publisher.PublishAsync(eventToSend, stoppingToken);
+    }
+
+    private async Task SendTestSucceededEventAsync(CSVModel csvModel, IIntegrationEventPublisher publisher,
+        CancellationToken stoppingToken)
+    {
+        var eventToSend = new ActuatorTestSucceededIntegrationEvent(
+            int.Parse(csvModel.WorkOrderNumber),
+            int.Parse(csvModel.SerialNumber),
+            csvModel.PCBAUid);
+        await publisher.PublishAsync(eventToSend, stoppingToken);
+    }
+
+    private async Task SendInvalidTestEventAsync(CSVModel csvModel, IIntegrationEventPublisher publisher,
+        CancellationToken stoppingToken)
+    {
+        var eventToSend = new ActuatorTestInvalidIntegrationTest(
             int.Parse(csvModel.WorkOrderNumber),
             int.Parse(csvModel.SerialNumber),
             csvModel.PCBAUid);

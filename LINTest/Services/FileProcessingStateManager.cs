@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using LINTest.Models;
+using Newtonsoft.Json;
 
 namespace LINTest.Services;
 
 public class FileProcessingStateManager
 {
     private readonly string _lastProcessedDateTimePath;
-
+    
     public FileProcessingStateManager(StateManagerOptions options)
     {
         _lastProcessedDateTimePath = options.LastProcessedDateTimePath ?? throw new ArgumentNullException(nameof(options.LastProcessedDateTimePath));
@@ -16,22 +17,59 @@ public class FileProcessingStateManager
         if (File.Exists(_lastProcessedDateTimePath))
         {
             var jsonData = File.ReadAllText(_lastProcessedDateTimePath);
-            var dateTime =JsonConvert.DeserializeObject<DateTime?>(jsonData, new JsonSerializerSettings()
+            var lastProcessedData = JsonConvert.DeserializeObject<LastProcessedData>(jsonData,
+                new JsonSerializerSettings()
+                {
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local
+                });
+            if (lastProcessedData != null)
             {
-                DateTimeZoneHandling = DateTimeZoneHandling.Local
-            });
-            return dateTime;
+                return lastProcessedData.LastProcessedTime;
+            }
         }
         return null;
     }
 
     public void SaveLastProcessedDateTime(DateTime datetime)
     {
-        var jsonData = JsonConvert.SerializeObject(datetime, Formatting.Indented, new JsonSerializerSettings()
+        var lastProcessed = new LastProcessedData(datetime);
+        var jsonData = JsonConvert.SerializeObject(lastProcessed, Formatting.Indented, new JsonSerializerSettings()
         {
             DateTimeZoneHandling = DateTimeZoneHandling.Local
+ 
         });
-        
         File.WriteAllText(_lastProcessedDateTimePath, jsonData);
+    }
+
+    public void ProcessingFailed()
+    {
+        var previousData = File.ReadAllText(_lastProcessedDateTimePath);
+        var lastProcessedData = JsonConvert.DeserializeObject<LastProcessedData>(previousData);
+        
+        if (lastProcessedData != null)
+        {
+            lastProcessedData.ConsecutiveFails++;
+            var jsonData = JsonConvert.SerializeObject(lastProcessedData, Formatting.Indented);
+            File.WriteAllText(_lastProcessedDateTimePath, jsonData);
+            return;
+        }
+
+        var newData = new LastProcessedData(DateTime.MinValue, 1);
+        var newAsJsonData = JsonConvert.SerializeObject(newData, Formatting.Indented);
+        File.WriteAllText(_lastProcessedDateTimePath, newAsJsonData);
+    }
+
+    public int GetNumberOfConsecutiveFails()
+    {
+        if (File.Exists(_lastProcessedDateTimePath))
+        {
+            var jsonData = File.ReadAllText(_lastProcessedDateTimePath);
+            var lastProcessedData = JsonConvert.DeserializeObject<LastProcessedData>(jsonData);
+            if (lastProcessedData != null)
+            {
+                return lastProcessedData.ConsecutiveFails;
+            }
+        }
+        return 0;
     }
 }
