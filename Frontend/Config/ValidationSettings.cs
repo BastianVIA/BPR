@@ -5,4 +5,7 @@ public class ValidationSettings
     public int WorkOrderNumberLength { get; set; }
     public int SerialNumberMinLength { get; set; }
     public int SerialNumberMaxLength { get; set; }
+    
+    public int ItemNumberLength { get; set; }
+
 }

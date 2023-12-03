@@ -24,7 +24,7 @@ public class PostPCBAController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAsync([FromBody] PostPCBARequest request, CancellationToken cancellationToken)
     {
-        var cmd = CreatePCBACommand.Create(request.Uid, request.ManufacturerNumber);
+        var cmd = CreatePCBACommand.Create(request.Uid, request.ManufacturerNumber, request.ItemNumber, request.Software, request.ProductionDateCode);
         await _bus.Send(cmd, cancellationToken);
         return Ok();
     }
@@ -33,6 +33,9 @@ public class PostPCBAController : ControllerBase
     {
         public string Uid { get; set; }
         public int ManufacturerNumber { get; set; }
+        public string ItemNumber { get; set; }
+        public string Software { get; set; }
+        public int ProductionDateCode { get; set; }
     }
 
 }

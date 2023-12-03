@@ -7,7 +7,7 @@ public class FileProcessor
     private readonly string _csvFolderPath;
     private readonly ILogger<FileProcessor> _logger;
 
-    public FileProcessor(FileProcessorOptions options, ILogger<FileProcessor> logger) // Inject ILogger
+    public FileProcessor(FileProcessorOptions options, ILogger<FileProcessor> logger)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
@@ -34,12 +34,13 @@ public class FileProcessor
         _logger.LogInformation($"CSV folder path is set to {_csvFolderPath}.");
     }
 
-
-    public string[] GetCsvFiles()
+    public string[] GetCsvFiles(DateTime lastProcessed)
     {
         try
         {
-            var files = Directory.GetFiles(_csvFolderPath, "*.csv");
+            var files = Directory.GetFiles(_csvFolderPath, "*.csv")
+                .Where(file => File.GetLastWriteTime(file) > lastProcessed)
+                .ToArray();
             foreach (var file in files)
             {
                 _logger.LogInformation($"Found CSV file: {file}");
@@ -53,7 +54,6 @@ public class FileProcessor
             throw;
         }
     }
-
 
     public DateTime GetFileCreationTime(string filePath)
     {

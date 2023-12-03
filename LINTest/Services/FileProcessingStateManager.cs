@@ -16,15 +16,22 @@ public class FileProcessingStateManager
         if (File.Exists(_lastProcessedDateTimePath))
         {
             var jsonData = File.ReadAllText(_lastProcessedDateTimePath);
-            return JsonConvert.DeserializeObject<DateTime?>(jsonData);
+            var dateTime =JsonConvert.DeserializeObject<DateTime?>(jsonData, new JsonSerializerSettings()
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Local
+            });
+            return dateTime;
         }
         return null;
     }
 
     public void SaveLastProcessedDateTime(DateTime datetime)
     {
-        var jsonData = JsonConvert.SerializeObject(datetime, Formatting.Indented);
+        var jsonData = JsonConvert.SerializeObject(datetime, Formatting.Indented, new JsonSerializerSettings()
+        {
+            DateTimeZoneHandling = DateTimeZoneHandling.Local
+        });
+        
         File.WriteAllText(_lastProcessedDateTimePath, jsonData);
     }
-    
 }

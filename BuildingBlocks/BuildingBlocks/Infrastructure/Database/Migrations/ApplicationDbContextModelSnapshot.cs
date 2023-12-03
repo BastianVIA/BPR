@@ -36,7 +36,7 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
                     b.HasIndex("PCBAUid");
 
-                    b.ToTable("Actuators", (string)null);
+                    b.ToTable("Actuators");
                 });
 
             modelBuilder.Entity("Infrastructure.PCBAModel", b =>
@@ -44,12 +44,23 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<string>("Uid")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ItemNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ManufacturerNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductionDateCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Software")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Uid");
 
-                    b.ToTable("PCBAs", (string)null);
+                    b.ToTable("PCBAs");
                 });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>

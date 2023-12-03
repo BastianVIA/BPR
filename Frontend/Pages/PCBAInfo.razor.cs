@@ -16,6 +16,8 @@ public class PCBAInfoBase : ComponentBase
     
     [Inject]
     private IAlertService _alertService { get; set; }
+
+    public  bool searchPerfomed = false;
     public PCBAInfoBase()
     {
     }
@@ -27,6 +29,7 @@ public class PCBAInfoBase : ComponentBase
     
     public async Task SearchActuator()
     {
+        searchPerfomed = true;
         try
         {
             actuator = await _actuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);

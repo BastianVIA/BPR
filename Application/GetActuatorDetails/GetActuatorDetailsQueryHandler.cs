@@ -6,7 +6,7 @@ namespace Application.GetActuatorDetails;
 
 public class GetActuatorDetailsQueryHandler : IQueryHandler<GetActuatorDetailsQuery, GetActuatorDetailsDto>
 {
-    private readonly IActuatorRepository _actuatorRepository;
+        private readonly IActuatorRepository _actuatorRepository;
 
     public GetActuatorDetailsQueryHandler(IActuatorRepository actuatorRepository)
     {

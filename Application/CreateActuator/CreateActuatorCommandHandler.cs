@@ -11,7 +11,8 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
     private IPCBARepository _pcbaRepository;
     private IDbTransaction _dbTransaction;
 
-    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository, IDbTransaction dbTransaction)
+    public CreateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository,
+        IDbTransaction dbTransaction)
     {
         _actuatorRepository = actuatorRepository;
         _pcbaRepository = pcbaRepository;
@@ -29,7 +30,7 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
 
     private async Task<PCBA> GetPCBA(string pcbaUid)
     {
-        var pcba = new PCBA(pcbaUid, 0);
+        var pcba = new PCBA(pcbaUid);
         try
         {
             pcba = await _pcbaRepository.GetPCBA(pcbaUid);
