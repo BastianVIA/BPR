@@ -20,7 +20,12 @@ public class ActuatorInfoTests
     {
         var expected = new List<Actuator>();
 
-        _model.GetActuatorsByPCBA(Arg.Any<string>())
+        _model.GetActuatorWithFilter(Arg.Any<int>(), 
+                Arg.Any<int>(), 
+                Arg.Any<string>(),
+                Arg.Any<string>(),
+                Arg.Any<int>(),
+                Arg.Any<int>())
             .Returns(expected);
         
         await _viewModel.SearchActuators();
@@ -37,7 +42,12 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>()
         };
 
-        _model.GetActuatorsByPCBA(Arg.Any<string>())
+        _model.GetActuatorWithFilter(Arg.Any<int>(), 
+                Arg.Any<int>(), 
+                Arg.Any<string>(),
+                Arg.Any<string>(),
+                Arg.Any<int>(),
+                Arg.Any<int>())
             .Returns(expected);
         
         // Act
@@ -59,7 +69,12 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>().WithPCBAUid(expectedUid)
         };
         
-        _model.GetActuatorsByPCBA(expectedUid)
+        _model.GetActuatorWithFilter(Arg.Any<int>(), 
+                Arg.Any<int>(), 
+                Arg.Any<string>(),
+                Arg.Any<string>(),
+                Arg.Any<int>(),
+                Arg.Any<int>())
             .Returns(expectedList);
         
         // Act
@@ -76,7 +91,12 @@ public class ActuatorInfoTests
         // Arrange
         var expectedList = _fixture.CreateMany<Actuator>().ToList();
 
-        _model.GetActuatorsByPCBA(Arg.Any<string>())
+        _model.GetActuatorWithFilter(Arg.Any<int>(), 
+                Arg.Any<int>(), 
+                Arg.Any<string>(),
+                Arg.Any<string>(),
+                Arg.Any<int>(),
+                Arg.Any<int>())
             .Returns(expectedList);
 
         // Act
@@ -101,7 +121,12 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>().WithPCBAUid(expectedUid)
         };
         
-        _model.GetActuatorsByPCBA(expectedUid)
+        _model.GetActuatorWithFilter(Arg.Any<int>(), 
+                Arg.Any<int>(), 
+                Arg.Any<string>(),
+                Arg.Any<string>(),
+                Arg.Any<int>(),
+                Arg.Any<int>())
             .Returns(expectedList);
 
         // Act
