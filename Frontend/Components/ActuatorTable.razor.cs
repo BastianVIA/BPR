@@ -15,4 +15,9 @@ public class ActuatorTableBase : ComponentBase
         filters ??= new List<string>();
         Filters = filters;
     }
+
+    public bool ShouldShowColumn(string name)
+    {
+        return Filters.Contains(name);
+    }
 }
