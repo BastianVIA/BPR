@@ -44,30 +44,41 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
-    public async Task<List<Actuator>> GetActuatorsWithFilter(string? requestUid, string? requestItemNumber,
-        int? requestManufacturerNumber,
-        int? requestProductionDateCode)
+
+    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid,
+        string? pcbaItemNumber,
+        int? pcbaManufacturerNumber, int? pcbaProductionDateCode)
     {
         var actuatorFromDb = Query().Include(model => model.PCBA).AsQueryable();
         
-        if (requestUid != null)
+        if (woNo != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.Uid == requestUid);
+            actuatorFromDb = actuatorFromDb.Where(model => model.WorkOrderNumber == woNo);
         }
 
-        if (requestItemNumber != null)
+        if (serialNo != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNumber == requestItemNumber);
+            actuatorFromDb = actuatorFromDb.Where(model => model.SerialNumber == serialNo);
         }
 
-        if (requestManufacturerNumber != null)
+        if (pcbaUid != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNumber);
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.Uid == pcbaUid);
         }
 
-        if (requestProductionDateCode != null)
+        if (pcbaItemNumber != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ProductionDateCode == requestProductionDateCode);
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNumber == pcbaItemNumber);
+        }
+
+        if (pcbaManufacturerNumber != null)
+        {
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ManufacturerNumber == pcbaManufacturerNumber);
+        }
+
+        if (pcbaProductionDateCode != null)
+        {
+            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ProductionDateCode == pcbaProductionDateCode);
         }
 
         var actuatorModel = await actuatorFromDb.ToListAsync();
