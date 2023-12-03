@@ -1,0 +1,43 @@
+﻿
+<RadzenRow AlignItems="AlignItems.Center">
+    <RadzenText Text="Table Filters"/>
+    
+</RadzenRow>
+<RadzenRow>
+    <RadzenDropDown @bind-Value=@Filters Data=@FilterParams 
+                                Multiple=true AllowClear=true Placeholder="Select Filters" Chips=true Style="width: 100%; max-width: 400px;"
+                                MaxSelectedLabels="10"
+                                Change="@OnChange"/>
+</RadzenRow>
+
+
+@code {
+    
+    private string[] filters = { 
+        "Work Order Number",
+        "Serial Number",
+        "UID",
+        "Manufacturer Number",
+        "Item Number",
+        "Production Date Code"
+    };
+    
+    public List<string> Filters = new();
+    public List<string> FilterParams = new();
+    [Parameter]
+    public EventCallback<List<string>> OnNewFilter { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Filters.AddRange(filters);
+        FilterParams.AddRange(filters);
+        OnChange();
+        return base.OnInitializedAsync();
+    }
+
+    private void OnChange()
+    {
+        OnNewFilter.InvokeAsync(Filters);
+    }
+
+}

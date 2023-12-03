@@ -1,13 +1,33 @@
 ﻿@using Frontend.Entities
 
+<TableFilters OnNewFilter="@UpdateFilters"/>
+
 <RadzenDataGrid TItem="Actuator" Data="@Actuators" ColumnWidth="300px">
     <Columns>
-        <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Frozen="true"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Frozen="true"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="ItemNumber Number"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="Production Date Code"/>
+        @if (Filters.Contains("Work Order Number"))
+        {
+            <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number"/>
+        }
+        @if (Filters.Contains("Serial Number"))
+        {
+            <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Frozen="true"/>
+        }
+        @if (Filters.Contains("UID"))
+        {
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID"/>
+        }
+        @if (Filters.Contains("Manufacturer Number"))
+        {
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"/>
+        }
+        @if (Filters.Contains("Item Number"))
+        {
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="Item Number"/>
+        }
+        @if (Filters.Contains("Production Date Code"))
+        {
+            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="Production Date Code"/>
+        }
     </Columns>
 </RadzenDataGrid>
 
@@ -15,5 +35,12 @@
 
     [Parameter]
     public List<Actuator> Actuators { get; set; } = new();
+    
+    private List<string> Filters { get; set; } = new();
 
+    private void UpdateFilters(List<string>? filters)
+    {
+        filters ??= new List<string>();
+        Filters = filters;
+    }
 }

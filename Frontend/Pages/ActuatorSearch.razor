@@ -1,4 +1,4 @@
-﻿@page "/ActuatorInfo"
+﻿@page "/ActuatorSearch"
 @using Frontend.Entities
 @using Frontend.Components
 @inherits ActuatorInfoBase
@@ -16,9 +16,13 @@
                         <RadzenLabel Text="Workorder Number"/>
                         <RadzenNumeric ShowUpDown="false" style="display: block" Name="WorkOrderNumber" @bind-Value=@SearchActuator.WorkOrderNumber class="w-100"/>
                     </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Serial Number"/>
+                        <RadzenNumeric ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@SearchActuator.SerialNumber class="w-100"/>
+                    </RadzenColumn>
                 </RadzenRow>
             </RadzenColumn>
-            <RadzenColumn Size="8">
+            <RadzenColumn Size="7">
                 <RadzenRow Style="margin-bottom: 10px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
                     <RadzenText>PCBA Parameters</RadzenText>
                 </RadzenRow>
@@ -42,11 +46,11 @@
                 </RadzenRow>
             </RadzenColumn>
             <RadzenColumn>
-                <RadzenRow>
-                    <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
-                </RadzenRow>
                 
             </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
         </RadzenRow>
     </RadzenTemplateForm>
 </RadzenRow>

@@ -19,6 +19,8 @@ public class ActuatorInfoBase : ComponentBase
     public Actuator SearchActuator { get; set; } = new();
     public List<Actuator> actuators = new();
 
+    
+
     // Blazor page needs an empty constructor
     public ActuatorInfoBase() { }
     
@@ -31,7 +33,12 @@ public class ActuatorInfoBase : ComponentBase
     {
         try
         {
-            //actuators = await SearchModel.SearchActuator();
+            actuators = await SearchModel.GetActuatorsWithFilter(
+                SearchActuator.PCBA.PCBAUid,
+                SearchActuator.PCBA.ItemNumber,
+                SearchActuator.PCBA.ManufacturerNumber,
+                SearchActuator.PCBA.ProductionDateCode
+                );
         }
         catch (NetworkException e)
         {
