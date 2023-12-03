@@ -10,7 +10,7 @@ namespace Frontend.Pages;
 public class ActuatorInfoBase : ComponentBase
 {
     [Inject] 
-    public IActuatorSearchModel ActuatorModel { get; set; }
+    public IActuatorSearchModel SearchModel { get; set; }
     
     [Inject]
     public IAlertService AlertService { get; set; }
@@ -25,17 +25,22 @@ public class ActuatorInfoBase : ComponentBase
     // Overloaded constructor for unit testing
     public ActuatorInfoBase(IActuatorSearchModel model)
     {
-        ActuatorModel = model;
+        SearchModel = model;
     }
     public async Task SearchActuators()
     {
         try
         {
-            actuators = await ActuatorModel.GetActuatorsByPCBA(SearchActuator.PCBA.PCBAUid);
+            //actuators = await SearchModel.SearchActuator();
         }
         catch (NetworkException e)
         {
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
         }
+    }
+
+    public void Changed()
+    {
+        Console.WriteLine();
     }
 }

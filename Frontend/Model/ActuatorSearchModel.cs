@@ -26,4 +26,11 @@ public class ActuatorSearchModel : IActuatorSearchModel
          }).ToList();
         return list;
     }
+
+    public async Task<List<Actuator>> SearchActuator(int? woNo, string? uid, int? itemNo, int? manuNo, int? prodDateCode, CancellationToken cancellationToken)
+    {
+        var list = new List<Actuator>();
+
+        return list;
+    }
 }
