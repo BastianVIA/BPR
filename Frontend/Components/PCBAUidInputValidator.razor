@@ -1,0 +1,6 @@
+﻿@inherits PCBAUidInputValidatorBase
+
+<RadzenLabel Text="PCBAUid"/>
+<RadzenNumeric ShowUpDown="false" style="display: block" Name="PCBAUid" @bind-Value=@Actuator.PCBA.PCBAUid class="w-100"/>
+<RadzenRequiredValidator Component="pcbaUid" Text="PCBAUid is required" Style="position: absolute"/>
+<RadzenRegexValidator Component="pcbaUid" Text=@RegexText Pattern=@RegexPattern Style="position: absolute"/>

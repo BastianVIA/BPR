@@ -48,32 +48,31 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         int? requestManufacturerNumber,
         int? requestProductionDateCode)
     {
-        var actuatorFromDb = Query().Include(model => model.PCBA).AsQueryable();
-        
+        var queryBuilder = Query().Include(model => model.PCBA).AsQueryable();
+
         if (requestUid != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.Uid == requestUid);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.Uid == requestUid);
         }
 
         if (requestItemNumber != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNumber == requestItemNumber);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ItemNumber == requestItemNumber);
         }
 
         if (requestManufacturerNumber != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNumber);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNumber);
         }
 
         if (requestProductionDateCode != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ProductionDateCode == requestProductionDateCode);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ProductionDateCode == requestProductionDateCode);
         }
 
-        var actuatorModel = await actuatorFromDb.ToListAsync();
+        var actuatorModel = await queryBuilder.ToListAsync();
         return ToDomain(actuatorModel);
     }
-
 
     public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo = null)
     {
@@ -86,7 +85,6 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var result = await query.ToListAsync();
         return ToDomain(result);
     }
-
 
     private Actuator ToDomain(ActuatorModel actuatorModel)
     {

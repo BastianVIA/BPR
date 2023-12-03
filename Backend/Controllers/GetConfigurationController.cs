@@ -19,10 +19,16 @@ public class GetConfigurationController : ControllerBase
     public IActionResult GetAsync(CancellationToken cancellationToken)
     {
         var configValidationSettings = _configuration.GetSection("ValidationSettings");
+        var pcbaUidLenght = configValidationSettings.GetValue<int>("PCBAUidLength");
         var woNoLength = configValidationSettings.GetValue<int>("WorkOrderNumberLength");
         var serialNoMinLength = configValidationSettings.GetValue<int>("SerialNumberMinLength");
         var serialNoMaxLenght = configValidationSettings.GetValue<int>("SerialNumberMaxLength");
-        var validationSettings = ValidationSettings.From(woNoLength, serialNoMinLength, serialNoMaxLenght);
+        var itemNoLength = configValidationSettings.GetValue<int>("ItemNumberLength");
+        var manufacturerNoLength = configValidationSettings.GetValue<int>("ManufacturerNumberLength");
+        var productionDateCodeLength = configValidationSettings.GetValue<int>("ProductionDateCodeLength");
+
+        var validationSettings = ValidationSettings.From(pcbaUidLenght, woNoLength, serialNoMinLength,
+            serialNoMaxLenght, itemNoLength, manufacturerNoLength, productionDateCodeLength);
         return Ok(ConfigurationResponse.From(validationSettings));
     }
 }
@@ -30,8 +36,10 @@ public class GetConfigurationController : ControllerBase
 public class ConfigurationResponse
 {
     public ValidationSettings ValidationSettings { get; }
-    
-    private ConfigurationResponse(){}
+
+    private ConfigurationResponse()
+    {
+    }
 
     private ConfigurationResponse(ValidationSettings validationSettings)
     {
@@ -49,17 +57,31 @@ public class ValidationSettings
     public int WorkOrderNumberLength { get; }
     public int SerialNumberMinLength { get; }
     public int SerialNumberMaxLength { get; }
+    public int ItemNumberLength { get; }
+    public int ManufacturerNumberLength { get; }
+    public int ProductionDateCodeLenght { get; }
+    public int PCBAUidLength { get; }
     
-    private ValidationSettings(){}
-    private ValidationSettings(int workOrderNumberLength, int serialNumberMinLength, int serialNumberMaxLength)
+    private ValidationSettings()
     {
-        WorkOrderNumberLength = workOrderNumberLength;
-        SerialNumberMinLength = serialNumberMinLength;
-        SerialNumberMaxLength = serialNumberMaxLength;
     }
 
-    internal static ValidationSettings From(int woNoLength, int serialNoMinLength, int serialNoMaxLength )
+    private ValidationSettings(int pcbaUidLenght, int woNoLength, int serialNoMinLength,
+        int serialNoMaxLength, int itemNoLength, int manufacturerNoLength, int productionDateCodeLenght)
     {
-        return new ValidationSettings(woNoLength, serialNoMinLength, serialNoMaxLength);
+        PCBAUidLength = pcbaUidLenght;
+        WorkOrderNumberLength = woNoLength;
+        SerialNumberMinLength = serialNoMinLength;
+        SerialNumberMaxLength = serialNoMaxLength;
+        ItemNumberLength = itemNoLength;
+        ManufacturerNumberLength = manufacturerNoLength;
+        ProductionDateCodeLenght = productionDateCodeLenght;
+    }
+
+    internal static ValidationSettings From(int pcbaUidLenght, int woNoLength, int serialNoMinLength,
+        int serialNoMaxLength, int itemNoLength, int manufacturerNoLength, int productionDateCodeLenght)
+    {
+        return new ValidationSettings(pcbaUidLenght, woNoLength, serialNoMinLength, serialNoMaxLength, itemNoLength,
+            manufacturerNoLength, productionDateCodeLenght);
     }
 }
