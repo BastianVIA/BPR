@@ -43,9 +43,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
     
-    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid,
-        string? pcbaItemNumber,
-        int? pcbaManufacturerNumber, int? pcbaProductionDateCode)
+    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode)
     {
         var queryBuilder = Query().Include(model => model.PCBA).AsQueryable();
         

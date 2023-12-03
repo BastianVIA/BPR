@@ -11,8 +11,7 @@ public class GetActuatorsWithFilterQuery : IQuery<GetActuatorsWithFilterDto>
     internal int? ManufacturerNumber { get; }
     internal int? ProductionDateCode { get; }
 
-    private GetActuatorsWithFilterQuery(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
-        int? productionDateCode)
+    private GetActuatorsWithFilterQuery(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode)
     {
         WorkOrderNumber = woNo;
         SerialNumber = serialNo;
@@ -22,9 +21,7 @@ public class GetActuatorsWithFilterQuery : IQuery<GetActuatorsWithFilterDto>
         ProductionDateCode = productionDateCode;
     }
 
-    public static GetActuatorsWithFilterQuery Create(int? woNo, int? serialNo, string? pcbaUid, string? itemNo,
-        int? manufacturerNo,
-        int? productionDateCode)
+    public static GetActuatorsWithFilterQuery Create(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode)
     {
         if (woNo == null && serialNo == null && productionDateCode == null && manufacturerNo == null &&
             productionDateCode == null && pcbaUid == null &&

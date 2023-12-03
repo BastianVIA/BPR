@@ -57,14 +57,14 @@ public class GetActuatorsWithFilterController : ControllerBase
     {
         public int WorkOrderNumber { get; private set; }
         public int SerialNumber { get; private set; }
-        public GetActuatorWithFilterPCBA Pcba { get; private set; }
+        public GetActuatorWithFilterPCBA PCBA { get; private set; }
 
         internal static GetActuatorWithFilterActuator From(ActuatorDTO result)
         {
             return new GetActuatorWithFilterActuator
             {
                 WorkOrderNumber = result.WorkOrderNumber, SerialNumber = result.SerialNumber,
-                Pcba = GetActuatorWithFilterPCBA.From(result.Pcba)
+                PCBA = GetActuatorWithFilterPCBA.From(result.Pcba)
             };
         }
     }
@@ -91,5 +91,4 @@ public class GetActuatorsWithFilterController : ControllerBase
                 result.ProductionDateCode);
         }
     }
-    
 }

@@ -10,21 +10,17 @@ namespace Frontend.Pages;
 public class PCBAInfoBase : ComponentBase
 {
     [Inject]
-    public IActuatorDetailsModel _actuatorDetailsModel { get; set; }
+    public IActuatorDetailsModel ActuatorDetailsModel { get; set; }
+    [Inject] 
+    private IAlertService _alertService { get; set; }
     
     public Actuator actuator = new();
-    
-    [Inject]
-    private IAlertService _alertService { get; set; }
-
     public  bool searchPerfomed = false;
-    public PCBAInfoBase()
-    {
-    }
+    public PCBAInfoBase() { }
     
     public PCBAInfoBase(IActuatorDetailsModel actuatorDetailsModel)
     {
-        _actuatorDetailsModel = actuatorDetailsModel;
+        ActuatorDetailsModel = actuatorDetailsModel;
     }
     
     public async Task SearchActuator()
