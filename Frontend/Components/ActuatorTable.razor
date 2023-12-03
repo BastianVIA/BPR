@@ -1,4 +1,5 @@
 ﻿@using Frontend.Entities
+@inherits ActuatorTableBase
 
 <TableFilters OnNewFilter="@UpdateFilters"/>
 
@@ -30,17 +31,3 @@
         }
     </Columns>
 </RadzenDataGrid>
-
-@code {
-
-    [Parameter]
-    public List<Actuator> Actuators { get; set; } = new();
-    
-    private List<string> Filters { get; set; } = new();
-
-    private void UpdateFilters(List<string>? filters)
-    {
-        filters ??= new List<string>();
-        Filters = filters;
-    }
-}
