@@ -22,7 +22,13 @@ public class GetConfigurationController : ControllerBase
         var woNoLength = configValidationSettings.GetValue<int>("WorkOrderNumberLength");
         var serialNoMinLength = configValidationSettings.GetValue<int>("SerialNumberMinLength");
         var serialNoMaxLenght = configValidationSettings.GetValue<int>("SerialNumberMaxLength");
-        var validationSettings = ValidationSettings.From(woNoLength, serialNoMinLength, serialNoMaxLenght);
+        var productionDateCodeMinLength = configValidationSettings.GetValue<int>("ProductionDateCodeMinLength");
+        var productionDateCodeMaxLength = configValidationSettings.GetValue<int>("ProductionDateCodeMaxLength");
+
+
+        var validationSettings = ValidationSettings.From(woNoLength, serialNoMinLength,
+            serialNoMaxLenght, productionDateCodeMinLength,
+            productionDateCodeMaxLength);
         return Ok(ConfigurationResponse.From(validationSettings));
     }
 }
@@ -30,8 +36,10 @@ public class GetConfigurationController : ControllerBase
 public class ConfigurationResponse
 {
     public ValidationSettings ValidationSettings { get; }
-    
-    private ConfigurationResponse(){}
+
+    private ConfigurationResponse()
+    {
+    }
 
     private ConfigurationResponse(ValidationSettings validationSettings)
     {
@@ -49,17 +57,28 @@ public class ValidationSettings
     public int WorkOrderNumberLength { get; }
     public int SerialNumberMinLength { get; }
     public int SerialNumberMaxLength { get; }
-    
-    private ValidationSettings(){}
-    private ValidationSettings(int workOrderNumberLength, int serialNumberMinLength, int serialNumberMaxLength)
+    public int ProductionDateCodeMinLength { get; }
+    public int ProductionDateCodeMaxLength { get; }
+
+
+    private ValidationSettings()
     {
-        WorkOrderNumberLength = workOrderNumberLength;
-        SerialNumberMinLength = serialNumberMinLength;
-        SerialNumberMaxLength = serialNumberMaxLength;
     }
 
-    internal static ValidationSettings From(int woNoLength, int serialNoMinLength, int serialNoMaxLength )
+    private ValidationSettings(int woNoLength, int serialNoMinLength,
+        int serialNoMaxLength, int productionDateCodeMinLength, int productionDateCodeMaxLength)
     {
-        return new ValidationSettings(woNoLength, serialNoMinLength, serialNoMaxLength);
+        WorkOrderNumberLength = woNoLength;
+        SerialNumberMinLength = serialNoMinLength;
+        SerialNumberMaxLength = serialNoMaxLength;
+        ProductionDateCodeMinLength = productionDateCodeMinLength;
+        ProductionDateCodeMaxLength = productionDateCodeMaxLength;
+    }
+
+    internal static ValidationSettings From(int woNoLength, int serialNoMinLength,
+        int serialNoMaxLength, int productionDateCodeMinLength, int productionDateCodeMaxLength)
+    {
+        return new ValidationSettings(woNoLength, serialNoMinLength, serialNoMaxLength, productionDateCodeMinLength,
+            productionDateCodeMaxLength);
     }
 }

@@ -37,11 +37,11 @@ public class UnitTestSearchActuatorModel
         // Arrange
         int woNo = fixture.Create<int>();
         int serialNo = fixture.Create<int>();
-        int pcbaUid = fixture.Create<int>();
+        PCBA pcba = fixture.Create<PCBA>();
 
         var response = new GetActuatorDetailsResponse
-        {
-            PcbaUid = pcbaUid
+        { 
+            Pcba = pcba
         };
 
         mockNetwork.GetActuatorDetails(woNo, serialNo).Returns(response);
@@ -52,7 +52,7 @@ public class UnitTestSearchActuatorModel
         // Assert
         Assert.Equal(woNo, actuator.WorkOrderNumber);
         Assert.Equal(serialNo, actuator.SerialNumber);
-        Assert.Equal(pcbaUid, actuator.PCBA.PCBAUid);
+        Assert.Equal(pcba.Uid, actuator.PCBA.PCBAUid);
     }
 
     [Fact]
