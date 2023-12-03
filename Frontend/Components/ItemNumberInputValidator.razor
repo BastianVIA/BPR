@@ -1,6 +1,4 @@
-﻿@inherits WorkOrderNumberInputValidatorBase
+﻿@inherits ItemNumberInputValidatorBase
 
 <RadzenLabel Text="Item Number"/>
-<RadzenNumeric ShowUpDown="false" style="display: block" Name="ItemNumber" @bind-Value=@Actuator.PCBA.ItemNumber class="w-100"/>
-<RadzenRequiredValidator Component="itemNo" Text="ItemNumber is required" Style="position: absolute"/>
-<RadzenRegexValidator Component="itemNo" Text=@RegexText Pattern=@RegexPattern Style="position: absolute"/>
+<RadzenTextBox ShowUpDown="false" style="display: block" Name="ItemNumber" @bind-Value=@Actuator.PCBA.ItemNumber class="w-100"/>

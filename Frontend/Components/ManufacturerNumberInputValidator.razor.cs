@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Frontend.Components;
 
-public class ItemNumberInputValidatorBase : ComponentBase
+public class ManufacturerNumberInputValidatorBase : ComponentBase
 {
     [Parameter] public Actuator Actuator { get; set; }
 }

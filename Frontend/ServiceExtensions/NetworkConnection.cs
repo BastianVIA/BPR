@@ -8,7 +8,6 @@ public static class NetworkConnection
     {
         services.AddHttpClient();
         services.AddSingleton<INetwork, NSwagProxy>();
-        
         return services;
     }
 }

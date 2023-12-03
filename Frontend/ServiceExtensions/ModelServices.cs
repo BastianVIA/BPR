@@ -10,6 +10,5 @@ public static class ModelServices
        serviceCollection.AddScoped<IActuatorSearchModel, ActuatorSearchModel>();
 
        return serviceCollection;
-       
     }
 }

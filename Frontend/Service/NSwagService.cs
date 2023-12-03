@@ -897,6 +897,12 @@ namespace Frontend.Service
         [Newtonsoft.Json.JsonProperty("serialNumberMaxLength", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int SerialNumberMaxLength { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("productionDateCodeMinLength", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ProductionDateCodeMinLength { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("productionDateCodeMaxLength", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ProductionDateCodeMaxLength { get; set; }
+
     }
 
 

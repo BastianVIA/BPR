@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using BuildingBlocks.Infrastructure;
+﻿using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Domain.Entities;
 using Domain.Repositories;
@@ -43,48 +42,46 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         actuatorFromDb.PCBA = pcba;
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
-
-
+    
     public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid,
         string? pcbaItemNumber,
         int? pcbaManufacturerNumber, int? pcbaProductionDateCode)
     {
-        var actuatorFromDb = Query().Include(model => model.PCBA).AsQueryable();
+        var queryBuilder = Query().Include(model => model.PCBA).AsQueryable();
         
         if (woNo != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.WorkOrderNumber == woNo);
+            queryBuilder = queryBuilder.Where(model => model.WorkOrderNumber == woNo);
         }
 
         if (serialNo != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.SerialNumber == serialNo);
+            queryBuilder = queryBuilder.Where(model => model.SerialNumber == serialNo);
         }
 
         if (pcbaUid != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.Uid == pcbaUid);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.Uid == pcbaUid);
         }
 
         if (pcbaItemNumber != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ItemNumber == pcbaItemNumber);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ItemNumber == pcbaItemNumber);
         }
 
         if (pcbaManufacturerNumber != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ManufacturerNumber == pcbaManufacturerNumber);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ManufacturerNumber == pcbaManufacturerNumber);
         }
 
         if (pcbaProductionDateCode != null)
         {
-            actuatorFromDb = actuatorFromDb.Where(model => model.PCBA.ProductionDateCode == pcbaProductionDateCode);
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ProductionDateCode == pcbaProductionDateCode);
         }
 
-        var actuatorModel = await actuatorFromDb.ToListAsync();
-        return ToDomain(actuatorModel);
+        var actuatorModels = await queryBuilder.ToListAsync();
+        return ToDomain(actuatorModels);
     }
-
 
     public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo = null)
     {
@@ -97,7 +94,6 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         var result = await query.ToListAsync();
         return ToDomain(result);
     }
-
 
     private Actuator ToDomain(ActuatorModel actuatorModel)
     {

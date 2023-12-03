@@ -1,0 +1,5 @@
+﻿@inherits ProductionDateCodeInputValidatorBase
+
+<RadzenLabel Text="Production Date Code"/>
+<RadzenNumeric ShowUpDown="false" style="display: block" Name="ProductionDateCode" @bind-Value=@Actuator.PCBA.ProductionDateCode class="w-100"/>
+<RadzenRegexValidator Component="productionDateCode" Text=@RegexText Pattern=@RegexPattern Style="position: absolute"/>

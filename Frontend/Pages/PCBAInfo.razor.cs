@@ -41,5 +41,4 @@ public class PCBAInfoBase : ComponentBase
             _alertService.FireEvent(AlertStyle.Danger, e.Message);
         }
     }
-
 }
