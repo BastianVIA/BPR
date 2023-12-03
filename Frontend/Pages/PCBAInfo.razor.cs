@@ -32,7 +32,8 @@ public class PCBAInfoBase : ComponentBase
         searchPerfomed = true;
         try
         {
-            actuator = await _actuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
+            // Udkommenteret fordi vi kommer til åbne siden gennem actuator search page
+            //actuator = await _actuatorDetailsModel.GetActuatorDetails(actuator.WorkOrderNumber, actuator.SerialNumber);
         }
         catch (NetworkException e)
         {

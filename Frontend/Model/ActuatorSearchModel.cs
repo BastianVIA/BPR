@@ -11,32 +11,11 @@ public class ActuatorSearchModel : IActuatorSearchModel
     {
         _network = network;
     }
-    public async Task<List<Actuator>> GetActuatorsByPCBA(string uid, int? manufacturerNumber = null)
-    {
-        var response = await _network.GetActuatorFromPCBA(uid, manufacturerNumber);
-         var list = response.Actuators.Select(entry => new Actuator
-         {
-             SerialNumber = entry.SerialNumber, 
-             WorkOrderNumber = entry.WorkOrderNumber, 
-             PCBA =
-             {
-                 PCBAUid = entry.Uid, 
-                 ManufacturerNumber = entry.ManufacturerNumber
-             }
-         }).ToList();
-        return list;
-    }
-
-    public async Task<List<Actuator>> SearchActuator(int? woNo, string? uid, int? itemNo, int? manuNo, int? prodDateCode, CancellationToken cancellationToken)
-    {
-        var list = new List<Actuator>();
-
-        return list;
-    }
     
-    public async Task<List<Actuator>> GetActuatorsWithFilter(string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode)
+    public async Task<List<Actuator>> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
+        int? productionDateCode)
     {
-        var networkResponse = await _network.GetActuatorWithFilter( pcbaUid, itemNo, manufacturerNo, productionDateCode);
+        var networkResponse = await _network.GetActuatorWithFilter(woNo,serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode);
 
         var actuators = new List<Actuator>();
         foreach (var responseItem in networkResponse.Actuators)

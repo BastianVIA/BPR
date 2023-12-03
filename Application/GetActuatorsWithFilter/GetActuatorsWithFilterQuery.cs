@@ -30,7 +30,7 @@ public class GetActuatorsWithFilterQuery : IQuery<GetActuatorsWithFilterDto>
             productionDateCode == null && pcbaUid == null &&
             itemNo == null)
         {
-            throw new ArgumentException("(Filter cannot all be empty");
+            throw new ArgumentException("Must specify at least one search parameter");
         }
 
         return new GetActuatorsWithFilterQuery(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode);

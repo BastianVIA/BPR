@@ -6,13 +6,12 @@
 <RadzenRow>
     <RadzenDropDown @bind-Value=@Filters Data=@FilterParams 
                                 Multiple=true AllowClear=true Placeholder="Select Filters" Chips=true Style="width: 100%; max-width: 400px;"
-                                MaxSelectedLabels="10"
+                                MaxSelectedLabels="5"
+                                SelectAllText="Select All"
                                 Change="@OnChange"/>
 </RadzenRow>
 
-
 @code {
-    
     private string[] filters = { 
         "Work Order Number",
         "Serial Number",
@@ -39,5 +38,4 @@
     {
         OnNewFilter.InvokeAsync(Filters);
     }
-
 }

@@ -16,11 +16,9 @@ public class ActuatorInfoBase : ComponentBase
     public IAlertService AlertService { get; set; }
 
     // Radzen needs a class to specify the data object
-    public Actuator SearchActuator { get; set; } = new();
+    public Actuator SearchActuator { get; } = new();
     public List<Actuator> actuators = new();
-
     
-
     // Blazor page needs an empty constructor
     public ActuatorInfoBase() { }
     
@@ -33,7 +31,9 @@ public class ActuatorInfoBase : ComponentBase
     {
         try
         {
-            actuators = await SearchModel.GetActuatorsWithFilter(
+            actuators = await SearchModel.GetActuatorWithFilter(
+                SearchActuator.WorkOrderNumber,
+                SearchActuator.SerialNumber,
                 SearchActuator.PCBA.PCBAUid,
                 SearchActuator.PCBA.ItemNumber,
                 SearchActuator.PCBA.ManufacturerNumber,
@@ -43,11 +43,7 @@ public class ActuatorInfoBase : ComponentBase
         catch (NetworkException e)
         {
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
+            actuators = new List<Actuator>();
         }
-    }
-
-    public void Changed()
-    {
-        Console.WriteLine();
     }
 }
