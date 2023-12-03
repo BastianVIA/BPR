@@ -7,7 +7,7 @@ public class FileProcessor
     private readonly string _csvFolderPath;
     private readonly ILogger<FileProcessor> _logger;
 
-    public FileProcessor(FileProcessorOptions options, ILogger<FileProcessor> logger) // Inject ILogger
+    public FileProcessor(FileProcessorOptions options, ILogger<FileProcessor> logger)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 

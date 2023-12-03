@@ -2,19 +2,19 @@
 @using Frontend.Entities
 @using Frontend.Components
 @inherits PCBAInfoBase
-<h3>PCBAInfo</h3>
+<h3>PCBA Information</h3>
 
 <RadzenRow>
     <RadzenTemplateForm TItem="Actuator" Data=@actuator Submit=@SearchActuator>
         <RadzenRow>
             <RadzenColumn>
-               <WorkOrderNumberInputValidator Actuator="@actuator"/>
+                <WorkOrderNumberInputValidator Actuator="@actuator"/>
             </RadzenColumn>
             <RadzenColumn>
-               <SerialNumberInputValidator Actuator="@actuator"/>
+                <SerialNumberInputValidator Actuator="@actuator"/>
             </RadzenColumn>
             <RadzenColumn>
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Search"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Search" Icon="search" Style="margin-top: 25px;"/>
             </RadzenColumn>
         </RadzenRow>
     </RadzenTemplateForm>
@@ -22,12 +22,23 @@
 
 <RadzenRow>
     
-    @if (!string.IsNullOrEmpty(actuator.PCBA.PCBAUid))
-    {
-        <RadzenCard Style="max-width: 420px; margin-top: 30px">
-            <RadzenText>WO: @actuator.WorkOrderNumber</RadzenText>
-            <RadzenText>Serial: @actuator.SerialNumber</RadzenText>
-            <RadzenText>PCBAUid: @actuator.PCBA.PCBAUid</RadzenText>
-        </RadzenCard>
-    }
+     @if (searchPerfomed)
+     {
+
+         @if (!string.IsNullOrEmpty(actuator.PCBA.PCBAUid))
+         {
+             <RadzenCard Style="max-width: 600px; margin-top: 30px;">
+                 <div><span Style="font-weight: bold;">Work Order Number:</span> @actuator.WorkOrderNumber</div>
+                 <div><span Style="font-weight: bold;">Serial Number:</span> @actuator.SerialNumber</div>
+                 <div><span Style="font-weight: bold;">PCBA UID:</span> @actuator.PCBA.PCBAUid</div>
+                 <div><span Style="font-weight: bold;">Manufacturer Number:</span> @actuator.PCBA.ManufacturerNumber</div>
+             </RadzenCard>
+         }
+         else
+         {
+             <RadzenLabel Text="No PCBA details available" Style="margin-top: 30px;"/>
+
+         }
+     }
+
 </RadzenRow>
