@@ -19,7 +19,7 @@ public class GetActuatorsWithFilterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync([FromQuery] string? pcbaUid, [FromQuery] string? itemNo,
+    public async Task<IActionResult> GetAsync([FromQuery] int woNo, [FromQuery] int serialNo, [FromQuery] string? pcbaUid, [FromQuery] string? itemNo,
         [FromQuery] int? manufacturerNo,
         [FromQuery] int? productionDateCode, CancellationToken cancellationToken)
     {
@@ -53,6 +53,21 @@ public class GetActuatorsWithFilterController : ControllerBase
         }
     }
 
+    public class GetActuatorWithFilterActuator
+    {
+        public int WorkOrderNumber { get; private set; }
+        public int SerialNumber { get; private set; }
+        public GetActuatorWithFilterPCBA Pcba { get; private set; }
+
+        internal static GetActuatorWithFilterActuator From(ActuatorDTO result)
+        {
+            return new GetActuatorWithFilterActuator
+            {
+                WorkOrderNumber = result.WorkOrderNumber, SerialNumber = result.SerialNumber,
+                Pcba = GetActuatorWithFilterPCBA.From(result.Pcba)
+            };
+        }
+    }
     public class GetActuatorWithFilterPCBA
     {
         public string PCBAUid { get; }
@@ -76,20 +91,5 @@ public class GetActuatorsWithFilterController : ControllerBase
                 result.ProductionDateCode);
         }
     }
-
-    public class GetActuatorWithFilterActuator
-    {
-        public int WorkOrderNumber { get; private set; }
-        public int SerialNumber { get; private set; }
-        public GetActuatorWithFilterPCBA Pcba { get; private set; }
-
-        internal static GetActuatorWithFilterActuator From(ActuatorDTO result)
-        {
-            return new GetActuatorWithFilterActuator
-            {
-                WorkOrderNumber = result.WorkOrderNumber, SerialNumber = result.SerialNumber,
-                Pcba = GetActuatorWithFilterPCBA.From(result.Pcba)
-            };
-        }
-    }
+    
 }
