@@ -19,11 +19,11 @@ public class GetActuatorsWithFilterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync([FromQuery] int woNo, [FromQuery] int serialNo, [FromQuery] string? pcbaUid, [FromQuery] string? itemNo,
+    public async Task<IActionResult> GetAsync([FromQuery] int? woNo, [FromQuery] int? serialNo, [FromQuery] string? pcbaUid, [FromQuery] string? itemNo,
         [FromQuery] int? manufacturerNo,
         [FromQuery] int? productionDateCode, CancellationToken cancellationToken)
     {
-        var query = GetActuatorsWithFilterQuery.Create(pcbaUid, itemNo, manufacturerNo, productionDateCode);
+        var query = GetActuatorsWithFilterQuery.Create(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode);
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorWithFilterResponse.From(result));
     }
