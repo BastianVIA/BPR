@@ -85,7 +85,7 @@ public class LINTestBackgroundService : BackgroundService
                 if (_configManager.MaxConsecutiveFailsBeforeGivingUp > consecutiveFails)
                 {
                     _logger.LogWarning(ex,
-                        $"Error processing file {filesToProcess[i].Path}. We will try again, continuing from this point the next time the service runs");
+                        $"Error processing file {filesToProcess[i].Path}. It will be tried again, continuing from this point the next time the service runs");
                     return i;
                 }
 

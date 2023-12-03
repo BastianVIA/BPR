@@ -21,7 +21,6 @@ public class FileProcessingStateManager
                 new JsonSerializerSettings()
                 {
                     DateTimeZoneHandling = DateTimeZoneHandling.Local
-
                 });
             if (lastProcessedData != null)
             {
