@@ -1,0 +1,12 @@
+﻿@inherits TableFiltersBase
+
+<RadzenRow AlignItems="AlignItems.Center">
+    <RadzenText Text="Table Filters"/>
+</RadzenRow>
+<RadzenRow>
+    <RadzenDropDown @bind-Value=@Filters Data=@FilterParams 
+                    Multiple=true AllowClear=true Placeholder="Select Filters" Chips=true Style="width: 100%; max-width: 400px;"
+                    MaxSelectedLabels="5"
+                    SelectAllText="Select All"
+                    Change="@OnChange"/>
+</RadzenRow>

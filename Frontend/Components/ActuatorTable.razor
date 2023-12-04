@@ -1,0 +1,15 @@
+﻿@using Frontend.Entities
+@inherits ActuatorTableBase
+
+<TableFilters OnNewFilter="@UpdateFilters"/>
+
+<RadzenDataGrid TItem="Actuator" Data="@Actuators" ColumnWidth="300px">
+    <Columns>
+        <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn("Work Order Number")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn("Serial Number")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID" Visible="@ShouldShowColumn("UID")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number" Visible="@ShouldShowColumn("Manufacturer Number")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="Item Number" Visible="@ShouldShowColumn("Item Number")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="Production Date Code" Visible="@ShouldShowColumn("Production Date Code")"/>
+    </Columns>
+</RadzenDataGrid>

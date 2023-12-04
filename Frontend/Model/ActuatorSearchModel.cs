@@ -11,19 +11,26 @@ public class ActuatorSearchModel : IActuatorSearchModel
     {
         _network = network;
     }
-    public async Task<List<Actuator>> GetActuatorsByPCBA(string uid, int? manufacturerNumber = null)
+    
+    public async Task<List<Actuator>> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
+        int? productionDateCode)
     {
-        var response = await _network.GetActuatorFromPCBA(uid, manufacturerNumber);
-         var list = response.Actuators.Select(entry => new Actuator
-         {
-             SerialNumber = entry.SerialNumber, 
-             WorkOrderNumber = entry.WorkOrderNumber, 
-             PCBA =
-             {
-                 PCBAUid = entry.Uid, 
-                 ManufacturerNumber = entry.ManufacturerNumber
-             }
-         }).ToList();
-        return list;
+        var networkResponse = await _network.GetActuatorWithFilter(woNo,serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode);
+
+        var actuators = new List<Actuator>();
+        foreach (var responseItem in networkResponse.Actuators)
+        {
+            var actuator = new Actuator()
+                .WithWorkOrderNumber(responseItem.WorkOrderNumber)
+                .WithSerialNumber(responseItem.SerialNumber)
+                .WithPCBAUid(responseItem.Pcba.PcbaUid)
+                .WithPCBAItemNumber(responseItem.Pcba.ItemNumber)
+                .WithPCBAManufacturerNumber(responseItem.Pcba.ManufacturerNumber)
+                .WithPCBAProductionDateCode(responseItem.Pcba.ProductionDateCode);
+
+            actuators.Add(actuator);
+        }
+
+        return actuators;
     }
 }

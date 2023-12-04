@@ -1,30 +1,57 @@
-﻿@page "/ActuatorInfo"
+﻿@page "/ActuatorSearch"
 @using Frontend.Entities
+@using Frontend.Components
 @inherits ActuatorInfoBase
-<h3>ActuatorInfo</h3>
+<h3>Search for actuator</h3>
 
-<RadzenRow>
-    <RadzenTemplateForm TItem="Actuator" Data="@SearchActuator" Submit="@SearchActuators">
+<RadzenRow JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenTemplateForm TItem="Actuator" Data="@SearchActuator" Submit="@SearchActuators" Style="width: 90%;">
+        <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
+            <RadzenColumn>
+                <RadzenRow Style="margin-bottom: 10px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
+                    <RadzenText >Actuator Parameters</RadzenText>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Workorder Number"/>
+                        <RadzenNumeric ShowUpDown="false" style="display: block" Name="WorkOrderNumber" @bind-Value=@SearchActuator.WorkOrderNumber class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Serial Number"/>
+                        <RadzenNumeric ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@SearchActuator.SerialNumber class="w-100"/>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenColumn>
+            <RadzenColumn Size="7">
+                <RadzenRow Style="margin-bottom: 10px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
+                    <RadzenText>PCBA Parameters</RadzenText>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn >
+                        <RadzenLabel Text="Uid"/>
+                        <RadzenTextBox style="display: block" Name="PcbaUid" @bind-Value="@SearchActuator.PCBA.PCBAUid" class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Item Number"/>
+                        <RadzenTextBox ShowUpDown="false" style="display: block" Name="ItemNumber" @bind-Value=@SearchActuator.PCBA.ItemNumber class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Manufacturer Number"/>
+                        <RadzenNumeric ShowUpDown="false" style="display: block" Name="ManufacturerNumber" @bind-Value=@SearchActuator.PCBA.ManufacturerNumber class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Production Date Code"/>
+                        <RadzenNumeric ShowUpDown="false" style="display: block" Name="ProductionDateCode" @bind-Value=@SearchActuator.PCBA.ProductionDateCode class="w-100"/>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenColumn>
+        </RadzenRow>
         <RadzenRow>
-            <RadzenColumn>
-              <RadzenLabel Text="PCBA Uid"/>
-              <RadzenTextBox style="display: block" Name="PcbaUid" @bind-Value="@SearchActuator.PCBA.PCBAUid" class="w-100"/>
-            </RadzenColumn>
-            <RadzenColumn>
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
-            </RadzenColumn>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
         </RadzenRow>
     </RadzenTemplateForm>
 </RadzenRow>
 
 <RadzenRow>
-    <RadzenDataGrid TItem="Actuator" Data="@actuators" FilterMode="FilterMode.Advanced" Style="--rz-grid-header-text-transform: none; --rz-grid-header-font-size: 20px;">
-        <Columns>
-            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID" >
-            </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number"></RadzenDataGridColumn>
-        </Columns>
-    </RadzenDataGrid>
+    <ActuatorTable Actuators="@actuators"/>
 </RadzenRow>
