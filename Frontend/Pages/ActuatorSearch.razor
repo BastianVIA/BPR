@@ -21,6 +21,14 @@
                         <RadzenLabel Text="Serial Number"/>
                         <RadzenNumeric ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@SearchActuator.SerialNumber class="w-100"/>
                     </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Created Date Start"/>
+                        <RadzenDatePicker ShowSeconds="false" ShowTime="true"  DateFormat="yyyy/MM/dd/HH" style="display: block" Name="ProductionDateCode" @bind-Value=@SearchActuator.CreatedTimeStart class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Created Date End"/>
+                        <RadzenDatePicker ShowSeconds="false" ShowTime="true" DateFormat="yyyy/MM/dd/HH" style="display: block" Name="ProductionDateCode" @bind-Value=@SearchActuator.CreatedTimeEnd class="w-100"/>
+                    </RadzenColumn>
                 </RadzenRow>
             </RadzenColumn>
             <RadzenColumn Size="7">

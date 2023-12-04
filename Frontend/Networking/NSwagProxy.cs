@@ -42,9 +42,9 @@ public class NSwagProxy : INetwork
     }
     
     public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
-        int? productionDateCode)
+        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd)
     {
         return await Send(async () =>
-            await _client.GetActuatorsWithFilterAsync(woNo,serialNo,pcbaUid,itemNo,manufacturerNo,productionDateCode));
+            await _client.GetActuatorsWithFilterAsync(woNo,serialNo,pcbaUid,itemNo,manufacturerNo,productionDateCode,null,null,null,createdTimeStart,createdTimeEnd));
     }
 }

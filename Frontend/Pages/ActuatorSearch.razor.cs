@@ -1,4 +1,5 @@
-﻿using Frontend.Entities;
+﻿using System.Runtime.InteropServices.JavaScript;
+using Frontend.Entities;
 using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service.AlertService;
@@ -44,7 +45,9 @@ public class ActuatorSearchBase : ComponentBase
                 SearchActuator.PCBA.PCBAUid,
                 SearchActuator.PCBA.ItemNumber,
                 SearchActuator.PCBA.ManufacturerNumber,
-                SearchActuator.PCBA.ProductionDateCode
+                SearchActuator.PCBA.ProductionDateCode,
+                SearchActuator.CreatedTimeStart,
+                SearchActuator.CreatedTimeEnd
             );
         }
         catch (NetworkException e)

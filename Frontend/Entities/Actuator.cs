@@ -6,14 +6,13 @@ public class Actuator
     public int? SerialNumber { get; set; }
     public string? ArticleNumber { get; set; }
     public string? ArticleName { get; set; }
-    public string? Configuration { get; set; }
     public string? CommunicationProtocol { get; set; }
     public DateTime? CreatedTime { get; set; }
-    
+    public DateTime? CreatedTimeStart { get; set; }
+    public DateTime? CreatedTimeEnd { get; set; }
     public PCBA PCBA { get; } = new();
 
-    
-    
+
     // Actuator
     public Actuator WithWorkOrderNumber(int woNo)
     {
@@ -26,6 +25,7 @@ public class Actuator
         SerialNumber = serialNo;
         return this;
     }
+
     public Actuator WithArticleNumber(string articleNo)
     {
         ArticleNumber = articleNo;
@@ -35,12 +35,6 @@ public class Actuator
     public Actuator WithArticleName(string articleName)
     {
         ArticleName = articleName;
-        return this;
-    }
-
-    public Actuator WithConfiguration(string configuration)
-    {
-        Configuration = configuration;
         return this;
     }
 
@@ -56,21 +50,20 @@ public class Actuator
         return this;
     }
     
-    
     // PCBA
-  
+
     public Actuator WithSoftware(string software)
     {
         PCBA.Software = software;
         return this;
     }
-    
+
     public Actuator WithConfigNumber(string configNo)
     {
         PCBA.ConfigNumber = configNo;
         return this;
     }
-    
+
     public Actuator WithPCBAUid(string pcbaUid)
     {
         PCBA.PCBAUid = pcbaUid;
