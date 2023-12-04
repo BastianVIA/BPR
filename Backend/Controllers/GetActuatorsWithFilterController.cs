@@ -1,10 +1,10 @@
 ﻿using Application.GetActuatorsWithFilter;
 using BuildingBlocks.Application;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
+[ApiController]
 public class GetActuatorsWithFilterController : ControllerBase
 {
     private readonly IQueryBus _bus;
@@ -16,6 +16,7 @@ public class GetActuatorsWithFilterController : ControllerBase
 
     [HttpGet()]
     [Route("api/GetActuatorsWithFilter")]
+    [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]

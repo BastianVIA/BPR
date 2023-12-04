@@ -7,9 +7,9 @@ namespace Application.CreateOrUpdateActuator;
 
 public class CreateOrUpdateActuatorCommandHandler : ICommandHandler<CreateOrUpdateActuatorCommand>
 {
-    private IActuatorRepository _actuatorRepository;
-    private IPCBARepository _pcbaRepository;
-    private IDbTransaction _dbTransaction;
+    private readonly IActuatorRepository _actuatorRepository;
+    private readonly IPCBARepository _pcbaRepository;
+    private readonly IDbTransaction _dbTransaction;
 
     public CreateOrUpdateActuatorCommandHandler(IActuatorRepository actuatorRepository, IPCBARepository pcbaRepository,
         IDbTransaction dbTransaction)
