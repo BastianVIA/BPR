@@ -26,9 +26,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\Domain\Domain.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\Actuator.Application\Actuator.Application.csproj" />
+      <ProjectReference Include="..\Actuator.Domain\Actuator.Domain.csproj" />
+      <ProjectReference Include="..\Actuator.Infrastructure\Actuator.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
