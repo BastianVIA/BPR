@@ -1,14 +1,12 @@
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Application.CreateOrUpdateActuator;
-using Application.CreatePCBA;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
 [ApiController]
+[ApiExplorerSettings(GroupName = "Actuator")]
 
 public class PostActuatorController : ControllerBase
 {
@@ -21,6 +19,7 @@ public class PostActuatorController : ControllerBase
     
     [HttpPost()]
     [Route("api/[controller]")]
+    [Tags("Actuator")]
     [ProducesResponseType((int)HttpStatusCode.Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAsync([FromBody] PostActuatorRequest request, CancellationToken cancellationToken)

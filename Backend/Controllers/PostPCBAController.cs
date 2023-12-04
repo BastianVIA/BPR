@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Application.CreatePCBA;
 using BuildingBlocks.Application;
@@ -20,6 +18,7 @@ public class PostPCBAController : ControllerBase
     
     [HttpPost()]
     [Route("api/[controller]")]
+    [Tags("PCBA")]
     [ProducesResponseType((int)HttpStatusCode.Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAsync([FromBody] PostPCBARequest request, CancellationToken cancellationToken)

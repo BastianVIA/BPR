@@ -1,6 +1,5 @@
 ﻿using Application.GetActuatorDetails;
 using BuildingBlocks.Application;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
@@ -17,6 +16,7 @@ public class GetActuatorDetailsController : ControllerBase
 
     [HttpGet()]
     [Route("api/GetActuatorDetails/{woNo}/{serialNo}")]
+    [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorDetailsResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
