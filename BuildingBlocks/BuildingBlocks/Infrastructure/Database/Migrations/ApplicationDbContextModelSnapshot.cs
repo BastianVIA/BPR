@@ -29,6 +29,21 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("ArticleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommunicationProtocol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PCBAUid")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
