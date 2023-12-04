@@ -97,7 +97,11 @@ public class CsvDataService
         var eventToSend = new ActuatorTestInvalidIntegrationTest(
             int.Parse(csvModel.WorkOrderNumber),
             int.Parse(csvModel.SerialNumber),
-            csvModel.PCBAUid);
+            csvModel.PCBAUid,
+            csvModel.ArticleNumber,
+            csvModel.ArticleName,
+            csvModel.CommunicationProtocol,
+            csvModel.CreatedTime);
         await publisher.PublishAsync(eventToSend, stoppingToken);
     }
 }
