@@ -7,9 +7,7 @@ public class GetActuatorsWithFilterDto
 {
     public List<ActuatorDTO> ActuatorDtos { get; }
 
-    private GetActuatorsWithFilterDto()
-    {
-    }
+    private GetActuatorsWithFilterDto() { }
 
     private GetActuatorsWithFilterDto(List<ActuatorDTO> actuatorDtos)
     {
@@ -29,25 +27,6 @@ public class GetActuatorsWithFilterDto
     }
 }
 
-public class PCBADto
-{
-    public string Uid { get; set; }
-    public int ManufacturerNumber { get; set; }
-    public int ProductionDateCode { get; set; }
-    public string ItemNumber { get; set; }
-
-    internal static PCBADto From(PCBA pcba)
-    {
-        return new PCBADto
-        {
-            Uid = pcba.Uid,
-            ManufacturerNumber = pcba.ManufacturerNumber,
-            ProductionDateCode = pcba.ProductionDateCode,
-            ItemNumber = pcba.ItemNumber
-        };
-    }
-}
-
 public class ActuatorDTO
 {
     public int WorkOrderNumber { get; private set; }
@@ -61,6 +40,29 @@ public class ActuatorDTO
             WorkOrderNumber = actuator.Id.WorkOrderNumber,
             SerialNumber = actuator.Id.SerialNumber,
             Pcba = PCBADto.From(actuator.PCBA)
+        };
+    }
+}
+
+public class PCBADto
+{
+    public string Uid { get; set; }
+    public int ManufacturerNumber { get; private set; }
+    public string ItemNumber { get; private set; }
+    public string Software { get; private set; }
+    public int ProductionDateCode { get; private set; }
+    public string ConfigNo { get; private set; }
+
+    internal static PCBADto From(PCBA pcba)
+    {
+        return new PCBADto
+        {
+            Uid = pcba.Uid,
+            ManufacturerNumber = pcba.ManufacturerNumber,
+            ProductionDateCode = pcba.ProductionDateCode,
+            ItemNumber = pcba.ItemNumber,
+            Software = pcba.Software,
+            ConfigNo = pcba.ConfigNo
         };
     }
 }

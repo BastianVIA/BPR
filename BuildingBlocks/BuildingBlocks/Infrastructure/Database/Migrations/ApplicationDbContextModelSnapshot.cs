@@ -79,6 +79,10 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<string>("Uid")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ConfigNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ItemNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

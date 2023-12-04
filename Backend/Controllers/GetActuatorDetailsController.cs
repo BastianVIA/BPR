@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers;
 
 [ApiController]
-
 public class GetActuatorDetailsController : ControllerBase
 {
     private readonly IQueryBus _bus;
@@ -27,24 +26,54 @@ public class GetActuatorDetailsController : ControllerBase
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorDetailsResponse.From(result));
     }
-    
-    public class GetActuatorDetailsResponse
-    {
-        public PCBA PCBA { get; }
-        private GetActuatorDetailsResponse() {}
-        private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo, string itemNumber, string software, int productionDateCode)
-        {
-            PCBA = new PCBA(
-                uid: pcbaUid, 
-                manufacturerNo: manufacturerNo,
-                itemNumber: itemNumber,
-                software: software,
-                productionDateCode: productionDateCode);
-        }
+}
 
-        internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
-        {
-            return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber, result.PCBADto.ItemNumber, result.PCBADto.Software, result.PCBADto.ProductionDateCode);
-        }
+public class GetActuatorDetailsResponse
+{
+    public GetActuatorDetailsPCBA PCBA { get; }
+    private GetActuatorDetailsResponse() { }
+
+    private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo, string itemNumber, string software,
+        int productionDateCode, string configNo)
+    {
+        PCBA = GetActuatorDetailsPCBA.From(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo);
     }
+
+    internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
+    {
+        return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber,
+            result.PCBADto.ItemNumber, result.PCBADto.Software, result.PCBADto.ProductionDateCode,
+            result.PCBADto.ConfigNo);
     }
+}
+
+public class GetActuatorDetailsPCBA
+{
+    public string Uid { get; }
+    public int ManufacturerNumber { get; }
+    public string ItemNumber { get; }
+    public string Software { get; }
+    public int ProductionDateCode { get; }
+    public string ConfigNo { get; }
+
+    private GetActuatorDetailsPCBA()
+    {
+    }
+
+    private GetActuatorDetailsPCBA(string pcbaUid, int manufacturerNo, string itemNumber, string software,
+        int productionDateCode, string configNo)
+    {
+        Uid = pcbaUid;
+        ManufacturerNumber = manufacturerNo;
+        ItemNumber = itemNumber;
+        Software = software;
+        ProductionDateCode = productionDateCode;
+        ConfigNo = configNo;
+    }
+
+    public static GetActuatorDetailsPCBA From(string pcbaUid, int manufacturerNo, string itemNumber, string software,
+        int productionDateCode, string configNo)
+    {
+        return new GetActuatorDetailsPCBA(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo);
+    }
+}

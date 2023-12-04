@@ -20,7 +20,10 @@ public class PCBADAO : IPCBAService
         using var connection = new SqlConnection();
         connection.ConnectionString = _linakDbConnectionString;
             
-        var query = "SELECT * FROM PCBAs WHERE Uid = '" + uid + "'";
+        var query = "SELECT Uid, ItemNumber, ManufacturerNumber, Software, ProductionDateCode, Configuration FROM PCBAs p " +
+                    "join Actuators a on p.Uid = a.PCBAUid " +
+                    "join Orders o on a.WorkOrderNumber = o.WorkOrderNumber " +
+                    "WHERE Uid = '" + uid +"'";
             
         var command = new SqlCommand(query, connection);
         connection.Open();
@@ -37,6 +40,7 @@ public class PCBADAO : IPCBAService
             pcbaToReturn.ManufacturerNumber = dataReader.GetInt32(2);
             pcbaToReturn.Software = dataReader.GetString(3);
             pcbaToReturn.ProductionDateCode = dataReader.GetInt32(4);
+            pcbaToReturn.ConfigNo = dataReader.GetString(5);
         }
         
         return pcbaToReturn;

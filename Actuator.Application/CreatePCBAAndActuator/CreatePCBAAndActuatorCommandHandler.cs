@@ -20,7 +20,7 @@ public class CreatePCBAAndActuatorCommandHandler : ICommandHandler<CreatePCBAAnd
     {
         var pcba = _pcbadao.GetPCBA(request.PCBAUid);
         var pcbaCommand = CreatePCBACommand.Create(pcba.Uid.ToString(), pcba.ManufacturerNumber, pcba.ItemNumber, pcba.Software,
-            pcba.ProductionDateCode);
+            pcba.ProductionDateCode, pcba.ConfigNo);
         _bus.Send(pcbaCommand, cancellationToken);
         
         var actuatorCommand = CreateOrUpdateActuatorCommand.Create(request.WorkOrderNumber, request.SerialNumber,
