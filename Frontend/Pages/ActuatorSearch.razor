@@ -1,11 +1,12 @@
 ﻿@page "/ActuatorSearch"
 @using Frontend.Entities
 @using Frontend.Components
-@inherits ActuatorInfoBase
+@inherits ActuatorSearchBase
 <h3>Search for actuator</h3>
 
 <RadzenRow JustifyContent="JustifyContent.SpaceBetween">
     <RadzenTemplateForm TItem="Actuator" Data="@SearchActuator" Submit="@SearchActuators" Style="width: 90%;">
+
         <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
             <RadzenColumn>
                 <RadzenRow Style="margin-bottom: 10px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
@@ -52,6 +53,4 @@
     </RadzenTemplateForm>
 </RadzenRow>
 
-<RadzenRow>
-    <ActuatorTable Actuators="@actuators"/>
-</RadzenRow>
+<ActuatorTable Actuators="@actuators" OnActuatorSelected="@ShowActuatorDetails"/>

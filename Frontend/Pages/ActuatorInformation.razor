@@ -1,0 +1,41 @@
+﻿@using Frontend.Entities
+@using Radzen
+@using Radzen.Blazor
+@inherits ActuatorInformationBase
+
+<RadzenRow>
+    <RadzenTemplateForm TItem="Actuator" Data=@Actuator>
+        <RadzenRow>
+            <RadzenColumn>
+                <WorkOrderNumberInputValidator Actuator="@Actuator"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <SerialNumberInputValidator Actuator="@Actuator"/>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+
+<RadzenRow>
+    
+         @if (!string.IsNullOrEmpty(Actuator.PCBA.PCBAUid))
+         {
+             <RadzenCard Style="max-width: 600px; margin-top: 30px;">
+                 <h4>Actuator Information</h4>
+                 <div><span Style="font-weight: bold;">Work Order Number:</span> @Actuator.WorkOrderNumber</div>
+                 <div><span Style="font-weight: bold;">Serial Number:</span> @Actuator.SerialNumber</div>
+                 <div><span Style="font-weight: bold;">Article Number:</span> @Actuator.ArticleNumber</div>
+                 <div><span Style="font-weight: bold;">Article Name:</span> @Actuator.ArticleName</div>
+                 <div><span Style="font-weight: bold;">Configuration:</span> @Actuator.Configuration</div>
+                 <div><span Style="font-weight: bold;">Communication Protocol:</span> @Actuator.Configuration</div>
+                 <div><span Style="font-weight: bold;">Created Time:</span> @Actuator.CreatedTime</div>
+                 
+             </RadzenCard>
+         }
+         else
+         {
+             <RadzenLabel Text="No Actuator details available" Style="margin-top: 30px;"/>
+
+         }
+   
+</RadzenRow>

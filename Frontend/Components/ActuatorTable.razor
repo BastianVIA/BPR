@@ -3,7 +3,7 @@
 
 <TableFilters OnNewFilter="@UpdateFilters"/>
 
-<RadzenDataGrid TItem="Actuator" Data="@Actuators" ColumnWidth="300px">
+<RadzenDataGrid TItem="Actuator" Data="@Actuators" RowSelect="@SelectActuator">
     <Columns>
         <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn("Work Order Number")"/>
         <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn("Serial Number")"/>
