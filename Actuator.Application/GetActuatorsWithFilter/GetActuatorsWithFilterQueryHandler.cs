@@ -19,7 +19,7 @@ public class GetActuatorsWithFilterQueryHandler : IQueryHandler<GetActuatorsWith
         try
         {
             var actuators = await _actuatorRepository.GetActuatorsWithFilter(request.WorkOrderNumber, request.SerialNumber, request.PCBAUid, request.ItemNumber,
-                request.ManufacturerNumber, request.ProductionDateCode);
+                request.ManufacturerNumber, request.ProductionDateCode, request.CommunicationProtocol, request.ArticleNumber, request.ArticleName, request.StartDate, request.EndDate);
             return GetActuatorsWithFilterDto.From(actuators);
         }
         catch (Exception e)
