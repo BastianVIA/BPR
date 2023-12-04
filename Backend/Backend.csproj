@@ -24,9 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
+      <ProjectReference Include="..\Actuator.Application\Actuator.Application.csproj" />
       <ProjectReference Include="..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\Actuator.Infrastructure\Actuator.Infrastructure.csproj" />
       <ProjectReference Include="..\LINTest\LINTest.csproj" />
     </ItemGroup>
 
