@@ -23,7 +23,7 @@ public class CreateActuatorCommandHandler : ICommandHandler<CreateActuatorComman
     {
         var pcba = await GetPCBA(request.PCBAUid);
         var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-        var actuator = Actuator.Create(actuatorId, pcba);
+        var actuator = Actuator.Create(actuatorId, pcba, request.ArticleNumber, request.ArticleName, request.CommunicationProtocol,request.CreatedTime);
         await _actuatorRepository.CreateActuator(actuator);
         await _dbTransaction.CommitAsync(cancellationToken);
     }

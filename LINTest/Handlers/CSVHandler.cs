@@ -1,4 +1,5 @@
-﻿using Backend.Model;
+﻿using System.Globalization;
+using Backend.Model;
 
 namespace LINTest.Handlers;
 
@@ -35,9 +36,6 @@ public class CSVHandler
                     case "Serial from PLC":
                         record.SerialNumber = value;
                         break;
-                    case "Product":
-                        record.Product = value;
-                        break;
                     case "Actuator ID":
                         record.ActuatorId = value;
                         break;
@@ -50,11 +48,11 @@ public class CSVHandler
                     case "From AxArtName":
                         record.ArticleName = value;
                         break;
-                    case "From AxConf":
-                        record.Configuration = value;
-                        break;
                     case "LINTest has finished. EndOfTest":
                         record.LINTestPassed = true;
+                        var dateTimeString = values[0].Trim();
+                        DateTime dateTime = ParseDateTime(dateTimeString);
+                        record.CreatedTime = dateTime;
                         break;
                 }
             }
@@ -66,5 +64,14 @@ public class CSVHandler
         }
 
         return record;
+    }
+
+    private static DateTime ParseDateTime(string dateTimeString)
+    {
+        if (DateTime.TryParseExact(dateTimeString, "dd.MM.y / HH:mm:ss", null, DateTimeStyles.None, out DateTime result))
+        {
+            return result;
+        }
+        throw new ArgumentException("System could not parse datetime.");
     }
 }
