@@ -1,8 +1,8 @@
 using BuildingBlocks;
 using BuildingBlocks.Application;
+using BuildingBlocks.Integration.Inbox.Configuration;
 using Infrastructure.Configuration;
 using LINTest;
-using LINTest.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +14,7 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 // Add services to the container.
 
 builder.Services.AddCore(builder.Configuration);
+builder.Services.AddInbox();
 builder.Services.AddActuatorServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -3,17 +3,14 @@ using Domain.Entities;
 
 namespace Application.CreateActuator;
 
-public class CreateActuatorCommand:ICommand
+public class CreateActuatorCommand : ICommand
 {
-   
-    internal int WorkOrderNumber { get; }
-    internal int SerialNumber { get; }
-    internal string PCBAUid { get; }
+    public int WorkOrderNumber { get; private set; }
+    public int SerialNumber { get; private set; }
+    public string PCBAUid { get; private set; }
 
-    private CreateActuatorCommand()
-    {
-    }
-    
+    private CreateActuatorCommand() { }
+
     private CreateActuatorCommand(int woNo, int serialNo, string pcbaUid)
     {
         WorkOrderNumber = woNo;
