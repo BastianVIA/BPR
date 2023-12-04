@@ -68,10 +68,14 @@ public class CSVHandler
 
     private static DateTime ParseDateTime(string dateTimeString)
     {
-        if (DateTime.TryParseExact(dateTimeString, "dd.MM.y / HH:mm:ss", null, DateTimeStyles.None, out DateTime result))
+        try
         {
-            return result;
+            return DateTime.ParseExact(dateTimeString, "dd.MM.y / HH:mm:ss", null, DateTimeStyles.None);
         }
-        throw new ArgumentException("System could not parse datetime.");
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new ArgumentException($"Could not parse datetime trying to read CSV file with date: {dateTimeString}");
+        }
     }
 }
