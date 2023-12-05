@@ -1,4 +1,5 @@
-﻿using Frontend.Entities;
+﻿using Frontend.Components;
+using Frontend.Entities;
 using Frontend.Model;
 using Frontend.Service.AlertService;
 using Microsoft.AspNetCore.Components;
@@ -8,9 +9,17 @@ namespace Frontend.Pages;
 
 public class TestResultSearchBase : ComponentBase
 {
+    protected class SearchObject
+    {
+        public int? WorkOrderNumber { get; set; }
+        public int? SerialNumber { get; set; }
+        public string? Tester { get; set; }
+        public int? Bay { get; set; }
+    }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public ITestResultSearchModel TestResultSearchModel { get; set; }
-    protected TestResult SearchTestResult { get; } = new();
+    [Inject] public DialogService DialogService { get; set; }
+    protected SearchObject SearchTestResult { get; } = new();
     protected List<TestResult> TestResults { get; set; } = new();
 
     public TestResultSearchBase()
@@ -26,12 +35,18 @@ public class TestResultSearchBase : ComponentBase
     {
         try
         {
-            TestResults = await TestResultSearchModel.GetTestResultsWithFilter(1);
+            TestResults = await TestResultSearchModel.GetTestResultsWithFilter(SearchTestResult.WorkOrderNumber, SearchTestResult.SerialNumber, SearchTestResult.Tester, SearchTestResult.Bay);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             AlertService.FireEvent(AlertStyle.Danger, "Error Test Result");
         }
+    }
+    protected async Task ShowTestResultDetails(TestResult testResult)
+    {
+        await DialogService.OpenAsync<TestResultDetails>($"Details",
+            new Dictionary<string, object> { { "TestResult", testResult } },
+            new DialogOptions() { Width = "90%", Height = "80%", Resizable = true, Draggable = true });
     }
 }

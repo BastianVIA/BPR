@@ -1,0 +1,73 @@
+﻿@using Frontend.Entities
+
+<RadzenRow>
+    <RadzenColumn Size="6">
+        <RadzenRow>
+            <RadzenRow Style="padding-bottom: 32px;" class="line-bottom-border">
+                <RadzenColumn>
+                    <RadzenLabel Text="Workorder Number"/>
+                    <RadzenNumeric ReadOnly="true" ShowUpDown="false" style="display: block" Name="WorkOrderNumber" @bind-Value=@TestResult.WorkOrderNumber class="w-100"/>
+                </RadzenColumn>
+                <RadzenColumn>
+                    <RadzenLabel Text="Serial Number"/>
+                    <RadzenNumeric ReadOnly="true" ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@TestResult.SerialNumber class="w-100"/>
+                </RadzenColumn>
+                <RadzenColumn>
+                    <RadzenLabel Text="Tester"/>
+                    <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="Tester" @bind-Value=@TestResult.Tester class="w-100"/>
+                </RadzenColumn>
+                <RadzenColumn>
+                    <RadzenLabel Text="Bay"/>
+                    <RadzenNumeric ReadOnly="true" ShowUpDown="false" style="display: block" Name="Bay" @bind-Value=@TestResult.Bay class="w-100"/>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Min Servo Position"/>
+                        <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="MinServoPosition" @bind-Value=@TestResult.MinServoPosition class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Max Servo Position"/>
+                        <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="MaxServoPosition" @bind-Value=@TestResult.MaxServoPosition class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Min Buslink Position"/>
+                        <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="MinBuslinkPosition" @bind-Value=@TestResult.MinBuslinkPosition class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Max Buslink Position"/>
+                        <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="MaxBuslinkPosition" @bind-Value=@TestResult.MaxBuslinkPosition class="w-100"/>
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenLabel Text="ServoStroke"/>
+                        <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="ServoStroke" @bind-Value=@TestResult.ServoStroke class="w-100"/>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenRow>
+        </RadzenRow>
+    </RadzenColumn>
+    <RadzenColumn Size="6">
+        <RadzenRow>
+            <RadzenText TextStyle="TextStyle.H6" Text="Test Errors"/> 
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenDataGrid TItem="TestError" Data="@TestResult.TestErrors">
+                <Columns>
+                    <RadzenDataGridColumn TItem="TestError" Property="Tester" Title="Test"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="Bay" Title="Bay"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="ErrorCode" Title="ErrorCode"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="ErrorMessage" Title="ErrorMessage"/>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenRow>
+    </RadzenColumn>
+</RadzenRow>
+
+
+@code {
+    [Parameter]
+    public TestResult TestResult { get; set; }
+}

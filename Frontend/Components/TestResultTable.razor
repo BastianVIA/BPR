@@ -1,19 +1,17 @@
 ﻿@using Frontend.Entities
 @inherits TestResultTableBase
-<h3>TestResultTable</h3>
+<TableFilters FilterOptions="@FilterOptions" OnNewFilter="@UpdateFilters" />
 
-<TableFilters FilterOptions="@FilterOptions" OnNewFilter="@UpdateFilters"/>
-
-<RadzenDataGrid TItem="TestResult" Data="@TestResults" ColumnWidth="240px">
+<RadzenDataGrid TItem="TestResult" Data="@TestResults" ColumnWidth="240px" RowSelect="@OnActuatorSelected">
     <Columns>
         <RadzenDataGridColumn TItem="TestResult" Frozen="true" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn("Work Order Number")" />
         <RadzenDataGridColumn TItem="TestResult" Frozen="true" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn("Serial Number")"/>
         <RadzenDataGridColumn TItem="TestResult" Property="Tester" Title="Tester" Visible="@ShouldShowColumn("Tester")"/>
         <RadzenDataGridColumn TItem="TestResult" Property="Bay" Title="Bay" Visible="@ShouldShowColumn("Bay")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="MinServoPosition" Title="Min Servo Position" Visible="@ShouldShowColumn("Min Servo Position")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="MaxServoPosition" Title="Max Servo Position" Visible="@ShouldShowColumn("Max Servo Position")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="MinBuslinkPosition" Title="Min Buslink Position" Visible="@ShouldShowColumn("Min Buslink Position")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="MaxBuslinkPosition" Title="Max Buslink Position"Visible="@ShouldShowColumn("Max Buslink Position")" />
-        <RadzenDataGridColumn TItem="TestResult" Property="ServoStroke" Title="Servo Stroke" Visible="@ShouldShowColumn("Servo Stroke")"/>
+        <RadzenDataGridColumn TItem="TestResult" Property="TestError" Title="Error Count" Visible="@ShouldShowColumn("Error Count")">
+            <Template>
+                @context.TestErrors.Count
+            </Template>
+        </RadzenDataGridColumn>
     </Columns>
 </RadzenDataGrid>

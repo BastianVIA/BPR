@@ -4,7 +4,7 @@ namespace Frontend.Model;
 
 public class TestResultSearchModelModel : ITestResultSearchModel
 {
-    public async Task<List<TestResult>> GetTestResultsWithFilter(int? woNo)
+    public async Task<List<TestResult>> GetTestResultsWithFilter(int? woNo, int? serialNo, string? tester, int? bay)
     {
         return await MockList();
 
@@ -20,6 +20,23 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 SerialNumber = 3,
                 Tester = "Tester1",
                 Bay = 69,
+                TestErrors = new()
+                {
+                    new TestError()
+                    {
+                        Tester = "Din mor",
+                        Bay = 42,
+                        ErrorCode = 40,
+                        ErrorMessage = "Sygt tyk mor alligevel"
+                    },
+                    new TestError()
+                    {
+                        Tester = "Din søster",
+                        Bay = 13,
+                        ErrorCode = 4,
+                        ErrorMessage = "Lange patter"
+                    }
+                },
                 MinServoPosition = "132.65 mm",
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",
@@ -32,6 +49,7 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 SerialNumber = 6,
                 Tester = "Tester1",
                 Bay = 69,
+                TestErrors = new(),
                 MinServoPosition = "132.65 mm",
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",
@@ -44,6 +62,7 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 SerialNumber = 3,
                 Tester = "Tester1",
                 Bay = 69,
+                TestErrors = new(),
                 MinServoPosition = "132.65 mm",
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",
@@ -56,6 +75,11 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 SerialNumber = 3,
                 Tester = "Tester1",
                 Bay = 69,
+                TestErrors = new()
+                {
+                    new TestError(),
+                    new TestError()
+                },
                 MinServoPosition = "132.65 mm",
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",
@@ -68,6 +92,7 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 SerialNumber = 3,
                 Tester = "Tester1",
                 Bay = 69,
+                TestErrors = new(),
                 MinServoPosition = "132.65 mm",
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",

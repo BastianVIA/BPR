@@ -5,19 +5,16 @@ namespace Frontend.Components;
 
 public class TestResultTableBase : ComponentBase
 {
-    [Parameter]
-    public List<TestResult> TestResults { get; set; }
+    [Parameter] public List<TestResult> TestResults { get; set; }
+    [Parameter] public EventCallback<TestResult> OnActuatorSelected { get; set; }
+    
     protected string[] FilterOptions =
     {
         "Work Order Number",
         "Serial Number",
         "Tester",
         "Bay",
-        "Min Servo Position",
-        "Max Servo Position",
-        "Min Buslink Position",
-        "Max Buslink Position",
-        "Servo Stroke"
+        "Error Count"
     };
     private List<string> _currentFilters = new();
 
@@ -30,5 +27,10 @@ public class TestResultTableBase : ComponentBase
     protected bool ShouldShowColumn(string name)
     {
         return _currentFilters.Contains(name);
+    }
+    
+    protected void SelectRow(TestResult testResult)
+    {
+        OnActuatorSelected.InvokeAsync(testResult);
     }
 }
