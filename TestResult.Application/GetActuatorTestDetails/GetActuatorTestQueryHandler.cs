@@ -18,9 +18,11 @@ public class GetActuatorTestQueryHandler : IQueryHandler<GetActuatorTestDetailsQ
     {
         try
         {
-            var actuatorId = CompositeActuatorId.From(request.WorkOrderNumber, request.SerialNumber);
-            var actuatortest = await _testResultRepository.GetActuatorTestDetails(actuatorId);
-            return GetActuatorTestDetailsDto.From(actuatortest);
+            var actuatorTests =
+                await _testResultRepository.GetActuatorsTestDetails(request.WorkOrderNumber, request.SerialNumber,
+                    request.Tester, request.Bay);
+
+            return GetActuatorTestDetailsDto.From(actuatorTests);
         }
         catch (Exception e)
         {

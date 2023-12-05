@@ -1,37 +1,53 @@
-﻿namespace TestResult.Application.GetActuatorTestDetails;
-
-public class GetActuatorTestDetailsDto
+﻿public class GetActuatorTestDetailsDto
 {
-    public int WorkOrderNumber { get; }
-    public int SerialNumber { get; }
-    public string Tester { get; set; }
-    public int Bay { get; set; }
-    public string? MinServoPosition { get; set; }
-    public string? MaxServoPosition { get; set; }
-    public string? MinBuslinkPosition { get; set; }
-    public string? MaxBuslinkPosition { get; set; }
-    public string? ServoStroke { get; set; }
+    public List<ActuatorTestDetailDTO> ActuatorTestDetailDtos { get; }
 
-    private GetActuatorTestDetailsDto(int workOrderNumber, int serialNumber, string tester, int bay,
-        string? minServoPosition, string? maxServoPosition, string? minBuslinkPosition, string? maxBuslinkPosition,
-        string? servoStroke)
+    private GetActuatorTestDetailsDto()
     {
-        WorkOrderNumber = workOrderNumber;
-        SerialNumber = serialNumber;
-        Tester = tester;
-        Bay = bay;
-        MinServoPosition = minServoPosition;
-        MaxServoPosition = maxServoPosition;
-        MinBuslinkPosition = minBuslinkPosition;
-        MaxBuslinkPosition = maxBuslinkPosition;
-        ServoStroke = servoStroke;
     }
 
-    internal static GetActuatorTestDetailsDto From(Domain.Entities.TestResult actuatorTestResult)
+    public GetActuatorTestDetailsDto(List<ActuatorTestDetailDTO> actuatorTestDetailDtos)
     {
-        return new GetActuatorTestDetailsDto(actuatorTestResult.WorkOrderNumber, actuatorTestResult.SerialNumber,
-            actuatorTestResult.Tester, actuatorTestResult.Bay, actuatorTestResult.MinServoPosition,
-            actuatorTestResult.MaxServoPosition, actuatorTestResult.MinBuslinkPosition,
-            actuatorTestResult.MaxBuslinkPosition, actuatorTestResult.ServoStroke);
+        ActuatorTestDetailDtos = actuatorTestDetailDtos;
+    }
+
+    internal static GetActuatorTestDetailsDto From(List<TestResult.Domain.Entities.TestResult> actuatorTestResult)
+    {
+        List<ActuatorTestDetailDTO> actuatorTestDetailDtos = new List<ActuatorTestDetailDTO>();
+        foreach (var actuatorTest in actuatorTestResult)
+        {
+            actuatorTestDetailDtos.Add(ActuatorTestDetailDTO.From(actuatorTest));
+        }
+
+        return new GetActuatorTestDetailsDto(actuatorTestDetailDtos);
+    }
+}
+
+public class ActuatorTestDetailDTO
+{
+    public int? WorkOrderNumber { get; private set; }
+    public int? SerialNumber { get; private set; }
+    public string? Tester { get; private set; }
+    public int? Bay { get; private set; }
+    public string? MinServoPosition { get; private set; }
+    public string? MaxServoPosition { get; private set; }
+    public string? MinBuslinkPosition { get; private set; }
+    public string? MaxBuslinkPosition { get; private set; }
+    public string? ServoStroke { get; private set; }
+
+    internal static ActuatorTestDetailDTO From(TestResult.Domain.Entities.TestResult actuatorTest)
+    {
+        return new ActuatorTestDetailDTO
+        {
+            WorkOrderNumber = actuatorTest.WorkOrderNumber,
+            SerialNumber = actuatorTest.SerialNumber,
+            Tester = actuatorTest.Tester,
+            Bay = actuatorTest.Bay,
+            MinServoPosition = actuatorTest.MinServoPosition,
+            MaxServoPosition = actuatorTest.MaxServoPosition,
+            MinBuslinkPosition = actuatorTest.MinBuslinkPosition,
+            MaxBuslinkPosition = actuatorTest.MaxBuslinkPosition,
+            ServoStroke = actuatorTest.ServoStroke
+        };
     }
 }

@@ -5,21 +5,23 @@ namespace TestResult.Domain.Entities;
 public class TestResult : Entity
 {
     public Guid Id { get; set; }
-    public int WorkOrderNumber { get; set; }
-    public int SerialNumber { get; set; }
-    public string Tester { get; set; }
-    public int Bay { get; private set; }
+    public int? WorkOrderNumber { get; set; }
+    public int? SerialNumber { get; set; }
+    public string? Tester { get; set; }
+    public int? Bay { get; private set; }
     public string? MinServoPosition { get; private set; }
     public string? MaxServoPosition { get; private set; }
     public string? MinBuslinkPosition { get; private set; }
     public string? MaxBuslinkPosition { get; private set; }
     public string? ServoStroke { get; private set; }
 
-    public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string? minServoPosition, 
+    public TestResult(Guid id, int? workOrderNo, int? serialNo, string? tester, int? bay, string? minServoPosition, 
         string? maxServoPosition, string? minBuslinkPosition, string? maxBuslinkPosition, string? servoStroke)
     {
         Id = id;
         Tester = tester;
+        WorkOrderNumber = workOrderNo;
+        SerialNumber = serialNo;
         Bay = bay;
         MinServoPosition = minServoPosition;
         MaxServoPosition = maxServoPosition;

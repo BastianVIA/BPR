@@ -18,23 +18,44 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         await AddAsync(FromDomain(testResult), testResult.GetDomainEvents());
     }
 
-    public async Task<Domain.Entities.TestResult> GetTestResult(int woNo, int serialNo)
+    public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo,
+        string? tester, int? bay)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Domain.Entities.TestResult> GetActuatorTestDetails(CompositeActuatorId id)
-    {
-        var actuatorTestModel = await Query()
-            .Where(a => a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber)
-            .FirstOrDefaultAsync();
-        if (actuatorTestModel == null)
+        var queryBuilder = Query();
+        if (woNo != null)
         {
-            throw new KeyNotFoundException(
-                $"Could not find Actuator with WorkOrderNumber: {id.WorkOrderNumber} and SerialNumber: {id.SerialNumber}");
+            queryBuilder = queryBuilder.Where(m => m.WorkOrderNumber == woNo.Value);
         }
 
-        return ToDomain(actuatorTestModel);
+        if (serialNo != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.SerialNumber == serialNo.Value);
+        }
+
+        if (tester != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.Tester == tester);
+        }
+
+        if (bay != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.Bay == bay);
+        }
+
+
+        var actuatorTestModels = await queryBuilder.ToListAsync();
+        return ToDomain(actuatorTestModels);
+    }
+
+    private List<Domain.Entities.TestResult> ToDomain(List<TestResultModel> testResultModels)
+    {
+        List<Domain.Entities.TestResult> domainTestResults = new List<Domain.Entities.TestResult>();
+        foreach (var testResultModel in testResultModels)
+        {
+            domainTestResults.Add(ToDomain(testResultModel));
+        }
+
+        return domainTestResults;
     }
 
     private Domain.Entities.TestResult ToDomain(TestResultModel testResultModel)
