@@ -37,7 +37,7 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                         ErrorMessage = "Lange patter"
                     }
                 },
-                MinServoPosition = "132.65 mm",
+                
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",
                 MaxBuslinkPosition = "700 mm",

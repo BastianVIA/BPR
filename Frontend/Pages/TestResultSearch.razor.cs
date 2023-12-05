@@ -45,8 +45,8 @@ public class TestResultSearchBase : ComponentBase
     }
     protected async Task ShowTestResultDetails(TestResult testResult)
     {
-        await DialogService.OpenAsync<TestResultDetails>($"Details",
+        await DialogService.OpenAsync<TestResultDetails>($"Test Details",
             new Dictionary<string, object> { { "TestResult", testResult } },
-            new DialogOptions() { Width = "90%", Height = "80%", Resizable = true, Draggable = true });
+            new DialogOptions() { Width = "90%", Height = "80%"});
     }
 }

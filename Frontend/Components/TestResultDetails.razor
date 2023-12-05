@@ -1,4 +1,5 @@
 ﻿@using Frontend.Entities
+@inherits TestResultDetailsBase
 
 <RadzenRow>
     <RadzenColumn Size="6">
@@ -22,6 +23,9 @@
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow>
+                <RadzenRow>
+                    <RadzenText TextStyle="TextStyle.H5" Text="Results"/>
+                </RadzenRow>
                 <RadzenRow>
                     <RadzenColumn>
                         <RadzenLabel Text="Min Servo Position"/>
@@ -65,9 +69,3 @@
         </RadzenRow>
     </RadzenColumn>
 </RadzenRow>
-
-
-@code {
-    [Parameter]
-    public TestResult TestResult { get; set; }
-}
