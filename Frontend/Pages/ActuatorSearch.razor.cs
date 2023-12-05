@@ -1,11 +1,9 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using Frontend.Entities;
+﻿using Frontend.Entities;
 using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service.AlertService;
 using Microsoft.AspNetCore.Components;
 using Radzen;
-using Radzen.Blazor;
 
 namespace Frontend.Pages;
 
@@ -35,7 +33,7 @@ public class ActuatorSearchBase : ComponentBase
         SearchModel = model;
     }
 
-    public async Task SearchActuators()
+    protected async Task SearchActuators()
     {
         try
         {
@@ -62,7 +60,7 @@ public class ActuatorSearchBase : ComponentBase
         }
     }
 
-    public async Task ShowActuatorDetails(Actuator actuator)
+    protected async Task ShowActuatorDetails(Actuator actuator)
     {
         await DialogService.OpenAsync<InformationContainer>($"Details",
             new Dictionary<string, object>() { { "Actuator", actuator } },

@@ -5,30 +5,17 @@ namespace Frontend.Components;
 public class TableFiltersBase : ComponentBase
 {
     [Parameter] public EventCallback<List<string>> OnNewFilter { get; set; }
-
-    private readonly string[] _filters =
-    {
-        "Work Order Number",
-        "Serial Number",
-        "UID",
-        "Manufacturer Number",
-        "Item Number",
-        "Production Date Code",
-        "Article Name",
-        "Article Number",
-        "Communication Protocol",
-        "Created Time",
-        "Software",
-        "Configuration Number"
-    };
+    
+    [Parameter]
+    public string[] FilterOptions { get; set; }
 
     protected List<string> Filters = new();
     protected readonly List<string> FilterParams = new();
 
     protected override Task OnInitializedAsync()
     {
-        Filters.AddRange(_filters.Take(3));
-        FilterParams.AddRange(_filters);
+        Filters.AddRange(FilterOptions.Take(3));
+        FilterParams.AddRange(FilterOptions);
         OnChange();
         return base.OnInitializedAsync();
     }

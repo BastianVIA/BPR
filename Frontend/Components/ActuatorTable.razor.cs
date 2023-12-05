@@ -8,20 +8,35 @@ public class ActuatorTableBase : ComponentBase
     [Parameter] public List<Actuator> Actuators { get; set; } = new();
 
     [Parameter] public EventCallback<Actuator> OnActuatorSelected { get; set; }
-    public List<string> Filters { get; set; } = new();
 
-    public void UpdateFilters(List<string>? filters)
+    protected string[] FilterOptions { get; } = {
+        "Work Order Number",
+        "Serial Number",
+        "UID",
+        "Manufacturer Number",
+        "Item Number",
+        "Production Date Code",
+        "Article Name",
+        "Article Number",
+        "Communication Protocol",
+        "Created Time",
+        "Software",
+        "Configuration Number"
+    };
+    private List<string> Filters { get; set; } = new();
+
+    protected void UpdateFilters(List<string>? filters)
     {
         filters ??= new List<string>();
         Filters = filters;
     }
 
-    public bool ShouldShowColumn(string name)
+    protected bool ShouldShowColumn(string name)
     {
         return Filters.Contains(name);
     }
 
-    public void SelectActuator(Actuator actuator)
+    protected void SelectActuator(Actuator actuator)
     {
         OnActuatorSelected.InvokeAsync(actuator);
     }
