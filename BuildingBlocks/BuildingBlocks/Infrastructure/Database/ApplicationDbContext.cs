@@ -16,6 +16,11 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<PCBAModel>().HasKey(p => p.Uid);
         modelBuilder.Entity<InboxMessageModel>().HasKey(i => i.Id);
         
+        modelBuilder.Entity<TestErrorModel>().HasKey(t => t.Id);
         modelBuilder.Entity<TestResultModel>().HasKey(t => t.Id);
+        modelBuilder.Entity<TestResultModel>()
+            .HasMany(t => t.TestErrors)
+            .WithOne()
+            .HasForeignKey(t => t.TestResultId);
     }
 }

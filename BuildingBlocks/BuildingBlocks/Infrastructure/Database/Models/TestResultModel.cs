@@ -12,4 +12,6 @@ public class TestResultModel
     public string? MinBuslinkPosition { get; set; }
     public string? MaxBuslinkPosition { get; set; }
     public string? ServoStroke { get; set; }
+    public DateTime TimeOccured { get; set; }
+    public List<TestErrorModel>? TestErrors { get; set; }
 }

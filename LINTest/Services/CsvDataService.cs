@@ -3,6 +3,7 @@ using BuildingBlocks.Exceptions;
 using BuildingBlocks.Integration;
 using LINTest.Handlers;
 using LINTest.Integration;
+using LINTest.Models;
 using Microsoft.Extensions.Logging;
 
 namespace LINTest.Services;
@@ -32,10 +33,10 @@ public class CsvDataService
             else if (csvModel.LINTestPassed)
             {
                 await SendTestSucceededEventAsync(csvModel, publisher, stoppingToken);
-            }
-            else
-            {
-                await SendTestFailedEventAsync(csvModel, publisher, stoppingToken);
+                foreach (var testError in csvModel.TestErrors)
+                {
+                    await SendTestFailedEventAsync(testError, publisher, stoppingToken);
+                }
             }
         }
         catch (Exception e)
@@ -67,13 +68,17 @@ public class CsvDataService
         return true;
     }
 
-    private async Task SendTestFailedEventAsync(CSVModel csvModel, IIntegrationEventPublisher publisher,
+    private async Task SendTestFailedEventAsync(TestErrorModel errorModel, IIntegrationEventPublisher publisher,
         CancellationToken stoppingToken)
     {
         var eventToSend = new ActuatorTestFailedIntegrationEvent(
-            int.Parse(csvModel.WorkOrderNumber),
-            int.Parse(csvModel.SerialNumber),
-            csvModel.PCBAUid);
+            errorModel.WorkOrderNumber,
+            errorModel.SerialNumber,
+            errorModel.Tester,
+            errorModel.Bay,
+            errorModel.ErrorCode,
+            errorModel.ErrorMessage,
+            errorModel.TimeOccured);
         await publisher.PublishAsync(eventToSend, stoppingToken);
     }
 

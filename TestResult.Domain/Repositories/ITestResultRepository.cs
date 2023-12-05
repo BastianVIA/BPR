@@ -1,3 +1,5 @@
+using TestResult.Domain.Entities;
+
 namespace TestResult.Domain.Repositories;
 
 public interface ITestResultRepository

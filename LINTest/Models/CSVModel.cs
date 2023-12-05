@@ -1,4 +1,6 @@
-﻿namespace Backend.Model;
+﻿using LINTest.Models;
+
+namespace Backend.Model;
 
 public class CSVModel
 {
@@ -18,4 +20,5 @@ public class CSVModel
         public string MinBuslinkPosition { get; set; }
         public string MaxBuslinkPosition { get; set; }
         public string ServoStroke { get; set; }
+        public List<TestErrorModel> TestErrors { get; set; } = new();
 }
