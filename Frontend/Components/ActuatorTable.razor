@@ -1,7 +1,14 @@
 ﻿@using Frontend.Entities
 @inherits ActuatorTableBase
 
-<TableFilters OnNewFilter="@UpdateFilters"/>
+<RadzenRow>
+    <RadzenCol>
+        <TableFilters OnNewFilter="@UpdateFilters" />
+    </RadzenCol>
+    <RadzenCol>
+        <RadzenButton Click="DownloadCsv" Text="Download data as csv"/>
+    </RadzenCol>
+</RadzenRow>
 
 <RadzenDataGrid ColumnWidth="270px"
                 TItem="Actuator" Data="@Actuators" RowSelect="@SelectActuator">
