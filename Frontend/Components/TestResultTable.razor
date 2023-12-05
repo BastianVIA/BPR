@@ -1,0 +1,21 @@
+﻿@using Frontend.Entities
+<h3>TestResultTable</h3>
+
+
+<RadzenDataGrid TItem="TestResult" Data="@TestResults" ColumnWidth="300px">
+    <Columns>
+        <RadzenDataGridColumn TItem="TestResult" Property="WorkOrderNumber" Title="Work Order Number" />
+        <RadzenDataGridColumn TItem="TestResult" Property="SerialNumber" Title="Serial Number" />
+        <RadzenDataGridColumn TItem="TestResult" Property="Tester" Title="Tester" />
+        <RadzenDataGridColumn TItem="TestResult" Property="Bay" Title="Bay" />
+        <RadzenDataGridColumn TItem="TestResult" Property="MinServoPosition" Title="Min Servo Position" />
+        <RadzenDataGridColumn TItem="TestResult" Property="MaxServoPosition" Title="Max Servo Position" />
+        <RadzenDataGridColumn TItem="TestResult" Property="MinBuslinkPosition" Title="Min Buslink Position" />
+        <RadzenDataGridColumn TItem="TestResult" Property="MaxBuslinkPosition" Title="Max Buslink Position" />
+        <RadzenDataGridColumn TItem="TestResult" Property="ServoStroke" Title="Servo Stroke" />
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    public List<TestResult> TestResults { get; set; }
+}
