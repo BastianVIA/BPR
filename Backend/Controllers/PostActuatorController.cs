@@ -23,7 +23,8 @@ public class PostActuatorController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateAsync([FromBody] PostActuatorRequest request, CancellationToken cancellationToken)
     {
-        var cmd = CreateOrUpdateActuatorCommand.Create(request.WorkOrderNumber, request.SerialNumber, request.PCBAUid);
+        var cmd = CreateOrUpdateActuatorCommand.Create(request.WorkOrderNumber, request.SerialNumber, request.PCBAUid,
+            request.ArticleNumber, request.ArticleName, request.CommunicationProtocol, request.CreatedTime);
         await _bus.Send(cmd, cancellationToken);
         return Ok();
     }
@@ -33,6 +34,9 @@ public class PostActuatorController : ControllerBase
         public int WorkOrderNumber { get; set; }
         public int SerialNumber { get; set; }
         public string PCBAUid { get; set; }
+        public string CommunicationProtocol { get; set; }
+        public string ArticleNumber { get; set; }
+        public string ArticleName { get; set; }
+        public DateTime CreatedTime { get; set; }
     }
-
 }

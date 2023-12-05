@@ -32,6 +32,11 @@ public class ActuatorDTO
     public int WorkOrderNumber { get; private set; }
     public int SerialNumber { get; private set; }
     public PCBADto Pcba { get; private set; }
+    
+    public string CommunicationProtocol { get; private set; }
+    public string ArticleNumber { get; private set; }
+    public string ArticleName { get; private set; }
+    public DateTime CreatedTime { get; private set; }
 
     internal static ActuatorDTO From(Actuator actuator)
     {
@@ -39,7 +44,11 @@ public class ActuatorDTO
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,
             SerialNumber = actuator.Id.SerialNumber,
-            Pcba = PCBADto.From(actuator.PCBA)
+            Pcba = PCBADto.From(actuator.PCBA),
+            CommunicationProtocol = actuator.CommunicationProtocol,
+            ArticleNumber = actuator.ArticleNumber,
+            ArticleName = actuator.ArticleName,
+            CreatedTime = actuator.CreatedTime
         };
     }
 }

@@ -31,7 +31,7 @@ public class CreateOrUpdateActuatorCommandHandler : ICommandHandler<CreateOrUpda
         }
         catch (KeyNotFoundException _)
         {
-            var actuator = Actuator.Create(actuatorId, pcba);
+            var actuator = Actuator.Create(actuatorId, pcba, request.ArticleNumber, request.ArticleName, request.CommunicationProtocol, request.CreatedTime);
             await _actuatorRepository.CreateActuator(actuator);
         }
         
