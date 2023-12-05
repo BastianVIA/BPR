@@ -1022,6 +1022,11 @@ namespace Frontend.Service
             Headers = headers;
         }
 
+        public ApiException() : base()
+        {
+            
+        }
+
         public override string ToString()
         {
             return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());

@@ -27,7 +27,7 @@ public class TableFiltersBase : ComponentBase
 
     protected override Task OnInitializedAsync()
     {
-        Filters.AddRange(_filters);
+        Filters.AddRange(_filters.Take(3));
         FilterParams.AddRange(_filters);
         OnChange();
         return base.OnInitializedAsync();
