@@ -14,6 +14,7 @@ public class GetConfigurationController : ControllerBase
 
     [HttpGet()]
     [Route("api/configuration")]
+    [Tags("Configuration")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ConfigurationResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public IActionResult GetAsync(CancellationToken cancellationToken)
