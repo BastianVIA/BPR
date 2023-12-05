@@ -47,7 +47,12 @@ public class ActuatorSearchBase : ComponentBase
                 SearchActuator.PCBA.ManufacturerNumber,
                 SearchActuator.PCBA.ProductionDateCode,
                 SearchActuator.CreatedTimeStart,
-                SearchActuator.CreatedTimeEnd
+                SearchActuator.CreatedTimeEnd,
+                SearchActuator.PCBA.Software,
+                SearchActuator.PCBA.ConfigNumber,
+                SearchActuator.ArticleName,
+                SearchActuator.ArticleNumber,
+                SearchActuator.CommunicationProtocol
             );
         }
         catch (NetworkException e)

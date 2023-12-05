@@ -6,6 +6,7 @@ namespace Frontend.Networking;
 public class NSwagProxy : INetwork
 {
     private readonly IClient _client;
+
     public NSwagProxy(IHttpClientFactory clientFactory, IConfiguration configuration)
     {
         var uri = configuration.GetSection("BackendApiSettings:Uri").Value;
@@ -40,11 +41,15 @@ public class NSwagProxy : INetwork
     {
         return await Send(async () => await _client.ConfigurationAsync());
     }
-    
-    public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
-        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd)
+
+    public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid,
+        string? itemNo, int? manufacturerNo,
+        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,
+        string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
     {
         return await Send(async () =>
-            await _client.GetActuatorsWithFilterAsync(woNo,serialNo,pcbaUid,itemNo,manufacturerNo,productionDateCode,null,null,null,createdTimeStart,createdTimeEnd));
+            await _client.GetActuatorsWithFilterAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
+                productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
+                createdTimeEnd));
     }
 }

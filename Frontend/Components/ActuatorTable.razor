@@ -3,13 +3,20 @@
 
 <TableFilters OnNewFilter="@UpdateFilters"/>
 
-<RadzenDataGrid TItem="Actuator" Data="@Actuators" RowSelect="@SelectActuator">
+<RadzenDataGrid ColumnWidth="270px"
+                TItem="Actuator" Data="@Actuators" RowSelect="@SelectActuator">
     <Columns>
         <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn("Work Order Number")"/>
         <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn("Serial Number")"/>
         <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="UID" Visible="@ShouldShowColumn("UID")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="ArticleName" Title="Article Name" Visible="@ShouldShowColumn("Article Name")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="ArticleNumber" Title="Article Number" Visible="@ShouldShowColumn("Article Number")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="CommunicationProtocol" Title="Communication Protocol" Visible="@ShouldShowColumn("Communication Protocol")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="CreatedTime" Title="Created Time" Visible="@ShouldShowColumn("Created Time")"/>
         <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="Manufacturer Number" Visible="@ShouldShowColumn("Manufacturer Number")"/>
         <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="Item Number" Visible="@ShouldShowColumn("Item Number")"/>
         <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="Production Date Code" Visible="@ShouldShowColumn("Production Date Code")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.Software" Title="Software" Visible="@ShouldShowColumn("Software")"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ConfigNumber" Title="Configuration Number" Visible="@ShouldShowColumn("Configuration Number")"/>
     </Columns>
 </RadzenDataGrid>
