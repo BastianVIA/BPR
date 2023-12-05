@@ -25,8 +25,6 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
     {
         var testErrorModel = new TestErrorModel()
         {
-            WorkOrderNumber = testError.WorkOrderNumber,
-            SerialNumber = testError.SerialNumber,
             Tester = testError.Tester,
             Bay = testError.Bay,
             ErrorCode = testError.ErrorCode,
