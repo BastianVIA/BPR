@@ -21,6 +21,29 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorPCBAHistoryModel", b =>
+                {
+                    b.Property<int>("WorkOrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SerialNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PCBAUid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("RemovalTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("WorkOrderNumber", "SerialNumber", "PCBAUid", "RemovalTime");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("WorkOrderNumber", "SerialNumber", "PCBAUid", "RemovalTime"), false);
+
+                    b.HasIndex("PCBAUid");
+
+                    b.ToTable("ActuatorPCBAHistoryModel");
+                });
+
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
                 {
                     b.Property<int>("WorkOrderNumber")
@@ -100,6 +123,25 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.HasKey("Uid");
 
                     b.ToTable("PCBAs");
+                });
+
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorPCBAHistoryModel", b =>
+                {
+                    b.HasOne("Infrastructure.PCBAModel", "PCBA")
+                        .WithMany()
+                        .HasForeignKey("PCBAUid")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.ActuatorModel", "ActuatorModel")
+                        .WithMany()
+                        .HasForeignKey("WorkOrderNumber", "SerialNumber")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ActuatorModel");
+
+                    b.Navigation("PCBA");
                 });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
