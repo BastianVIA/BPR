@@ -43,7 +43,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
     
-    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode,  string? communicationProtocol, string? articleNumber, string? articleName, DateTime? startDate, DateTime? endDate)
+    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode,  string? communicationProtocol, string? articleNumber, string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
     {
         var queryBuilder = Query().Include(model => model.PCBA).AsQueryable();
         
@@ -92,6 +92,16 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             queryBuilder = queryBuilder.Where(model => model.ArticleName == articleName);
         }
 
+        if (configNo != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ConfigNo == configNo);
+        }
+
+        if (software != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.PCBA.Software == software);
+        }
+
         if (startDate != null)
         {
             queryBuilder = queryBuilder.Where(model => model.CreatedTime > startDate);
@@ -126,7 +136,8 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             manufacturerNo: actuatorModel.PCBA.ManufacturerNumber,
             itemNumber: actuatorModel.PCBA.ItemNumber,
             software: actuatorModel.PCBA.Software,
-            productionDateCode: actuatorModel.PCBA.ProductionDateCode);
+            productionDateCode: actuatorModel.PCBA.ProductionDateCode,
+            configNo: actuatorModel.PCBA.ConfigNo);
         return new Actuator(actuatorId, pcba, actuatorModel.ArticleNumber, actuatorModel.ArticleName, actuatorModel.CommunicationProtocol, actuatorModel.CreatedTime);
     }
 
