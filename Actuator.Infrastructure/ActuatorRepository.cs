@@ -43,7 +43,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
     
-    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode)
+    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode,  string? communicationProtocol, string? articleNumber, string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
     {
         var queryBuilder = Query().Include(model => model.PCBA).AsQueryable();
         
@@ -75,6 +75,41 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         if (pcbaProductionDateCode != null)
         {
             queryBuilder = queryBuilder.Where(model => model.PCBA.ProductionDateCode == pcbaProductionDateCode);
+        }
+
+        if (communicationProtocol != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.CommunicationProtocol == communicationProtocol);
+        }
+
+        if (articleNumber != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.ArticleNumber == articleNumber);
+        }
+
+        if (articleName != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.ArticleName == articleName);
+        }
+
+        if (configNo != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.PCBA.ConfigNo == configNo);
+        }
+
+        if (software != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.PCBA.Software == software);
+        }
+
+        if (startDate != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.CreatedTime > startDate);
+        }
+
+        if (endDate != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.CreatedTime < endDate);
         }
 
         var actuatorModels = await queryBuilder.ToListAsync();

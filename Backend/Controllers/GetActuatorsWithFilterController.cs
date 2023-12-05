@@ -26,10 +26,17 @@ public class GetActuatorsWithFilterController : ControllerBase
         [FromQuery] string? pcbaUid,
         [FromQuery] string? itemNo,
         [FromQuery] int? manufacturerNo,
-        [FromQuery] int? productionDateCode, 
+        [FromQuery] int? productionDateCode,
+        [FromQuery] string? communicationProtocol,
+        [FromQuery] string? articleNumber,
+        [FromQuery] string? articleName,
+        [FromQuery] string? configNo,
+        [FromQuery] string? software,
+        [FromQuery] DateTime? startDate,
+        [FromQuery] DateTime? endDate,
         CancellationToken cancellationToken)
     {
-        var query = GetActuatorsWithFilterQuery.Create(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode);
+        var query = GetActuatorsWithFilterQuery.Create(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate);
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorWithFilterResponse.From(result));
     }
