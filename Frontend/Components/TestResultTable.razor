@@ -1,14 +1,13 @@
 ﻿@using Frontend.Entities
 @inherits TestResultTableBase
-<TableFilters FilterOptions="@FilterOptions" OnNewFilter="@UpdateFilters" />
 
 <RadzenDataGrid TItem="TestResult" Data="@TestResults" ColumnWidth="240px" RowSelect="@OnActuatorSelected">
     <Columns>
-        <RadzenDataGridColumn TItem="TestResult" Frozen="true" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn("Work Order Number")" />
-        <RadzenDataGridColumn TItem="TestResult" Frozen="true" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn("Serial Number")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="Tester" Title="Tester" Visible="@ShouldShowColumn("Tester")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="Bay" Title="Bay" Visible="@ShouldShowColumn("Bay")"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="TestError" Title="Error Count" Visible="@ShouldShowColumn("Error Count")">
+        <RadzenDataGridColumn TItem="TestResult" Property="WorkOrderNumber" Title="Work Order Number"/>
+        <RadzenDataGridColumn TItem="TestResult" Property="SerialNumber" Title="Serial Number"/>
+        <RadzenDataGridColumn TItem="TestResult" Property="Tester" Title="Tester"/>
+        <RadzenDataGridColumn TItem="TestResult" Property="Bay" Title="Bay"/>
+        <RadzenDataGridColumn TItem="TestResult" Property="TestError" Title="Error Count" >
             <Template>
                 @context.TestErrors.Count
             </Template>
