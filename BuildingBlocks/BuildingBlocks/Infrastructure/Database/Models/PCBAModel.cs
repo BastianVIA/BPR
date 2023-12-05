@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Infrastructure;
 
 public class PCBAModel
@@ -7,4 +9,5 @@ public class PCBAModel
     public string ItemNumber { get; set; }
     public string Software { get; set; }
     public int ProductionDateCode { get; set; }
+    public string ConfigNo { get; set; }
 }

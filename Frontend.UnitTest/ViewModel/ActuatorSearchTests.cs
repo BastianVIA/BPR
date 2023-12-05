@@ -8,11 +8,11 @@ public class ActuatorInfoTests
 {
     private Fixture _fixture = new();
     private IActuatorSearchModel _model = Substitute.For<IActuatorSearchModel>();
-    private ActuatorInfoBase _viewModel;
+    private ActuatorSearchBase _viewModel;
 
     public ActuatorInfoTests()
     {
-        _viewModel = new ActuatorInfoBase(_model);
+        _viewModel = new ActuatorSearchBase(_model);
     }
 
     [Fact]

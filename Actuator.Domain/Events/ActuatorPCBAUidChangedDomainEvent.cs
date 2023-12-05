@@ -6,9 +6,11 @@ namespace Domain.Events;
 public class ActuatorPCBAUidChangedDomainEvent : DomainEvent
 {
     public CompositeActuatorId Id { get; }
+    public string OldPCBAUid { get; }
 
-    public ActuatorPCBAUidChangedDomainEvent(CompositeActuatorId id)
+    public ActuatorPCBAUidChangedDomainEvent(CompositeActuatorId id, string oldPcbaUid)
     {
         Id = id;
+        OldPCBAUid = oldPcbaUid;
     }
 }
