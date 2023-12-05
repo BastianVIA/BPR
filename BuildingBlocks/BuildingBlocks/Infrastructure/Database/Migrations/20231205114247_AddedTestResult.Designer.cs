@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingBlocks.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231205110012_AddedTestResult")]
+    [Migration("20231205114247_AddedTestResult")]
     partial class AddedTestResult
     {
         /// <inheritdoc />
@@ -139,6 +139,9 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
+
+                    b.Property<string>("ServoStroke")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tester")
                         .IsRequired()

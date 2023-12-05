@@ -37,7 +37,8 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
             notification.MinServoPosition,
             notification.MaxServoPosition,
             notification.MinBuslinkPosition,
-            notification.MaxBuslinkPosition);
+            notification.MaxBuslinkPosition,
+            notification.ServoStroke);
         await _inbox.Add(InboxMessage.From(testResultCommand, notification.Id));
         
         await _transaction.CommitAsync(cancellationToken);

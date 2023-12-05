@@ -25,7 +25,8 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
     {
         return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber, 
             testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
-            testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition);
+            testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
+            testResultModel.ServoStroke);
     }
     
     private TestResultModel FromDomain(Domain.Entities.TestResult testResult)
@@ -39,7 +40,8 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
             MinServoPosition = testResult.MinServoPosition,
             MaxServoPosition = testResult.MaxServoPosition,
             MinBuslinkPosition = testResult.MinBuslinkPosition,
-            MaxBuslinkPosition = testResult.MaxBuslinkPosition
+            MaxBuslinkPosition = testResult.MaxBuslinkPosition,
+            ServoStroke = testResult.ServoStroke
         };
         return testResultModel;
     }

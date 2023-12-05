@@ -12,13 +12,15 @@ public class CreateTestResultCommand : ICommand
     public string MaxServoPosition { get; private set; }
     public string MinBuslinkPosition { get; private set; }
     public string MaxBuslinkPosition { get; private set; }
+    public string ServoStroke { get; private set; }
 
     private CreateTestResultCommand()
     {
     }
 
     private CreateTestResultCommand(int workOrderNumber, int serialNumber, string tester, int bay, 
-        string minServoPosition, string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition)
+        string minServoPosition, string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, 
+        string servoStroke)
     {
         WorkOrderNumber = workOrderNumber;
         SerialNumber = serialNumber;
@@ -28,12 +30,14 @@ public class CreateTestResultCommand : ICommand
         MaxServoPosition = maxServoPosition;
         MinBuslinkPosition = minBuslinkPosition;
         MaxBuslinkPosition = maxBuslinkPosition;
+        ServoStroke = servoStroke;
     }
 
     public static CreateTestResultCommand Create(int workOrderNumber, int serialNumber, string tester, int bay, 
-        string minServoPosition, string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition)
+        string minServoPosition, string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, 
+        string servoStroke)
     {
         return new CreateTestResultCommand(workOrderNumber, serialNumber, tester, bay, minServoPosition, 
-            maxServoPosition, minBuslinkPosition, maxBuslinkPosition);
+            maxServoPosition, minBuslinkPosition, maxBuslinkPosition, servoStroke);
     }
 }

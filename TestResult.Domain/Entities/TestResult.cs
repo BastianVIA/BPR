@@ -13,9 +13,10 @@ public class TestResult : Entity
     public string MaxServoPosition { get; private set; }
     public string MinBuslinkPosition { get; private set; }
     public string MaxBuslinkPosition { get; private set; }
+    public string ServoStroke { get; private set; }
 
     public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string minServoPosition, 
-        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition)
+        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke)
     {
         Id = id;
         Tester = tester;
@@ -24,13 +25,14 @@ public class TestResult : Entity
         MaxServoPosition = maxServoPosition;
         MinBuslinkPosition = minBuslinkPosition;
         MaxBuslinkPosition = maxBuslinkPosition;
+        ServoStroke = servoStroke;
     }
 
     public static TestResult Create(int workOrderNo, int serialNo, string tester, int bay, string minServoPosition, 
-        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition)
+        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke)
     {
         var id = Guid.NewGuid();
         return new TestResult(id, workOrderNo, serialNo, tester, bay, minServoPosition, maxServoPosition, 
-            minBuslinkPosition, maxBuslinkPosition);
+            minBuslinkPosition, maxBuslinkPosition, servoStroke);
     }
 }

@@ -63,14 +63,29 @@ public class CSVHandler
                     case "Min Servo Position":
                         record.MinServoPosition = value;
                         break;
+                    case "Min.Servo.Position":
+                        record.MinServoPosition = value;
+                        break;
                     case "Max Servo Position":
+                        record.MaxServoPosition = value;
+                        break;
+                    case "Max.Servo.Position":
                         record.MaxServoPosition = value;
                         break;
                     case "Min Buslink Position":
                         record.MinBuslinkPosition = value;
                         break;
+                    case "Min. BusLink Position":
+                        record.MinBuslinkPosition = value;
+                        break;
                     case "Max Buslink Position":
                         record.MaxBuslinkPosition = value;
+                        break;
+                    case "Max. BusLink Position":
+                        record.MaxBuslinkPosition = value;
+                        break;
+                    case "Servo Stroke":
+                        record.ServoStroke = value;
                         break;
                 }
             }

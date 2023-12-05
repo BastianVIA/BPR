@@ -23,7 +23,8 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     MinServoPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MaxServoPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MinBuslinkPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaxBuslinkPosition = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    MaxBuslinkPosition = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ServoStroke = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -93,7 +93,8 @@ public class CsvDataService
             csvModel.MinServoPosition,
             csvModel.MaxServoPosition,
             csvModel.MinBuslinkPosition,
-            csvModel.MaxBuslinkPosition);
+            csvModel.MaxBuslinkPosition,
+            csvModel.ServoStroke);
         await publisher.PublishAsync(eventToSend, stoppingToken);
     }
 

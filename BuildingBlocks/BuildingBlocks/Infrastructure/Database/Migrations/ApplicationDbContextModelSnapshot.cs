@@ -137,6 +137,9 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("ServoStroke")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Tester")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

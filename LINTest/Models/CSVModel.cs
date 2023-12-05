@@ -17,4 +17,5 @@ public class CSVModel
         public string MaxServoPosition { get; set; }
         public string MinBuslinkPosition { get; set; }
         public string MaxBuslinkPosition { get; set; }
+        public string ServoStroke { get; set; }
 }

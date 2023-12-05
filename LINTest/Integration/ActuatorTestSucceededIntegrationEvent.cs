@@ -17,11 +17,12 @@ public class ActuatorTestSucceededIntegrationEvent : IntegrationEvent
     public string MaxServoPosition { get; }
     public string MinBuslinkPosition { get; }
     public string MaxBuslinkPosition { get; }
+    public string ServoStroke { get; }
 
     public ActuatorTestSucceededIntegrationEvent(int workOrderNumber, int serialNumber, string pcbaUid, string articleNo,
         string articleName, string communicationProtocol, DateTime createdTime, string tester, int bay, 
         string minServoPosition, string maxServoPosition, string minBuslinkPosition, 
-        string maxBuslinkPosition)
+        string maxBuslinkPosition, string servoStroke)
     {
         WorkOrderNumber = workOrderNumber;
         SerialNumber = serialNumber;
@@ -36,5 +37,6 @@ public class ActuatorTestSucceededIntegrationEvent : IntegrationEvent
         MaxServoPosition = maxServoPosition;
         MinBuslinkPosition = minBuslinkPosition;
         MaxBuslinkPosition = maxBuslinkPosition;
+        ServoStroke = servoStroke;
     }
 }

@@ -19,7 +19,7 @@ public class CreateTestResultCommandHandler : ICommandHandler<CreateTestResultCo
     {
         var testResult = Domain.Entities.TestResult.Create(request.WorkOrderNumber, request.SerialNumber, request.Tester,
             request.Bay, request.MinServoPosition, request.MaxServoPosition, request.MinBuslinkPosition, 
-            request.MaxBuslinkPosition);
+            request.MaxBuslinkPosition, request.ServoStroke);
         
         await _testResultRepository.CreateTestResult(testResult);
         await _dbTransaction.CommitAsync(cancellationToken);
