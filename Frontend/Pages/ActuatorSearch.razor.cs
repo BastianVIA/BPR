@@ -9,6 +9,18 @@ namespace Frontend.Pages;
 
 public class ActuatorSearchBase : ComponentBase
 {
+    protected class SearchObject
+    {
+        public int? WorkOrderNumber { get; set; }
+        public int? SerialNumber { get; set; }
+        public string? ArticleNumber { get; set; }
+        public string? ArticleName { get; set; }
+        public string? CommunicationProtocol { get; set; }
+        public DateTime? CreatedTimeStart { get; set; }
+        public DateTime? CreatedTimeEnd { get; set; }
+        public PCBA PCBA { get; } = new();
+    }
+
     [Inject] public IActuatorSearchModel SearchModel { get; set; }
 
     [Inject] public IActuatorDetailsModel DetailsModel { get; set; }
@@ -18,7 +30,7 @@ public class ActuatorSearchBase : ComponentBase
     [Inject] public DialogService DialogService { get; set; }
 
     // Radzen needs a class to specify the data object
-    public Actuator SearchActuator { get; } = new();
+    protected SearchObject SearchActuator { get; } = new();
 
     public List<Actuator> actuators = new();
 
