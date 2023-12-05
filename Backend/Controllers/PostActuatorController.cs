@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers;
 
 [ApiController]
-[ApiExplorerSettings(GroupName = "Actuator")]
 
 public class PostActuatorController : ControllerBase
 {

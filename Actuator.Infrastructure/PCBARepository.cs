@@ -58,7 +58,6 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
            Software = pcba.Software,
            ProductionDateCode = pcba.ProductionDateCode,
            ConfigNo = pcba.ConfigNo
-           
         };
         return pcbaModel;
     }
