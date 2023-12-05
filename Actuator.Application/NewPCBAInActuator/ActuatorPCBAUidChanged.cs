@@ -7,17 +7,17 @@ namespace Application.NewPCBAInActuator;
 
 public class ActuatorPCBAUidChanged : IDomainEventListener<ActuatorPCBAUidChangedDomainEvent>
 {
-    private readonly IActuatorPCBAHistory _actuatorPcbaHistory;
+    private readonly IActuatorPCBAHistoryRepository actuatorPcbaHistoryRepository;
 
-    public ActuatorPCBAUidChanged(IActuatorPCBAHistory actuatorPcbaHistory)
+    public ActuatorPCBAUidChanged(IActuatorPCBAHistoryRepository actuatorPcbaHistoryRepository)
     {
-        _actuatorPcbaHistory = actuatorPcbaHistory;
+        this.actuatorPcbaHistoryRepository = actuatorPcbaHistoryRepository;
     }
 
     public async Task Handle(ActuatorPCBAUidChangedDomainEvent notification, CancellationToken cancellationToken)
     {
         var newChange = ActuatorPCBAChange.Create(notification.Id.WorkOrderNumber, notification.Id.SerialNumber,
             notification.OldPCBAUid, DateTime.Now);
-        await _actuatorPcbaHistory.PCBARemoved(newChange);
+        await actuatorPcbaHistoryRepository.PCBARemoved(newChange);
     }
 }

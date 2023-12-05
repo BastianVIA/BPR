@@ -8,23 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
-public class ActuatorPCBAHistory : BaseRepository<ActuatorPCBAHistoryModel>, IActuatorPCBAHistory
+public class ActuatorPCBAHistoryRepository : BaseRepository<ActuatorPCBAHistoryModel>, IActuatorPCBAHistoryRepository
 {
-    public ActuatorPCBAHistory(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler)
+    public ActuatorPCBAHistoryRepository(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler)
     {
     }
 
     public async Task PCBARemoved(ActuatorPCBAChange change)
     {
-        var actuator = await QueryOther<ActuatorModel>().AsNoTracking()
-            .FirstAsync(model =>
-                model.WorkOrderNumber == change.WorkOrderNumber && model.SerialNumber == change.SerialNumber);
-        var pcba = await QueryOther<PCBAModel>().AsNoTracking().FirstAsync(model => model.Uid == change.OldPCBAUid);
-
         var newModel = new ActuatorPCBAHistoryModel
         {
-            ActuatorModel = actuator,
-            PCBA = pcba,
+            WorkOrderNumber = change.WorkOrderNumber,
+            SerialNumber = change.SerialNumber,
+            PCBAUid = change.OldPCBAUid,
             RemovalTime = change.RemovalTime
         };
         await AddAsync(newModel, new List<IDomainEvent>());
@@ -36,7 +32,6 @@ public class ActuatorPCBAHistory : BaseRepository<ActuatorPCBAHistoryModel>, IAc
             .ToListAsync();
         return ToDomain(allChanges);
     }
-
 
     private List<ActuatorPCBAChange> ToDomain(List<ActuatorPCBAHistoryModel> changesAsModel)
     {

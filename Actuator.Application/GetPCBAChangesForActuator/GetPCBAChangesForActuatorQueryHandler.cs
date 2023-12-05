@@ -6,18 +6,18 @@ namespace Application.GetPCBAChangesForActuator;
 public class
     GetPCBAChangesForActuatorQueryHandler : IQueryHandler<GetPCBAChangesForActuatorQuery, GetPCBAChangesForActuatorDto>
 {
-    private readonly IActuatorPCBAHistory _actuatorPcbaHistory;
+    private readonly IActuatorPCBAHistoryRepository actuatorPcbaHistoryRepository;
 
-    public GetPCBAChangesForActuatorQueryHandler(IActuatorPCBAHistory actuatorPcbaHistory)
+    public GetPCBAChangesForActuatorQueryHandler(IActuatorPCBAHistoryRepository actuatorPcbaHistoryRepository)
     {
-        _actuatorPcbaHistory = actuatorPcbaHistory;
+        this.actuatorPcbaHistoryRepository = actuatorPcbaHistoryRepository;
     }
 
     public async Task<GetPCBAChangesForActuatorDto> Handle(GetPCBAChangesForActuatorQuery request,
         CancellationToken cancellationToken)
     {
         var pcbaChanges =
-            await _actuatorPcbaHistory.GetPCBAChangesForActuator(request.WorkOrderNumber, request.SerialNumber);
+            await actuatorPcbaHistoryRepository.GetPCBAChangesForActuator(request.WorkOrderNumber, request.SerialNumber);
         return GetPCBAChangesForActuatorDto.From(pcbaChanges);
     }
 }
