@@ -3,6 +3,8 @@ using BuildingBlocks.Application;
 using BuildingBlocks.Integration.Inbox.Configuration;
 using Infrastructure.Configuration;
 using LINTest;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +18,15 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddInbox();
 builder.Services.AddActuatorServices();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddLINTestServices(builder.Configuration);
 
 var app = builder.Build();
