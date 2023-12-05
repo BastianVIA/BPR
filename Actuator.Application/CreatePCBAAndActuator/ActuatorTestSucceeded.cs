@@ -2,6 +2,7 @@
 using BuildingBlocks.Integration;
 using BuildingBlocks.Integration.Inbox;
 using LINTest.Integration;
+using TestResult.Application.CreateTestResult;
 
 namespace Application.CreatePCBAAndActuator;
 
@@ -18,7 +19,7 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
 
     public async Task Handle(ActuatorTestSucceededIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        var cmd = CreatePCBAAndActuatorCommand.Create(
+        var createPcbaAndActuatorCommand = CreatePCBAAndActuatorCommand.Create(
             notification.WorkOrderNumber, 
             notification.SerialNumber,
             notification.PCBAUid,
@@ -26,7 +27,19 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
             notification.ArticleName,
             notification.CommunicationProtocol,
             notification.CreatedTime);
-        await _inbox.Add(InboxMessage.From(cmd, notification.Id));
+        await _inbox.Add(InboxMessage.From(createPcbaAndActuatorCommand, notification.Id));
+
+        var testResultCommand = CreateTestResultCommand.Create(
+            notification.WorkOrderNumber,
+            notification.SerialNumber,
+            notification.Tester,
+            notification.Bay,
+            notification.MinServoPosition,
+            notification.MaxServoPosition,
+            notification.MinBuslinkPosition,
+            notification.MaxBuslinkPosition);
+        await _inbox.Add(InboxMessage.From(testResultCommand, notification.Id));
+        
         await _transaction.CommitAsync(cancellationToken);
     }
 }

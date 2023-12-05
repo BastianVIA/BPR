@@ -3,6 +3,7 @@ using BuildingBlocks.Application;
 using BuildingBlocks.Integration.Inbox.Configuration;
 using Infrastructure.Configuration;
 using LINTest;
+using TestResult.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddInbox();
 builder.Services.AddActuatorServices();
+builder.Services.AddTestResultServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

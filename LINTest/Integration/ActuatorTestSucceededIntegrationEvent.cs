@@ -11,9 +11,17 @@ public class ActuatorTestSucceededIntegrationEvent : IntegrationEvent
     public string ArticleNumber { get; }
     public string ArticleName { get; }
     public DateTime CreatedTime { get; }
+    public string Tester { get; }
+    public int Bay { get; }
+    public string MinServoPosition { get; }
+    public string MaxServoPosition { get; }
+    public string MinBuslinkPosition { get; }
+    public string MaxBuslinkPosition { get; }
 
     public ActuatorTestSucceededIntegrationEvent(int workOrderNumber, int serialNumber, string pcbaUid, string articleNo,
-        string articleName, string communicationProtocol, DateTime createdTime)
+        string articleName, string communicationProtocol, DateTime createdTime, string tester, int bay, 
+        string minServoPosition, string maxServoPosition, string minBuslinkPosition, 
+        string maxBuslinkPosition)
     {
         WorkOrderNumber = workOrderNumber;
         SerialNumber = serialNumber;
@@ -22,5 +30,11 @@ public class ActuatorTestSucceededIntegrationEvent : IntegrationEvent
         ArticleName = articleName;
         CommunicationProtocol = communicationProtocol;
         CreatedTime = createdTime;
+        Tester = tester;
+        Bay = bay;
+        MinServoPosition = minServoPosition;
+        MaxServoPosition = maxServoPosition;
+        MinBuslinkPosition = minBuslinkPosition;
+        MaxBuslinkPosition = maxBuslinkPosition;
     }
 }

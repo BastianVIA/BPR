@@ -87,7 +87,13 @@ public class CsvDataService
             csvModel.ArticleNumber,
             csvModel.ArticleName,
             csvModel.CommunicationProtocol,
-            csvModel.CreatedTime);
+            csvModel.CreatedTime,
+            csvModel.Tester,
+            csvModel.Bay,
+            csvModel.MinServoPosition,
+            csvModel.MaxServoPosition,
+            csvModel.MinBuslinkPosition,
+            csvModel.MaxBuslinkPosition);
         await publisher.PublishAsync(eventToSend, stoppingToken);
     }
 

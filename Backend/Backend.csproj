@@ -28,6 +28,7 @@
       <ProjectReference Include="..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
       <ProjectReference Include="..\Actuator.Infrastructure\Actuator.Infrastructure.csproj" />
       <ProjectReference Include="..\LINTest\LINTest.csproj" />
+      <ProjectReference Include="..\TestResult.Infrastructure\TestResult.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

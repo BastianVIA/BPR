@@ -15,5 +15,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<ActuatorModel>().HasKey(a => new { a.WorkOrderNumber, a.SerialNumber });
         modelBuilder.Entity<PCBAModel>().HasKey(p => p.Uid);
         modelBuilder.Entity<InboxMessageModel>().HasKey(i => i.Id);
+        
+        modelBuilder.Entity<TestResultModel>().HasKey(t => t.Id);
     }
 }

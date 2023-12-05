@@ -1,5 +1,4 @@
 using BuildingBlocks.Application;
-using BuildingBlocks.Exceptions;
 using Domain.Entities;
 using Domain.Repositories;
 
