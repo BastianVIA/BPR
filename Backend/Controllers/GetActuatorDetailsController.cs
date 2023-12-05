@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers;
 
 [ApiController]
+
 public class GetActuatorDetailsController : ControllerBase
 {
     private readonly IQueryBus _bus;
@@ -30,13 +31,25 @@ public class GetActuatorDetailsController : ControllerBase
 
 public class GetActuatorDetailsResponse
 {
+    public int WorkOrderNumber { get; private set; }
+    public int SerialNumber { get; private set; }
     public GetActuatorDetailsPCBA PCBA { get; }
+    public string CommunicationProtocol { get; private set; }
+    public string ArticleNumber { get; private set; }
+    public string ArticleName { get; private set; }
+    public DateTime CreatedTime { get; private set; }
     private GetActuatorDetailsResponse() { }
 
     private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo, string itemNumber, string software,
-        int productionDateCode, string configNo)
+        int productionDateCode, string configNo, string communicationProtocol, string articleNumber, string articleName, DateTime createdTime)
     {
-        PCBA = GetActuatorDetailsPCBA.From(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo);
+        WorkOrderNumber = woNo;
+        SerialNumber = serialNumber;
+        PCBA = GetActuatorDetailsPCBA.From(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo, result.CommunicationProtocol, result.ArticleNumber, result.ArticleName, result.CreatedTime);
+        CommunicationProtocol = communicationProtocol;
+        ArticleNumber = articleNumber;
+        ArticleName = articleName;
+        CreatedTime = createdTime;
     }
 
     internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)

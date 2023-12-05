@@ -4,22 +4,30 @@ namespace Application.GetActuatorDetails;
 
 public class GetActuatorDetailsDto
 {
+    public int WorkOrderNumber { get; }
+    public int SerialNumber { get; }
     public PCBADto PCBADto { get; }
-
-    private GetActuatorDetailsDto()
-    {
-    }
-
+    public string CommunicationProtocol { get; }
+    public string ArticleNumber { get; }
+    public string ArticleName { get; }
+    public DateTime CreatedTime { get; }
+    
+    private GetActuatorDetailsDto(){}
     private GetActuatorDetailsDto(PCBADto pcbaDto)
     {
         PCBADto = pcbaDto;
+        WorkOrderNumber = woNo;
+        SerialNumber = serialNumber;
+        CommunicationProtocol = communicationProtocol;
+        ArticleNumber = articleNumber;
+        ArticleName = articleName;
+        CreatedTime = createdTime;
     }
 
     internal static GetActuatorDetailsDto From(Actuator actuator)
     {
-        PCBADto pcbaDto = PCBADto.From(actuator.PCBA.Uid, actuator.PCBA.ManufacturerNumber, actuator.PCBA.ItemNumber,
-            actuator.PCBA.Software, actuator.PCBA.ProductionDateCode, actuator.PCBA.ConfigNo);
-        return new GetActuatorDetailsDto(pcbaDto);
+        PCBADto pcbaDto = PCBADto.From(actuator.PCBA.Uid, actuator.PCBA.ManufacturerNumber, actuator.PCBA.ItemNumber, actuator.PCBA.Software, actuator.PCBA.ProductionDateCode);
+        return new GetActuatorDetailsDto(actuator.Id.WorkOrderNumber, actuator.Id.SerialNumber, pcbaDto, actuator.CommunicationProtocol,actuator.ArticleNumber,actuator.ArticleName, actuator.CreatedTime);
     }
 }
 

@@ -103,7 +103,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             software: actuatorModel.PCBA.Software,
             productionDateCode: actuatorModel.PCBA.ProductionDateCode,
             configNo: actuatorModel.PCBA.ConfigNo);
-        return new Actuator(actuatorId, pcba);
+        return new Actuator(actuatorId, pcba, actuatorModel.ArticleNumber, actuatorModel.ArticleName, actuatorModel.CommunicationProtocol, actuatorModel.CreatedTime);
     }
 
     private List<Actuator> ToDomain(List<ActuatorModel> actuatorModels)
@@ -128,7 +128,11 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,
             SerialNumber = actuator.Id.SerialNumber,
-            PCBA = pcbaModel
+            PCBA = pcbaModel,
+            ArticleNumber = actuator.ArticleNumber,
+            ArticleName = actuator.ArticleName,
+            CommunicationProtocol = actuator.CommunicationProtocol,
+            CreatedTime = actuator.CreatedTime
         };
         return actuatorModel;
     }
