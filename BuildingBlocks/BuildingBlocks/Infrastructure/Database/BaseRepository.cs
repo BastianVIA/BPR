@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.Domain;
+﻿using System.Diagnostics;
+using BuildingBlocks.Domain;
 using BuildingBlocks.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,6 @@ namespace BuildingBlocks.Infrastructure.Database;
 
 public class BaseRepository<TEntity> where TEntity : class
 {
-
     private ApplicationDbContext _dbContext;
     private IScheduler _scheduler;
     protected BaseRepository(ApplicationDbContext dbContext, IScheduler scheduler)
