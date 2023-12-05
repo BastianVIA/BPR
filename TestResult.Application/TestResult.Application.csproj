@@ -10,5 +10,5 @@
       <ProjectReference Include="..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
       <ProjectReference Include="..\TestResult.Domain\TestResult.Domain.csproj" />
     </ItemGroup>
-
+    
 </Project>

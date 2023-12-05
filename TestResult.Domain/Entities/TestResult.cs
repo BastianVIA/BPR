@@ -9,14 +9,14 @@ public class TestResult : Entity
     public int SerialNumber { get; set; }
     public string Tester { get; set; }
     public int Bay { get; private set; }
-    public string MinServoPosition { get; private set; }
-    public string MaxServoPosition { get; private set; }
-    public string MinBuslinkPosition { get; private set; }
-    public string MaxBuslinkPosition { get; private set; }
-    public string ServoStroke { get; private set; }
+    public string? MinServoPosition { get; private set; }
+    public string? MaxServoPosition { get; private set; }
+    public string? MinBuslinkPosition { get; private set; }
+    public string? MaxBuslinkPosition { get; private set; }
+    public string? ServoStroke { get; private set; }
 
-    public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string minServoPosition, 
-        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke)
+    public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string? minServoPosition, 
+        string? maxServoPosition, string? minBuslinkPosition, string? maxBuslinkPosition, string? servoStroke)
     {
         Id = id;
         Tester = tester;

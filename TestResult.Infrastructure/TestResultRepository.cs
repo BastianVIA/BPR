@@ -1,6 +1,8 @@
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using TestResult.Domain.Entities;
 using TestResult.Domain.Repositories;
 
 namespace TestResult.Infrastructure;
@@ -20,15 +22,29 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
     {
         throw new NotImplementedException();
     }
-    
-    private Domain.Entities.TestResult ToDomain(Domain.Entities.TestResult testResultModel)
+
+    public async Task<Domain.Entities.TestResult> GetActuatorTestDetails(CompositeActuatorId id)
     {
-        return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber, 
+        var actuatorTestModel = await Query()
+            .Where(a => a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber)
+            .FirstOrDefaultAsync();
+        if (actuatorTestModel == null)
+        {
+            throw new KeyNotFoundException(
+                $"Could not find Actuator with WorkOrderNumber: {id.WorkOrderNumber} and SerialNumber: {id.SerialNumber}");
+        }
+
+        return ToDomain(actuatorTestModel);
+    }
+
+    private Domain.Entities.TestResult ToDomain(TestResultModel testResultModel)
+    {
+        return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
             testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
             testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
             testResultModel.ServoStroke);
     }
-    
+
     private TestResultModel FromDomain(Domain.Entities.TestResult testResult)
     {
         var testResultModel = new TestResultModel()

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers;
 
 [ApiController]
-
 public class GetActuatorDetailsController : ControllerBase
 {
     private readonly IQueryBus _bus;
@@ -27,24 +26,30 @@ public class GetActuatorDetailsController : ControllerBase
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorDetailsResponse.From(result));
     }
-    
+
     public class GetActuatorDetailsResponse
     {
         public int WorkOrderNumber { get; private set; }
         public int SerialNumber { get; private set; }
         public PCBA PCBA { get; }
-        
+
         public string CommunicationProtocol { get; private set; }
         public string ArticleNumber { get; private set; }
         public string ArticleName { get; private set; }
         public DateTime CreatedTime { get; private set; }
-        private GetActuatorDetailsResponse() {}
-        private GetActuatorDetailsResponse(int woNo, int serialNumber, string pcbaUid, int manufacturerNo, string itemNumber, string software, int productionDateCode, string communicationProtocol, string articleNumber, string articleName, DateTime createdTime)
+
+        private GetActuatorDetailsResponse()
+        {
+        }
+
+        private GetActuatorDetailsResponse(int woNo, int serialNumber, string pcbaUid, int manufacturerNo,
+            string itemNumber, string software, int productionDateCode, string communicationProtocol,
+            string articleNumber, string articleName, DateTime createdTime)
         {
             WorkOrderNumber = woNo;
             SerialNumber = serialNumber;
             PCBA = new PCBA(
-                uid: pcbaUid, 
+                uid: pcbaUid,
                 manufacturerNo: manufacturerNo,
                 itemNumber: itemNumber,
                 software: software,
@@ -57,7 +62,10 @@ public class GetActuatorDetailsController : ControllerBase
 
         internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
         {
-            return new GetActuatorDetailsResponse(result.WorkOrderNumber, result.SerialNumber, result.PCBADto.Uid, result.PCBADto.ManufacturerNumber, result.PCBADto.ItemNumber, result.PCBADto.Software, result.PCBADto.ProductionDateCode, result.CommunicationProtocol, result.ArticleNumber, result.ArticleName, result.CreatedTime);
+            return new GetActuatorDetailsResponse(result.WorkOrderNumber, result.SerialNumber, result.PCBADto.Uid,
+                result.PCBADto.ManufacturerNumber, result.PCBADto.ItemNumber, result.PCBADto.Software,
+                result.PCBADto.ProductionDateCode, result.CommunicationProtocol, result.ArticleNumber,
+                result.ArticleName, result.CreatedTime);
         }
     }
-    }
+}
