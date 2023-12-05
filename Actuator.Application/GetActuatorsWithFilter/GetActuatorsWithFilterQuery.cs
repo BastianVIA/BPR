@@ -18,7 +18,9 @@ public class GetActuatorsWithFilterQuery : IQuery<GetActuatorsWithFilterDto>
     internal DateTime? StartDate { get; }
     internal DateTime? EndDate { get; }
 
-    private GetActuatorsWithFilterQuery(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode, string? communicationProtocol, string? articleNumber, string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
+    private GetActuatorsWithFilterQuery(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
+        int? productionDateCode, string? communicationProtocol, string? articleNumber, string? articleName,
+       string? configNo, string? software, DateTime? startDate, DateTime? endDate)
     {
         WorkOrderNumber = woNo;
         SerialNumber = serialNo;
@@ -35,14 +37,18 @@ public class GetActuatorsWithFilterQuery : IQuery<GetActuatorsWithFilterDto>
         EndDate = endDate;
     }
 
-    public static GetActuatorsWithFilterQuery Create(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode,string? communicationProtocol, string? articleNumber, string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
+    public static GetActuatorsWithFilterQuery Create(int? woNo, int? serialNo, string? pcbaUid, string? itemNo,
+        int? manufacturerNo, int? productionDateCode, string? communicationProtocol, string? articleNumber,
+        string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
     {
-        if (ParametersAreNull(woNo,serialNo,pcbaUid,itemNo, manufacturerNo, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate))
+        if (ParametersAreNull(woNo,serialNo,pcbaUid,itemNo, manufacturerNo, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software,
+            startDate , endDate))
         {
             throw new ArgumentException("Must specify at least one search parameter");
         }
 
-        return new GetActuatorsWithFilterQuery(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate);
+        return new GetActuatorsWithFilterQuery(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode,
+            communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate);
     }
 
     private static bool ParametersAreNull(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode,string? communicationProtocol, string? articleNumber, string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
