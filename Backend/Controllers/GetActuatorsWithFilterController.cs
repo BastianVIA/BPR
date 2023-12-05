@@ -1,10 +1,10 @@
 ﻿using Application.GetActuatorsWithFilter;
 using BuildingBlocks.Application;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
+[ApiController]
 public class GetActuatorsWithFilterController : ControllerBase
 {
     private readonly IQueryBus _bus;
@@ -16,6 +16,7 @@ public class GetActuatorsWithFilterController : ControllerBase
 
     [HttpGet()]
     [Route("api/GetActuatorsWithFilter")]
+    [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
@@ -83,25 +84,29 @@ public class GetActuatorsWithFilterController : ControllerBase
     }
     public class GetActuatorWithFilterPCBA
     {
-        public string PCBAUid { get; }
-        public int ManufacturerNumber { get; }
-        public string ItemNumber { get; }
-        public int ProductionDateCode { get; }
+        public string Uid { get; set; }
+        public int ManufacturerNumber { get; private set; }
+        public string ItemNumber { get; private set; }
+        public string Software { get; private set; }
+        public int ProductionDateCode { get; private set; }
+        public string ConfigNo { get; private set; }
 
 
-        public GetActuatorWithFilterPCBA(string pcbaUid, int manufacturerNumber, string itemNumber,
-            int productionDateCode)
+        private GetActuatorWithFilterPCBA(string pcbaUid, int manufacturerNumber, string itemNumber,
+            int productionDateCode, string software, string configNo)
         {
             ManufacturerNumber = manufacturerNumber;
-            PCBAUid = pcbaUid;
+            Uid = pcbaUid;
             ItemNumber = itemNumber;
             ProductionDateCode = productionDateCode;
+            Software = software;
+            ConfigNo = configNo;
         }
 
         internal static GetActuatorWithFilterPCBA From(PCBADto result)
         {
             return new GetActuatorWithFilterPCBA(result.Uid, result.ManufacturerNumber, result.ItemNumber,
-                result.ProductionDateCode);
+                result.ProductionDateCode, result.Software, result.ConfigNo);
         }
     }
 }

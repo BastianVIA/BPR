@@ -101,7 +101,8 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             manufacturerNo: actuatorModel.PCBA.ManufacturerNumber,
             itemNumber: actuatorModel.PCBA.ItemNumber,
             software: actuatorModel.PCBA.Software,
-            productionDateCode: actuatorModel.PCBA.ProductionDateCode);
+            productionDateCode: actuatorModel.PCBA.ProductionDateCode,
+            configNo: actuatorModel.PCBA.ConfigNo);
         return new Actuator(actuatorId, pcba, actuatorModel.ArticleNumber, actuatorModel.ArticleName, actuatorModel.CommunicationProtocol, actuatorModel.CreatedTime);
     }
 
