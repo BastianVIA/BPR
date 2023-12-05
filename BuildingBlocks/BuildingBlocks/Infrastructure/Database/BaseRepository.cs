@@ -39,7 +39,6 @@ public class BaseRepository<TEntity> where TEntity : class
         }
         catch (DbUpdateException e)
         {
-            Console.WriteLine(e);
             throw new AlreadyExistingException();
         }
     }
