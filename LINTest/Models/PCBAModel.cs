@@ -7,4 +7,5 @@ public class PCBAModel
     public int ManufacturerNumber { get; set; }
     public string Software { get; set; }
     public int ProductionDateCode { get; set; }
+    public string ConfigNo { get; set; }
 }
