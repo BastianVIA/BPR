@@ -5,8 +5,8 @@ namespace Frontend.Components;
 
 public class AlertBoxBase : ComponentBase, IDisposable
 {
-    protected Alert? Alert { get; set; } = null;
-    private int _alertTimeSeconds = 5;
+    protected Alert? Alert { get; private set; }
+    private readonly int _alertTimeSeconds = 5;
     private CancellationTokenSource? _cancelAlert;
 
     protected override void OnInitialized()
@@ -38,6 +38,8 @@ public class AlertBoxBase : ComponentBase, IDisposable
                 Alert = null;
                 InvokeAsync(StateHasChanged);
             }
-        });
+
+            _cancelAlert = null;
+        }, cancelToken);
     }
 }
