@@ -13,7 +13,7 @@ public class GetActuatorDetailsDto
     public DateTime CreatedTime { get; }
     
     private GetActuatorDetailsDto(){}
-    private GetActuatorDetailsDto(PCBADto pcbaDto)
+    private GetActuatorDetailsDto(int woNo, int serialNumber, PCBADto pcbaDto, string communicationProtocol, string articleNumber, string articleName, DateTime createdTime)
     {
         PCBADto = pcbaDto;
         WorkOrderNumber = woNo;
@@ -26,7 +26,7 @@ public class GetActuatorDetailsDto
 
     internal static GetActuatorDetailsDto From(Actuator actuator)
     {
-        PCBADto pcbaDto = PCBADto.From(actuator.PCBA.Uid, actuator.PCBA.ManufacturerNumber, actuator.PCBA.ItemNumber, actuator.PCBA.Software, actuator.PCBA.ProductionDateCode);
+        PCBADto pcbaDto = PCBADto.From( actuator.PCBA.Uid, actuator.PCBA.ManufacturerNumber, actuator.PCBA.ItemNumber, actuator.PCBA.Software, actuator.PCBA.ProductionDateCode, actuator.PCBA.ConfigNo);
         return new GetActuatorDetailsDto(actuator.Id.WorkOrderNumber, actuator.Id.SerialNumber, pcbaDto, actuator.CommunicationProtocol,actuator.ArticleNumber,actuator.ArticleName, actuator.CreatedTime);
     }
 }

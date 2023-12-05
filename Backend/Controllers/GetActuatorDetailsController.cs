@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers;
 
 [ApiController]
-
 public class GetActuatorDetailsController : ControllerBase
 {
     private readonly IQueryBus _bus;
@@ -38,14 +37,18 @@ public class GetActuatorDetailsResponse
     public string ArticleNumber { get; private set; }
     public string ArticleName { get; private set; }
     public DateTime CreatedTime { get; private set; }
-    private GetActuatorDetailsResponse() { }
 
-    private GetActuatorDetailsResponse(string pcbaUid, int manufacturerNo, string itemNumber, string software,
-        int productionDateCode, string configNo, string communicationProtocol, string articleNumber, string articleName, DateTime createdTime)
+    private GetActuatorDetailsResponse()
+    {
+    }
+
+    private GetActuatorDetailsResponse(int woNo, int serialNumber, string communicationProtocol, string articleNumber,
+        string articleName, DateTime createdTime, GetActuatorDetailsPCBA pcba)
+
     {
         WorkOrderNumber = woNo;
         SerialNumber = serialNumber;
-        PCBA = GetActuatorDetailsPCBA.From(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo, result.CommunicationProtocol, result.ArticleNumber, result.ArticleName, result.CreatedTime);
+        PCBA = pcba;
         CommunicationProtocol = communicationProtocol;
         ArticleNumber = articleNumber;
         ArticleName = articleName;
@@ -54,9 +57,12 @@ public class GetActuatorDetailsResponse
 
     internal static GetActuatorDetailsResponse From(GetActuatorDetailsDto result)
     {
-        return new GetActuatorDetailsResponse(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber,
-            result.PCBADto.ItemNumber, result.PCBADto.Software, result.PCBADto.ProductionDateCode,
-            result.PCBADto.ConfigNo);
+        var pcba = GetActuatorDetailsPCBA.From(result.PCBADto.Uid, result.PCBADto.ManufacturerNumber,
+            result.PCBADto.ItemNumber,
+            result.PCBADto.Software, result.PCBADto.ProductionDateCode, result.PCBADto.ConfigNo);
+
+        return new GetActuatorDetailsResponse(result.WorkOrderNumber, result.SerialNumber, result.CommunicationProtocol,
+            result.ArticleNumber, result.ArticleName, result.CreatedTime, pcba);
     }
 }
 

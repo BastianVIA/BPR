@@ -1,6 +1,5 @@
 ﻿using Application.GetActuatorsWithFilter;
 using BuildingBlocks.Application;
-using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
