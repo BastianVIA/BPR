@@ -12,7 +12,7 @@ public static class Config
         services.AddCommandAndQueryHandlers(AssemblyReference.Assembly);
         services.AddScoped<IActuatorRepository, ActuatorRepository>();
         services.AddScoped<IPCBARepository, PCBARepository>();
-        services.AddScoped<IActuatorPCBAHistory, ActuatorPCBAHistory>();
+        services.AddScoped<IActuatorPCBAHistoryRepository, ActuatorPCBAHistoryRepository>();
         
         return services;
     }
