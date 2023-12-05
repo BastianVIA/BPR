@@ -1,0 +1,38 @@
+﻿@using Frontend.Entities
+@using Radzen
+@using Radzen.Blazor
+@inherits PCBAInformationBase
+
+<RadzenRow>
+    <RadzenTemplateForm TItem="Actuator" Data=@Actuator>
+        <RadzenRow>
+            <RadzenColumn>
+                <WorkOrderNumberInputValidator Actuator="@Actuator"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <SerialNumberInputValidator Actuator="@Actuator"/>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+
+<RadzenRow>
+    
+    @if (!string.IsNullOrEmpty(Actuator.PCBA.PCBAUid))
+    {
+        <RadzenCard Style="max-width: 600px; margin-top: 30px;">
+            <h4>PCBA Information</h4>
+            <div><span Style="font-weight: bold;">PCBA UID:</span> @Actuator.PCBA.PCBAUid</div>
+            <div><span Style="font-weight: bold;">Item Number:</span> @Actuator.PCBA.ItemNumber</div>
+            <div><span Style="font-weight: bold;">Production Data Code:</span> @Actuator.PCBA.ProductionDateCode</div>
+            <div><span Style="font-weight: bold;">Manufacturer Number:</span> @Actuator.PCBA.ManufacturerNumber</div>
+            <div><span Style="font-weight: bold;">Software:</span> @Actuator.PCBA.Software</div>
+            <div><span Style="font-weight: bold;">Config Number:</span> @Actuator.PCBA.ConfigNumber</div>
+        </RadzenCard>
+    }
+    else
+    {
+        <RadzenLabel Text="No PCBA details available" Style="margin-top: 30px;"/>
+    }
+
+</RadzenRow>

@@ -16,11 +16,20 @@
       <Content Remove="Pages\Counter.razor" />
       <Content Remove="Pages\FetchData.razor" />
       <Content Remove="Pages\Error.cshtml" />
+      <Content Update="Pages\ActuatorInformation.razor">
+        <DependentUpon>InformationContainer.razor</DependentUpon>
+      </Content>
+      <Content Update="Pages\PCBAInformation.razor">
+        <DependentUpon>InformationContainer.razor</DependentUpon>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
       <Compile Remove="Data\WeatherForecastService.cs" />
       <Compile Remove="Pages\Error.cshtml.cs" />
+      <Compile Update="Pages\InformationContainer.razor.cs">
+        <DependentUpon>InformationContainer.razor</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>

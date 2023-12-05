@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingBlocks.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231204131221_AddConfigNoToPCBA")]
+    partial class AddConfigNoToPCBA
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,21 +31,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
-
-                    b.Property<string>("ArticleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ArticleNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CommunicationProtocol")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("PCBAUid")
                         .IsRequired()
@@ -115,45 +103,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.HasKey("Uid");
 
                     b.ToTable("PCBAs");
-                });
-
-            modelBuilder.Entity("Infrastructure.TestResultModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Bay")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MaxBuslinkPosition")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaxServoPosition")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MinBuslinkPosition")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MinServoPosition")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SerialNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ServoStroke")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tester")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WorkOrderNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestResultModel");
                 });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
