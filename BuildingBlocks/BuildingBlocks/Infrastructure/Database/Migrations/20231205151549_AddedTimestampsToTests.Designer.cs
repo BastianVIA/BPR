@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingBlocks.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231205151549_AddedTimestampsToTests")]
+    partial class AddedTimestampsToTests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,29 +23,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorPCBAHistoryModel", b =>
-                {
-                    b.Property<int>("WorkOrderNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SerialNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PCBAUid")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("RemovalTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("WorkOrderNumber", "SerialNumber", "PCBAUid", "RemovalTime");
-
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("WorkOrderNumber", "SerialNumber", "PCBAUid", "RemovalTime"), false);
-
-                    b.HasIndex("PCBAUid");
-
-                    b.ToTable("ActuatorPCBAHistoryModel");
-                });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
                 {
@@ -117,10 +97,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<string>("Uid")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ConfigNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ItemNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -156,6 +132,9 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SerialNumber")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("TestResultId")
                         .HasColumnType("uniqueidentifier");
 
@@ -165,6 +144,9 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
                     b.Property<DateTime>("TimeOccured")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkOrderNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -213,25 +195,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TestResultModel");
-                });
-
-            modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorPCBAHistoryModel", b =>
-                {
-                    b.HasOne("Infrastructure.PCBAModel", "PCBA")
-                        .WithMany()
-                        .HasForeignKey("PCBAUid")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Infrastructure.ActuatorModel", "ActuatorModel")
-                        .WithMany()
-                        .HasForeignKey("WorkOrderNumber", "SerialNumber")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ActuatorModel");
-
-                    b.Navigation("PCBA");
                 });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
