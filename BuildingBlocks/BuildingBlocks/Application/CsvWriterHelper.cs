@@ -22,8 +22,7 @@ public static class CsvWriterHelper
                 classMap.Map(typeof(T), propertyInfo);
             }
         }
-
-
+        
         csv.Context.RegisterClassMap(classMap);
 
         csv.WriteRecords(records);

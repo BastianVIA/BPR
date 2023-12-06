@@ -15,7 +15,7 @@ public class GetActuatorsWithFilterAsCSVQueryHandler : IQueryHandler<GetActuator
     public async Task<byte[]> Handle(GetActuatorsWithFilterAsCSVQuery request, CancellationToken cancellationToken)
     {
         var searchResult = await _bus.Send(request.FilterQuery, cancellationToken);
-        var propsToIncludeAsStrings = request.PropertiesToInclude.ConvertAll(csvProperty => csvProperty.ToString());
+        var propsToIncludeAsStrings = request.PropertiesToInclude.ConvertAll(csvProperty => csvProperty.ToString().Replace("_", ""));
         var singleLines = GetActuatorsWithFilerAsCSVDto.From(searchResult);
         return CsvWriterHelper.WriteToCsv(singleLines.AllLines, propsToIncludeAsStrings);
     }
