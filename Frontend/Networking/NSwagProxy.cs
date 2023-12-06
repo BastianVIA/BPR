@@ -51,4 +51,10 @@ public class NSwagProxy : INetwork
                 productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
                 createdTimeEnd));
     }
+
+    public async Task<GetTestResultsWithFilterResponse> GetTestResultWithFilter(int? woNo, int? serialNo,
+        string? tester, int? bay)
+    {
+        return await Send(async () => await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay));
+    }
 }

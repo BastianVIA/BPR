@@ -20,12 +20,14 @@
                     <RadzenNumeric ReadOnly="true" ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@TestResult.SerialNumber class="w-100"/>
                 </RadzenColumn>
                 <RadzenColumn>
-                    <RadzenLabel Text="Tester"/>
-                    <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="Tester" @bind-Value=@TestResult.Tester class="w-100"/>
-                </RadzenColumn>
-                <RadzenColumn>
                     <RadzenLabel Text="Bay"/>
                     <RadzenNumeric ReadOnly="true" ShowUpDown="false" style="display: block" Name="Bay" @bind-Value=@TestResult.Bay class="w-100"/>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow Style="width: 80%">
+                <RadzenColumn>
+                    <RadzenLabel Text="Tester"/>
+                    <RadzenTextBox ReadOnly="true" ShowUpDown="false" style="display: block" Name="Tester" @bind-Value=@TestResult.Tester class="w-100"/>
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow>

@@ -1,13 +1,14 @@
 ﻿@using Frontend.Entities
 @inherits TestResultTableBase
 
-<RadzenDataGrid TItem="TestResult" Data="@TestResults" ColumnWidth="240px" RowSelect="@OnActuatorSelected">
+<RadzenDataGrid TItem="TestResult" Data="@TestResults" ColumnWidth="240px" RowSelect="@OnActuatorSelected" AllowColumnResize="true">
     <Columns>
+        <RadzenDataGridColumn TItem="TestResult" Property="TimeOccured" Title="Time Occured"/>
         <RadzenDataGridColumn TItem="TestResult" Property="WorkOrderNumber" Title="Work Order Number"/>
         <RadzenDataGridColumn TItem="TestResult" Property="SerialNumber" Title="Serial Number"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="Tester" Title="Tester"/>
+        <RadzenDataGridColumn TItem="TestResult" Property="Tester" Title="Tester" Width="50%"/>
         <RadzenDataGridColumn TItem="TestResult" Property="Bay" Title="Bay"/>
-        <RadzenDataGridColumn TItem="TestResult" Property="TestError" Title="Error Count" >
+        <RadzenDataGridColumn TItem="TestResult" Property="TestError" Title="Error Count">
             <Template>
                 @context.TestErrors.Count
             </Template>
