@@ -1,4 +1,5 @@
 using BuildingBlocks.Domain;
+using TestResult.Domain.Events;
 
 namespace TestResult.Domain.Entities;
 
@@ -16,12 +17,12 @@ public class TestResult : Entity
     public string ServoStroke { get; private set; }
     public DateTime TimeOccured { get; private set; }
 
-    public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string minServoPosition, 
+    public TestResult(Guid id, int woNo, int serialNo, string tester, int bay, string minServoPosition, 
         string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke, 
         DateTime timeOccured)
     {
         Id = id;
-        WorkOrderNumber = workOrderNo;
+        WorkOrderNumber = woNo;
         SerialNumber = serialNo;
         Tester = tester;
         Bay = bay;
@@ -38,7 +39,11 @@ public class TestResult : Entity
         DateTime timeOccured)
     {
         var id = Guid.NewGuid();
-        return new TestResult(id, workOrderNo, serialNo, tester, bay, minServoPosition, maxServoPosition, 
+        var testResult = new TestResult(id, workOrderNo, serialNo, tester, bay, minServoPosition, maxServoPosition, 
             minBuslinkPosition, maxBuslinkPosition, servoStroke, timeOccured);
+        
+        testResult.AddDomainEvent(new TestResultCreatedDomainEvent(testResult.Id));
+        
+        return testResult;
     }
 }
