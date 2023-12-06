@@ -8,19 +8,19 @@
         <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
             <RadzenColumn>
                 <RadzenLabel Text="Workorder Number"/>
-                <RadzenNumeric ShowUpDown="false" style="display: block" Name="WorkOrderNumber" @bind-Value=@SearchTestResult.WorkOrderNumber class="w-100"/>
+                <RadzenNumeric ShowUpDown="false" Name="WorkOrderNumber" @bind-Value=@SearchTestResult.WorkOrderNumber class="w-100"/>
             </RadzenColumn>
             <RadzenColumn>
                 <RadzenLabel Text="Serial Number"/>
-                <RadzenNumeric ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@SearchTestResult.SerialNumber class="w-100"/>
+                <RadzenNumeric ShowUpDown="false" Name="SerialNumber" @bind-Value=@SearchTestResult.SerialNumber class="w-100"/>
             </RadzenColumn>
             <RadzenColumn>
                 <RadzenLabel Text="Tester"/>
-                <RadzenTextBox ShowUpDown="false" style="display: block" Name="Tester" @bind-Value=@SearchTestResult.Tester class="w-100"/>
+                <RadzenTextBox Name="Tester" @bind-Value=@SearchTestResult.Tester class="w-100"/>
             </RadzenColumn>
             <RadzenColumn>
                 <RadzenLabel Text="Bay"/>
-                <RadzenNumeric ShowUpDown="false" style="display: block" Name="Bay" @bind-Value=@SearchTestResult.Bay class="w-100"/>
+                <RadzenNumeric ShowUpDown="false" Name="Bay" @bind-Value=@SearchTestResult.Bay class="w-100"/>
             </RadzenColumn>
         </RadzenRow>
         <RadzenRow Style="margin-bottom: 16px;">

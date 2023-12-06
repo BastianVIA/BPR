@@ -5,7 +5,6 @@ namespace Frontend.Components;
 
 public class TableFiltersBase : ComponentBase
 {
-    // Faked enums, husk at skifte til den fra endpoint
     [Parameter] public EventCallback<List<CsvProperties>> OnNewFilter { get; set; }
     [Parameter] public List<CsvProperties> FilterOptionsEnums { get; set; }
     [Parameter] public List<CsvProperties> InitFilters { get; set; }
