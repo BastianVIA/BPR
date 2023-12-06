@@ -1,7 +1,7 @@
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Infrastructure;
-using TestResult.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using TestResult.Domain.Repositories;
 
 namespace TestResult.Infrastructure;
@@ -17,19 +17,54 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         await AddAsync(FromDomain(testResult), testResult.GetDomainEvents());
     }
 
-    public async Task<Domain.Entities.TestResult> GetTestResult(int woNo, int serialNo)
+    public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo,
+        string? tester, int? bay)
     {
-        throw new NotImplementedException();
+        var queryBuilder = Query();
+        if (woNo != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.WorkOrderNumber == woNo);
+        }
+
+        if (serialNo != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.SerialNumber == serialNo);
+        }
+
+        if (tester != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.Tester == tester);
+        }
+
+        if (bay != null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.Bay == bay);
+        }
+
+
+        var actuatorTestModels = await queryBuilder.ToListAsync();
+        return ToDomain(actuatorTestModels);
+    }
+
+    private List<Domain.Entities.TestResult> ToDomain(List<TestResultModel> testResultModels)
+    {
+        List<Domain.Entities.TestResult> domainTestResults = new List<Domain.Entities.TestResult>();
+        foreach (var testResultModel in testResultModels)
+        {
+            domainTestResults.Add(ToDomain(testResultModel));
+        }
+
+        return domainTestResults;
     }
 
     private Domain.Entities.TestResult ToDomain(TestResultModel testResultModel)
     {
-        return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber, 
-            testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
+        return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
+            testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel. MinServoPosition,
             testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
             testResultModel.ServoStroke, testResultModel.TimeOccured);
     }
-    
+
     private TestResultModel FromDomain(Domain.Entities.TestResult testResult)
     {
         var testResultModel = new TestResultModel()

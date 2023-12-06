@@ -7,11 +7,11 @@ public class TestResultModel
     public int SerialNumber { get; set; }
     public string Tester { get; set; }
     public int Bay { get; set; }
-    public string MinServoPosition { get; set; } = "N/A";
-    public string MaxServoPosition { get; set; } = "N/A";
-    public string MinBuslinkPosition { get; set; } = "N/A";
-    public string MaxBuslinkPosition { get; set; } = "N/A";
-    public string ServoStroke { get; set; } = "N/A";
+    public string MinServoPosition { get; set; } 
+    public string MaxServoPosition { get; set; } 
+    public string MinBuslinkPosition { get; set; } 
+    public string MaxBuslinkPosition { get; set; } 
+    public string ServoStroke { get; set; }
     public DateTime TimeOccured { get; set; }
     public List<TestErrorModel> TestErrors { get; set; } = new();
 }
