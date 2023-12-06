@@ -37,7 +37,7 @@ public class Actuator : Entity
 
     public void UpdatePCBA(PCBA pcba)
     {
+        AddDomainEvent(new ActuatorPCBAUidChangedDomainEvent(Id, PCBA.Uid));
         PCBA = pcba;
-        AddDomainEvent(new ActuatorPCBAUidChangedDomainEvent(Id));
     }
 }

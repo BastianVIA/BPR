@@ -5,7 +5,6 @@ public class DomainEvent : IDomainEvent
     public Guid Id { get; } = default!;
     public DateTime OccurredOn { get; } = default!;
     
-    
     protected DomainEvent()
     {
         Id = Guid.NewGuid();

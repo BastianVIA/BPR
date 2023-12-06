@@ -11,6 +11,7 @@ public static class Config
     {
         services.AddCommandAndQueryHandlers(AssemblyReference.Assembly);
         services.AddScoped<ITestResultRepository, TestResultRepository>();
+        services.AddScoped<ITestErrorRepository, TestErrorRepository>();
         return services;
     }
 }
