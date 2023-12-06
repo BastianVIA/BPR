@@ -1,4 +1,5 @@
 using Frontend.Entities;
+using Frontend.Model;
 using Frontend.Service.AlertService;
 using Microsoft.AspNetCore.Components;
 using Radzen;
@@ -10,6 +11,8 @@ public class ChangeComponentBase : ComponentBase
         [Parameter] public Actuator Actuator { get; set; }
         
         [Inject] public IAlertService AlertService { get; set; }
+        
+        [Inject] public IUpdateActuatorsPCBAModel UpdateActuatorsPcbaModel { get; set; }
         protected int PCBAUid { get; set; }
 
         protected string value;
@@ -25,7 +28,9 @@ public class ChangeComponentBase : ComponentBase
                         case "PCBA":
                                 if (PCBAUid > 0)
                                 {
-                                        
+                                        await UpdateActuatorsPcbaModel.UpdateActuatorsPCBA(Actuator.WorkOrderNumber,
+                                                Actuator.SerialNumber, PCBAUid);
+                                        AlertService.FireEvent(AlertStyle.Success, "Jubiii!"); 
                                 }
                                 break;
                 }
