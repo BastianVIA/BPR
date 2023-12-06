@@ -21,22 +21,10 @@ public class GetActuatorsWithFilterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(
-        [FromQuery] int? woNo,
-        [FromQuery] int? serialNo, 
-        [FromQuery] string? pcbaUid,
-        [FromQuery] string? itemNo,
-        [FromQuery] int? manufacturerNo,
-        [FromQuery] int? productionDateCode,
-        [FromQuery] string? communicationProtocol,
-        [FromQuery] string? articleNumber,
-        [FromQuery] string? articleName,
-        [FromQuery] string? configNo,
-        [FromQuery] string? software,
-        [FromQuery] DateTime? startDate,
-        [FromQuery] DateTime? endDate,
+        [FromQuery] GetActuatorsWithFilterQuery query,
         CancellationToken cancellationToken)
     {
-        var query = GetActuatorsWithFilterQuery.Create(woNo, serialNo, pcbaUid, itemNo, manufacturerNo, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate);
+        query.Validate();
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorWithFilterResponse.From(result));
     }
@@ -81,7 +69,7 @@ public class GetActuatorsWithFilterController : ControllerBase
             return new GetActuatorWithFilterActuator
             {
                 WorkOrderNumber = result.WorkOrderNumber, SerialNumber = result.SerialNumber,
-                PCBA = GetActuatorWithFilterPCBA.From(result.Pcba),
+                PCBA = GetActuatorWithFilterPCBA.From(result.PCBA),
                 CommunicationProtocol = result.CommunicationProtocol,
                 ArticleNumber = result.ArticleNumber,
                 ArticleName = result.ArticleName,
@@ -89,6 +77,7 @@ public class GetActuatorsWithFilterController : ControllerBase
             };
         }
     }
+
     public class GetActuatorWithFilterPCBA
     {
         public string Uid { get; set; }
