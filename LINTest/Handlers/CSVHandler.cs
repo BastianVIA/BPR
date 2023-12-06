@@ -9,104 +9,28 @@ public class CSVHandler
     public static CSVModel ReadCSV(string filePath)
     {
         var record = new CSVModel();
+        var keyActions = GetKeyActions();
 
         try
         {
             using var reader = new StreamReader(filePath);
             while (!reader.EndOfStream)
             {
-                var line = reader.ReadLine();
-                var values = line.Split(';');
+                var values = reader.ReadLine()?.Split(';') ?? Array.Empty<string>();
 
                 if (values.Length < 6) continue;
 
                 var key = values[4].Trim();
                 var value = values[5].Trim();
-                var type = values[2].Trim();
+                var stepType = values[2].Trim();
                 var stepNo = values[3].Trim();
+                var timestamp = values[0].Trim();
 
-                switch (key)
-                {
-                    case "Communication Protocol":
-                        record.CommunicationProtocol = value;
-                        break;
-                    case "WO Number":
-                        record.WorkOrderNumber = value;
-                        break;
-                    case "Serial Number":
-                        record.SerialNumber = value;
-                        break;
-                    case "Serial from PLC":
-                        record.SerialNumber = value;
-                        break;
-                    case "Actuator ID":
-                        record.ActuatorId = value;
-                        break;
-                    case "UniqueID from Actuator":
-                        record.PCBAUid = value;
-                        break;
-                    case "From AxArtNo":
-                        record.ArticleNumber = value;
-                        break;
-                    case "From AxArtName":
-                        record.ArticleName = value;
-                        break;
-                    case "LINTest has finished. EndOfTest":
-                        record.LINTestPassed = true;
-                        var dateTimeString = values[0].Trim();
-                        DateTime dateTime = ParseDateTime(dateTimeString);
-                        record.CreatedTime = dateTime;
-                        break;
-                    case "Tester":
-                        record.Tester = value;
-                        break;
-                    case "Bay":
-                        record.Bay = Int32.Parse(value);
-                        break;
-                    case "Min Servo Position":
-                        record.MinServoPosition = value;
-                        break;
-                    case "Min.Servo.Position":
-                        record.MinServoPosition = value;
-                        break;
-                    case "Max Servo Position":
-                        record.MaxServoPosition = value;
-                        break;
-                    case "Max.Servo.Position":
-                        record.MaxServoPosition = value;
-                        break;
-                    case "Min Buslink Position":
-                        record.MinBuslinkPosition = value;
-                        break;
-                    case "Min. BusLink Position":
-                        record.MinBuslinkPosition = value;
-                        break;
-                    case "Max Buslink Position":
-                        record.MaxBuslinkPosition = value;
-                        break;
-                    case "Max. BusLink Position":
-                        record.MaxBuslinkPosition = value;
-                        break;
-                    case "Servo Stroke":
-                        record.ServoStroke = value;
-                        break;
-                }
+                ProcessKey(record, keyActions, key, value, timestamp);
 
-                if (type == "ERROR")
+                if (stepType == "ERROR")
                 {
-                    var dateTimeString = values[0].Trim();
-                    DateTime dateTime = ParseDateTime(dateTimeString);
-                    var error = new TestErrorModel
-                    {
-                        WorkOrderNumber = Int32.Parse(record.WorkOrderNumber),
-                        SerialNumber = Int32.Parse(record.SerialNumber),
-                        Tester = record.Tester,
-                        Bay = record.Bay,
-                        ErrorCode = Int32.Parse(stepNo),
-                        ErrorMessage = key,
-                        TimeOccured = dateTime
-                    };
-                    record.TestErrors.Add(error);
+                    AddError(record, stepNo, ParseDateTime(timestamp));
                 }
             }
         }
@@ -117,6 +41,67 @@ public class CSVHandler
         }
 
         return record;
+    }
+
+    private static void ProcessKey(CSVModel record, Dictionary<string, Action<CSVModel, string>> keyActions, string key,
+        string value, string timestamp)
+    {
+        if (key == "LINTest has finished. EndOfTest")
+        {
+            value = timestamp;
+        }
+        if (keyActions.TryGetValue(key, out var action))
+        {
+            action(record, value);
+        }
+    }
+
+    private static void AddError(CSVModel record, string stepNo, DateTime dateTime)
+    {
+        var error = new TestErrorModel
+        {
+            WorkOrderNumber = Int32.TryParse(record.WorkOrderNumber, out var woNumber) ? woNumber : 0,
+            SerialNumber = Int32.TryParse(record.SerialNumber, out var serialNumber) ? serialNumber : 0,
+            Tester = record.Tester,
+            Bay = record.Bay,
+            ErrorCode = Int32.TryParse(stepNo, out var errorCode) ? errorCode : 0,
+            ErrorMessage = stepNo,
+            TimeOccured = dateTime
+        };
+        record.TestErrors.Add(error);
+    }
+
+    private static Dictionary<string, Action<CSVModel, string>> GetKeyActions()
+    {
+        return new Dictionary<string, Action<CSVModel, string>>
+        {
+            { "Communication Protocol", (model, value) => model.CommunicationProtocol = value },
+            { "WO Number", (model, value) => model.WorkOrderNumber = value },
+            { "Serial Number", (model, value) => model.SerialNumber = value },
+            { "Serial from PLC", (model, value) => model.SerialNumber = value },
+            { "Actuator ID", (model, value) => model.ActuatorId = value },
+            { "UniqueID from Actuator", (model, value) => model.PCBAUid = value },
+            { "From AxArtNo", (model, value) => model.ArticleNumber = value },
+            { "From AxArtName", (model, value) => model.ArticleName = value },
+            {
+                "LINTest has finished. EndOfTest", (model, value) =>
+                {
+                    model.LINTestPassed = true;
+                    model.CreatedTime = ParseDateTime(value);
+                }
+            },
+            { "Tester", (model, value) => model.Tester = value },
+            { "Bay", (model, value) => model.Bay = Int32.Parse(value) },
+            { "Min Servo Position", (model, value) => model.MinServoPosition = value },
+            { "Min.Servo.Position", (model, value) => model.MinServoPosition = value },
+            { "Max Servo Position", (model, value) => model.MaxServoPosition = value },
+            { "Max.Servo.Position", (model, value) => model.MaxServoPosition = value },
+            { "Min Buslink Position", (model, value) => model.MinBuslinkPosition = value },
+            { "Min. BusLink Position", (model, value) => model.MinBuslinkPosition = value },
+            { "Max Buslink Position", (model, value) => model.MaxBuslinkPosition = value },
+            { "Max. BusLink Position", (model, value) => model.MaxBuslinkPosition = value },
+            { "Servo Stroke", (model, value) => model.ServoStroke = value },
+        };
     }
 
     private static DateTime ParseDateTime(string dateTimeString)

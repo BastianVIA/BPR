@@ -17,6 +17,12 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<PCBAModel>().HasKey(p => p.Uid);
         modelBuilder.Entity<InboxMessageModel>().HasKey(i => i.Id);
         
+        BuildActuatorPCBAHistoryModel(modelBuilder);
+        BuildTestModel(modelBuilder);
+    }
+
+    private static void BuildActuatorPCBAHistoryModel(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<ActuatorPCBAHistoryModel>()
             .HasOne(a => a.ActuatorModel)
             .WithMany()
@@ -28,10 +34,13 @@ public class ApplicationDbContext : DbContext
             .WithMany()
             .HasForeignKey(a => a.PCBAUid)
             .OnDelete(DeleteBehavior.Restrict);
-        
+
         modelBuilder.Entity<ActuatorPCBAHistoryModel>().HasKey(a => new
             { a.WorkOrderNumber, a.SerialNumber, a.PCBAUid, a.RemovalTime }).IsClustered(false);
-        
+    }
+
+    private static void BuildTestModel(ModelBuilder modelBuilder)
+    {
         modelBuilder.Entity<TestErrorModel>().HasKey(t => t.Id);
         modelBuilder.Entity<TestResultModel>().HasKey(t => t.Id);
         modelBuilder.Entity<TestResultModel>()

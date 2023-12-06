@@ -1,4 +1,5 @@
 using BuildingBlocks.Domain;
+using TestResult.Domain.Events;
 
 namespace TestResult.Domain.Entities;
 
@@ -30,6 +31,10 @@ public class TestError : Entity
         string errorMessage, DateTime timeOccured)
     {
         var id = Guid.NewGuid();
-        return new TestError(id, workOrderNumber, serialNumber, tester, bay, errorCode, errorMessage, timeOccured);
+        var testError = new TestError(id, workOrderNumber, serialNumber, tester, bay, errorCode, errorMessage, timeOccured);
+
+        testError.AddDomainEvent(new TestErrorCreatedDomainEvent(testError.Id));
+        
+        return testError;
     }
 }
