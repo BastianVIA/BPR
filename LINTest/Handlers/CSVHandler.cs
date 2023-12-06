@@ -30,7 +30,7 @@ public class CSVHandler
 
                 if (stepType == "ERROR")
                 {
-                    AddError(record, stepNo, ParseDateTime(timestamp));
+                    AddError(record, stepNo, key, ParseDateTime(timestamp));
                 }
             }
         }
@@ -56,7 +56,7 @@ public class CSVHandler
         }
     }
 
-    private static void AddError(CSVModel record, string stepNo, DateTime dateTime)
+    private static void AddError(CSVModel record, string stepNo, string key, DateTime dateTime)
     {
         var error = new TestErrorModel
         {
@@ -65,7 +65,7 @@ public class CSVHandler
             Tester = record.Tester,
             Bay = record.Bay,
             ErrorCode = Int32.TryParse(stepNo, out var errorCode) ? errorCode : 0,
-            ErrorMessage = stepNo,
+            ErrorMessage = key,
             TimeOccured = dateTime
         };
         record.TestErrors.Add(error);
