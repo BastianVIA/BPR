@@ -19,24 +19,6 @@ public class GetActuatorsWithFilterQuery : IQuery<GetActuatorsWithFilterDto>
     public DateTime? EndDate { get; set; }
 
     public GetActuatorsWithFilterQuery(){}
-    private GetActuatorsWithFilterQuery(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
-        int? productionDateCode, string? communicationProtocol, string? articleNumber, string? articleName,
-       string? configNo, string? software, DateTime? startDate, DateTime? endDate)
-    {
-        WorkOrderNumber = woNo;
-        SerialNumber = serialNo;
-        PCBAUid = pcbaUid;
-        ItemNumber = itemNo;
-        ManufacturerNumber = manufacturerNo;
-        ProductionDateCode = productionDateCode;
-        CommunicationProtocol = communicationProtocol;
-        ArticleNumber = articleNumber;
-        ArticleName = articleName;
-        ConfigNo = configNo;
-        Software = software;
-        StartDate = startDate;
-        EndDate = endDate;
-    }
 
     public void Validate()
     {

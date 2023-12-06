@@ -42,10 +42,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestResult", "TestResult", "{B944BF79-26DB-4593-9F76-05140B7D8163}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestResult.Application", "TestResult.Application\TestResult.Application.csproj", "{D3C43FB8-669D-4A69-8DFD-EAFD100BFEF8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C201C1D0-57FC-4676-AA22-D3FB9D204B92} = {C201C1D0-57FC-4676-AA22-D3FB9D204B92}
+		{42CCC86B-B38B-48F2-B72D-56E7DCA39810} = {42CCC86B-B38B-48F2-B72D-56E7DCA39810}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestResult.Domain", "TestResult.Domain\TestResult.Domain.csproj", "{42CCC86B-B38B-48F2-B72D-56E7DCA39810}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestResult.Infrastructure", "TestResult.Infrastructure\TestResult.Infrastructure.csproj", "{ABA1AF0B-EBA8-4EF0-8C0B-4C4C04728B9D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D3C43FB8-669D-4A69-8DFD-EAFD100BFEF8} = {D3C43FB8-669D-4A69-8DFD-EAFD100BFEF8}
+		{42CCC86B-B38B-48F2-B72D-56E7DCA39810} = {42CCC86B-B38B-48F2-B72D-56E7DCA39810}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
