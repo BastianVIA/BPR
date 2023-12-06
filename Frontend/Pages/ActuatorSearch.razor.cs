@@ -1,4 +1,5 @@
-﻿using Frontend.Entities;
+﻿using Frontend.Components;
+using Frontend.Entities;
 using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service.AlertService;
@@ -18,7 +19,12 @@ public class ActuatorSearchBase : ComponentBase
         public string? CommunicationProtocol { get; set; }
         public DateTime? CreatedTimeStart { get; set; }
         public DateTime? CreatedTimeEnd { get; set; }
-        public PCBA PCBA { get; } = new();
+        public string? PCBAUid { get; set; }
+        public string? PCBAItemNumber { get; set; }
+        public int? PCBAManufacturerNumber { get; set; }
+        public int? PCBAProductionDateCode { get; set; }
+        public string? PCBASoftware { get; set; }
+        public string? PCBAConfigNumber { get; set; }
     }
 
     [Inject] public IActuatorSearchModel SearchModel { get; set; }
@@ -33,6 +39,8 @@ public class ActuatorSearchBase : ComponentBase
     protected SearchObject SearchActuator { get; } = new();
 
     public List<Actuator> actuators = new();
+
+    private List<TableFiltersBase.CsvProperties> _selectedFilters = new();
 
     // Blazor page needs an empty constructor
     public ActuatorSearchBase()
@@ -52,14 +60,14 @@ public class ActuatorSearchBase : ComponentBase
             actuators = await SearchModel.GetActuatorWithFilter(
                 SearchActuator.WorkOrderNumber,
                 SearchActuator.SerialNumber,
-                SearchActuator.PCBA.PCBAUid,
-                SearchActuator.PCBA.ItemNumber,
-                SearchActuator.PCBA.ManufacturerNumber,
-                SearchActuator.PCBA.ProductionDateCode,
+                SearchActuator.PCBAUid,
+                SearchActuator.PCBAItemNumber,
+                SearchActuator.PCBAManufacturerNumber,
+                SearchActuator.PCBAProductionDateCode,
                 SearchActuator.CreatedTimeStart,
                 SearchActuator.CreatedTimeEnd,
-                SearchActuator.PCBA.Software,
-                SearchActuator.PCBA.ConfigNumber,
+                SearchActuator.PCBASoftware,
+                SearchActuator.PCBAConfigNumber,
                 SearchActuator.ArticleName,
                 SearchActuator.ArticleNumber,
                 SearchActuator.CommunicationProtocol
@@ -70,6 +78,12 @@ public class ActuatorSearchBase : ComponentBase
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
             actuators = new List<Actuator>();
         }
+    }
+
+    protected void OnColumnsUpdated(List<TableFiltersBase.CsvProperties>? filters)
+    {
+        filters ??= new List<TableFiltersBase.CsvProperties>();
+        _selectedFilters = filters;
     }
 
     protected async Task ShowActuatorDetails(Actuator actuator)

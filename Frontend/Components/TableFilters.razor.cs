@@ -4,24 +4,34 @@ namespace Frontend.Components;
 
 public class TableFiltersBase : ComponentBase
 {
-    [Parameter] public EventCallback<List<string>> OnNewFilter { get; set; }
-    
-    [Parameter]
-    public string[] FilterOptions { get; set; }
-
-    protected List<string> Filters = new();
-    protected readonly List<string> FilterParams = new();
+    // Faked enums, husk at skifte til den fra endpoint
+    public enum CsvProperties
+    {
+        WorkOrderNumber,
+        SerialNumber,
+        CommunicationProtocol,
+        ArticleNumber,
+        ArticleName,
+        CreatedTime,
+        PCBAUid,
+        PCBAManufacturerNumber,
+        PCBAItemNumber,
+        PCBASoftware,
+        PCBAProductionDateCode,
+        PCBAConfigNo,
+    }
+    [Parameter] public EventCallback<List<CsvProperties>> OnNewFilter { get; set; }
+    [Parameter] public List<CsvProperties> FilterParams { get; set; }
+    [Parameter] public List<CsvProperties> CurrentFilter { get; set; }
 
     protected override Task OnInitializedAsync()
     {
-        Filters.AddRange(FilterOptions.Take(3));
-        FilterParams.AddRange(FilterOptions);
         OnChange();
         return base.OnInitializedAsync();
     }
 
     protected void OnChange()
     {
-        OnNewFilter.InvokeAsync(Filters);
+        OnNewFilter.InvokeAsync(CurrentFilter);
     }
 }

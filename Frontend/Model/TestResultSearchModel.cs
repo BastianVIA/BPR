@@ -27,21 +27,24 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                         Tester = "Din mor",
                         Bay = 42,
                         ErrorCode = 40,
-                        ErrorMessage = "Sygt tyk mor alligevel"
+                        ErrorMessage = "Sygt tyk mor alligevel",
+                        TimeOccured = new DateTime(2023, 08,09, 11,35,02)
                     },
                     new TestError()
                     {
                         Tester = "Din søster",
                         Bay = 13,
                         ErrorCode = 4,
-                        ErrorMessage = "Lange patter"
+                        ErrorMessage = "Lange patter",
+                        TimeOccured = new DateTime(2023, 08,09, 11,35,02)
                     }
                 },
                 
                 MaxServoPosition = "532.55 mm",
                 MinBuslinkPosition = "111 mm",
                 MaxBuslinkPosition = "700 mm",
-                ServoStroke = "69.420 mm"
+                ServoStroke = "69.420 mm",
+                TimeOccured = new DateTime(2023, 08,09, 11,35,02)
             },
             new ()
             {
