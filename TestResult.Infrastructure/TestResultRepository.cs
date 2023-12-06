@@ -3,6 +3,7 @@ using BuildingBlocks.Infrastructure.Database;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using TestResult.Domain.Entities;
+
 using TestResult.Domain.Repositories;
 
 namespace TestResult.Infrastructure;
@@ -63,7 +64,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
             testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
             testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
-            testResultModel.ServoStroke);
+            testResultModel.ServoStroke, testResultModel.TimeOccured);
     }
 
     private TestResultModel FromDomain(Domain.Entities.TestResult testResult)
@@ -78,7 +79,8 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
             MaxServoPosition = testResult.MaxServoPosition,
             MinBuslinkPosition = testResult.MinBuslinkPosition,
             MaxBuslinkPosition = testResult.MaxBuslinkPosition,
-            ServoStroke = testResult.ServoStroke
+            ServoStroke = testResult.ServoStroke,
+            TimeOccured = testResult.TimeOccured
         };
         return testResultModel;
     }

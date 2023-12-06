@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Backend.Model;
+using LINTest.Models;
 
 namespace LINTest.Handlers;
 
@@ -21,6 +22,8 @@ public class CSVHandler
 
                 var key = values[4].Trim();
                 var value = values[5].Trim();
+                var type = values[2].Trim();
+                var stepNo = values[3].Trim();
 
                 switch (key)
                 {
@@ -87,6 +90,23 @@ public class CSVHandler
                     case "Servo Stroke":
                         record.ServoStroke = value;
                         break;
+                }
+
+                if (type == "ERROR")
+                {
+                    var dateTimeString = values[0].Trim();
+                    DateTime dateTime = ParseDateTime(dateTimeString);
+                    var error = new TestErrorModel
+                    {
+                        WorkOrderNumber = Int32.Parse(record.WorkOrderNumber),
+                        SerialNumber = Int32.Parse(record.SerialNumber),
+                        Tester = record.Tester,
+                        Bay = record.Bay,
+                        ErrorCode = Int32.Parse(stepNo),
+                        ErrorMessage = key,
+                        TimeOccured = dateTime
+                    };
+                    record.TestErrors.Add(error);
                 }
             }
         }

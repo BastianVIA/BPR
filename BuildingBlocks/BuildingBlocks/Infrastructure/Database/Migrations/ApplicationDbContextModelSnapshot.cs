@@ -21,6 +21,29 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorPCBAHistoryModel", b =>
+                {
+                    b.Property<int>("WorkOrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SerialNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PCBAUid")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("RemovalTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("WorkOrderNumber", "SerialNumber", "PCBAUid", "RemovalTime");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("WorkOrderNumber", "SerialNumber", "PCBAUid", "RemovalTime"), false);
+
+                    b.HasIndex("PCBAUid");
+
+                    b.ToTable("ActuatorPCBAHistoryModel");
+                });
+
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
                 {
                     b.Property<int>("WorkOrderNumber")
@@ -94,6 +117,10 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<string>("Uid")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ConfigNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ItemNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,6 +138,39 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.HasKey("Uid");
 
                     b.ToTable("PCBAs");
+                });
+
+            modelBuilder.Entity("Infrastructure.TestErrorModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Bay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ErrorCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ErrorMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TestResultId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Tester")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeOccured")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestResultId");
+
+                    b.ToTable("TestErrorModel");
                 });
 
             modelBuilder.Entity("Infrastructure.TestResultModel", b =>
@@ -144,12 +204,34 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("TimeOccured")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("WorkOrderNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("TestResultModel");
+                });
+
+            modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorPCBAHistoryModel", b =>
+                {
+                    b.HasOne("Infrastructure.PCBAModel", "PCBA")
+                        .WithMany()
+                        .HasForeignKey("PCBAUid")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.ActuatorModel", "ActuatorModel")
+                        .WithMany()
+                        .HasForeignKey("WorkOrderNumber", "SerialNumber")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ActuatorModel");
+
+                    b.Navigation("PCBA");
                 });
 
             modelBuilder.Entity("Infrastructure.ActuatorModel", b =>
@@ -161,6 +243,20 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                         .IsRequired();
 
                     b.Navigation("PCBA");
+                });
+
+            modelBuilder.Entity("Infrastructure.TestErrorModel", b =>
+                {
+                    b.HasOne("Infrastructure.TestResultModel", null)
+                        .WithMany("TestErrors")
+                        .HasForeignKey("TestResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.TestResultModel", b =>
+                {
+                    b.Navigation("TestErrors");
                 });
 #pragma warning restore 612, 618
         }

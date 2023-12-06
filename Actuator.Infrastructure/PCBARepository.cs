@@ -45,7 +45,7 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
 
     private PCBA ToDomain(PCBAModel pcbaModel)
     {
-        return new PCBA(pcbaModel.Uid, pcbaModel.ManufacturerNumber, pcbaModel.ItemNumber, pcbaModel.Software, pcbaModel.ProductionDateCode);
+        return new PCBA(pcbaModel.Uid, pcbaModel.ManufacturerNumber, pcbaModel.ItemNumber, pcbaModel.Software, pcbaModel.ProductionDateCode, pcbaModel.ConfigNo);
     }
     
     private PCBAModel FromDomain(PCBA pcba)
@@ -56,7 +56,8 @@ public class PCBARepository : BaseRepository<PCBAModel>, IPCBARepository
            ManufacturerNumber = pcba.ManufacturerNumber,
            ItemNumber = pcba.ItemNumber,
            Software = pcba.Software,
-           ProductionDateCode = pcba.ProductionDateCode
+           ProductionDateCode = pcba.ProductionDateCode,
+           ConfigNo = pcba.ConfigNo
         };
         return pcbaModel;
     }

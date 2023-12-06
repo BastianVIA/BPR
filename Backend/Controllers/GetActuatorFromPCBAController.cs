@@ -16,6 +16,7 @@ public class GetActuatorFromPCBAController : ControllerBase
 
     [HttpGet()]
     [Route("api/GetActuatorFromPCBA/{uid}")]
+    [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorFromPCBAResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
