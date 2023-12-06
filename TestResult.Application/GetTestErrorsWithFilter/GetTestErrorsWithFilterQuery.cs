@@ -19,11 +19,4 @@ public class GetTestErrorsWithFilterQuery : IQuery<GetTestErrorsWithFilterDto>
     
     public GetTestErrorsWithFilterQuery()
     {}
-    public void Validate()
-    {
-        if (WorkOrderNumber == null && ErrorCode == null && Tester == null && Bay == null)
-        {
-            throw new ArgumentException("Must specify at least one search parameter");
-        }
-    }
 }

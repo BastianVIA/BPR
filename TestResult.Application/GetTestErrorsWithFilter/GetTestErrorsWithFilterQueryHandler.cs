@@ -60,6 +60,7 @@ public class
         DateTime endIntervalAsDate, HashSet<int> uniqueErrorCodes, Task<int> numberOfTestResultsForInterval)
     {
         Dictionary<int, int> testErrorsAndAmount = new();
+        Dictionary<int, string> errorCodeToMessage = new();
         foreach (var testError in errors)
         {
             uniqueErrorCodes.Add(testError.ErrorCode);
@@ -71,6 +72,7 @@ public class
             else
             {
                 testErrorsAndAmount[testError.ErrorCode] = 1;
+                errorCodeToMessage[testError.ErrorCode] = testError.ErrorMessage;
             }
         }
 
@@ -79,6 +81,7 @@ public class
             .Select(kv => new GetTestErrorsWithFilterTestDataDto
             {
                 ErrorCode = kv.Key,
+                ErrorMessage = errorCodeToMessage[kv.Key],
                 AmountOfErrors = kv.Value
             })
             .ToList();

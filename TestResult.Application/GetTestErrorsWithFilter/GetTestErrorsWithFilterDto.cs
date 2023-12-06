@@ -48,5 +48,6 @@ public class GetTestErrorsWithFilterSingleLineDto
 public class GetTestErrorsWithFilterTestDataDto
 {
     public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
     public int AmountOfErrors { get; set; }
 }
