@@ -5,6 +5,7 @@ using Infrastructure.Configuration;
 using LINTest;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using TestResult.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,12 +19,12 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddInbox();
 builder.Services.AddActuatorServices();
+builder.Services.AddTestResultServices();
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.Converters.Add(new StringEnumConverter());
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 });
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGenNewtonsoftSupport();
