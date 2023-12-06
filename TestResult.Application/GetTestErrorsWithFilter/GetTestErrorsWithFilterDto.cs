@@ -20,13 +20,13 @@ public class GetTestErrorsWithFilterDto
 
 public class GetTestErrorsWithFilterSingleLineDto
 {
-    public List<GetTestErrorsWithFilterTestDataDto> ListOfErrors { get; }
+    public List<GetTestErrorsWithFilterTestErrorCodeAndAmountDto> ListOfErrors { get; }
     public int TotalErrors { get; }
     public int TotalTests { get; }
     public DateTime StartIntervalAsDate { get; }
     public DateTime EndIntervalAsDate { get; }
 
-    private GetTestErrorsWithFilterSingleLineDto(List<GetTestErrorsWithFilterTestDataDto> listOfErrors, int totalErrors, int totalTests,
+    private GetTestErrorsWithFilterSingleLineDto(List<GetTestErrorsWithFilterTestErrorCodeAndAmountDto> listOfErrors, int totalErrors, int totalTests,
         DateTime startIntervalAsDate, DateTime endIntervalAsDate)
     {
         ListOfErrors = listOfErrors;
@@ -36,7 +36,7 @@ public class GetTestErrorsWithFilterSingleLineDto
         EndIntervalAsDate = endIntervalAsDate;
     }
 
-    public static GetTestErrorsWithFilterSingleLineDto From(List<GetTestErrorsWithFilterTestDataDto> listOfErrors,
+    public static GetTestErrorsWithFilterSingleLineDto From(List<GetTestErrorsWithFilterTestErrorCodeAndAmountDto> listOfErrors,
         int totalErrors, int totalTests,
         DateTime startIntervalAsDate, DateTime endIntervalAsDate)
     {
@@ -45,7 +45,7 @@ public class GetTestErrorsWithFilterSingleLineDto
     }
 }
 
-public class GetTestErrorsWithFilterTestDataDto
+public class GetTestErrorsWithFilterTestErrorCodeAndAmountDto
 {
     public int ErrorCode { get; set; }
     public string ErrorMessage { get; set; }

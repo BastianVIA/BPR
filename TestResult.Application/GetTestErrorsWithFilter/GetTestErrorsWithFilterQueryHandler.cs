@@ -47,13 +47,10 @@ public class
             startOfInterval = endOfInterval;
             
         } while (startOfInterval < request.EndDate);
-
-
+        
         List<int> possibleErrorCodes = uniqueErrorCodes.ToList();
         return GetTestErrorsWithFilterDto.From(possibleErrorCodes, dataLines);
     }
-
-
 
     private async Task<GetTestErrorsWithFilterSingleLineDto> CreateSingleLine(List<TestError> errors,
         DateTime startIntervalAsDate,
@@ -77,8 +74,8 @@ public class
         }
 
 
-        List<GetTestErrorsWithFilterTestDataDto> listOfErrors = testErrorsAndAmount
-            .Select(kv => new GetTestErrorsWithFilterTestDataDto
+        List<GetTestErrorsWithFilterTestErrorCodeAndAmountDto> listOfErrors = testErrorsAndAmount
+            .Select(kv => new GetTestErrorsWithFilterTestErrorCodeAndAmountDto
             {
                 ErrorCode = kv.Key,
                 ErrorMessage = errorCodeToMessage[kv.Key],

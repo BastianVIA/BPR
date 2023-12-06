@@ -78,7 +78,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
 
     private TestError ToDomain(TestErrorModel model)
     {
-        return new TestError(model.Id, null, null, model.Tester, model.Bay
+        return new TestError(model.Id, 0, 0, model.Tester, model.Bay
             , model.ErrorCode, model.ErrorMessage, model.TimeOccured);
     }
 
@@ -95,7 +95,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         return testErrorModel;
     }
 
-    private async Task<TestResultModel> GetTestResultModel(int? workOrderNo, int? serialNo)
+    private async Task<TestResultModel> GetTestResultModel(int workOrderNo, int serialNo)
     {
         var testResult = QueryOtherLocal<TestResultModel>().FirstOrDefault(
                              t => t.WorkOrderNumber == workOrderNo && t.SerialNumber == serialNo)
