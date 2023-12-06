@@ -1,0 +1,33 @@
+﻿@page "/TestResultSearch"
+@using Frontend.Components
+@inherits TestResultSearchBase
+<h3>TestResultSearch</h3>
+
+<RadzenRow JustifyContent="JustifyContent.SpaceBetween">
+    <RadzenTemplateForm TItem="SearchObject" Data="@SearchTestResult" Submit="@Search" Style="width: 90%;">
+        <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
+            <RadzenColumn>
+                <RadzenLabel Text="Workorder Number"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="WorkOrderNumber" @bind-Value=@SearchTestResult.WorkOrderNumber class="w-100"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="Serial Number"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="SerialNumber" @bind-Value=@SearchTestResult.SerialNumber class="w-100"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="Tester"/>
+                <RadzenTextBox ShowUpDown="false" style="display: block" Name="Tester" @bind-Value=@SearchTestResult.Tester class="w-100"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="Bay"/>
+                <RadzenNumeric ShowUpDown="false" style="display: block" Name="Bay" @bind-Value=@SearchTestResult.Bay class="w-100"/>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow Style="margin-bottom: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+<RadzenRow>
+    <TestResultTable TestResults="@TestResults" OnActuatorSelected="@ShowTestResultDetails"/>
+</RadzenRow>
