@@ -32,6 +32,24 @@ public class NSwagProxy : INetwork
         }
     }
 
+    private async Task Send(Func<Task> func)
+    {
+        try
+        {
+            await func();
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Result.Detail);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Message);
+        }
+    }
+
     public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo)
     {
         return await Send(async () => await _client.GetActuatorDetailsAsync(woNo, serialNo));
@@ -51,5 +69,16 @@ public class NSwagProxy : INetwork
             await _client.GetActuatorsWithFilterAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
                 productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
                 createdTimeEnd));
+    }
+
+    public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)
+    {
+        PutActuatorPCBARequest body = new PutActuatorPCBARequest
+        {
+            WorkOrderNumber = woNo,
+            SerialNumber = serialNo,
+            PcbaUid = pcbaUid
+        };
+        await Send(async () => await _client.PutNewPCBAInActuatorAsync(body));
     }
 }
