@@ -9,9 +9,9 @@ public class TableFiltersBase : ComponentBase
     [Parameter] public EventCallback<List<CsvProperties>> OnNewFilter { get; set; }
     [Parameter] public List<CsvProperties> FilterOptionsEnums { get; set; }
     [Parameter] public List<CsvProperties> InitFilters { get; set; }
-    
-    protected List<string> CurrentFilters { get; set; }
-    protected List<string> FilterOptions { get; set; }
+
+    protected List<string> CurrentFilters { get; set; } = new();
+    protected List<string> FilterOptions { get; set; } = new();
 
     private Dictionary<string, CsvProperties> _enumMap = new();
     protected override Task OnInitializedAsync()
@@ -25,17 +25,22 @@ public class TableFiltersBase : ComponentBase
 
     private void InitEnumMap(List<CsvProperties> enumList)
     {
-        _enumMap = enumList.ToDictionary(enumValue => enumValue.ToString().Replace("_", " "));
+        _enumMap = enumList.ToDictionary(EnumToString);
     }
 
     private List<string> EnumListToStringList(List<CsvProperties> enumList)
     {
-        return enumList.Select(prop => prop.ToString().Replace("_", " ")).ToList();
+        return enumList.Select(EnumToString).ToList();
+    }
+
+    private string EnumToString(CsvProperties prop)
+    {
+        return prop.ToString().Replace("_", " ");
     }
 
     private List<CsvProperties> GetSelectedAsListOfEnums()
     {
-        return CurrentFilters.Select(key => _enumMap[key]).ToList();
+        return CurrentFilters?.Select(key => _enumMap[key]).ToList();
     }
 
     protected void OnChange()
