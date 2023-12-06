@@ -1,0 +1,441 @@
+﻿@page "/Graph"
+@using System.Globalization
+<h3>Graph</h3>
+
+<div style="width: 80%;">
+    <RadzenStack Orientation="Orientation.Horizontal">
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenLabel Text="Testers"/>
+            <RadzenDropDown @bind-Value=@SelectedTesters Data=@TesterOptions
+                            Multiple=true AllowClear=true Placeholder="Select Testers" Chips=true Style="width: 100%; max-width: 400px;"
+                            MaxSelectedLabels="5"
+                            SelectAllText="Select All"
+                            Change="@OnChange"/>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenLabel Text="Time Period"/>
+                <RadzenDropDown @bind-Value=@SelectedTimePeriod Data=@TimePeriodOptions
+                                Multiple=false AllowClear=true Placeholder="Select Time Period" Chips=true Style="width: 100%; max-width: 400px;"
+                                Change="@OnChange"/>
+        </RadzenStack>
+    </RadzenStack>
+    
+
+    <RadzenChart ColorScheme="ColorScheme.Palette">
+        @foreach (var item in ToShow)
+        {
+            <RadzenColumnSeries Data="@item.Data" CategoryProperty="Date" Title="@item.Tester" ValueProperty="ErrorCount" StrokeWidth="1" Stroke="1">
+                <RadzenSeriesDataLabels Visible="false"/>
+            </RadzenColumnSeries>
+        }
+        <RadzenColumnOptions Margin="0"/>
+        <RadzenCategoryAxis Formatter="@FormatDate"/>
+        <RadzenValueAxis Formatter="@FormatYAxis">
+            <RadzenGridLines Visible="true"/>
+            <RadzenAxisTitle Text="Number of Errors"/>
+        </RadzenValueAxis>
+    </RadzenChart>
+</div>
+
+@code {
+    public class DataItem
+    {
+        public class DataEntry
+        {
+            public string Date { get; set; }
+            public int ErrorCount { get; set; }
+        }
+        public string Tester { get; set; }
+        public List<DataEntry> Data { get; set; }
+    }
+
+    public List<string> TesterOptions { get; set; } = new()
+    {
+        "Tester1",
+        "Tester2",
+        "Tester3",
+        "Tester4",
+        "Tester5"
+    };
+    public List<string>? SelectedTesters { get; set; }
+    public List<string> TimePeriodOptions { get; set; } = new()
+    {
+        "Past Year",
+        "Past 6 Months",
+        "Past Month",
+        "Past Week",
+        "Today"
+    };
+    public string SelectedTimePeriod { get; set; }
+
+    public List<DataItem> ToShow { get; set; } = new();
+    public List<DataItem> DataItems { get; set; } = new()
+    {
+        new DataItem
+        {
+            Tester = "Tester1",
+            Data = new()
+            {
+                
+                new()
+                {
+                    Date = ("2019-01-01"),
+                    ErrorCount = 86
+                },
+                new ()
+                {
+                    Date = ("2019-02-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-03-01"),
+                    ErrorCount = 13
+                },
+                new ()
+                {
+                    Date = ("2019-04-01"),
+                    ErrorCount = 117
+                },
+                new ()
+                {
+                    Date = ("2019-05-01"),
+                    ErrorCount = 4
+                },
+                new ()
+                {
+                    Date = ("2019-06-01"),
+                    ErrorCount = 78
+                },
+                 new ()
+                {
+                    Date = ("2019-07-01"),
+                    ErrorCount = 22
+                },
+                new ()
+                {
+                    Date = ("2019-08-01"),
+                    ErrorCount = 19
+                },
+                new ()
+                {
+                    Date = ("2019-09-01"),
+                    ErrorCount = 15
+                },
+                new ()
+                {
+                    Date = ("2019-10-01"),
+                    ErrorCount = 46
+                },
+                new ()
+                {
+                    Date = ("2019-11-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-12-01"),
+                    ErrorCount = 22
+                }
+            }
+        },
+        new ()
+        {
+            Tester = "Tester2",
+            Data = new()
+            {
+                new ()
+                {
+                    Date = ("2019-01-01"),
+                    ErrorCount = 116
+                },
+                new ()
+                {
+                    Date = ("2019-02-01"),
+                    ErrorCount = 87
+                },
+                new ()
+                {
+                    Date = ("2019-03-01"),
+                    ErrorCount = 69
+                },
+                new ()
+                {
+                    Date = ("2019-04-01"),
+                    ErrorCount = 74
+                },
+                new ()
+                {
+                    Date = ("2019-05-01"),
+                    ErrorCount = 67
+                },
+                new ()
+                {
+                    Date = ("2019-06-01"),
+                    ErrorCount = 54
+                },
+                new ()
+                {
+                    Date = ("2019-07-01"),
+                    ErrorCount = 44
+                },
+                new ()
+                {
+                    Date = ("2019-08-01"),
+                    ErrorCount = 32
+                },
+                new ()
+                {
+                    Date = ("2019-09-01"),
+                    ErrorCount = 21
+                },
+                new ()
+                {
+                    Date = ("2019-10-01"),
+                    ErrorCount = 25
+                },
+                new ()
+                {
+                    Date = ("2019-11-01"),
+                    ErrorCount = 17
+                },
+                new ()
+                {
+                    Date = ("2019-12-01"),
+                    ErrorCount = 18
+                }
+            }
+            
+        },
+        new DataItem
+        {
+            Tester = "Tester3",
+            Data = new()
+            {
+                
+                new()
+                {
+                    Date = ("2019-01-01"),
+                    ErrorCount = 86
+                },
+                new ()
+                {
+                    Date = ("2019-02-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-03-01"),
+                    ErrorCount = 13
+                },
+                new ()
+                {
+                    Date = ("2019-04-01"),
+                    ErrorCount = 117
+                },
+                new ()
+                {
+                    Date = ("2019-05-01"),
+                    ErrorCount = 4
+                },
+                new ()
+                {
+                    Date = ("2019-06-01"),
+                    ErrorCount = 78
+                },
+                new ()
+                {
+                    Date = ("2019-07-01"),
+                    ErrorCount = 22
+                },
+                new ()
+                {
+                    Date = ("2019-08-01"),
+                    ErrorCount = 19
+                },
+                new ()
+                {
+                    Date = ("2019-09-01"),
+                    ErrorCount = 15
+                },
+                new ()
+                {
+                    Date = ("2019-10-01"),
+                    ErrorCount = 46
+                },
+                new ()
+                {
+                    Date = ("2019-11-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-12-01"),
+                    ErrorCount = 22
+                }
+            }
+        },
+        new DataItem
+        {
+            Tester = "Tester4",
+            Data = new()
+            {
+                
+                new()
+                {
+                    Date = ("2019-01-01"),
+                    ErrorCount = 86
+                },
+                new ()
+                {
+                    Date = ("2019-02-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-03-01"),
+                    ErrorCount = 13
+                },
+                new ()
+                {
+                    Date = ("2019-04-01"),
+                    ErrorCount = 117
+                },
+                new ()
+                {
+                    Date = ("2019-05-01"),
+                    ErrorCount = 4
+                },
+                new ()
+                {
+                    Date = ("2019-06-01"),
+                    ErrorCount = 78
+                },
+                new ()
+                {
+                    Date = ("2019-07-01"),
+                    ErrorCount = 22
+                },
+                new ()
+                {
+                    Date = ("2019-08-01"),
+                    ErrorCount = 19
+                },
+                new ()
+                {
+                    Date = ("2019-09-01"),
+                    ErrorCount = 15
+                },
+                new ()
+                {
+                    Date = ("2019-10-01"),
+                    ErrorCount = 46
+                },
+                new ()
+                {
+                    Date = ("2019-11-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-12-01"),
+                    ErrorCount = 22
+                }
+            }
+        },
+        new DataItem
+        {
+            Tester = "Tester5",
+            Data = new()
+            {
+                
+                new()
+                {
+                    Date = ("2019-01-01"),
+                    ErrorCount = 86
+                },
+                new ()
+                {
+                    Date = ("2019-02-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-03-01"),
+                    ErrorCount = 13
+                },
+                new ()
+                {
+                    Date = ("2019-04-01"),
+                    ErrorCount = 117
+                },
+                new ()
+                {
+                    Date = ("2019-05-01"),
+                    ErrorCount = 4
+                },
+                new ()
+                {
+                    Date = ("2019-06-01"),
+                    ErrorCount = 78
+                },
+                new ()
+                {
+                    Date = ("2019-07-01"),
+                    ErrorCount = 22
+                },
+                new ()
+                {
+                    Date = ("2019-08-01"),
+                    ErrorCount = 19
+                },
+                new ()
+                {
+                    Date = ("2019-09-01"),
+                    ErrorCount = 15
+                },
+                new ()
+                {
+                    Date = ("2019-10-01"),
+                    ErrorCount = 46
+                },
+                new ()
+                {
+                    Date = ("2019-11-01"),
+                    ErrorCount = 45
+                },
+                new ()
+                {
+                    Date = ("2019-12-01"),
+                    ErrorCount = 22
+                }
+            }
+        }
+    };
+
+    string FormatYAxis(object value)
+    {
+        return ((double)value).ToString(CultureInfo.InvariantCulture);
+    }
+
+    string FormatDate(object value)
+    {
+        if (value != null)
+        {
+            return Convert.ToDateTime(value).ToString("MMM-yy");
+        }
+
+        return string.Empty;
+    }
+
+    public void OnChange()
+    {
+        ToShow = new List<DataItem>();
+        if (SelectedTesters is null) return;
+        foreach (var selected in SelectedTesters)
+        {
+            ToShow.Add(DataItems.Find(tester => tester.Tester.Equals(selected)));
+        }
+    }
+
+}
