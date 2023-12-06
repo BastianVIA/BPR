@@ -1,0 +1,26 @@
+@inherits ChangeComponentBase
+
+<RadzenRow>
+    <p>WoNo: @Actuator.WorkOrderNumber <br/>
+        SerialNo: @Actuator.SerialNumber</p>
+</RadzenRow>
+
+<RadzenRow>
+    <RadzenLabel Text="Component to change:" Component="DropDownBindValue"/>
+    <RadzenDropDown @bind-Value=@value Data=@componentNames Style="width: 100%; max-width: 200px;" Name="DropDownBindValue" />
+</RadzenRow>
+
+@if (value == "PCBA")
+{
+    <RadzenRow>
+        <RadzenColumn>
+            <RadzenLabel Text="PCBA Uid"/>
+            <RadzenNumeric ShowUpDown="false" Name="SerialNumber" @bind-Value="@PCBAUid" class="w-100"/>
+        </RadzenColumn>
+    </RadzenRow>
+}
+
+<RadzenRow Style="position: absolute; bottom: 20px;">
+    <RadzenButton Click="@(_ => OnSubmitComponentBtnClick())" Text="Submit Change" ButtonStyle="ButtonStyle.Primary" />
+</RadzenRow>
+
