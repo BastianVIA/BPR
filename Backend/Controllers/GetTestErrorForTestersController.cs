@@ -1,5 +1,4 @@
-﻿using Application.GetActuatorsWithFilter;
-using Application.GetActuatorsWithFilterAsCSV;
+﻿using System.ComponentModel.DataAnnotations;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,8 +21,8 @@ public class GetTestErrorForTestersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(
-        [FromQuery] List<string> testers,
-        [FromQuery] string timePeriod, //TODO lav string til enum
+        [FromQuery][Required] List<string> testers,
+        [FromQuery][Required] string timePeriod, //TODO lav string til enum
         CancellationToken cancellationToken)
     {
         // "Past Year",
