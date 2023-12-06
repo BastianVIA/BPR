@@ -2,6 +2,7 @@
 using Frontend.Entities;
 using Frontend.Exceptions;
 using Frontend.Model;
+using Frontend.Service;
 using Frontend.Service.AlertService;
 using Microsoft.AspNetCore.Components;
 using Radzen;
@@ -40,7 +41,7 @@ public class ActuatorSearchBase : ComponentBase
 
     public List<Actuator> actuators = new();
 
-    private List<TableFiltersBase.CsvProperties> _selectedFilters = new();
+    private List<CsvProperties> _selectedFilters = new();
 
     // Blazor page needs an empty constructor
     public ActuatorSearchBase()
@@ -80,9 +81,9 @@ public class ActuatorSearchBase : ComponentBase
         }
     }
 
-    protected void OnColumnsUpdated(List<TableFiltersBase.CsvProperties>? filters)
+    protected void OnColumnsUpdated(List<CsvProperties>? filters)
     {
-        filters ??= new List<TableFiltersBase.CsvProperties>();
+        filters ??= new List<CsvProperties>();
         _selectedFilters = filters;
     }
 

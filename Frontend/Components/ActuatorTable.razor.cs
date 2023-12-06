@@ -1,4 +1,5 @@
 ﻿using Frontend.Entities;
+using Frontend.Service;
 using Microsoft.AspNetCore.Components;
 
 namespace Frontend.Components;
@@ -7,37 +8,37 @@ public class ActuatorTableBase : ComponentBase
 {
     [Parameter] public List<Actuator> Actuators { get; set; } = new();
     [Parameter] public EventCallback<Actuator> OnActuatorSelected { get; set; }
-    [Parameter] public EventCallback<List<TableFiltersBase.CsvProperties>> OnColumnsUpdated { get; set; }
+    [Parameter] public EventCallback<List<CsvProperties>> OnColumnsUpdated { get; set; }
     
-    protected List<TableFiltersBase.CsvProperties> FilterOptions { get; } = new (){
-        TableFiltersBase.CsvProperties.WorkOrderNumber,
-        TableFiltersBase.CsvProperties.SerialNumber,
-        TableFiltersBase.CsvProperties.CommunicationProtocol,
-        TableFiltersBase.CsvProperties.ArticleNumber,
-        TableFiltersBase.CsvProperties.ArticleName,
-        TableFiltersBase.CsvProperties.CreatedTime,
-        TableFiltersBase.CsvProperties.PCBAUid,
-        TableFiltersBase.CsvProperties.PCBAManufacturerNumber,
-        TableFiltersBase.CsvProperties.PCBAItemNumber,
-        TableFiltersBase.CsvProperties.PCBASoftware,
-        TableFiltersBase.CsvProperties.PCBAProductionDateCode,
-        TableFiltersBase.CsvProperties.PCBAConfigNo,
+    protected List<CsvProperties> FilterOptions { get; } = new (){
+        CsvProperties.Work_Order_Number,
+        CsvProperties.Serial_Number,
+        CsvProperties.Communication_Protocol,
+        CsvProperties.Article_Number,
+        CsvProperties.Article_Name,
+        CsvProperties.Created_Time,
+        CsvProperties.PCBA_Uid,
+        CsvProperties.PCBA_Manufacturer_Number,
+        CsvProperties.PCBA_Item_Number,
+        CsvProperties.PCBA_Software,
+        CsvProperties.PCBA_Production_DateCode,
+        CsvProperties.PCBA_Config_No,
     };
-    protected List<TableFiltersBase.CsvProperties> Filters { get; set; } = new()
+    protected List<CsvProperties> Filters { get; set; } = new()
     {
-        TableFiltersBase.CsvProperties.WorkOrderNumber,
-        TableFiltersBase.CsvProperties.SerialNumber,
-        TableFiltersBase.CsvProperties.PCBAUid
+        CsvProperties.Work_Order_Number,
+        CsvProperties.Serial_Number,
+        CsvProperties.PCBA_Uid,
     };
 
-    protected void UpdateFilters(List<TableFiltersBase.CsvProperties>? filters)
+    protected void UpdateFilters(List<CsvProperties>? filters)
     {
-        filters ??= new List<TableFiltersBase.CsvProperties>();
+        filters ??= new List<CsvProperties>();
         Filters = filters;
         OnColumnsUpdated.InvokeAsync(filters);
     }
 
-    protected bool ShouldShowColumn(TableFiltersBase.CsvProperties name)
+    protected bool ShouldShowColumn(CsvProperties name)
     {
         return Filters.Contains(name);
     }

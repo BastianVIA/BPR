@@ -1,21 +1,22 @@
 ﻿@using Frontend.Entities
+@using Frontend.Service
 @inherits ActuatorTableBase
 
-<TableFilters FilterParams="@FilterOptions" CurrentFilter="@Filters" OnNewFilter="@UpdateFilters"/>
+<TableFilters FilterOptionsEnums="@FilterOptions" InitFilters="@Filters" OnNewFilter="@UpdateFilters"/>
 
 <RadzenDataGrid ColumnWidth="270px" TItem="Actuator" Data="@Actuators" RowSelect="@SelectActuator">
     <Columns>
-        <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.WorkOrderNumber)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.SerialNumber)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="ArticleName" Title="Article Name" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.ArticleName)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="ArticleNumber" Title="Article Number" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.ArticleNumber)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="CommunicationProtocol" Title="Communication Protocol" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.CommunicationProtocol)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="CreatedTime" Title="Created Time" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.CreatedTime)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="PCBA UID" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.PCBAUid)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="PCBA Manufacturer Number" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.PCBAManufacturerNumber)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="PCBA Item Number" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.PCBAItemNumber)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="PCBA Production Date Code" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.PCBAProductionDateCode)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.Software" Title="PCBA Software" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.PCBASoftware)"/>
-        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ConfigNumber" Title="PCBA Configuration Number" Visible="@ShouldShowColumn(TableFiltersBase.CsvProperties.PCBAConfigNo)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn(CsvProperties.Work_Order_Number)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn(CsvProperties.Serial_Number)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="ArticleName" Title="Article Name" Visible="@ShouldShowColumn(CsvProperties.Article_Name)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="ArticleNumber" Title="Article Number" Visible="@ShouldShowColumn(CsvProperties.Article_Number)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="CommunicationProtocol" Title="Communication Protocol" Visible="@ShouldShowColumn(CsvProperties.Communication_Protocol)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="CreatedTime" Title="Created Time" Visible="@ShouldShowColumn(CsvProperties.Created_Time)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.PCBAUid" Title="PCBA UID" Visible="@ShouldShowColumn(CsvProperties.PCBA_Uid)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ManufacturerNumber" Title="PCBA Manufacturer Number" Visible="@ShouldShowColumn(CsvProperties.PCBA_Manufacturer_Number)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ItemNumber" Title="PCBA Item Number" Visible="@ShouldShowColumn(CsvProperties.PCBA_Item_Number)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ProductionDateCode" Title="PCBA Production Date Code" Visible="@ShouldShowColumn(CsvProperties.PCBA_Production_DateCode)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.Software" Title="PCBA Software" Visible="@ShouldShowColumn(CsvProperties.PCBA_Software)"/>
+        <RadzenDataGridColumn TItem="Actuator" Property="PCBA.ConfigNumber" Title="PCBA Configuration Number" Visible="@ShouldShowColumn(CsvProperties.PCBA_Config_No)"/>
     </Columns>
 </RadzenDataGrid>

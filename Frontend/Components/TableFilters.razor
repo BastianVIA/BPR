@@ -4,7 +4,7 @@
     <RadzenText Text="Table Filters"/>
 </RadzenRow>
 <RadzenRow>
-    <RadzenDropDown @bind-Value=@CurrentFilter Data=@FilterParams 
+    <RadzenDropDown @bind-Value=@CurrentFilters Data=@FilterOptions 
                     Multiple=true AllowClear=true Placeholder="Select Filters" Chips=true Style="width: 100%; max-width: 400px;"
                     MaxSelectedLabels="5"
                     SelectAllText="Select All"
