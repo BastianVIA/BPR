@@ -11,5 +11,5 @@
       <ProjectReference Include="..\LINTest\LINTest.csproj" />
       <ProjectReference Include="..\TestResult.Domain\TestResult.Domain.csproj" />
     </ItemGroup>
-
+    
 </Project>
