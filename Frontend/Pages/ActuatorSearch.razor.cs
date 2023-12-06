@@ -1,5 +1,4 @@
 using Frontend.Entities;
-using Frontend.Components;
 using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service;
@@ -85,9 +84,8 @@ public class ActuatorSearchBase : ComponentBase
         }
     }
 
-    protected void OnColumnsUpdated(List<CsvProperties>? filters)
+    protected void OnColumnsUpdated(List<CsvProperties> filters)
     {
-        filters ??= new List<CsvProperties>();
         _selectedFilters = filters;
     }
 
@@ -98,19 +96,19 @@ public class ActuatorSearchBase : ComponentBase
             new DialogOptions() { Width = "700px", Height = "530px", Resizable = true, Draggable = true });
     }
 
-    public async Task DownloadActuators(List<string> selectedFilter)
+    public async Task DownloadActuators()
     {
-        var file = await SearchCsvModel.GetActuatorWithFilter(selectedFilter,
+        var file = await SearchCsvModel.GetActuatorWithFilter(_selectedFilters,
             SearchActuator.WorkOrderNumber,
             SearchActuator.SerialNumber,
-            SearchActuator.PCBA.PCBAUid,
-            SearchActuator.PCBA.ItemNumber,
-            SearchActuator.PCBA.ManufacturerNumber,
-            SearchActuator.PCBA.ProductionDateCode,
+            SearchActuator.PCBAUid,
+            SearchActuator.PCBAItemNumber,
+            SearchActuator.PCBAManufacturerNumber,
+            SearchActuator.PCBAProductionDateCode,
             SearchActuator.CreatedTimeStart,
             SearchActuator.CreatedTimeEnd,
-            SearchActuator.PCBA.Software,
-            SearchActuator.PCBA.ConfigNumber,
+            SearchActuator.PCBASoftware,
+            SearchActuator.PCBAConfigNumber,
             SearchActuator.ArticleName,
             SearchActuator.ArticleNumber,
             SearchActuator.CommunicationProtocol);
@@ -119,6 +117,5 @@ public class ActuatorSearchBase : ComponentBase
         string dataUri = $"data:text/csv;base64,{base64String}";
 
         NavigationManager.NavigateTo(dataUri, forceLoad: true);
-       // await JsRuntime.InvokeVoidAsync("jsSaveAsFile", "Actuators.txt", yikers);
     }
 }

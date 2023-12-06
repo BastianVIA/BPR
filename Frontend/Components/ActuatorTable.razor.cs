@@ -9,7 +9,7 @@ public class ActuatorTableBase : ComponentBase
     [Parameter] public List<Actuator> Actuators { get; set; } = new();
     [Parameter] public EventCallback<Actuator> OnActuatorSelected { get; set; }
     [Parameter] public EventCallback<List<CsvProperties>> OnColumnsUpdated { get; set; }
-    [Parameter] public EventCallback<List<string>> OnDownloadSelected { get; set; }
+    [Parameter] public EventCallback OnDownloadSelected { get; set; }
 
     protected List<CsvProperties> FilterOptions { get; } = new (){
         CsvProperties.Work_Order_Number,
@@ -51,6 +51,6 @@ public class ActuatorTableBase : ComponentBase
 
     public void DownloadCsv()
     {
-        OnDownloadSelected.InvokeAsync(Filters);
+        OnDownloadSelected.InvokeAsync();
     }
 }

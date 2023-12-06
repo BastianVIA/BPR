@@ -12,36 +12,12 @@ public class ActuatorSearchCsvModel : IActuatorSearchCsvModel
         _network = network;
     }
 
-    public async Task<byte[]> GetActuatorWithFilter(List<string> columnsToInclude, int? woNo, int? serialNo,
+    public async Task<byte[]> GetActuatorWithFilter(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
         string? pcbaUid, string? itemNo,
         int? manufacturerNo, int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,
         string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
     {
-        /*
-        columnsToInclude = new List<string>()
-        {
-            "WorkOrderNumber",
-            "SerialNumber",
-            "CommunicationProtocol",
-            "ArticleNumber",
-            "ArticleName",
-            "CreatedTime",
-            "PCBAUid",
-            "PCBAManufacturerNumber",
-            "PCBAItemNumber",
-            "PCBASoftware",
-            "PCBAProductionDateCode",
-            "PCBAConfigNo",
-        };
-        */
-        List<CsvProperties> propertiesList = new();
-        foreach (var column in columnsToInclude)
-        {
-            CsvProperties csvProp = (CsvProperties)Enum.Parse(typeof(CsvProperties), column);
-            propertiesList.Add(csvProp);
-        }
-
-        var networkResponse = await _network.GetActuatorWithFilterAsCsv(propertiesList, woNo, serialNo, pcbaUid, itemNo,
+        var networkResponse = await _network.GetActuatorWithFilterAsCsv(columnsToInclude, woNo, serialNo, pcbaUid, itemNo,
             manufacturerNo,
             productionDateCode, createdTimeStart, createdTimeEnd, software, configNo, articleName, articleNo,
             comProtocol);
