@@ -4,26 +4,23 @@ namespace TestResult.Application.GetActuatorTestDetails;
 
 public class GetActuatorTestDetailsQuery : IQuery<GetActuatorTestDetailsDto>
 {
-    internal int? WorkOrderNumber { get; }
-    internal int? SerialNumber { get; }
-    public string? Tester { get; }
-    public int? Bay { get; }
+    public int? WorkOrderNumber { get; set; }
+    public int? SerialNumber { get; set; }
+    public string? Tester { get; set; }
+    public int? Bay { get; set; }
 
-    private GetActuatorTestDetailsQuery(int? woNo, int? serialNo, string? tester, int? bay)
+    public GetActuatorTestDetailsQuery()
     {
-        WorkOrderNumber = woNo;
-        SerialNumber = serialNo;
-        Tester = tester;
-        Bay = bay;
     }
-
-    public static GetActuatorTestDetailsQuery Create(int? woNo, int? serialNo, string? tester, int? bay)
+    
+    public void Validate()
     {
-        if (woNo == null && serialNo == null && tester == null && bay == null)
+        if (WorkOrderNumber == null && SerialNumber == null && Tester == null && Bay == null)
         {
             throw new ArgumentException("Must specify at least one search parameter");
         }
-
-        return new GetActuatorTestDetailsQuery(woNo, serialNo, tester, bay);
+        
     }
+    
+
 }

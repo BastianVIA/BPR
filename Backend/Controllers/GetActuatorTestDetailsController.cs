@@ -16,17 +16,14 @@ public class GetActuatorTestDetailsController : ControllerBase
 
     [HttpGet()]
     [Route("api/GetActuatorTestDetails")]
+    [Tags("Test Result")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorTestDetailsResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync(
-        [FromQuery] int? woNo,
-        [FromQuery] int? serialNo,
-        [FromQuery] string? tester,
-        [FromQuery] int? bay,
+    public async Task<IActionResult> GetAsync([FromQuery] GetActuatorTestDetailsQuery query,
         CancellationToken cancellationToken)
     {
-        var query = GetActuatorTestDetailsQuery.Create(woNo, serialNo, tester, bay);
+        query.Validate();
         var result = await _bus.Send(query, cancellationToken);
         return Ok(GetActuatorTestDetailsResponse.From(result));
     }
@@ -57,15 +54,16 @@ public class GetActuatorTestDetailsController : ControllerBase
 
         public class GetActuatorTestActuator
         {
-            public int? WorkOrderNumber { get; private set; }
-            public int? SerialNumber { get; private set; }
-            public string? Tester { get; set; }
-            public int? Bay { get; set; }
+            public int WorkOrderNumber { get; private set; }
+            public int SerialNumber { get; private set; }
+            public string Tester { get; set; }
+            public int Bay { get; set; }
             public string? MinServoPosition { get; set; }
             public string? MaxServoPosition { get; set; }
             public string? MinBuslinkPosition { get; set; }
             public string? MaxBuslinkPosition { get; set; }
             public string? ServoStroke { get; set; }
+            public DateTime TimeOccured { get; set; }
 
             internal static GetActuatorTestActuator From(ActuatorTestDetailDTO result)
             {
@@ -79,7 +77,8 @@ public class GetActuatorTestDetailsController : ControllerBase
                     MaxServoPosition = result.MaxServoPosition,
                     MinBuslinkPosition = result.MinBuslinkPosition,
                     MaxBuslinkPosition = result.MaxBuslinkPosition,
-                    ServoStroke = result.ServoStroke
+                    ServoStroke = result.ServoStroke,
+                    TimeOccured = result.TimeOccured
                 };
             }
         }

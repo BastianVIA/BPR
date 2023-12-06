@@ -16,18 +16,11 @@ public class GetActuatorTestQueryHandler : IQueryHandler<GetActuatorTestDetailsQ
     public async Task<GetActuatorTestDetailsDto> Handle(GetActuatorTestDetailsQuery request,
         CancellationToken cancellationToken)
     {
-        try
-        {
             var actuatorTests =
                 await _testResultRepository.GetActuatorsTestDetails(request.WorkOrderNumber, request.SerialNumber,
                     request.Tester, request.Bay);
 
             return GetActuatorTestDetailsDto.From(actuatorTests);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+            
     }
 }

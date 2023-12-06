@@ -2,8 +2,6 @@ using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using TestResult.Domain.Entities;
-
 using TestResult.Domain.Repositories;
 
 namespace TestResult.Infrastructure;
@@ -25,12 +23,12 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         var queryBuilder = Query();
         if (woNo != null)
         {
-            queryBuilder = queryBuilder.Where(m => m.WorkOrderNumber == woNo.Value);
+            queryBuilder = queryBuilder.Where(m => m.WorkOrderNumber == woNo);
         }
 
         if (serialNo != null)
         {
-            queryBuilder = queryBuilder.Where(m => m.SerialNumber == serialNo.Value);
+            queryBuilder = queryBuilder.Where(m => m.SerialNumber == serialNo);
         }
 
         if (tester != null)
@@ -62,7 +60,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
     private Domain.Entities.TestResult ToDomain(TestResultModel testResultModel)
     {
         return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
-            testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
+            testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel. MinServoPosition,
             testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
             testResultModel.ServoStroke, testResultModel.TimeOccured);
     }

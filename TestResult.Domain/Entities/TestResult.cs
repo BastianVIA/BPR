@@ -17,8 +17,8 @@ public class TestResult : Entity
     public DateTime TimeOccured { get; private set; }
 
 
-    public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string minServoPosition, 
-        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke, DateTime timeOccured)
+    public TestResult(Guid id, int workOrderNo, int serialNo, string tester, int bay, string? minServoPosition, 
+        string? maxServoPosition, string? minBuslinkPosition, string? maxBuslinkPosition, string? servoStroke, DateTime timeOccured)
     {
         Id = id;
         Tester = tester;
@@ -33,8 +33,8 @@ public class TestResult : Entity
         TimeOccured = timeOccured;
     }
 
-    public static TestResult Create(int workOrderNo, int serialNo, string tester, int bay, string minServoPosition, 
-        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke, 
+    public static TestResult Create(int workOrderNo, int serialNo, string tester, int bay, string? minServoPosition, 
+        string? maxServoPosition, string? minBuslinkPosition, string? maxBuslinkPosition, string? servoStroke, 
         DateTime timeOccured)
     {
         var id = Guid.NewGuid();

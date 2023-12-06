@@ -25,15 +25,18 @@
 
 public class ActuatorTestDetailDTO
 {
-    public int? WorkOrderNumber { get; private set; }
-    public int? SerialNumber { get; private set; }
-    public string? Tester { get; private set; }
-    public int? Bay { get; private set; }
+    public int WorkOrderNumber { get; private set; }
+    public int SerialNumber { get; private set; }
+    public string Tester { get; private set; }
+    public int Bay { get; private set; }
     public string? MinServoPosition { get; private set; }
     public string? MaxServoPosition { get; private set; }
     public string? MinBuslinkPosition { get; private set; }
     public string? MaxBuslinkPosition { get; private set; }
     public string? ServoStroke { get; private set; }
+    public DateTime TimeOccured { get; private set; }
+
+    
 
     internal static ActuatorTestDetailDTO From(TestResult.Domain.Entities.TestResult actuatorTest)
     {
@@ -47,7 +50,8 @@ public class ActuatorTestDetailDTO
             MaxServoPosition = actuatorTest.MaxServoPosition,
             MinBuslinkPosition = actuatorTest.MinBuslinkPosition,
             MaxBuslinkPosition = actuatorTest.MaxBuslinkPosition,
-            ServoStroke = actuatorTest.ServoStroke
+            ServoStroke = actuatorTest.ServoStroke,
+            TimeOccured = actuatorTest.TimeOccured
         };
     }
 }
