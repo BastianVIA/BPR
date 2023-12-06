@@ -30,7 +30,7 @@ public class ActuatorDTO
 {
     public int WorkOrderNumber { get; private set; }
     public int SerialNumber { get; private set; }
-    public PCBADto Pcba { get; private set; }
+    public PCBADto PCBA { get; private set; }
     
     public string CommunicationProtocol { get; private set; }
     public string ArticleNumber { get; private set; }
@@ -43,7 +43,7 @@ public class ActuatorDTO
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,
             SerialNumber = actuator.Id.SerialNumber,
-            Pcba = PCBADto.From(actuator.PCBA),
+            PCBA = PCBADto.From(actuator.PCBA),
             CommunicationProtocol = actuator.CommunicationProtocol,
             ArticleNumber = actuator.ArticleNumber,
             ArticleName = actuator.ArticleName,
