@@ -1,15 +1,15 @@
 ﻿using BuildingBlocks.Application;
 
-namespace TestResult.Application.GetActuatorTestDetails;
+namespace TestResult.Application.GetTestResultsWithFilter;
 
-public class GetActuatorTestDetailsQuery : IQuery<GetActuatorTestDetailsDto>
+public class GetTestResultsWithFilterQuery : IQuery<GetTestResultsWithFilterDto>
 {
     public int? WorkOrderNumber { get; set; }
     public int? SerialNumber { get; set; }
     public string? Tester { get; set; }
     public int? Bay { get; set; }
 
-    public GetActuatorTestDetailsQuery()
+    public GetTestResultsWithFilterQuery()
     {
     }
     

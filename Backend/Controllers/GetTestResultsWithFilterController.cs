@@ -1,15 +1,15 @@
 ﻿using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
-using TestResult.Application.GetActuatorTestDetails;
+using TestResult.Application.GetTestResultsWithFilter;
 
 namespace Backend.Controllers;
 
 [ApiController]
-public class GetActuatorTestDetailsController : ControllerBase
+public class GetTestResultsWithFilterController : ControllerBase
 {
     private readonly IQueryBus _bus;
 
-    public GetActuatorTestDetailsController(IQueryBus bus)
+    public GetTestResultsWithFilterController(IQueryBus bus)
     {
         _bus = bus;
     }
@@ -17,42 +17,42 @@ public class GetActuatorTestDetailsController : ControllerBase
     [HttpGet()]
     [Route("api/GetActuatorTestDetails")]
     [Tags("Test Result")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorTestDetailsResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTestResultsWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync([FromQuery] GetActuatorTestDetailsQuery query,
+    public async Task<IActionResult> GetAsync([FromQuery] GetTestResultsWithFilterQuery query,
         CancellationToken cancellationToken)
     {
         query.Validate();
         var result = await _bus.Send(query, cancellationToken);
-        return Ok(GetActuatorTestDetailsResponse.From(result));
+        return Ok(GetTestResultsWithFilterResponse.From(result));
     }
 
-    public class GetActuatorTestDetailsResponse
+    public class GetTestResultsWithFilterResponse
     {
-        public List<GetActuatorTestActuator> ActuatorTest { get; private set; }
+        public List<GetTestResultWithFilterActuator> ActuatorTest { get; private set; }
 
-        private GetActuatorTestDetailsResponse()
+        private GetTestResultsWithFilterResponse()
         {
         }
 
-        private GetActuatorTestDetailsResponse(List<GetActuatorTestActuator> actuatorTest)
+        private GetTestResultsWithFilterResponse(List<GetTestResultWithFilterActuator> actuatorTest)
         {
             ActuatorTest = actuatorTest;
         }
 
-        internal static GetActuatorTestDetailsResponse From(GetActuatorTestDetailsDto result)
+        internal static GetTestResultsWithFilterResponse From(GetTestResultsWithFilterDto result)
         {
-            List<GetActuatorTestActuator> actuatorTests = new List<GetActuatorTestActuator>();
-            foreach (var actuatorTest in result.ActuatorTestDetailDtos)
+            List<GetTestResultWithFilterActuator> actuatorTests = new List<GetTestResultWithFilterActuator>();
+            foreach (var actuatorTest in result.TestResultDtos)
             {
-                actuatorTests.Add(GetActuatorTestActuator.From(actuatorTest));
+                actuatorTests.Add(GetTestResultWithFilterActuator.From(actuatorTest));
             }
 
-            return new GetActuatorTestDetailsResponse(actuatorTests);
+            return new GetTestResultsWithFilterResponse(actuatorTests);
         }
 
-        public class GetActuatorTestActuator
+        public class GetTestResultWithFilterActuator
         {
             public int WorkOrderNumber { get; private set; }
             public int SerialNumber { get; private set; }
@@ -65,9 +65,9 @@ public class GetActuatorTestDetailsController : ControllerBase
             public string? ServoStroke { get; set; }
             public DateTime TimeOccured { get; set; }
 
-            internal static GetActuatorTestActuator From(ActuatorTestDetailDTO result)
+            internal static GetTestResultWithFilterActuator From(TestResultsWithFilterDTO result)
             {
-                return new GetActuatorTestActuator
+                return new GetTestResultWithFilterActuator
                 {
                     WorkOrderNumber = result.WorkOrderNumber,
                     SerialNumber = result.SerialNumber,

@@ -1,26 +1,25 @@
 ﻿using BuildingBlocks.Application;
-using TestResult.Domain.Entities;
 using TestResult.Domain.Repositories;
 
-namespace TestResult.Application.GetActuatorTestDetails;
+namespace TestResult.Application.GetTestResultsWithFilter;
 
-public class GetActuatorTestQueryHandler : IQueryHandler<GetActuatorTestDetailsQuery, GetActuatorTestDetailsDto>
+public class GetTestResultsWithFilterQueryHandler : IQueryHandler<GetTestResultsWithFilterQuery, GetTestResultsWithFilterDto>
 {
     private readonly ITestResultRepository _testResultRepository;
 
-    public GetActuatorTestQueryHandler(ITestResultRepository testResultRepository)
+    public GetTestResultsWithFilterQueryHandler(ITestResultRepository testResultRepository)
     {
         _testResultRepository = testResultRepository;
     }
 
-    public async Task<GetActuatorTestDetailsDto> Handle(GetActuatorTestDetailsQuery request,
+    public async Task<GetTestResultsWithFilterDto> Handle(GetTestResultsWithFilterQuery request,
         CancellationToken cancellationToken)
     {
             var actuatorTests =
                 await _testResultRepository.GetActuatorsTestDetails(request.WorkOrderNumber, request.SerialNumber,
                     request.Tester, request.Bay);
 
-            return GetActuatorTestDetailsDto.From(actuatorTests);
+            return GetTestResultsWithFilterDto.From(actuatorTests);
             
     }
 }
