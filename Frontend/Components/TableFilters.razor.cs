@@ -40,7 +40,7 @@ public class TableFiltersBase : ComponentBase
 
     private List<CsvProperties> GetSelectedAsListOfEnums()
     {
-        return CurrentFilters?.Select(key => _enumMap[key]).ToList();
+        return CurrentFilters.Select(key => _enumMap[key]).ToList();
     }
 
     protected void OnChange()
