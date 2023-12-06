@@ -18,10 +18,10 @@ public class GetActuatorWithFilterAsCsvController : ControllerBase
     [HttpGet]
     [Route("api/GetActuatorsWithFilterAsCsv")]
     [Tags("Actuator")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileResult))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAsync(
+    public async Task<FileResult> GetAsync(
         [FromQuery] GetActuatorsWithFilterQuery filterQuery,
         [FromQuery] List<CsvProperties> propertiesToIncludeInFile,
         CancellationToken cancellationToken)

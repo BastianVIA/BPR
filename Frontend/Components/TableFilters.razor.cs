@@ -1,40 +1,50 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Frontend.Service;
+using Microsoft.AspNetCore.Components;
 
 namespace Frontend.Components;
 
 public class TableFiltersBase : ComponentBase
 {
-    [Parameter] public EventCallback<List<string>> OnNewFilter { get; set; }
+    // Faked enums, husk at skifte til den fra endpoint
+    [Parameter] public EventCallback<List<CsvProperties>> OnNewFilter { get; set; }
+    [Parameter] public List<CsvProperties> FilterOptionsEnums { get; set; }
+    [Parameter] public List<CsvProperties> InitFilters { get; set; }
 
-    private readonly string[] _filters =
-    {
-        "Work Order Number",
-        "Serial Number",
-        "UID",
-        "Manufacturer Number",
-        "Item Number",
-        "Production Date Code",
-        "Article Name",
-        "Article Number",
-        "Communication Protocol",
-        "Created Time",
-        "Software",
-        "Configuration Number"
-    };
+    protected List<string> CurrentFilters { get; set; } = new();
+    protected List<string> FilterOptions { get; set; } = new();
 
-    protected List<string> Filters = new();
-    protected readonly List<string> FilterParams = new();
-
+    private Dictionary<string, CsvProperties> _enumMap = new();
     protected override Task OnInitializedAsync()
     {
-        Filters.AddRange(_filters.Take(3));
-        FilterParams.AddRange(_filters);
+        InitEnumMap(FilterOptionsEnums);
+        FilterOptions = EnumListToStringList(FilterOptionsEnums);
+        CurrentFilters = EnumListToStringList(InitFilters);
         OnChange();
         return base.OnInitializedAsync();
     }
 
+    private void InitEnumMap(List<CsvProperties> enumList)
+    {
+        _enumMap = enumList.ToDictionary(EnumToString);
+    }
+
+    private List<string> EnumListToStringList(List<CsvProperties> enumList)
+    {
+        return enumList.Select(EnumToString).ToList();
+    }
+
+    private string EnumToString(CsvProperties prop)
+    {
+        return prop.ToString().Replace("_", " ");
+    }
+
+    private List<CsvProperties> GetSelectedAsListOfEnums()
+    {
+        return CurrentFilters.Select(key => _enumMap[key]).ToList();
+    }
+
     protected void OnChange()
     {
-        OnNewFilter.InvokeAsync(Filters);
+        OnNewFilter.InvokeAsync(GetSelectedAsListOfEnums());
     }
 }

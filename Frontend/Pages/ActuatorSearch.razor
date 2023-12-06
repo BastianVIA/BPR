@@ -1,12 +1,10 @@
 ﻿@page "/ActuatorSearch"
-@using Frontend.Entities
 @using Frontend.Components
 @inherits ActuatorSearchBase
 <h2>Search For Actuator</h2>
 
 <RadzenRow JustifyContent="JustifyContent.SpaceBetween">
-    <RadzenTemplateForm TItem="Actuator" Data="@SearchActuator" Submit="@SearchActuators" Style="width: 90%;">
-
+    <RadzenTemplateForm TItem="SearchObject" Data="@SearchActuator" Submit="@SearchActuators" Style="width: 90%;">
         <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
             <RadzenRow>        
                 <RadzenColumn Size="10">
@@ -53,27 +51,27 @@
                     <RadzenRow>
                         <RadzenColumn >
                             <RadzenLabel Text="Uid"/>
-                            <RadzenTextBox style="display: block" Name="PcbaUid" @bind-Value="@SearchActuator.PCBA.PCBAUid" class="w-100"/>
+                            <RadzenTextBox style="display: block" Name="Uid" @bind-Value="@SearchActuator.PCBAUid" class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
                             <RadzenLabel Text="Item Number"/>
-                            <RadzenTextBox ShowUpDown="false" style="display: block" Name="ItemNumber" @bind-Value=@SearchActuator.PCBA.ItemNumber class="w-100"/>
+                            <RadzenTextBox ShowUpDown="false" style="display: block" Name="ItemNumber" @bind-Value=@SearchActuator.PCBAItemNumber class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
                             <RadzenLabel Text="Manufacturer Number"/>
-                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ManufacturerNumber" @bind-Value=@SearchActuator.PCBA.ManufacturerNumber class="w-100"/>
+                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ManufacturerNumber" @bind-Value=@SearchActuator.PCBAManufacturerNumber class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
                             <RadzenLabel Text="Production Date Code"/>
-                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ProductionDateCode" @bind-Value=@SearchActuator.PCBA.ProductionDateCode class="w-100"/>
+                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ProductionDateCode" @bind-Value=@SearchActuator.PCBAProductionDateCode class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
                             <RadzenLabel Text="Software"/>
-                            <RadzenTextBox ShowUpDown="false" style="display: block" Name="Software" @bind-Value=@SearchActuator.PCBA.Software class="w-100"/>
+                            <RadzenTextBox ShowUpDown="false" style="display: block" Name="Software" @bind-Value=@SearchActuator.PCBASoftware class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
                             <RadzenLabel Text="Configuration Number"/>
-                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ConfigNo" @bind-Value=@SearchActuator.PCBA.ConfigNumber class="w-100"/>
+                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ConfigNo" @bind-Value=@SearchActuator.PCBAConfigNumber class="w-100"/>
                         </RadzenColumn>
                     </RadzenRow>
                 </RadzenColumn>
@@ -85,4 +83,4 @@
     </RadzenTemplateForm>
 </RadzenRow>
 
-<ActuatorTable Actuators="@actuators" OnActuatorSelected="@ShowActuatorDetails"/>
+<ActuatorTable Actuators="@actuators" OnColumnsUpdated="OnColumnsUpdated" OnActuatorSelected="@ShowActuatorDetails" OnDownloadSelected="@DownloadActuators"/>
