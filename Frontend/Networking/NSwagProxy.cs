@@ -52,4 +52,13 @@ public class NSwagProxy : INetwork
                 productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
                 createdTimeEnd));
     }
+
+    public async Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? wrkOrderNumber, string? tester,
+        int? bay, int? errorCode, DateTime startDate, DateTime endDate, int timeIntervalBetweenRowsAsMinutes)
+    {
+        var sd = await Send(async () =>
+            await _client.GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes,startDate,endDate,wrkOrderNumber,tester,bay,errorCode));
+        return sd;
+    }
+    
 }

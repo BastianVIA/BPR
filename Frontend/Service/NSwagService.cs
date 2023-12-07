@@ -22,36 +22,148 @@ namespace Frontend.Service
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IClient
     {
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int woNo, int serialNo);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        GetActuatorDetailsResponse GetActuatorDetails(int woNo, int serialNo);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBAAsync(string uid, int? manufacturerNo);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        GetActuatorFromPCBAResponse GetActuatorFromPCBA(string uid, int? manufacturerNo);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBAAsync(string uid, int? manufacturerNo = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBAAsync(string uid, int? manufacturerNo, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        GetActuatorWithFilterResponse GetActuatorsWithFilter(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? woNo = null, int? serialNo = null, string pcbaUid = null, string itemNo = null, int? manufacturerNo = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken);
 
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>No Content</returns>
+        /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PutNewPCBAInActuatorAsync(PutActuatorPCBARequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<FileResponse> GetActuatorsWithFilterAsCsvAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        FileResponse GetActuatorsWithFilterAsCsv(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<FileResponse> GetActuatorsWithFilterAsCsvAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        GetActuatorFromPCBAResponse GetPCBAChangesForActuator(int woNo, int serialNo);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PostActuatorAsync(PostActuatorRequest body);
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        void PostActuator(PostActuatorRequest body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PostPCBAAsync(PostPCBARequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task PostActuatorAsync(PostActuatorRequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PutNewPCBAInActuatorAsync(PutActuatorPCBARequest body);
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        void PutNewPCBAInActuator(PutActuatorPCBARequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PutNewPCBAInActuatorAsync(PutActuatorPCBARequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync();
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        ConfigurationResponse Configuration();
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync(System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PostPCBAAsync(PostPCBARequest body);
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        void PostPCBA(PostPCBARequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task PostPCBAAsync(PostPCBARequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber, string tester, int? bay, int? errorCode);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        GetTestErrorsWithFilterResponse GetTestErrorsWithFilter(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber, string tester, int? bay, int? errorCode);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber, string tester, int? bay, int? errorCode, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate);
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        GetTestResultsWithFilterResponse GetActuatorTestDetails(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -94,10 +206,24 @@ namespace Frontend.Service
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int woNo, int serialNo)
+        {
+            return GetActuatorDetailsAsync(woNo, serialNo, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual GetActuatorDetailsResponse GetActuatorDetails(int woNo, int serialNo)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetActuatorDetailsAsync(woNo, serialNo, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<GetActuatorDetailsResponse> GetActuatorDetailsAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken)
         {
             if (woNo == null)
                 throw new System.ArgumentNullException("woNo");
@@ -194,10 +320,24 @@ namespace Frontend.Service
             }
         }
 
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBAAsync(string uid, int? manufacturerNo)
+        {
+            return GetActuatorFromPCBAAsync(uid, manufacturerNo, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual GetActuatorFromPCBAResponse GetActuatorFromPCBA(string uid, int? manufacturerNo)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetActuatorFromPCBAAsync(uid, manufacturerNo, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBAAsync(string uid, int? manufacturerNo = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetActuatorFromPCBAAsync(string uid, int? manufacturerNo, System.Threading.CancellationToken cancellationToken)
         {
             if (uid == null)
                 throw new System.ArgumentNullException("uid");
@@ -295,10 +435,24 @@ namespace Frontend.Service
             }
         }
 
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate)
+        {
+            return GetActuatorsWithFilterAsync(workOrderNumber, serialNumber, pCBAUid, itemNumber, manufacturerNumber, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual GetActuatorWithFilterResponse GetActuatorsWithFilter(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetActuatorsWithFilterAsync(workOrderNumber, serialNumber, pCBAUid, itemNumber, manufacturerNumber, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? woNo = null, int? serialNo = null, string pcbaUid = null, string itemNo = null, int? manufacturerNo = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -315,57 +469,57 @@ namespace Frontend.Service
                     urlBuilder_.Append('/');
                     urlBuilder_.Append("GetActuatorsWithFilter");
             urlBuilder_.Append('?');
-            if (woNo != null)
+            if (workOrderNumber != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("woNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(woNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("WorkOrderNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(workOrderNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
-            if (serialNo != null)
+            if (serialNumber != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("serialNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(serialNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("SerialNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(serialNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
-            if (pcbaUid != null)
+            if (pCBAUid != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("pcbaUid") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pcbaUid, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("PCBAUid") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pCBAUid, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
-            if (itemNo != null)
+            if (itemNumber != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("itemNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(itemNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("ItemNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(itemNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
-            if (manufacturerNo != null)
+            if (manufacturerNumber != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("manufacturerNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(manufacturerNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("ManufacturerNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(manufacturerNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (productionDateCode != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("productionDateCode") + "=").Append(System.Uri.EscapeDataString(ConvertToString(productionDateCode, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("ProductionDateCode") + "=").Append(System.Uri.EscapeDataString(ConvertToString(productionDateCode, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (communicationProtocol != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("communicationProtocol") + "=").Append(System.Uri.EscapeDataString(ConvertToString(communicationProtocol, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("CommunicationProtocol") + "=").Append(System.Uri.EscapeDataString(ConvertToString(communicationProtocol, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (articleNumber != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("articleNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("ArticleNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (articleName != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("articleName") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleName, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("ArticleName") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleName, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (configNo != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("configNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(configNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("ConfigNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(configNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (software != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("software") + "=").Append(System.Uri.EscapeDataString(ConvertToString(software, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("Software") + "=").Append(System.Uri.EscapeDataString(ConvertToString(software, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (startDate != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("startDate") + "=").Append(System.Uri.EscapeDataString(startDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("StartDate") + "=").Append(System.Uri.EscapeDataString(startDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (endDate != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("endDate") + "=").Append(System.Uri.EscapeDataString(endDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("EndDate") + "=").Append(System.Uri.EscapeDataString(endDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
 
@@ -439,10 +593,298 @@ namespace Frontend.Service
             }
         }
 
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>No Content</returns>
+        /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task PutNewPCBAInActuatorAsync(PutActuatorPCBARequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual System.Threading.Tasks.Task<FileResponse> GetActuatorsWithFilterAsCsvAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile)
+        {
+            return GetActuatorsWithFilterAsCsvAsync(workOrderNumber, serialNumber, pCBAUid, itemNumber, manufacturerNumber, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate, propertiesToIncludeInFile, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual FileResponse GetActuatorsWithFilterAsCsv(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetActuatorsWithFilterAsCsvAsync(workOrderNumber, serialNumber, pCBAUid, itemNumber, manufacturerNumber, productionDateCode, communicationProtocol, articleNumber, articleName, configNo, software, startDate, endDate, propertiesToIncludeInFile, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<FileResponse> GetActuatorsWithFilterAsCsvAsync(int? workOrderNumber, int? serialNumber, string pCBAUid, string itemNumber, int? manufacturerNumber, int? productionDateCode, string communicationProtocol, string articleNumber, string articleName, string configNo, string software, System.DateTime? startDate, System.DateTime? endDate, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    urlBuilder_.Append("api");
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append("GetActuatorsWithFilterAsCsv");
+            urlBuilder_.Append('?');
+            if (workOrderNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("WorkOrderNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(workOrderNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (serialNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("SerialNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(serialNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pCBAUid != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("PCBAUid") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pCBAUid, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (itemNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ItemNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(itemNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (manufacturerNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ManufacturerNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(manufacturerNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (productionDateCode != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ProductionDateCode") + "=").Append(System.Uri.EscapeDataString(ConvertToString(productionDateCode, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (communicationProtocol != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("CommunicationProtocol") + "=").Append(System.Uri.EscapeDataString(ConvertToString(communicationProtocol, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (articleNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ArticleNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (articleName != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ArticleName") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleName, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (configNo != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ConfigNo") + "=").Append(System.Uri.EscapeDataString(ConvertToString(configNo, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (software != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Software") + "=").Append(System.Uri.EscapeDataString(ConvertToString(software, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (startDate != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("StartDate") + "=").Append(System.Uri.EscapeDataString(startDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (endDate != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("EndDate") + "=").Append(System.Uri.EscapeDataString(endDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (propertiesToIncludeInFile != null)
+            {
+                foreach (var item_ in propertiesToIncludeInFile) { urlBuilder_.Append(System.Uri.EscapeDataString("propertiesToIncludeInFile") + "=").Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200 || status_ == 206)
+                        {
+                            var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                            var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_);
+                            disposeClient_ = false; disposeResponse_ = false; // response and client are disposed by FileResponse
+                            return fileResponse_;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Server Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo)
+        {
+            return GetPCBAChangesForActuatorAsync(woNo, serialNo, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual GetActuatorFromPCBAResponse GetPCBAChangesForActuator(int woNo, int serialNo)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetPCBAChangesForActuatorAsync(woNo, serialNo, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken)
+        {
+            if (woNo == null)
+                throw new System.ArgumentNullException("woNo");
+
+            if (serialNo == null)
+                throw new System.ArgumentNullException("serialNo");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    urlBuilder_.Append("api");
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append("GetPCBAChangesForActuator");
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(woNo, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(serialNo, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetActuatorFromPCBAResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Server Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task PostActuatorAsync(PostActuatorRequest body)
+        {
+            return PostActuatorAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual void PostActuator(PostActuatorRequest body)
+        {
+            System.Threading.Tasks.Task.Run(async () => await PostActuatorAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task PostActuatorAsync(PostActuatorRequest body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -452,7 +894,99 @@ namespace Frontend.Service
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    urlBuilder_.Append("api");
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append("PostActuator");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 201)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task PutNewPCBAInActuatorAsync(PutActuatorPCBARequest body)
+        {
+            return PutNewPCBAInActuatorAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual void PutNewPCBAInActuator(PutActuatorPCBARequest body)
+        {
+            System.Threading.Tasks.Task.Run(async () => await PutNewPCBAInActuatorAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>No Content</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task PutNewPCBAInActuatorAsync(PutActuatorPCBARequest body, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
 
@@ -517,10 +1051,24 @@ namespace Frontend.Service
             }
         }
 
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync()
+        {
+            return ConfigurationAsync(System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual ConfigurationResponse Configuration()
+        {
+            return System.Threading.Tasks.Task.Run(async () => await ConfigurationAsync(System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -597,10 +1145,24 @@ namespace Frontend.Service
             }
         }
 
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task PostPCBAAsync(PostPCBARequest body)
+        {
+            return PostPCBAAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual void PostPCBA(PostPCBARequest body)
+        {
+            System.Threading.Tasks.Task.Run(async () => await PostPCBAAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task PostPCBAAsync(PostPCBARequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task PostPCBAAsync(PostPCBARequest body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -610,7 +1172,7 @@ namespace Frontend.Service
                 {
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
                     var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
 
@@ -654,6 +1216,270 @@ namespace Frontend.Service
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new ApiException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber, string tester, int? bay, int? errorCode)
+        {
+            return GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes, startDate, endDate, workOrderNumber, tester, bay, errorCode, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual GetTestErrorsWithFilterResponse GetTestErrorsWithFilter(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber, string tester, int? bay, int? errorCode)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes, startDate, endDate, workOrderNumber, tester, bay, errorCode, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber, string tester, int? bay, int? errorCode, System.Threading.CancellationToken cancellationToken)
+        {
+            if (timeIntervalBetweenRowsAsMinutes == null)
+                throw new System.ArgumentNullException("timeIntervalBetweenRowsAsMinutes");
+
+            if (startDate == null)
+                throw new System.ArgumentNullException("startDate");
+
+            if (endDate == null)
+                throw new System.ArgumentNullException("endDate");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    urlBuilder_.Append("api");
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append("GetTestErrorsWithFilter");
+            urlBuilder_.Append('?');
+            urlBuilder_.Append(System.Uri.EscapeDataString("TimeIntervalBetweenRowsAsMinutes") + "=").Append(System.Uri.EscapeDataString(ConvertToString(timeIntervalBetweenRowsAsMinutes, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            urlBuilder_.Append(System.Uri.EscapeDataString("StartDate") + "=").Append(System.Uri.EscapeDataString(startDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            urlBuilder_.Append(System.Uri.EscapeDataString("EndDate") + "=").Append(System.Uri.EscapeDataString(endDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            if (workOrderNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("WorkOrderNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(workOrderNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (tester != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Tester") + "=").Append(System.Uri.EscapeDataString(ConvertToString(tester, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (bay != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Bay") + "=").Append(System.Uri.EscapeDataString(ConvertToString(bay, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (errorCode != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ErrorCode") + "=").Append(System.Uri.EscapeDataString(ConvertToString(errorCode, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetTestErrorsWithFilterResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Server Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate)
+        {
+            return GetActuatorTestDetailsAsync(workOrderNumber, serialNumber, tester, bay, startDate, endDate, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual GetTestResultsWithFilterResponse GetActuatorTestDetails(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetActuatorTestDetailsAsync(workOrderNumber, serialNumber, tester, bay, startDate, endDate, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    urlBuilder_.Append("api");
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append("GetActuatorTestDetails");
+            urlBuilder_.Append('?');
+            if (workOrderNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("WorkOrderNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(workOrderNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (serialNumber != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("SerialNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(serialNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (tester != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Tester") + "=").Append(System.Uri.EscapeDataString(ConvertToString(tester, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (bay != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Bay") + "=").Append(System.Uri.EscapeDataString(ConvertToString(bay, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (startDate != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("StartDate") + "=").Append(System.Uri.EscapeDataString(startDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (endDate != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("EndDate") + "=").Append(System.Uri.EscapeDataString(endDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetTestResultsWithFilterResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Server Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -783,6 +1609,48 @@ namespace Frontend.Service
     {
         [Newtonsoft.Json.JsonProperty("validationSettings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public ValidationSettings ValidationSettings { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum CsvProperties
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Work_Order_Number")]
+        Work_Order_Number = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Serial_Number")]
+        Serial_Number = 1,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Communication_Protocol")]
+        Communication_Protocol = 2,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Article_Number")]
+        Article_Number = 3,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Article_Name")]
+        Article_Name = 4,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Created_Time")]
+        Created_Time = 5,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"PCBA_Uid")]
+        PCBA_Uid = 6,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"PCBA_Manufacturer_Number")]
+        PCBA_Manufacturer_Number = 7,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"PCBA_Item_Number")]
+        PCBA_Item_Number = 8,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"PCBA_Software")]
+        PCBA_Software = 9,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"PCBA_Production_DateCode")]
+        PCBA_Production_DateCode = 10,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"PCBA_Config_No")]
+        PCBA_Config_No = 11,
 
     }
 
@@ -918,6 +1786,131 @@ namespace Frontend.Service
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestErrorsWithFilterErrorCodeAndAmount
+    {
+        [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ErrorCode { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("errorMessage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ErrorMessage { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("amountOfErrors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int AmountOfErrors { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestErrorsWithFilterErrorCodeAndMessage
+    {
+        [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ErrorCode { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("errorMessage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ErrorMessage { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestErrorsWithFilterResponse
+    {
+        [Newtonsoft.Json.JsonProperty("possibleErrorCodes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GetTestErrorsWithFilterErrorCodeAndMessage> PossibleErrorCodes { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("dataLines", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GetTestErrorsWithFilterSingleLine> DataLines { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestErrorsWithFilterSingleLine
+    {
+        [Newtonsoft.Json.JsonProperty("listOfErrors", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GetTestErrorsWithFilterErrorCodeAndAmount> ListOfErrors { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("totalErrors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int TotalErrors { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("totalTests", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int TotalTests { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("startIntervalAsDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime StartIntervalAsDate { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("endIntervalAsDate", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime EndIntervalAsDate { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestResultWithFilterActuator
+    {
+        [Newtonsoft.Json.JsonProperty("workOrderNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int WorkOrderNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("serialNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int SerialNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("tester", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Tester { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("bay", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Bay { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("minServoPosition", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string MinServoPosition { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("maxServoPosition", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string MaxServoPosition { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("minBuslinkPosition", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string MinBuslinkPosition { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("maxBuslinkPosition", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string MaxBuslinkPosition { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("servoStroke", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ServoStroke { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("timeOccured", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime TimeOccured { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestResultsWithFilterResponse
+    {
+        [Newtonsoft.Json.JsonProperty("actuatorTest", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GetTestResultWithFilterActuator> ActuatorTest { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PostActuatorRequest
+    {
+        [Newtonsoft.Json.JsonProperty("workOrderNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int WorkOrderNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("serialNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int SerialNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("pcbaUid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PcbaUid { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("communicationProtocol", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CommunicationProtocol { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("articleNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ArticleNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("articleName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ArticleName { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("createdTime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime CreatedTime { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PostPCBARequest
     {
         [Newtonsoft.Json.JsonProperty("uid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1003,6 +1996,41 @@ namespace Frontend.Service
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class FileResponse : System.IDisposable
+    {
+        private System.IDisposable _client;
+        private System.IDisposable _response;
+
+        public int StatusCode { get; private set; }
+
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
+
+        public System.IO.Stream Stream { get; private set; }
+
+        public bool IsPartial
+        {
+            get { return StatusCode == 206; }
+        }
+
+        public FileResponse(int statusCode, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.IO.Stream stream, System.IDisposable client, System.IDisposable response)
+        {
+            StatusCode = statusCode;
+            Headers = headers;
+            Stream = stream;
+            _client = client;
+            _response = response;
+        }
+
+        public void Dispose()
+        {
+            Stream.Dispose();
+            if (_response != null)
+                _response.Dispose();
+            if (_client != null)
+                _client.Dispose();
+        }
+    }
 
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -1020,11 +2048,6 @@ namespace Frontend.Service
             StatusCode = statusCode;
             Response = response;
             Headers = headers;
-        }
-
-        public ApiException() : base()
-        {
-            
         }
 
         public override string ToString()
