@@ -12,7 +12,7 @@
 
 @if (TestErrors?.PossibleErrorCodes?.Any() == true)
 {
-    var pivotedData = PivotDataLines(TestErrors.DataLines.ToList(), SelectedTimeIntervalBase);
+    var pivotedData = PivotDataLines(TestErrors.DataLines.ToList(), SelectedTimeIntervalBaseTable);
 
     <RadzenDataGrid Data="@pivotedData" TItem="Dictionary<string, object>" AutoGenerateColumns="false">
         <Columns>
@@ -21,20 +21,19 @@
                     @dataItem["TimeInterval"]
                 </Template>
             </RadzenDataGridColumn>
-      @foreach (var errorCode in ErrorCodes)
-      {
-          <RadzenDataGridColumn TItem="Dictionary<string, object>" Property=@($"ErrorCode{errorCode}") Visible=@ShouldShowColumn($"Error Code")>
-              <HeaderTemplate>
-                  <div title="@ErrorCodeMessages[int.Parse(errorCode)]">
-                      @($"Error Code {errorCode}")
-                  </div>
-              </HeaderTemplate>
-              <Template Context="dataItem">
-                  @dataItem[$"ErrorCode{errorCode}"]
-              </Template>
-          </RadzenDataGridColumn>
-      }
-
+            @foreach (var errorCode in ErrorCodes)
+            {
+                <RadzenDataGridColumn TItem="Dictionary<string, object>" Property=@($"ErrorCode{errorCode}") Visible=@ShouldShowColumn($"Error Code")>
+                    <HeaderTemplate>
+                        <div title="@ErrorCodeMessages[int.Parse(errorCode)]">
+                            @($"Error Code {errorCode}")
+                        </div>
+                    </HeaderTemplate>
+                    <Template Context="dataItem">
+                        @dataItem[$"ErrorCode{errorCode}"]
+                    </Template>
+                </RadzenDataGridColumn>
+            }
             <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Errors")>
                 <Template Context="dataItem">
                     @dataItem["TotalErrors"].ToString()

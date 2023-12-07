@@ -2,6 +2,7 @@
 using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service.AlertService;
+using Frontend.Util;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 
@@ -12,12 +13,10 @@ public class TestStatisticsBase : ComponentBase
     [Inject] public ITestErrorModel TestErrorModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public DialogService DialogService { get; set; }
-
-    public TestError TestErrors { get; set; } = new TestError();
+    public TestErrorResponse TestErrors { get; set; } = new TestErrorResponse();
     protected SearchObject SearchTestError { get; set; } = new SearchObject();
-    public string SelectedTimeIntervalBase { get; set; } = "Minutes";
-    public List<string> timeIntervalBases = new List<string> { "Minutes", "Daily", "Weekly", "Monthly", "Yearly" };
- 
+    public string SelectedTimeIntervalBase { get; set; } = "Hourly";
+    public List<string> timeIntervalBases = new List<string> { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
 
     protected class SearchObject
     {
@@ -27,10 +26,12 @@ public class TestStatisticsBase : ComponentBase
         public int? ErrorCode { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int TimeIntervalBetweenRowsAsMinutes { get; set; }
-        
     }
-    
+
+    public async Task OnChange()
+    {
+        await SearchTestErrors();
+    }
 
     public async Task SearchTestErrors()
     {
@@ -43,7 +44,7 @@ public class TestStatisticsBase : ComponentBase
                 SearchTestError.ErrorCode,
                 SearchTestError.StartDate,
                 SearchTestError.EndDate,
-                ConvertingFromMinutes(SearchTestError.TimeIntervalBetweenRowsAsMinutes));
+                ConvertSelectionToMinutes());
         }
         catch (NetworkException e)
         {
@@ -51,21 +52,22 @@ public class TestStatisticsBase : ComponentBase
         }
     }
 
-
-    public int ConvertingFromMinutes(int timeIntervalBetweenRowsAsMinutes)
+    public int ConvertSelectionToMinutes()
     {
         switch (SelectedTimeIntervalBase)
         {
+            case "Hourly":
+                return 60;
             case "Daily":
-                return timeIntervalBetweenRowsAsMinutes * 24 * 60;
+                return 24 * 60;
             case "Weekly":
-                return timeIntervalBetweenRowsAsMinutes * 24 * 60 * 7;
+                return 24 * 60 * 7;
             case "Monthly":
-                return timeIntervalBetweenRowsAsMinutes * 24 * 60 * 30;
+                return 24 * 60 * 30;
             case "Yearly":
-                return timeIntervalBetweenRowsAsMinutes * 24 * 60 * 365;
+                return 24 * 60 * 365;
             default:
-                return timeIntervalBetweenRowsAsMinutes; 
+                throw new InvalidDataException();
         }
     }
 }

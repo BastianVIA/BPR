@@ -1,6 +1,5 @@
 ﻿@page "/TestStatistics"
 <h3>TestStatistics</h3>
-@using Frontend.Entities
 @using Frontend.Components
 @inherits TestStatisticsBase
 
@@ -8,7 +7,6 @@
 
 <RadzenRow JustifyContent="JustifyContent.SpaceBetween">
     <RadzenTemplateForm TItem="SearchObject" Data="@SearchTestError" Submit="@SearchTestErrors" Style="width: 90%;">
-
         <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
             <RadzenRow>
                 <RadzenColumn Size="10">
@@ -41,15 +39,11 @@
                             <RadzenDatePicker ShowSeconds="false" ShowTime="true" DateFormat="yyyy/MM/dd/HH" style="display: block" Name="ProductionDateCode" @bind-Value=@SearchTestError.EndDate class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
-                            <RadzenLabel Text="Time Interval"/>
-                            <RadzenNumeric ShowUpDown="false" style="display: block" Name="ErrorCode" @bind-Value=@SearchTestError.TimeIntervalBetweenRowsAsMinutes class="w-100"/>
-                        </RadzenColumn>
-                        <RadzenColumn>
                             <RadzenLabel Text="Time Interval Basis"/>
                             <RadzenDropDown Data="@timeIntervalBases"
                                             TValue="string"
-                                            Value="@SelectedTimeIntervalBase"
-                                            Change="@((args) => SelectedTimeIntervalBase = args.ToString())"
+                                            Change="OnChange"
+                                            @bind-Value="@SelectedTimeIntervalBase"
                                             Style="width:200px"/>
                         </RadzenColumn>
                     </RadzenRow>
@@ -62,4 +56,4 @@
     </RadzenTemplateForm>
 </RadzenRow>
 
-<TestErrorTable TestErrors="@TestErrors" SelectedTimeIntervalBase="@SelectedTimeIntervalBase"/>
+<TestErrorTable TestErrors="@TestErrors" SelectedTimeIntervalBaseTable="@SelectedTimeIntervalBase"/>

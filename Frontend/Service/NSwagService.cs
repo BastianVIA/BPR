@@ -154,16 +154,16 @@ namespace Frontend.Service
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate);
+        System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetTestResultsWithFilterAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        GetTestResultsWithFilterResponse GetActuatorTestDetails(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate);
+        GetTestResultsWithFilterResponse GetTestResultsWithFilter(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetTestResultsWithFilterAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -1373,22 +1373,22 @@ namespace Frontend.Service
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate)
+        public virtual System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetTestResultsWithFilterAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate)
         {
-            return GetActuatorTestDetailsAsync(workOrderNumber, serialNumber, tester, bay, startDate, endDate, System.Threading.CancellationToken.None);
+            return GetTestResultsWithFilterAsync(workOrderNumber, serialNumber, tester, bay, startDate, endDate, System.Threading.CancellationToken.None);
         }
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual GetTestResultsWithFilterResponse GetActuatorTestDetails(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate)
+        public virtual GetTestResultsWithFilterResponse GetTestResultsWithFilter(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate)
         {
-            return System.Threading.Tasks.Task.Run(async () => await GetActuatorTestDetailsAsync(workOrderNumber, serialNumber, tester, bay, startDate, endDate, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await GetTestResultsWithFilterAsync(workOrderNumber, serialNumber, tester, bay, startDate, endDate, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetActuatorTestDetailsAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetTestResultsWithFilterAsync(int? workOrderNumber, int? serialNumber, string tester, int? bay, System.DateTime? startDate, System.DateTime? endDate, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1403,7 +1403,7 @@ namespace Frontend.Service
                     if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
                     urlBuilder_.Append("api");
                     urlBuilder_.Append('/');
-                    urlBuilder_.Append("GetActuatorTestDetails");
+                    urlBuilder_.Append("GetTestResultsWithFilter");
             urlBuilder_.Append('?');
             if (workOrderNumber != null)
             {
@@ -1790,9 +1790,6 @@ namespace Frontend.Service
     {
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int ErrorCode { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("errorMessage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ErrorMessage { get; set; }
 
         [Newtonsoft.Json.JsonProperty("amountOfErrors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int AmountOfErrors { get; set; }

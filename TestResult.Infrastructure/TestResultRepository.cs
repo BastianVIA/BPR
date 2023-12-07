@@ -1,6 +1,6 @@
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
-using Infrastructure;
+using BuildingBlocks.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using TestResult.Domain.Repositories;
 

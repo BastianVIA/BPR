@@ -1,40 +1,30 @@
 ﻿using Frontend.Entities;
+using Frontend.Util;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Frontend.Components
 {
     public class TestErrorTableBase : ComponentBase
     {
-        [Parameter] public TestError TestErrors { get; set; } = new();
-        [Parameter] public string SelectedTimeIntervalBase { get; set; } = "Minutes";
-
+        [Parameter] public TestErrorResponse TestErrors { get; set; } = new();
+        [Parameter] public string SelectedTimeIntervalBaseTable { get; set; }
         public List<string> Filters { get; set; } = new List<string>();
         public List<string> ErrorCodes { get; set; }
-        
         public Dictionary<int, string> ErrorCodeMessages { get; set; } = new Dictionary<int, string>();
-
 
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            // InitializeErrorCodes();
+            InitializeErrorCodes();
             InitializeErrorMessages();
         }
 
-        // private void InitializeErrorCodes()
-        // {
-        //     ErrorCodes = TestErrors.PossibleErrorCodes.ConvertAll(a => a.ToString());
-        // }
-
-        // private void InitializeErrorCodes()
-        // {
-        //     ErrorCodes = TestErrors.PossibleErrorCodes
-        //         .Select(ec => ec.ErrorCode.ToString())
-        //         .ToList();
-        // }
+        private void InitializeErrorCodes()
+        {
+            ErrorCodes = TestErrors.PossibleErrorCodes
+                .Select(ec => ec.ErrorCode.ToString())
+                .ToList();
+        }
 
         private void InitializeErrorMessages()
         {
@@ -53,7 +43,8 @@ namespace Frontend.Components
             StateHasChanged();
         }
 
-        public List<Dictionary<string, object>> PivotDataLines(List<GetTestErrorsWithFilterSingleLine> dataLines, string intervalBase)
+        public List<Dictionary<string, object>> PivotDataLines(List<GetTestErrorsWithFilterSingleLine> dataLines,
+            string intervalBase)
         {
             var pivotedList = new List<Dictionary<string, object>>();
             foreach (var line in dataLines)
@@ -69,10 +60,10 @@ namespace Frontend.Components
 
                 foreach (var code in ErrorCodes)
                 {
-                    var errorCount = line.listOfErrors.FirstOrDefault(e => e.ErrorCode.ToString() == code)?.AmountOfErrors ?? 0;
+                    var errorCount = line.listOfErrors.FirstOrDefault(e => e.ErrorCode.ToString() == code)
+                        ?.AmountOfErrors ?? 0;
                     pivotRow.Add($"ErrorCode{code}", errorCount);
 
-                    // Include error messages if available
                     if (ErrorCodeMessages.TryGetValue(int.Parse(code), out var errorMessage))
                     {
                         pivotRow.Add($"ErrorMessage{code}", errorMessage);
@@ -88,8 +79,6 @@ namespace Frontend.Components
 
             return pivotedList;
         }
-
-
         private string FormatTimeInterval(DateTime start, DateTime end, string intervalBase)
         {
             switch (intervalBase)

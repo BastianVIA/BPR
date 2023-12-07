@@ -2,6 +2,7 @@
 using Frontend.Networking;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Frontend.Util;
 
 namespace Frontend.Model
 {
@@ -14,7 +15,7 @@ namespace Frontend.Model
             _network = network;
         }
 
-        public async Task<TestError> GetTestErrorsWithFilter(int? workOrderNumber, string? tester, int? bay,
+        public async Task<TestErrorResponse> GetTestErrorsWithFilter(int? workOrderNumber, string? tester, int? bay,
             int? errorCode, DateTime startDate, DateTime endDate, int timeIntervalBetweenRowsAsMinutes)
         {
             var networkResponse = await _network.GetTestErrorWithFilter(workOrderNumber, tester, bay, errorCode,
@@ -45,12 +46,11 @@ namespace Frontend.Model
                     TotalTests = responseItem.TotalTests,
                     listOfErrors = errorCodeList
                 };
-
-
+                
                 dataLinesList.Add(singleLine);
             }
 
-            var testError = new TestError
+            var testError = new TestErrorResponse
             {
                 PossibleErrorCodes = networkResponse.PossibleErrorCodes.Select(code =>
                     new GetTestErrorsWithFilterErrorCodeAndMessage
@@ -60,7 +60,6 @@ namespace Frontend.Model
                     }).ToList(),
                 DataLines = dataLinesList
             };
-
 
             return testError;
         }

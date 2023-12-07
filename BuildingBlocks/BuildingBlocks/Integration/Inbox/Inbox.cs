@@ -2,7 +2,7 @@
 using BuildingBlocks.Domain;
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
-using Infrastructure;
+using BuildingBlocks.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Integration.Inbox;
