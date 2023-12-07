@@ -11,7 +11,6 @@ public class TesterErrorsBase : ComponentBase
     protected class SearchObject
     {
         public List<string> Testers { get; set; }
-        public string TimePeriod { get; set; } //TODO Husk at ændrer til enum
     }
     
     [Inject] private ITesterErrorsModel TesterErrorsModel { get; set; }
@@ -39,21 +38,28 @@ public class TesterErrorsBase : ComponentBase
         {"Today", TesterTimePeriodEnum.Today },
         {"Yesterday", TesterTimePeriodEnum.Yesterday}
     };
-    public List<string> TesterOptions { get; set; } = new()
-    {
-        "LASPRD-C22873TT, LA36 Pre-Tester ManualTwo-Cell, 2023-0xx, LINTest 11.0.22.0",
-    };
+
+    public List<string> TesterOptions { get; set; } = new();
     public List<string>? SelectedTesters { get; set; }
     public List<string> TimePeriodOptions { get; set; } = new();
     public string SelectedTimePeriod { get; set; }
     public List<TesterErrorsSet> DataSets { get; set; } = new();
 
-    protected override Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
         SetTimePeriodOptions();
-        return base.OnInitializedAsync();
+        await SetCellOptions();
+        
     }
 
+    public async Task SetCellOptions()
+    {
+        TesterOptions = new List<string>()
+        {
+            "LASPRD-C22873TT, LA36 Pre-Tester ManualTwo-Cell, 2023-0xx, LINTest 11.0.22.0",
+        };
+    }
+    
     private void SetTimePeriodOptions()
     {
         foreach (var kv in _dateFormatMap)
