@@ -17,13 +17,10 @@ public class GetTestResultsWithFilterQuery : IQuery<GetTestResultsWithFilterDto>
     
     public void Validate()
     {
-        if (WorkOrderNumber == null && SerialNumber == null && Tester == null && Bay == null 
-            && StartDate == null && EndDate == null)
+        if (WorkOrderNumber is null && SerialNumber is null && Tester is null && Bay is null 
+            && StartDate is null && EndDate is null)
         {
             throw new ArgumentException("Must specify at least one search parameter");
         }
-        
     }
-    
-
 }
