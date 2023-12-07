@@ -15,7 +15,11 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
 
     public async Task CreateTestError(TestError testError)
     {
-        var testResult = await GetTestResultModel(testError.WorkOrderNumber, testError.SerialNumber);
+        if (testError.WorkOrderNumber == null || testError.SerialNumber == null)
+        {
+            throw new ArgumentException("Need to have WrokOrderNumber and SerialNumber for creation");
+        }
+        var testResult = await GetTestResultModel(testError.WorkOrderNumber.Value, testError.SerialNumber.Value);
         var testErrorModel = FromDomain(testError);
         testErrorModel.TestResultId = testResult.Id;
         await AddAsync(testErrorModel, testError.GetDomainEvents());
@@ -78,7 +82,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
 
     private TestError ToDomain(TestErrorModel model)
     {
-        return new TestError(model.Id, 0, 0, model.Tester, model.Bay
+        return new TestError(model.Id,  model.Tester, model.Bay
             , model.ErrorCode, model.ErrorMessage, model.TimeOccured);
     }
 
