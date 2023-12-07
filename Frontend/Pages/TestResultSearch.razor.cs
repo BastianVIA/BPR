@@ -40,7 +40,7 @@ public class TestResultSearchBase : ComponentBase
         catch (Exception e)
         {
             Console.WriteLine(e);
-            AlertService.FireEvent(AlertStyle.Danger, "Error Test Result");
+            AlertService.FireEvent(AlertStyle.Danger, e.Message);
         }
     }
     protected async Task ShowTestResultDetails(TestResult testResult)
