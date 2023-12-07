@@ -2,6 +2,7 @@
 
 public class TesterErrorEntry
 {
-    public DateTime Date { get; set; }
+    public double DateDouble { get; set; }
+    public string DateString { get; set; }
     public int ErrorCount { get; set; }
 }

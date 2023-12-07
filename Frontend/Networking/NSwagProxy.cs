@@ -57,4 +57,9 @@ public class NSwagProxy : INetwork
     {
         return await Send(async () => await _client.GetTestErrorForTestersAsync(testers, timePeriod));
     }
+
+    public async Task<GetAllTestersResponse> GetAllCellNames()
+    {
+        return await Send(async () => await _client.GetAllTestersAsync());
+    }
 }

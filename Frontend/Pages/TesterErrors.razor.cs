@@ -3,16 +3,13 @@ using Frontend.Entities;
 using Frontend.Model;
 using Frontend.Service;
 using Microsoft.AspNetCore.Components;
+using Radzen.Blazor;
 
 namespace Frontend.Pages;
 
 public class TesterErrorsBase : ComponentBase
 {
-    protected class SearchObject
-    {
-        public List<string> Testers { get; set; }
-    }
-    
+    public RadzenChart Chart { get; set; }
     [Inject] private ITesterErrorsModel TesterErrorsModel { get; set; }
 
     private Dictionary<TesterTimePeriodEnum, string> _dateFormatMap = new()
@@ -42,22 +39,19 @@ public class TesterErrorsBase : ComponentBase
     public List<string> TesterOptions { get; set; } = new();
     public List<string>? SelectedTesters { get; set; }
     public List<string> TimePeriodOptions { get; set; } = new();
-    public string SelectedTimePeriod { get; set; }
+    public string SelectedTimePeriod { get; set; } = "Today";
     public List<TesterErrorsSet> DataSets { get; set; } = new();
-
-    protected async override Task OnInitializedAsync()
+    
+    protected override async Task OnInitializedAsync()
     {
         SetTimePeriodOptions();
         await SetCellOptions();
-        
     }
+    
 
-    public async Task SetCellOptions()
+    private async Task SetCellOptions()
     {
-        TesterOptions = new List<string>()
-        {
-            "LASPRD-C22873TT, LA36 Pre-Tester ManualTwo-Cell, 2023-0xx, LINTest 11.0.22.0",
-        };
+        TesterOptions = await TesterErrorsModel.GetAllCellNames();
     }
     
     private void SetTimePeriodOptions()
@@ -70,23 +64,72 @@ public class TesterErrorsBase : ComponentBase
 
     public string FormatYAxis(object value)
     {
-        return ((double)value).ToString(CultureInfo.InvariantCulture);
+        return ((double)value).ToString(CultureInfo.CurrentCulture);
     }
-
-    private DateTime currentMonth;
-    private DateTime? lastMonth;
-
     public string FormatDate(object value)
     {
+        var numValue = Convert.ToDouble(value);
+        var date = DateTime.FromOADate(numValue);
+        //if (value is null) return string.Empty;
         var dateFormat = _dateFormatMap[_stringEnumMap[SelectedTimePeriod]];
-        lastMonth = currentMonth;
-        return Convert.ToDateTime(value).ToString(dateFormat);
+        return date.ToString(dateFormat);
     }
     
-    public async Task OnChange()
+    public string FormatDateToday(object value)
     {
-        DataSets.Clear();
-        DataSets = await TesterErrorsModel.GetTestErrorsForTesters(SelectedTesters ?? new List<string>(), _stringEnumMap[SelectedTimePeriod]);
-        Console.WriteLine();
+        var date = Convert.ToDateTime(value);
+       
+        //if (value is null) return string.Empty;
+        var dateFormat = _dateFormatMap[_stringEnumMap[SelectedTimePeriod]];
+        return date.ToString(dateFormat);
+    }
+    
+    public async Task OnUpdateGraph()
+    {
+        
+        SelectedTesters ??= new List<string>();
+        var selectedTime = _stringEnumMap[SelectedTimePeriod];
+        DataSets = await TesterErrorsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
+        Mod();
+    }
+
+    public TimeSpan FormatXAxisStep()
+    {
+        switch (SelectedTimePeriod)
+        {
+            case "Today":
+            case "Yesterday":
+                return TimeSpan.FromMinutes(1);
+
+            case "This_Week":
+            case "Last_Full_Week":
+                return TimeSpan.FromDays(1);
+
+            case "This_Month":
+            case "Last_Full_Month":
+                return TimeSpan.FromDays(5);
+
+            case "This_Year":
+            case "Last_Full_Year":
+                return TimeSpan.FromDays(30);
+
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    private void Mod()
+    {
+        foreach (var error in DataSets[0].Errors)
+        {
+            error.ErrorCount = new Random().Next(20, 30);
+        }
+
+        DataSets[0].Errors[2].ErrorCount = 50;
+    }
+
+    public async Task OnApply()
+    {
+        
     }
 }
