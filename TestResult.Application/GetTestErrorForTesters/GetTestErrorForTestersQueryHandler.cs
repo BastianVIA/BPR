@@ -56,10 +56,8 @@ public class GetTestErrorForTestersQueryHandler : IQueryHandler<GetTestErrorForT
                 testerToErrors[tester]
                     .Add(GetTestErrorForTestersErrorDto.From(startDate, numberOfErrorsInTimeInterval));
             }
-
-
             startDate = endOfInterval;
-        } while (startDate < DateTime.Now);
+        } while (startDate < endDate);
 
 
         List<GetTestErrorForTestersTesterDto> testersWithErrors = testerToErrors
