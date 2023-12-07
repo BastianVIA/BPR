@@ -52,4 +52,9 @@ public class NSwagProxy : INetwork
                 productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
                 createdTimeEnd));
     }
+
+    public async Task<GetTestErrorForTestersResponse> GetTestErrorForTesters(List<string> testers, TesterTimePeriodEnum timePeriod)
+    {
+        return await Send(async () => await _client.GetTestErrorForTestersAsync(testers, timePeriod));
+    }
 }

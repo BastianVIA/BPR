@@ -1,0 +1,42 @@
+﻿@page "/TesterErrors"
+@inherits TesterErrorsBase
+<h3>Tester Errors</h3>
+
+<div style="width: 80%;">
+    <RadzenStack Orientation="Orientation.Horizontal">
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenLabel Text="Testers"/>
+            <RadzenDropDown @bind-Value=@SelectedTesters Data=@TesterOptions
+                            Multiple=true AllowClear=true Placeholder="Select Testers" Chips=true Style="width: 100%; max-width: 400px;"
+                            MaxSelectedLabels="5"
+                            SelectAllText="Select All"
+                            Change="@OnChange"/>
+        </RadzenStack>
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenLabel Text="Time Period"/>
+            <RadzenDropDown @bind-Value=@SelectedTimePeriod Data=@TimePeriodOptions
+                            Multiple=false AllowClear=true Placeholder="Select Time Period" Chips=true Style="width: 100%; max-width: 400px;"
+                            Change="@OnChange"/>
+        </RadzenStack>
+        <RadzenButton Text="Apply" ></RadzenButton>
+    </RadzenStack>
+    
+
+    <RadzenChart ColorScheme="ColorScheme.Pastel">
+        @foreach (var item in DataSets)
+        {
+            <RadzenLineSeries Data="@item.Errors" CategoryProperty="Date" Title="@item.Name" ValueProperty="ErrorCount">
+                <RadzenSeriesDataLabels Visible="false"/>
+            </RadzenLineSeries>
+        }
+        <RadzenColumnOptions Margin="0"/>
+        <RadzenCategoryAxis Visible="true" Padding="20" Formatter="@FormatDate" FormatString="MMM">
+            
+        </RadzenCategoryAxis>
+        
+        <RadzenValueAxis Formatter="@FormatYAxis">
+            <RadzenGridLines Visible="true"/>
+            <RadzenAxisTitle Text="Number of Errors"/>
+        </RadzenValueAxis>
+    </RadzenChart>
+</div>
