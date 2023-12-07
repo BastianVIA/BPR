@@ -1,4 +1,5 @@
-﻿@inherits InformationContainerBase
+﻿@using Frontend.Components
+@inherits InformationContainerBase
 
 <div style="display: flex; width: 100%;">
     <div style="flex: 1;">
@@ -11,5 +12,6 @@
 
 <RadzenRow Style="position: absolute; bottom: 20px;">
     <RadzenButton Click="@(_ => OnChangeComponentBtnClick())" Text="Change Component" ButtonStyle="ButtonStyle.Primary"/>
+    <RadzenButton Click="@(_ => OnComponentHistoryBtnClick())" Text="Component History" ButtonStyle="ButtonStyle.Primary"/>
 </RadzenRow>
 

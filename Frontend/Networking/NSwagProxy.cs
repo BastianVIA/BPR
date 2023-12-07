@@ -103,4 +103,9 @@ public class NSwagProxy : INetwork
         };
         await Send(async () => await _client.PutNewPCBAInActuatorAsync(body));
     }
+
+    public async Task<GetPCBAChangesForActuatorResponse> GetComponentHistory(int woNo, int serialNo)
+    {
+        return await Send(async () => await _client.GetPCBAChangesForActuatorAsync(woNo, serialNo));
+    }
 }

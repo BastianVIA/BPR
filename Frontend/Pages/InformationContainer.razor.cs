@@ -20,4 +20,11 @@ public class InformationContainerBase : ComponentBase
         Actuator = await ActuatorDetailsModel.GetActuatorDetails(Actuator.WorkOrderNumber, Actuator.SerialNumber);
         StateHasChanged();
     }
+    
+    protected async Task OnComponentHistoryBtnClick()
+    {
+        await DialogService.OpenAsync<ComponentHistory>($"Component History",
+            new Dictionary<string, object>() { { "Actuator", Actuator } },
+            new DialogOptions() { Width = "800px", Height = "600px", Resizable = true, Draggable = true });
+    }
 }

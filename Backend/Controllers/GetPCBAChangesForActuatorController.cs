@@ -17,7 +17,7 @@ public class GetPCBAChangesForActuatorController : ControllerBase
     [HttpGet()]
     [Route("api/GetPCBAChangesForActuator/{woNo}/{serialNo}")]
     [Tags("Actuator")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorFromPCBAResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetPCBAChangesForActuatorResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(int woNo, int serialNo, CancellationToken cancellationToken)

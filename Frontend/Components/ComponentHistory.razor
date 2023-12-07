@@ -1,0 +1,10 @@
+@using Frontend.Entities
+@inherits ComponentHistoryBase
+
+<h3>PCBA</h3>
+<RadzenDataGrid TItem="ComponentChange" Data="@ComponentChanges">
+    <Columns>
+        <RadzenDataGridColumn TItem="ComponentChange" Property="OldPCBAUid" Title="Old PCBAUid"/>
+        <RadzenDataGridColumn TItem="ComponentChange" Property="RemovalTime" Title="Removal Time"/>
+    </Columns>
+</RadzenDataGrid>
