@@ -2,6 +2,16 @@
 
 public class TestError
 {
+    public string Tester { get; set; }
+    public int Bay { get; set; }
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
+    public DateTime TimeOccured { get; set; }
+    
+}
+
+public class TestError
+{
     public List<GetTestErrorsWithFilterErrorCodeAndMessage> PossibleErrorCodes { get; set; } = new();
     public List<GetTestErrorsWithFilterSingleLine> DataLines { get; set; } = new();
 

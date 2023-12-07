@@ -10,6 +10,8 @@ public static class ModelServices
        serviceCollection.AddScoped<IActuatorSearchModel, ActuatorSearchModel>();
        serviceCollection.AddScoped<ITestErrorModel, TestErrorModel>();
 
+       serviceCollection.AddScoped<ITestResultSearchModel, TestResultSearchModelModel>();
+       serviceCollection.AddScoped<IActuatorSearchCsvModel, ActuatorSearchCsvModel>();
 
        return serviceCollection;
     }

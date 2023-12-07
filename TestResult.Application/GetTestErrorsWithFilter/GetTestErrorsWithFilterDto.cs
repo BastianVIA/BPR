@@ -4,19 +4,37 @@ namespace TestResult.Application.GetTestErrorsWithFilter;
 
 public class GetTestErrorsWithFilterDto
 {
-    public List<int> PossibleErrorCodes { get; }
+    public List<GetTestErrorsWithFilterErrorCodeAndMessageDto> PossibleErrorCodes { get; }
     public List<GetTestErrorsWithFilterSingleLineDto> DataLines { get; }
-    public GetTestErrorsWithFilterDto(List<int> possibleErrorCodes, List<GetTestErrorsWithFilterSingleLineDto> dataLines)
+    public GetTestErrorsWithFilterDto(List<GetTestErrorsWithFilterErrorCodeAndMessageDto> possibleErrorCodes, List<GetTestErrorsWithFilterSingleLineDto> dataLines)
     {
         PossibleErrorCodes = possibleErrorCodes;
         DataLines = dataLines;
     }
-    public static GetTestErrorsWithFilterDto From(List<int> possibleErrorCodes,
+    public static GetTestErrorsWithFilterDto From(List<GetTestErrorsWithFilterErrorCodeAndMessageDto> possibleErrorCodes,
         List<GetTestErrorsWithFilterSingleLineDto> dataLines)
     {
         return new GetTestErrorsWithFilterDto(possibleErrorCodes, dataLines);
     }
 }
+
+public class GetTestErrorsWithFilterErrorCodeAndMessageDto
+{
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
+    private GetTestErrorsWithFilterErrorCodeAndMessageDto(){}
+    private GetTestErrorsWithFilterErrorCodeAndMessageDto(int errorCode, string errorMessage)
+    {
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+    }
+
+    public static GetTestErrorsWithFilterErrorCodeAndMessageDto From(int errorCode, string errorMessage)
+    {
+        return new GetTestErrorsWithFilterErrorCodeAndMessageDto(errorCode, errorMessage);
+    }
+}
+
 
 public class GetTestErrorsWithFilterSingleLineDto
 {
@@ -48,6 +66,5 @@ public class GetTestErrorsWithFilterSingleLineDto
 public class GetTestErrorsWithFilterTestErrorCodeAndAmountDto
 {
     public int ErrorCode { get; set; }
-    public string ErrorMessage { get; set; }
     public int AmountOfErrors { get; set; }
 }
