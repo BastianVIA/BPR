@@ -26,8 +26,8 @@ public static class TesterTimePeriodEnumMapper
         DateTime firstDayOfLastMonth = new DateTime(currentDate.Year, currentDate.Month - 1, 1).Date;
         DateTime firstDayOfThisMonth = new DateTime(currentDate.Year, currentDate.Month, 1).Date;
 
-        DateTime firstDayOfLastWeek = new DateTime();
-        DateTime firstDayOfThisWeek = new DateTime();
+        DateTime firstDayOfLastWeek = GetFirstDayOfLastWeek();
+        DateTime firstDayOfThisWeek = GetFirstDayThisLastWeek();
 
         DateTime yesterday = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day - 1).Date;
         DateTime startOfToday = currentDate.Date;
@@ -63,7 +63,7 @@ public static class TesterTimePeriodEnumMapper
 
             case TesterTimePeriodEnum.Yesterday:
 
-                return (yesterday,startOfToday, numberOfMinutesInAnHour);
+                return (yesterday, startOfToday, numberOfMinutesInAnHour);
 
             case TesterTimePeriodEnum.Today:
 
@@ -71,5 +71,29 @@ public static class TesterTimePeriodEnumMapper
             default:
                 throw new ArgumentOutOfRangeException(nameof(timePeriodEnum), timePeriodEnum, null);
         }
+    }
+
+    public static DateTime GetFirstDayOfLastWeek()
+    {
+        var now = DateTime.Now;
+        var lastWeek = now.AddDays(-7);
+        
+        while (lastWeek.DayOfWeek != DayOfWeek.Monday)
+        {
+            lastWeek = lastWeek.AddDays(-1);
+        }
+
+        return lastWeek.Date;
+    }
+
+    public static DateTime GetFirstDayThisLastWeek()
+    {
+        var now = DateTime.Now;
+        while (now.DayOfWeek != DayOfWeek.Monday)
+        {
+            now = now.AddDays(-1);
+        }
+
+        return now.Date;
     }
 }
