@@ -35,7 +35,6 @@ public class
             var numberOfTestResultsForInterval = GetNumberOfTestResultsForInterval(cancellationToken, startOfInterval, endOfInterval);
 
             var intervalErrors = errorsMatchingFilter
-                .Select(error => error)
                 .Where(error => error.TimeOccured >= startOfInterval && error.TimeOccured < endOfInterval)
                 .ToList();
             

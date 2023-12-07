@@ -25,4 +25,19 @@ public class GetTestErrorsWithFilterQuery : IQuery<GetTestErrorsWithFilterDto>
             throw new ArgumentException("Time interval cannot be 0 or negative");
         }
     }
+
+    public static GetTestErrorsWithFilterQuery Create(int timeIntervalBetweenRowsAsMinutes, DateTime startDat,
+        DateTime endDate, int? woNo= null, string? tester= null, int? bay= null, int? errorCode = null)
+    {
+        return new GetTestErrorsWithFilterQuery
+        {
+            TimeIntervalBetweenRowsAsMinutes = timeIntervalBetweenRowsAsMinutes,
+            StartDate = startDat,
+            EndDate = endDate,
+            WorkOrderNumber = woNo,
+            Tester = tester,
+            Bay = bay,
+            ErrorCode = errorCode
+        };
+    }
 }
