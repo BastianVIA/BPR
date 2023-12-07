@@ -18,6 +18,24 @@ public class GetTestErrorsWithFilterDto
     }
 }
 
+public class GetTestErrorsWithFilterErrorCodeAndMessage
+{
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
+    private GetTestErrorsWithFilterErrorCodeAndMessage(){}
+    private GetTestErrorsWithFilterErrorCodeAndMessage(int errorCode, string errorMessage)
+    {
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+    }
+
+    public static GetTestErrorsWithFilterErrorCodeAndMessage From(int errorCode, string errorMessage)
+    {
+        return new GetTestErrorsWithFilterErrorCodeAndMessage(errorCode, errorMessage);
+    }
+}
+
+
 public class GetTestErrorsWithFilterSingleLineDto
 {
     public List<GetTestErrorsWithFilterTestErrorCodeAndAmountDto> ListOfErrors { get; }

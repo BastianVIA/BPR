@@ -110,18 +110,16 @@ public class GetTestErrorsWithFilterSingleLine
 public class GetTestErrorsWithFilterErrorCodeAndAmount
 {
     public int ErrorCode { get; }
-    public string ErrorMessage { get; }
     public int AmountOfErrors { get; }
 
-    private GetTestErrorsWithFilterErrorCodeAndAmount(int errorCode, string errorMessage, int amountOfErrors)
+    private GetTestErrorsWithFilterErrorCodeAndAmount(int errorCode,  int amountOfErrors)
     {
         ErrorCode = errorCode;
-        ErrorMessage = errorMessage;
         AmountOfErrors = amountOfErrors;
     }
 
     public static GetTestErrorsWithFilterErrorCodeAndAmount From(int errorCode, string errorMessage, int amountOfErrors)
     {
-        return new GetTestErrorsWithFilterErrorCodeAndAmount(errorCode, errorMessage, amountOfErrors);
+        return new GetTestErrorsWithFilterErrorCodeAndAmount(errorCode, amountOfErrors);
     }
 }
