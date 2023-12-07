@@ -3,6 +3,7 @@ using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service;
 using Frontend.Service.AlertService;
+using Frontend.Services;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 
@@ -94,6 +95,7 @@ public class ActuatorSearchBase : ComponentBase
         await DialogService.OpenAsync<InformationContainer>($"Details",
             new Dictionary<string, object>() { { "Actuator", actuator } },
             new DialogOptions() { Width = "700px", Height = "530px", Resizable = true, Draggable = true });
+        await SearchActuators();
     }
 
     public async Task DownloadActuators()

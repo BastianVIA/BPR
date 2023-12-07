@@ -8,33 +8,43 @@ namespace Frontend.Components;
 
 public class ChangeComponentBase : ComponentBase
 {
-        [Parameter] public Actuator Actuator { get; set; }
-        
-        [Inject] public IAlertService AlertService { get; set; }
-        
-        [Inject] public IUpdateActuatorsPCBAModel UpdateActuatorsPcbaModel { get; set; }
-        protected int PCBAUid { get; set; }
+    [Parameter] public Actuator Actuator { get; set; }
 
-        protected string value;
-        protected IEnumerable<string> componentNames = new []{"PCBA"};
+    [Inject] public IAlertService AlertService { get; set; }
         
-        protected async Task OnSubmitComponentBtnClick()
-        {
-                switch (value)
+    [Inject] public IUpdateActuatorsPCBAModel UpdateActuatorsPcbaModel { get; set; }
+    protected int PCBAUid { get; set; }
+
+    protected string component;
+    protected IEnumerable<string> componentNames = new []{"PCBA"};
+
+    protected override Task OnInitializedAsync()
+    {
+        PCBAUid = Int32.Parse(Actuator.PCBA.PCBAUid);
+        return base.OnInitializedAsync();
+    }
+
+    protected async Task OnSubmitComponentBtnClick()
+    {
+        switch (component)
+        { 
+            case null:
+                AlertService.FireEvent(AlertStyle.Danger, "Missing component parameters");
+                break;
+            case "PCBA":
+                if (PCBAUid == 0) break;
+                try
                 {
-                        case null:
-                                AlertService.FireEvent(AlertStyle.Danger, "Missing component parameters");
-                                break;
-                        case "PCBA":
-                                if (PCBAUid > 0)
-                                {
-                                        await UpdateActuatorsPcbaModel.UpdateActuatorsPCBA(Actuator.WorkOrderNumber,
-                                                Actuator.SerialNumber, PCBAUid);
-                                        AlertService.FireEvent(AlertStyle.Success, "Jubiii!"); 
-                                }
-                                break;
+                    await UpdateActuatorsPcbaModel.UpdateActuatorsPCBA(Actuator.WorkOrderNumber,
+                        Actuator.SerialNumber, PCBAUid.ToString());
+                    AlertService.FireEvent(AlertStyle.Success, "PCBA change success"); 
                 }
-
-                return;
+                catch (Exception e)
+                {
+                    AlertService.FireEvent(AlertStyle.Danger, "PCBA change failed");
+                }
+                break;
         }
+        
+    }
 }

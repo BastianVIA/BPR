@@ -1,5 +1,5 @@
 ﻿using Frontend.Exceptions;
-using Frontend.Service;
+using Frontend.Services;
 
 namespace Frontend.Networking;
 
