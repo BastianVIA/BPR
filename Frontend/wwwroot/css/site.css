@@ -67,6 +67,11 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+.line-bottom-border {
+    border-bottom: #3a3d41; 
+    border-bottom-width: thin; 
+    border-bottom-style: solid;
+}    
 /*Grids*/
 .rz-column-title {
     font-weight: bold !important;

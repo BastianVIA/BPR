@@ -1,0 +1,80 @@
+﻿@using Frontend.Entities
+@inherits TestResultDetailsBase
+
+<RadzenRow>
+    <RadzenColumn Size="6">
+        <RadzenRow>
+            <RadzenRow>
+                <RadzenColumn>
+                    <RadzenLabel Text="Time Occured"/>
+                    <RadzenDatePicker ReadOnly="true" Name="TimeOccured" @bind-Value=@TestResult.TimeOccured class="w-100"/>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow Style="padding-bottom: 32px;" class="line-bottom-border">
+                <RadzenColumn>
+                    <RadzenLabel Text="Workorder Number"/>
+                    <RadzenNumeric ReadOnly="true" ShowUpDown="false" Name="WorkOrderNumber" @bind-Value=@TestResult.WorkOrderNumber class="w-100"/>
+                </RadzenColumn>
+                <RadzenColumn>
+                    <RadzenLabel Text="Serial Number"/>
+                    <RadzenNumeric ReadOnly="true" ShowUpDown="false" Name="SerialNumber" @bind-Value=@TestResult.SerialNumber class="w-100"/>
+                </RadzenColumn>
+                <RadzenColumn>
+                    <RadzenLabel Text="Bay"/>
+                    <RadzenNumeric ReadOnly="true" ShowUpDown="false" Name="Bay" @bind-Value=@TestResult.Bay class="w-100"/>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow Style="width: 80%">
+                <RadzenColumn>
+                    <RadzenLabel Text="Tester"/>
+                    <RadzenTextBox ReadOnly="true" Name="Tester" @bind-Value=@TestResult.Tester class="w-100"/>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow>
+                <RadzenRow>
+                    <RadzenText TextStyle="TextStyle.H5" Text="Results"/>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Min Servo Position"/>
+                        <RadzenTextBox ReadOnly="true" Name="MinServoPosition" @bind-Value=@TestResult.MinServoPosition class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Max Servo Position"/>
+                        <RadzenTextBox ReadOnly="true" Name="MaxServoPosition" @bind-Value=@TestResult.MaxServoPosition class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Min Buslink Position"/>
+                        <RadzenTextBox ReadOnly="true" Name="MinBuslinkPosition" @bind-Value=@TestResult.MinBuslinkPosition class="w-100"/>
+                    </RadzenColumn>
+                    <RadzenColumn>
+                        <RadzenLabel Text="Max Buslink Position"/>
+                        <RadzenTextBox ReadOnly="true" Name="MaxBuslinkPosition" @bind-Value=@TestResult.MaxBuslinkPosition class="w-100"/>
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn>
+                        <RadzenLabel Text="ServoStroke"/>
+                        <RadzenTextBox ReadOnly="true" Name="ServoStroke" @bind-Value=@TestResult.ServoStroke class="w-100"/>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenRow>
+        </RadzenRow>
+    </RadzenColumn>
+    <RadzenColumn Size="6">
+        <RadzenRow>
+            <RadzenText TextStyle="TextStyle.H6" Text="Test Errors"/> 
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenDataGrid TItem="TestError" Data="@TestResult.TestErrors">
+                <Columns>
+                    <RadzenDataGridColumn TItem="TestError" Property="Tester" Title="Test"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="Bay" Title="Bay"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="ErrorCode" Title="Error Code"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="ErrorMessage" Title="Error Message"/>
+                    <RadzenDataGridColumn TItem="TestError" Property="TimeOccured" Title="Time Occured"/>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenRow>
+    </RadzenColumn>
+</RadzenRow>

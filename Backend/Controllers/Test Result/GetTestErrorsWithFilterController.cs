@@ -32,10 +32,10 @@ public class GetTestErrorsWithFilterController : ControllerBase
 
 public class GetTestErrorsWithFilterResponse
 {
-    public List<int> PossibleErrorCodes { get; }
+    public List<GetTestErrorsWithFilterErrorCodeAndMessage> PossibleErrorCodes { get; }
     public List<GetTestErrorsWithFilterSingleLine> DataLines { get; }
 
-    public GetTestErrorsWithFilterResponse(List<int> possibleErrorCodes,
+    public GetTestErrorsWithFilterResponse(List<GetTestErrorsWithFilterErrorCodeAndMessage> possibleErrorCodes,
         List<GetTestErrorsWithFilterSingleLine> dataLines)
     {
         PossibleErrorCodes = possibleErrorCodes;
@@ -50,7 +50,31 @@ public class GetTestErrorsWithFilterResponse
             dataLines.Add(GetTestErrorsWithFilterSingleLine.From(singleLine));
         }
 
-        return new GetTestErrorsWithFilterResponse(dto.PossibleErrorCodes, dataLines);
+        List<GetTestErrorsWithFilterErrorCodeAndMessage> possibleErrorCodes = dto.PossibleErrorCodes.Select(code =>
+            GetTestErrorsWithFilterErrorCodeAndMessage.From(code.ErrorCode, code.ErrorMessage)).ToList();
+
+        return new GetTestErrorsWithFilterResponse(possibleErrorCodes, dataLines);
+    }
+}
+
+public class GetTestErrorsWithFilterErrorCodeAndMessage
+{
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
+
+    private GetTestErrorsWithFilterErrorCodeAndMessage()
+    {
+    }
+
+    private GetTestErrorsWithFilterErrorCodeAndMessage(int errorCode, string errorMessage)
+    {
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+    }
+
+    public static GetTestErrorsWithFilterErrorCodeAndMessage From(int errorCode, string errorMessage)
+    {
+        return new GetTestErrorsWithFilterErrorCodeAndMessage(errorCode, errorMessage);
     }
 }
 
@@ -62,7 +86,8 @@ public class GetTestErrorsWithFilterSingleLine
     public DateTime StartIntervalAsDate { get; }
     public DateTime EndIntervalAsDate { get; }
 
-    private GetTestErrorsWithFilterSingleLine(List<GetTestErrorsWithFilterErrorCodeAndAmount> listOfErrors, int totalErrors,
+    private GetTestErrorsWithFilterSingleLine(List<GetTestErrorsWithFilterErrorCodeAndAmount> listOfErrors,
+        int totalErrors,
         int totalTests,
         DateTime startIntervalAsDate, DateTime endIntervalAsDate)
     {
@@ -79,7 +104,7 @@ public class GetTestErrorsWithFilterSingleLine
         List<GetTestErrorsWithFilterErrorCodeAndAmount> testData = new();
         foreach (var testDataDto in singleLineDto.ListOfErrors)
         {
-            testData.Add(GetTestErrorsWithFilterErrorCodeAndAmount.From(testDataDto.ErrorCode, testDataDto.ErrorMessage,
+            testData.Add(GetTestErrorsWithFilterErrorCodeAndAmount.From(testDataDto.ErrorCode,
                 testDataDto.AmountOfErrors));
         }
 
@@ -92,18 +117,16 @@ public class GetTestErrorsWithFilterSingleLine
 public class GetTestErrorsWithFilterErrorCodeAndAmount
 {
     public int ErrorCode { get; }
-    public string ErrorMessage { get; }
     public int AmountOfErrors { get; }
 
-    private GetTestErrorsWithFilterErrorCodeAndAmount(int errorCode, string errorMessage, int amountOfErrors)
+    private GetTestErrorsWithFilterErrorCodeAndAmount(int errorCode, int amountOfErrors)
     {
         ErrorCode = errorCode;
-        ErrorMessage = errorMessage;
         AmountOfErrors = amountOfErrors;
     }
 
-    public static GetTestErrorsWithFilterErrorCodeAndAmount From(int errorCode, string errorMessage, int amountOfErrors)
+    public static GetTestErrorsWithFilterErrorCodeAndAmount From(int errorCode, int amountOfErrors)
     {
-        return new GetTestErrorsWithFilterErrorCodeAndAmount(errorCode, errorMessage, amountOfErrors);
+        return new GetTestErrorsWithFilterErrorCodeAndAmount(errorCode, amountOfErrors);
     }
 }
