@@ -46,6 +46,11 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         return ToDomain(actuatorTestModels);
     }
 
+    public async Task<int> GetNumberOfTestsPerformedInInterval(DateTime startTime, DateTime endTime)
+    {
+        return await Query().Where(model => model.TimeOccured > startTime && model.TimeOccured < endTime).CountAsync();
+    }
+
     private List<Domain.Entities.TestResult> ToDomain(List<TestResultModel> testResultModels)
     {
         List<Domain.Entities.TestResult> domainTestResults = new List<Domain.Entities.TestResult>();
