@@ -32,10 +32,10 @@ public class GetTestErrorsWithFilterController : ControllerBase
 
 public class GetTestErrorsWithFilterResponse
 {
-    public List<int> PossibleErrorCodes { get; }
+    public List<GetTestErrorsWithFilterErrorCodeAndMessage> PossibleErrorCodes { get; }
     public List<GetTestErrorsWithFilterSingleLine> DataLines { get; }
 
-    public GetTestErrorsWithFilterResponse(List<int> possibleErrorCodes,
+    public GetTestErrorsWithFilterResponse(List<GetTestErrorsWithFilterErrorCodeAndMessage> possibleErrorCodes,
         List<GetTestErrorsWithFilterSingleLine> dataLines)
     {
         PossibleErrorCodes = possibleErrorCodes;
@@ -50,8 +50,26 @@ public class GetTestErrorsWithFilterResponse
             dataLines.Add(GetTestErrorsWithFilterSingleLine.From(singleLine));
         }
 
-        return new GetTestErrorsWithFilterResponse(dto.PossibleErrorCodes, dataLines);
+        return new GetTestErrorsWithFilterResponse(new List<GetTestErrorsWithFilterErrorCodeAndMessage>(), dataLines);
     }
+}
+
+public class GetTestErrorsWithFilterErrorCodeAndMessage
+{
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
+    private GetTestErrorsWithFilterErrorCodeAndMessage(){}
+    private GetTestErrorsWithFilterErrorCodeAndMessage(int errorCode, string errorMessage)
+    {
+        ErrorCode = errorCode;
+        ErrorMessage = errorMessage;
+    }
+
+    public static GetTestErrorsWithFilterErrorCodeAndMessage From(int errorCode, string errorMessage)
+    {
+        return new GetTestErrorsWithFilterErrorCodeAndMessage(errorCode, errorMessage);
+    }
+
 }
 
 public class GetTestErrorsWithFilterSingleLine
