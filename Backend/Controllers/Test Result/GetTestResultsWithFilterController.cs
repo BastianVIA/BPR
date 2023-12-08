@@ -15,7 +15,7 @@ public class GetTestResultsWithFilterController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetTestResultsWithFilter")]
+    [Route("api/[controller]")]
     [Tags("Test Result")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTestResultsWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

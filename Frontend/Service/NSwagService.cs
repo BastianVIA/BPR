@@ -39,7 +39,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FileResponse> GetActuatorsWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<FileResponse> GetActuatorWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
@@ -59,7 +59,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ConfigurationResponse> GetConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Created</returns>
@@ -462,10 +462,10 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FileResponse> GetActuatorsWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<FileResponse> GetActuatorWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetActuatorsWithFilterAsCsv?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetActuatorWithFilterAsCsv?");
             if (workOrderNumber != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("WorkOrderNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(workOrderNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -849,10 +849,10 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ConfigurationResponse> ConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<ConfigurationResponse> GetConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/configuration");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetConfiguration");
 
             var client_ = _httpClient;
             var disposeClient_ = false;

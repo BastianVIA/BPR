@@ -15,7 +15,7 @@ public class GetPCBAChangesForActuatorController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetPCBAChangesForActuator/{woNo}/{serialNo}")]
+    [Route("api/[controller]/{woNo}/{serialNo}")]
     [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetPCBAChangesForActuatorResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

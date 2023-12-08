@@ -57,7 +57,7 @@ public class NSwagProxy : INetwork
 
     public async Task<ConfigurationResponse> GetConfiguration()
     {
-        return await Send(async () => await _client.ConfigurationAsync());
+        return await Send(async () => await _client.GetConfigurationAsync());
     }
 
     public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid,
@@ -84,7 +84,7 @@ public class NSwagProxy : INetwork
         string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
     {
         var response = await Send(async () =>
-            await _client.GetActuatorsWithFilterAsCsvAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
+            await _client.GetActuatorWithFilterAsCsvAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
                 productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
                 createdTimeEnd, columnsToInclude));
 

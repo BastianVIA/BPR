@@ -15,7 +15,7 @@ public class GetActuatorsWithFilterController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetActuatorsWithFilter")]
+    [Route("api/[controller]")]
     [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

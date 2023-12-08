@@ -15,7 +15,7 @@ public class GetActuatorFromPCBAController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetActuatorFromPCBA/{uid}")]
+    [Route("api/[controller]/{uid}")]
     [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorFromPCBAResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

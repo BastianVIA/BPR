@@ -19,8 +19,7 @@ public interface INetwork
 
     Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid);
     Task<GetPCBAChangesForActuatorResponse> GetComponentHistory(int woNo, int serialNo);
-
-
+    
     Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
         string? pcbaUid, string? itemNo, int? manufacturerNo,
         int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd, string? software,

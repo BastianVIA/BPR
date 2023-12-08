@@ -5,17 +5,17 @@ using TestResult.Application.GetStartUpAmounts;
 
 namespace Backend.Controllers.StartUp;
 
-public class StartUpController : ControllerBase
+public class GetStartUpAmountsController : ControllerBase
 {
     private readonly IQueryBus _bus;
 
-    public StartUpController(IQueryBus bus)
+    public GetStartUpAmountsController(IQueryBus bus)
     {
         _bus = bus;
     }
     
     [HttpGet]
-    [Route("api/GetStartUpAmounts")]
+    [Route("api/[controller]")]
     [Tags("StartUp")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetStartUpResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
