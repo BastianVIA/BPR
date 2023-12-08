@@ -113,6 +113,11 @@ public class NSwagProxy : INetwork
         return sd;
     }
 
+    public async Task<GetStartUpResponse> GetStartUpAmounts()
+    {
+        return await Send(async () => await _client.GetStartUpAmountsAsync());
+    }
+
     public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)
     {
         PutActuatorPCBARequest body = new PutActuatorPCBARequest

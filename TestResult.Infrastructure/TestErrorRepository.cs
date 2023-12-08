@@ -77,6 +77,11 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         
     }
 
+    public async Task<int> GetTotalTestErrorAmounts()
+    {
+        return Query().Count();
+    }
+
     private List<TestError> ToDomain(List<TestErrorModel> models)
     {
         List<TestError> domains = new();

@@ -75,6 +75,21 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         return allTestersIncludingErrors.Distinct().ToList();
     }
 
+    public async Task<int> GetTotalTestResultAmount()
+    {
+        return Query().Count();
+    }
+
+    public async Task<int> GetTotalTestResultWithErrorsAmount()
+    {
+        return Query().Include(e => e.TestErrors).Count(e => e.TestErrors.Count > 0);
+    }
+
+    public async Task<int> GetTotalTestResultWithoutErrorsAmount()
+    {
+        return Query().Include(e => e.TestErrors).Count(e => e.TestErrors.Count == 0);
+    }
+
     private List<Domain.Entities.TestResult> ToDomain(List<TestResultModel> testResultModels)
     {
         List<Domain.Entities.TestResult> domainTestResults = new List<Domain.Entities.TestResult>();

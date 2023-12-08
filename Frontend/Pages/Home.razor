@@ -1,9 +1,47 @@
 @page "/"
+@inherits HomeBase
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, user!</h1>
+<RadzenCard Class="rz-my-12 rz-mx-auto" Style="max-width: 800px">
+    
+    <RadzenRow Style="margin-bottom: 15px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
+        <RadzenText TextStyle="TextStyle.H4">Actuator</RadzenText>
+    </RadzenRow>
 
-<RadzenLink Path="PCBAInfo" Icon="pageview" Style="color: #0c63e4" Text="Find PCBA info" />
+    <RadzenRow Style="margin-bottom: 30px" JustifyContent="JustifyContent.Center">
+        <h5>Total Actuators: @ActuatorAmount</h5>
+    </RadzenRow>
+    
+    <RadzenRow Style="margin-bottom: 5px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
+            <RadzenText TextStyle="TextStyle.H4">First Acceptance Test</RadzenText>
+        </RadzenRow>
+    
+        <RadzenRow JustifyContent="JustifyContent.Center">
+            <RadzenChart>
+                <RadzenPieSeries Data="@FirstAcceptanceTests" Title="FirstAcceptanceTest" CategoryProperty="Status" ValueProperty="Amount">
+                    <RadzenSeriesDataLabels Visible="false"/>
+                </RadzenPieSeries>
+            </RadzenChart>
+        </RadzenRow>
+        <RadzenRow JustifyContent="JustifyContent.Center">
+            <h5>First Acceptance Rate: @FirstAcceptanceRate.ToString("N1") %</h5>
+        </RadzenRow>
 
-<RadzenLink Path="ActuatorsInfoPage" Icon="pageview" Style="color: #0c63e4" Text="Find Actuator info" />
+    <RadzenRow Style="margin-bottom: 5px; border-bottom: #3a3d41; border-bottom-width: thin; border-bottom-style: solid;">
+        <RadzenText TextStyle="TextStyle.H4">Total Test</RadzenText>
+    </RadzenRow>
+
+    <RadzenRow JustifyContent="JustifyContent.Center">
+        <RadzenChart>
+            <RadzenPieSeries Data="@Tests" Title="Tests" CategoryProperty="Status" ValueProperty="Amount">
+                <RadzenSeriesDataLabels Visible="false"/>
+            </RadzenPieSeries>
+        </RadzenChart>
+    </RadzenRow>
+    <RadzenRow JustifyContent="JustifyContent.Center">
+        <h5>Test success rate: @SuccessRate.ToString("N1") %</h5>
+    </RadzenRow>
+
+</RadzenCard>
+

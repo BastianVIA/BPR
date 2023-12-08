@@ -129,6 +129,11 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         return ToDomain(result);
     }
 
+    public async Task<int> GetTotalActuatorAmount()
+    {
+        return Query().Count();
+    }
+
     private Actuator ToDomain(ActuatorModel actuatorModel)
     {
         var actuatorId = CompositeActuatorId.From(actuatorModel.WorkOrderNumber, actuatorModel.SerialNumber);

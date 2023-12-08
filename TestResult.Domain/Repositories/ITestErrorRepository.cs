@@ -9,4 +9,5 @@ public interface ITestErrorRepository
         int? bay, int? errorCode,
         DateTime? startDate, DateTime? endDate);
     Task<List<TestError>> GetAllErrorsForTesterSince(List<string> testers, DateTime startDate, DateTime endDate);
+    Task<int> GetTotalTestErrorAmounts();
 }

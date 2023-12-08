@@ -6,4 +6,7 @@ public interface ITestResultRepository
     Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo, string? tester, int? bay,DateTime? startDate, DateTime? endDate);
     Task<int> GetNumberOfTestsPerformedInInterval(DateTime startTime, DateTime endTime);
     Task<List<string>> GetAllTesters();
+    Task<int> GetTotalTestResultAmount();
+    Task<int> GetTotalTestResultWithErrorsAmount();
+    Task<int> GetTotalTestResultWithoutErrorsAmount();
 }
