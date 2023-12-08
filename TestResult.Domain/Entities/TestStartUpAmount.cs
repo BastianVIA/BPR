@@ -19,6 +19,4 @@ public class TestStartUpAmount
         return new TestStartUpAmount(testResultAmount, testErrorAmount, testResultWithErrorAmount,
             testResultWithoutErrorAmount);
     }
-
-    
 }
