@@ -11,9 +11,9 @@ public class DbTransaction : IDbTransaction
         _scheduler = scheduler;
     }
 
-    public Task CommitAsync(CancellationToken cancellationToken)
+    public async Task CommitAsync(CancellationToken cancellationToken)
     {
-        _scheduler.PublishEvents();
-        return _dbContext.SaveChangesAsync(cancellationToken);
+        await _scheduler.PublishEvents();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

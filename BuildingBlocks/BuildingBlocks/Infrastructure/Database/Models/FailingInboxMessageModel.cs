@@ -2,6 +2,6 @@
 
 namespace BuildingBlocks.Infrastructure.Database.Models;
 
-public class InboxMessageModel : BaseInboxMessageModel
+public class FailingInboxMessageModel : BaseInboxMessageModel
 {
 }

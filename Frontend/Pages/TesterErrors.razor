@@ -1,0 +1,63 @@
+﻿@page "/TesterErrors"
+@inherits TesterErrorsBase
+<h3>Tester Errors</h3>
+
+<div style="width: 85%;">
+    <RadzenRow JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
+        <RadzenColumn>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenStack Orientation="Orientation.Vertical">
+                    <RadzenLabel Text="Cells"/>
+                    <RadzenDropDown @bind-Value=@SelectedTesters Data=@TesterOptions
+                                    Multiple=true AllowClear=true Placeholder="Select Testers" Chips=true Style="width: 100%; max-width: 400px;"
+                                    MaxSelectedLabels="2"
+                                    SelectAllText="Select All"
+                                    Change="@OnUpdateGraph"/>
+                </RadzenStack>
+                <RadzenStack Orientation="Orientation.Vertical">
+                    <RadzenLabel Text="Time Period"/>
+                    <RadzenDropDown @bind-Value=@SelectedTimePeriod Data=@TimePeriodOptions
+                                    Multiple=false Placeholder="Select Time Period" Chips=true Style="width: 100%; max-width: 400px;"
+                                    Change="@OnUpdateGraph"/>
+                </RadzenStack>
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    
+    @if (SelectedTimePeriod.Equals("Today") || SelectedTimePeriod.Equals("Yesterday"))
+    {
+        <RadzenChart ColorScheme="ColorScheme.Pastel" Style="height: 700px">
+            @foreach (var item in DataSets)
+            {
+                <RadzenLineSeries Data="@item.Errors" CategoryProperty="DateString" Title="@item.Name" ValueProperty="ErrorCount">
+                    <RadzenSeriesDataLabels Visible="false"/>
+                </RadzenLineSeries>
+            }
+            <RadzenLegend Position="LegendPosition.Left"/>
+            <RadzenColumnOptions Margin="0"/>
+            <RadzenCategoryAxis Visible="true" Padding="20" Formatter="@FormatDateToday" Step="@FormatXAxisStep"/>
+            <RadzenValueAxis Formatter="@FormatYAxis" Min="0" Step="5">
+                <RadzenGridLines Visible="true"/>
+                <RadzenAxisTitle Text="Number of Errors"/>
+            </RadzenValueAxis>
+        </RadzenChart>
+    }
+    else
+    {
+        <RadzenChart ColorScheme="ColorScheme.Pastel" Style="height: 700px">
+            @foreach (var item in DataSets)
+            {
+                <RadzenLineSeries Data="@item.Errors" CategoryProperty="DateDouble" Title="@item.Name" ValueProperty="ErrorCount">
+                    <RadzenSeriesDataLabels Visible="false"/>
+                </RadzenLineSeries>
+            }
+            <RadzenLegend Position="LegendPosition.Left"/>
+            <RadzenColumnOptions Margin="0"/>
+            <RadzenCategoryAxis Visible="true" Padding="20" Formatter="@FormatDate" Step="@FormatXAxisStep"/>
+            <RadzenValueAxis Formatter="@FormatYAxis" Min="0" Step="5">
+                <RadzenGridLines Visible="true"/>
+                <RadzenAxisTitle Text="Number of Errors"/>
+            </RadzenValueAxis>
+        </RadzenChart>
+    }
+</div>

@@ -51,6 +51,20 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         return await Query().Where(model => model.TimeOccured > startTime && model.TimeOccured < endTime).CountAsync();
     }
 
+    public async Task<List<string>> GetAllTesters()
+    {
+        var testeresForResult = await Query().Select(model => model.Tester).Distinct().ToListAsync();
+
+        var testeresForError =
+            await QueryOther<TestErrorModel>().Select(model => model.Tester).Distinct().ToListAsync();
+
+        List<string> allTestersIncludingErrors = new();
+        allTestersIncludingErrors.AddRange(testeresForResult);
+        allTestersIncludingErrors.AddRange(testeresForError);
+        
+        return allTestersIncludingErrors.Distinct().ToList();
+    }
+
     private List<Domain.Entities.TestResult> ToDomain(List<TestResultModel> testResultModels)
     {
         List<Domain.Entities.TestResult> domainTestResults = new List<Domain.Entities.TestResult>();
@@ -67,7 +81,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         var list = testResultModel.TestErrors.Select(error => new TestError(error.Id, error.Tester, error.Bay, error.ErrorCode, error.ErrorMessage, error.TimeOccured)).ToList();
 
         return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
-            testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel. MinServoPosition,
+            testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
             testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
             testResultModel.ServoStroke, testResultModel.TimeOccured, list);
     }

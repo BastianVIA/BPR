@@ -1,19 +1,30 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using BuildingBlocks.Domain;
-using BuildingBlocks.Infrastructure;
+﻿using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
-using BuildingBlocks.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Integration.Inbox;
 
-public class Inbox : BaseRepository<InboxMessageModel>, IInbox
+public class InboxRepository<TEntity> : BaseRepository<TEntity>, IFailingInbox
+    where TEntity : BaseInboxMessageModel, new()
 {
-    public Inbox(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler) { }
+    public InboxRepository(ApplicationDbContext dbContext, IScheduler scheduler) : base(dbContext, scheduler)
+    {
+    }
+
+    public async Task<InboxMessage> GetById(Guid id)
+    {
+        var message = await Query().FirstOrDefaultAsync(model => model.Id == id);
+        if (message is null)
+        {
+            throw new KeyNotFoundException($"Could not fine InboxMessage for id {id}");
+        }
+
+        return ToDomain(message);
+    }
 
     public async Task Add(InboxMessage inboxMessage)
     {
-        await AddAsync(FromDomain(inboxMessage), new List<IDomainEvent>());
+        await AddAsync(FromDomain(inboxMessage), inboxMessage.GetDomainEvents());
     }
 
     public async Task<IEnumerable<InboxMessage>> GetUnProcessedMessages()
@@ -30,11 +41,13 @@ public class Inbox : BaseRepository<InboxMessageModel>, IInbox
         toUpdate.ProcessedDate = inboxMessage.ProcessedDate;
         toUpdate.FailedAttempts = inboxMessage.FailedAttempts;
         toUpdate.FailureReason = inboxMessage.FailureReason;
-        await UpdateAsync(toUpdate, new List<IDomainEvent>());    }
+        toUpdate.IsFailing = inboxMessage.IsFailing;
+        await UpdateAsync(toUpdate, inboxMessage.GetDomainEvents());
+    }
 
-    private InboxMessageModel FromDomain(InboxMessage inboxMessage)
+    private TEntity FromDomain(InboxMessage inboxMessage)
     {
-        return new InboxMessageModel
+        return new TEntity()
         {
             Id = inboxMessage.Id,
             OccurredOn = inboxMessage.OccurredOn,
@@ -43,11 +56,12 @@ public class Inbox : BaseRepository<InboxMessageModel>, IInbox
             Payload = inboxMessage.Payload,
             FailedAttempts = inboxMessage.FailedAttempts,
             ProcessedDate = inboxMessage.ProcessedDate,
-            FailureReason = inboxMessage.FailureReason
+            FailureReason = inboxMessage.FailureReason,
+            IsFailing = inboxMessage.IsFailing
         };
     }
-    
-    private IEnumerable<InboxMessage> ToDomain(IEnumerable<InboxMessageModel> inboxMessageModels)
+
+    private IEnumerable<InboxMessage> ToDomain(IEnumerable<TEntity> inboxMessageModels)
     {
         List<InboxMessage> domainMessages = new();
         foreach (var inboxMessageModel in inboxMessageModels)
@@ -58,7 +72,7 @@ public class Inbox : BaseRepository<InboxMessageModel>, IInbox
         return domainMessages;
     }
 
-    private InboxMessage ToDomain(InboxMessageModel inboxMessage)
+    private InboxMessage ToDomain(TEntity inboxMessage)
     {
         return new InboxMessage(
             inboxMessage.Id,
@@ -68,6 +82,7 @@ public class Inbox : BaseRepository<InboxMessageModel>, IInbox
             inboxMessage.Payload,
             inboxMessage.ProcessedDate,
             inboxMessage.FailedAttempts,
-            inboxMessage.FailureReason);
+            inboxMessage.FailureReason,
+            inboxMessage.IsFailing);
     }
 }

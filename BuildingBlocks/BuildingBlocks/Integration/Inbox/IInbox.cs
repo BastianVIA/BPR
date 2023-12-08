@@ -2,6 +2,7 @@
 
 public interface IInbox
 {
+    Task<InboxMessage> GetById(Guid id);
     Task Add(InboxMessage inboxMessage);
     Task<IEnumerable<InboxMessage>> GetUnProcessedMessages();
     Task Update(InboxMessage inboxMessage);

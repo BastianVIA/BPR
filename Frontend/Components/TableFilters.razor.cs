@@ -39,6 +39,10 @@ public class TableFiltersBase : ComponentBase
 
     private List<CsvProperties> GetSelectedAsListOfEnums()
     {
+        if (CurrentFilters is null)
+        {
+            return new List<CsvProperties>();
+        }
         return CurrentFilters.Select(key => _enumMap[key]).ToList();
     }
 

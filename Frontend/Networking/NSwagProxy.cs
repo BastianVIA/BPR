@@ -74,7 +74,8 @@ public class NSwagProxy : INetwork
     public async Task<GetTestResultsWithFilterResponse> GetTestResultWithFilter(int? woNo, int? serialNo,
         string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        return await Send(async () => await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, startDate,endDate));
+        return await Send(async () =>
+            await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, startDate, endDate));
     }
 
     public async Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
@@ -90,6 +91,17 @@ public class NSwagProxy : INetwork
         using MemoryStream memoryStream = new();
         await response.Stream.CopyToAsync(memoryStream);
         return memoryStream.ToArray();
+    }
+
+    public async Task<GetTestErrorForTestersResponse> GetTestErrorForTesters(List<string> testers,
+        TesterTimePeriodEnum timePeriod)
+    {
+        return await Send(async () => await _client.GetTestErrorForTestersAsync(testers, timePeriod));
+    }
+
+    public async Task<GetAllTestersResponse> GetAllCellNames()
+    {
+        return await Send(async () => await _client.GetAllTestersAsync());
     }
 
     public async Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? wrkOrderNumber, string? tester,

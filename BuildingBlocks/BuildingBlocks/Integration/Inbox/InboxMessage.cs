@@ -1,9 +1,12 @@
-﻿using BuildingBlocks.Application;
+﻿using System.ComponentModel.DataAnnotations;
+using BuildingBlocks.Application;
+using BuildingBlocks.Domain;
+using BuildingBlocks.Integration.Inbox.Events;
 using BuildingBlocks.Integration.Inbox.Serialization;
 
 namespace BuildingBlocks.Integration.Inbox;
 
-public class InboxMessage
+public class InboxMessage : Entity
 {
     public Guid Id { get; }
     public Guid IntegrationEventId { get; }
@@ -13,6 +16,7 @@ public class InboxMessage
     public DateTime? ProcessedDate { get; private set; }
     public int FailedAttempts { get; private set; }
     public string? FailureReason { get; private set; }
+    public bool IsFailing { get; private set; }
 
     private InboxMessage() { }
 
@@ -27,7 +31,7 @@ public class InboxMessage
 
     //This constructor is only to be used when getting from the database
     public InboxMessage(Guid id, DateTime occurredOn, Guid integrationEventId, string messageType, string payload,
-        DateTime? processedDate, int failedAttempts, string? failureReason)
+        DateTime? processedDate, int failedAttempts, string? failureReason, bool isFailing)
     {
         Id = id;
         IntegrationEventId = integrationEventId;
@@ -37,6 +41,7 @@ public class InboxMessage
         ProcessedDate = processedDate;
         FailedAttempts = failedAttempts;
         FailureReason = failureReason;
+        IsFailing = isFailing;
     }
 
     internal void Processed()
@@ -48,6 +53,23 @@ public class InboxMessage
     {
         FailureReason = failureReason;
         FailedAttempts++;
+        if (FailedAttempts > 1 && !IsFailing)
+        {
+            ProcessedDate = DateTime.Now;
+            AddDomainEvent(new InboxMessageExitedFailLimitDomainEvent(Id));
+        }
+    }
+
+    internal void MarkFailedBackToAsNotProcessed()
+    {
+        if (ProcessedDate == null)
+        {
+            throw new ValidationException(
+                "Cannot MarkFailedBackToAsNotProcessed, on something that has not yet been processed");
+        }
+
+        ProcessedDate = null;
+        IsFailing = true;
     }
 
     public static InboxMessage From(ICommand cmd, Guid integrationEventId)
