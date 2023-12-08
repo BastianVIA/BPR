@@ -19,6 +19,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         {
             throw new ArgumentException("Need to have WrokOrderNumber and SerialNumber for creation");
         }
+
         var testResult = await GetTestResultModel(testError.WorkOrderNumber.Value, testError.SerialNumber.Value);
         var testErrorModel = FromDomain(testError);
         testErrorModel.TestResultId = testResult.Id;
@@ -29,7 +30,9 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         int? bay, int? errorCode,
         DateTime? startDate, DateTime? endDate)
     {
-        var queryBuilder = Query();
+        var queryBuilder = Query()
+            .Include(model => model.ErrorCodeModel)
+            .AsQueryable();
         if (woNo != null)
         {
             var testResultIds = await QueryOther<TestResultModel>()
@@ -69,13 +72,13 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         return ToDomain(errorModels);
     }
 
-    public async Task<List<TestError>> GetAllErrorsForTesterSince(List<string> testers, DateTime startDate, DateTime endDate)
+    public async Task<List<TestError>> GetAllErrorsForTesterSince(List<string> testers, DateTime startDate,
+        DateTime endDate)
     {
         var testErrors = await Query().Where(model => model.TimeOccured > startDate && model.TimeOccured < endDate)
             .Where(model => testers.Contains(model.Tester))
             .ToListAsync();
         return ToDomain(testErrors);
-        
     }
 
     private List<TestError> ToDomain(List<TestErrorModel> models)
@@ -91,19 +94,24 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
 
     private TestError ToDomain(TestErrorModel model)
     {
-        return new TestError(model.Id,  model.Tester, model.Bay
-            , model.ErrorCode, model.ErrorMessage, model.TimeOccured);
+        return new TestError(model.Id, model.Tester, model.Bay
+            , model.ErrorCode, model.ErrorCodeModel.ErrorMessage, model.TimeOccured);
     }
 
     private TestErrorModel FromDomain(TestError testError)
     {
+        var errorCodeMode = new TestErrorCodeModel()
+        {
+            ErrorCode = testError.ErrorCode,
+            ErrorMessage = testError.ErrorMessage
+        };
         var testErrorModel = new TestErrorModel()
         {
             Tester = testError.Tester,
             Bay = testError.Bay,
             ErrorCode = testError.ErrorCode,
-            ErrorMessage = testError.ErrorMessage,
-            TimeOccured = testError.TimeOccured
+            TimeOccured = testError.TimeOccured,
+            ErrorCodeModel = errorCodeMode,
         };
         return testErrorModel;
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildingBlocks.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231208153624_AddingModelsToNormalize")]
+    partial class AddingModelsToNormalize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,9 +32,13 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<int>("SerialNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("ArticleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ArticleNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CommunicationProtocol")
                         .IsRequired()
@@ -45,8 +52,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("WorkOrderNumber", "SerialNumber");
-
-                    b.HasIndex("ArticleNumber");
 
                     b.HasIndex("PCBAUid");
 
@@ -218,6 +223,10 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                     b.Property<int>("ErrorCode")
                         .HasColumnType("int");
 
+                    b.Property<string>("ErrorMessage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("TestResultId")
                         .HasColumnType("uniqueidentifier");
 
@@ -229,8 +238,6 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ErrorCode");
 
                     b.HasIndex("TestResultId");
 
@@ -286,19 +293,11 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.ActuatorModel", b =>
                 {
-                    b.HasOne("BuildingBlocks.Infrastructure.Database.Models.ArticleModel", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleNumber")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BuildingBlocks.Infrastructure.Database.Models.PCBAModel", "PCBA")
                         .WithMany()
                         .HasForeignKey("PCBAUid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Article");
 
                     b.Navigation("PCBA");
                 });
@@ -324,19 +323,11 @@ namespace BuildingBlocks.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.TestErrorModel", b =>
                 {
-                    b.HasOne("BuildingBlocks.Infrastructure.Database.Models.TestErrorCodeModel", "ErrorCodeModel")
-                        .WithMany()
-                        .HasForeignKey("ErrorCode")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BuildingBlocks.Infrastructure.Database.Models.TestResultModel", null)
                         .WithMany("TestErrors")
                         .HasForeignKey("TestResultId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ErrorCodeModel");
                 });
 
             modelBuilder.Entity("BuildingBlocks.Infrastructure.Database.Models.TestResultModel", b =>

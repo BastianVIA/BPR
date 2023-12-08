@@ -16,9 +16,23 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<PCBAModel>().HasKey(p => p.Uid);
         modelBuilder.Entity<InboxMessageModel>().HasKey(i => i.Id);
         modelBuilder.Entity<FailingInboxMessageModel>().HasKey(i => i.Id);
+        modelBuilder.Entity<ArticleModel>().HasKey(a => a.ArticleNumber);
+        modelBuilder.Entity<TestErrorCodeModel>().Property(e => e.ErrorCode).ValueGeneratedNever();
+        modelBuilder.Entity<TestErrorCodeModel>().HasKey(e => e.ErrorCode);
         
+        BuildActuatorModel(modelBuilder);
         BuildActuatorPCBAHistoryModel(modelBuilder);
         BuildTestModel(modelBuilder);
+    }
+
+    private void BuildActuatorModel(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ActuatorModel>()
+            .HasOne(a => a.Article)
+            .WithMany()
+            .HasForeignKey(a => a.ArticleNumber)
+            .OnDelete(DeleteBehavior.Restrict);
+
     }
 
     private static void BuildActuatorPCBAHistoryModel(ModelBuilder modelBuilder)
@@ -34,7 +48,7 @@ public class ApplicationDbContext : DbContext
             .WithMany()
             .HasForeignKey(a => a.PCBAUid)
             .OnDelete(DeleteBehavior.Restrict);
-
+        
         modelBuilder.Entity<ActuatorPCBAHistoryModel>().HasKey(a => new
             { a.WorkOrderNumber, a.SerialNumber, a.PCBAUid, a.RemovalTime }).IsClustered(false);
     }
@@ -42,6 +56,13 @@ public class ApplicationDbContext : DbContext
     private static void BuildTestModel(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TestErrorModel>().HasKey(t => t.Id);
+        
+        modelBuilder.Entity<TestErrorModel>()
+            .HasOne(e => e.ErrorCodeModel)
+            .WithMany()
+            .HasForeignKey(e => e.ErrorCode)
+            .OnDelete(DeleteBehavior.Restrict);
+        
         modelBuilder.Entity<TestResultModel>().HasKey(t => t.Id);
         modelBuilder.Entity<TestResultModel>()
             .HasMany(t => t.TestErrors)
