@@ -2,7 +2,7 @@
 using Frontend.Entities;
 using Microsoft.AspNetCore.Components;
 
-namespace Frontend.Components;
+namespace Frontend.Components.Validators;
 
 public class ProductionDateCodeInputValidatorBase : ComponentBase
 {

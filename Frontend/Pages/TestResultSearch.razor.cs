@@ -15,6 +15,8 @@ public class TestResultSearchBase : ComponentBase
         public int? SerialNumber { get; set; }
         public string? Tester { get; set; }
         public int? Bay { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public ITestResultSearchModel TestResultSearchModel { get; set; }
@@ -35,7 +37,7 @@ public class TestResultSearchBase : ComponentBase
     {
         try
         {
-            TestResults = await TestResultSearchModel.GetTestResultsWithFilter(SearchTestResult.WorkOrderNumber, SearchTestResult.SerialNumber, SearchTestResult.Tester, SearchTestResult.Bay);
+            TestResults = await TestResultSearchModel.GetTestResultsWithFilter(SearchTestResult.WorkOrderNumber, SearchTestResult.SerialNumber, SearchTestResult.Tester, SearchTestResult.Bay, SearchTestResult.StartDate, SearchTestResult.EndDate);
         }
         catch (Exception e)
         {

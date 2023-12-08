@@ -1,20 +1,5 @@
 ﻿@using Frontend.Entities
-@using Radzen
-@using Radzen.Blazor
 @inherits ActuatorInformationBase
-
-<RadzenRow>
-    <RadzenTemplateForm TItem="Actuator" Data=@Actuator>
-        <RadzenRow>
-            <RadzenColumn>
-                <WorkOrderNumberInputValidator Actuator="@Actuator"/>
-            </RadzenColumn>
-            <RadzenColumn>
-                <SerialNumberInputValidator Actuator="@Actuator"/>
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenTemplateForm>
-</RadzenRow>
 
 <RadzenRow>
     

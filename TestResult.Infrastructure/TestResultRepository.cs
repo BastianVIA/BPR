@@ -2,6 +2,7 @@ using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using TestResult.Domain.Entities;
 using TestResult.Domain.Repositories;
 
 namespace TestResult.Infrastructure;
@@ -20,7 +21,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
     public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo,
         string? tester, int? bay)
     {
-        var queryBuilder = Query();
+        var queryBuilder = Query().Include(t => t.TestErrors).AsQueryable();
         if (woNo != null)
         {
             queryBuilder = queryBuilder.Where(m => m.WorkOrderNumber == woNo);
@@ -41,9 +42,13 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
             queryBuilder = queryBuilder.Where(m => m.Bay == bay);
         }
 
-
         var actuatorTestModels = await queryBuilder.ToListAsync();
         return ToDomain(actuatorTestModels);
+    }
+
+    public async Task<int> GetNumberOfTestsPerformedInInterval(DateTime startTime, DateTime endTime)
+    {
+        return await Query().Where(model => model.TimeOccured > startTime && model.TimeOccured < endTime).CountAsync();
     }
 
     private List<Domain.Entities.TestResult> ToDomain(List<TestResultModel> testResultModels)
@@ -59,10 +64,12 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
 
     private Domain.Entities.TestResult ToDomain(TestResultModel testResultModel)
     {
+        var list = testResultModel.TestErrors.Select(error => new TestError(error.Id, error.Tester, error.Bay, error.ErrorCode, error.ErrorMessage, error.TimeOccured)).ToList();
+
         return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
             testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel. MinServoPosition,
             testResultModel.MaxServoPosition, testResultModel.MinBuslinkPosition, testResultModel.MaxBuslinkPosition,
-            testResultModel.ServoStroke, testResultModel.TimeOccured);
+            testResultModel.ServoStroke, testResultModel.TimeOccured, list);
     }
 
     private TestResultModel FromDomain(Domain.Entities.TestResult testResult)

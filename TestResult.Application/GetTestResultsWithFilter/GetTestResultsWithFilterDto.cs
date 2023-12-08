@@ -1,4 +1,6 @@
-﻿namespace TestResult.Application.GetTestResultsWithFilter;
+﻿using TestResult.Domain.Entities;
+
+namespace TestResult.Application.GetTestResultsWithFilter;
 
 public class GetTestResultsWithFilterDto
 {
@@ -37,9 +39,8 @@ public class TestResultsWithFilterDTO
     public string MaxBuslinkPosition { get; private set; }
     public string ServoStroke { get; private set; }
     public DateTime TimeOccured { get; private set; }
-
+    public List<TestError> TestErrors { get; private set; }
     
-
     internal static TestResultsWithFilterDTO From(TestResult.Domain.Entities.TestResult testResult)
     {
         return new TestResultsWithFilterDTO
@@ -53,7 +54,8 @@ public class TestResultsWithFilterDTO
             MinBuslinkPosition = testResult.MinBuslinkPosition,
             MaxBuslinkPosition = testResult.MaxBuslinkPosition,
             ServoStroke = testResult.ServoStroke,
-            TimeOccured = testResult.TimeOccured
+            TimeOccured = testResult.TimeOccured,
+            TestErrors = testResult.TestErrors ?? new List<TestError>()
         };
     }
 }

@@ -11,12 +11,24 @@ public class TestResultSearchModelModel : ITestResultSearchModel
     {
         _network = network;
     }
-    public async Task<List<TestResult>> GetTestResultsWithFilter(int? woNo, int? serialNo, string? tester, int? bay)
+    public async Task<List<TestResult>> GetTestResultsWithFilter(int? woNo, int? serialNo, string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        var response = await _network.GetTestResultWithFilter(woNo, serialNo, tester, bay);
+        var response = await _network.GetTestResultWithFilter(woNo, serialNo, tester, bay, startDate, endDate);
         var list = new List<TestResult>();
         foreach (var testResult in response.ActuatorTest)
         {
+            var errors = new List<TestError>();
+            foreach (var error in testResult.TestErrors)
+            {
+                errors.Add(new TestError()
+                {
+                    Bay = error.Bay,
+                    Tester = error.Tester,
+                    TimeOccured = error.TimeOccured,
+                    ErrorCode = error.ErrorCode,
+                    ErrorMessage = error.ErrorMessage
+                });
+            }
             list.Add(new TestResult()
             {
                 WorkOrderNumber = testResult.WorkOrderNumber,
@@ -29,11 +41,10 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 MinServoPosition = testResult.MinServoPosition,
                 ServoStroke = testResult.ServoStroke,
                 TimeOccured = testResult.TimeOccured,
-                TestErrors = new List<TestError>()
+                TestErrors = errors
             });
             
         }
-
         return list;
     }
 }

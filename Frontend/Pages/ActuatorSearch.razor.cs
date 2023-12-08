@@ -94,6 +94,7 @@ public class ActuatorSearchBase : ComponentBase
         await DialogService.OpenAsync<InformationContainer>($"Details",
             new Dictionary<string, object>() { { "Actuator", actuator } },
             new DialogOptions() { Width = "700px", Height = "530px", Resizable = true, Draggable = true });
+        await SearchActuators();
     }
 
     public async Task DownloadActuators()
