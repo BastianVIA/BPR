@@ -3,7 +3,7 @@ using Application.GetActuatorsWithFilterAsCSV;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.Actuator;
 
 [ApiController]
 public class GetActuatorWithFilterAsCsvController : ControllerBase

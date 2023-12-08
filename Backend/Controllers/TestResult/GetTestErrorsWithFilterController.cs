@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TestResult.Application.GetTestErrorsWithFilter;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.TestResult;
 
 [ApiController]
 public class GetTestErrorsWithFilterController : ControllerBase

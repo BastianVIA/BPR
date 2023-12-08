@@ -18,6 +18,4 @@ public class ActuatorStartUpAmounts
         var startUpAmounts = new ActuatorStartUpAmounts(actuatorAmount);
         return startUpAmounts;
     }
-
-    
 }

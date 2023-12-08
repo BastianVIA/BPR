@@ -1,9 +1,8 @@
 ﻿using BuildingBlocks.Application;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TestResult.Application.GetAllTesters;
 
-namespace Backend.Controllers.Test_Result;
+namespace Backend.Controllers.TestResult;
 
 [ApiController]
 

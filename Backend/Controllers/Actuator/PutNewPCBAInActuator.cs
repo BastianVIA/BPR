@@ -3,7 +3,7 @@ using Application.NewPCBAInActuator;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.Actuator;
 
 [ApiController]
 
@@ -28,11 +28,11 @@ public class PutNewPCBAInActuator : ControllerBase
         await _bus.Send(cmd, cancellationToken);
         return NoContent();
     }
+}
 
-    public class PutActuatorPCBARequest
-    {
-        public int WorkOrderNumber { get; set; }
-        public int SerialNumber { get; set; }
-        public string PCBAUid { get; set; }
-    }
+public class PutActuatorPCBARequest
+{
+    public int WorkOrderNumber { get; set; }
+    public int SerialNumber { get; set; }
+    public string PCBAUid { get; set; }
 }

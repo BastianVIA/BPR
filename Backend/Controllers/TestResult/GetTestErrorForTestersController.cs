@@ -3,7 +3,7 @@ using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 using TestResult.Application.GetTestErrorForTesters;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.TestResult;
 
 [ApiController]
 public class GetTestErrorForTestersController : ControllerBase

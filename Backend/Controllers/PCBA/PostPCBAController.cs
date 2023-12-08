@@ -3,7 +3,7 @@ using Application.CreatePCBA;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.PCBA;
 
 [ApiController]
 
@@ -27,16 +27,14 @@ public class PostPCBAController : ControllerBase
         await _bus.Send(cmd, cancellationToken);
         return Ok();
     }
+}
 
-    public class PostPCBARequest
-    {
-        public string Uid { get; set; }
-        public int ManufacturerNumber { get; set; }
-        public string ItemNumber { get; set; }
-        public string Software { get; set; }
-        public int ProductionDateCode { get; set; }
-        public string ConfigNo { get; set; }
-    
-    }
-
+public class PostPCBARequest
+{
+    public string Uid { get; set; }
+    public int ManufacturerNumber { get; set; }
+    public string ItemNumber { get; set; }
+    public string Software { get; set; }
+    public int ProductionDateCode { get; set; }
+    public string ConfigNo { get; set; }
 }

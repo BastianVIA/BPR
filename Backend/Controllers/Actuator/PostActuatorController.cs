@@ -3,7 +3,7 @@ using Application.CreateOrUpdateActuator;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.Actuator;
 
 [ApiController]
 
@@ -28,15 +28,15 @@ public class PostActuatorController : ControllerBase
         await _bus.Send(cmd, cancellationToken);
         return Ok();
     }
+}
 
-    public class PostActuatorRequest
-    {
-        public int WorkOrderNumber { get; set; }
-        public int SerialNumber { get; set; }
-        public string PCBAUid { get; set; }
-        public string CommunicationProtocol { get; set; }
-        public string ArticleNumber { get; set; }
-        public string ArticleName { get; set; }
-        public DateTime CreatedTime { get; set; }
-    }
+public class PostActuatorRequest
+{
+    public int WorkOrderNumber { get; set; }
+    public int SerialNumber { get; set; }
+    public string PCBAUid { get; set; }
+    public string CommunicationProtocol { get; set; }
+    public string ArticleNumber { get; set; }
+    public string ArticleName { get; set; }
+    public DateTime CreatedTime { get; set; }
 }

@@ -6,7 +6,6 @@ public class GetActuatorStartUpAmountsDto
 {
     public int ActuatorAmount { get; set; }
     
-    
     private GetActuatorStartUpAmountsDto()
     {
     }

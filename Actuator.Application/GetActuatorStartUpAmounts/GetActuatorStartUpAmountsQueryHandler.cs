@@ -1,9 +1,9 @@
+using Application.GetStartUpAmounts;
 using BuildingBlocks.Application;
 using Domain.Entities;
 using Domain.Repositories;
-using TestResult.Domain.Repositories;
 
-namespace Application.GetStartUpAmounts;
+namespace Application.GetActuatorStartUpAmounts;
 
 public class GetActuatorStartUpAmountsQueryHandler : IQueryHandler<GetActuatorStartUpAmountsQuery, GetActuatorStartUpAmountsDto>
 {
