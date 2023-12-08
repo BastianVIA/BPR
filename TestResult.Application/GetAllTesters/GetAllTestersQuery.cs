@@ -4,7 +4,6 @@ namespace TestResult.Application.GetAllTesters;
 
 public class GetAllTestersQuery : IQuery<GetAllTestersDto>
 {
-    
     private GetAllTestersQuery(){}
 
     public static GetAllTestersQuery Create()

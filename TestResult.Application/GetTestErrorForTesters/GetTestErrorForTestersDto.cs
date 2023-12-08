@@ -1,6 +1,4 @@
-﻿using TestResult.Domain.Entities;
-
-namespace TestResult.Application.GetTestErrorForTesters;
+﻿namespace TestResult.Application.GetTestErrorForTesters;
 
 public class GetTestErrorForTestersDto
 {
@@ -18,7 +16,6 @@ public class GetTestErrorForTestersDto
         return new GetTestErrorForTestersDto(errorsForTesters);
     }
 }
-
 
 public class GetTestErrorForTestersTesterDto
 {
@@ -58,5 +55,4 @@ public class GetTestErrorForTestersErrorDto
     {
         return new GetTestErrorForTestersErrorDto(date, errorCount);
     }
-
 }

@@ -16,12 +16,12 @@ public class TesterErrorsBase : ComponentBase
     {
         {TesterTimePeriodEnum.This_Year, "dd MMM yy"},
         {TesterTimePeriodEnum.Last_Full_Year, "dd MMM yy"},
-        { TesterTimePeriodEnum.This_Month, "dd MMM"},
-        { TesterTimePeriodEnum.Last_Full_Month, "dd MMM"},
-        { TesterTimePeriodEnum.This_Week, "dd MMM" },
-        { TesterTimePeriodEnum.Last_Full_Week, "dd MMM"},
-        { TesterTimePeriodEnum.Today, "HH:mm"},
-        { TesterTimePeriodEnum.Yesterday, "HH:mm"}
+        {TesterTimePeriodEnum.This_Month, "dd MMM"},
+        {TesterTimePeriodEnum.Last_Full_Month, "dd MMM"},
+        {TesterTimePeriodEnum.This_Week, "dd MMM" },
+        {TesterTimePeriodEnum.Last_Full_Week, "dd MMM"},
+        {TesterTimePeriodEnum.Today, "HH:mm"},
+        {TesterTimePeriodEnum.Yesterday, "HH:mm"}
     };
 
     private Dictionary<string, TesterTimePeriodEnum> _stringEnumMap = new()
@@ -36,11 +36,11 @@ public class TesterErrorsBase : ComponentBase
         {"Yesterday", TesterTimePeriodEnum.Yesterday}
     };
 
-    public List<string> TesterOptions { get; set; } = new();
-    public List<string>? SelectedTesters { get; set; }
-    public List<string> TimePeriodOptions { get; set; } = new();
-    public string SelectedTimePeriod { get; set; } = "Today";
-    public List<TesterErrorsSet> DataSets { get; set; } = new();
+    protected List<string> TesterOptions { get; set; } = new();
+    protected List<string>? SelectedTesters { get; set; }
+    protected List<string> TimePeriodOptions { get; set; } = new();
+    protected string SelectedTimePeriod { get; set; } = "Today";
+    protected List<TesterErrorsSet> DataSets { get; set; } = new();
     
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +48,6 @@ public class TesterErrorsBase : ComponentBase
         await SetCellOptions();
     }
     
-
     private async Task SetCellOptions()
     {
         TesterOptions = await TesterErrorsModel.GetAllCellNames();
@@ -62,31 +61,28 @@ public class TesterErrorsBase : ComponentBase
         }
     }
 
-    public string FormatYAxis(object value)
+    protected string FormatYAxis(object value)
     {
         return ((double)value).ToString(CultureInfo.CurrentCulture);
     }
-    public string FormatDate(object value)
+
+    protected string FormatDate(object value)
     {
         var numValue = Convert.ToDouble(value);
         var date = DateTime.FromOADate(numValue);
-        //if (value is null) return string.Empty;
         var dateFormat = _dateFormatMap[_stringEnumMap[SelectedTimePeriod]];
         return date.ToString(dateFormat);
     }
-    
-    public string FormatDateToday(object value)
+
+    protected string FormatDateToday(object value)
     {
         var date = Convert.ToDateTime(value);
-       
-        //if (value is null) return string.Empty;
         var dateFormat = _dateFormatMap[_stringEnumMap[SelectedTimePeriod]];
         return date.ToString(dateFormat);
     }
-    
-    public async Task OnUpdateGraph()
+
+    protected async Task OnUpdateGraph()
     {
-        
         SelectedTesters ??= new List<string>();
         var selectedTime = _stringEnumMap[SelectedTimePeriod];
         DataSets = await TesterErrorsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
@@ -115,9 +111,5 @@ public class TesterErrorsBase : ComponentBase
             default:
                 throw new ArgumentOutOfRangeException();
         }
-    }
-    public async Task OnApply()
-    {
-        
     }
 }

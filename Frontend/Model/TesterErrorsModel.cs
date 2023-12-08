@@ -17,7 +17,6 @@ public class TesterErrorsModel : ITesterErrorsModel
     public async Task<List<TesterErrorsSet>> GetTestErrorsForTesters(List<string> testers, TesterTimePeriodEnum timePeriod)
     {
         var response = await _network.GetTestErrorForTesters(testers, timePeriod);
-        //var response = MockData();
         return response.ErrorsForTesters.Select(tester => new TesterErrorsSet
         {
             Name = tester.Name, Errors = FromResponse(tester.Errors)
@@ -34,9 +33,4 @@ public class TesterErrorsModel : ITesterErrorsModel
     {
         return errors.Select(error => new TesterErrorEntry{ DateString = error.Date.ToString(), DateDouble = error.Date.ToOADate(), ErrorCount = error.ErrorCount }).ToList();
     }
-
-    
-            
-            
-    
 }

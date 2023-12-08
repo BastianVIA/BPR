@@ -22,11 +22,6 @@
                 </RadzenStack>
             </RadzenStack>
         </RadzenColumn>
-        <RadzenColumn>
-            <RadzenRow JustifyContent="JustifyContent.Right">
-                <RadzenButton Text="Download as CSV" ButtonType="ButtonType.Submit" Click="@OnApply"/>
-            </RadzenRow>
-        </RadzenColumn>
     </RadzenRow>
     
     @if (SelectedTimePeriod.Equals("Today") || SelectedTimePeriod.Equals("Yesterday"))
