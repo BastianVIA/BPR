@@ -7,7 +7,7 @@ using Radzen;
 
 namespace Frontend.Pages;
 
-public class TestStatisticsBase : ComponentBase
+public class TestErrorsBase : ComponentBase
 {
     [Inject] public ITestErrorModel TestErrorModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }

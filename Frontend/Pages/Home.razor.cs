@@ -66,6 +66,6 @@ public class HomeBase : ComponentBase
 
     private double CalculateSuccessRate(DataItem[] dataItems)
     {
-        return 100 - dataItems[1].Amount / (double)dataItems[0].Amount * 100;
+        return 100 - (double)dataItems[1].Amount / (dataItems[1].Amount + dataItems[0].Amount) * 100;
     }
 }

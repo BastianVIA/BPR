@@ -1,6 +1,7 @@
 using Application.GetStartUpAmounts;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
+using TestResult.Application.GetStartUpAmounts;
 
 namespace Backend.Controllers.StartUp;
 
@@ -21,9 +22,13 @@ public class StartUpController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
     {
-        var query = GetStartUpAmountsQuery.Create();
-        var result = await _bus.Send(query, cancellationToken);
-        return Ok(GetStartUpResponse.From(result));
+        var actuatorQuery = GetActuatorStartUpAmountsQuery.Create();
+        var actuatorResult = _bus.Send(actuatorQuery, cancellationToken);
+        
+        var testQuery = GetTestStartUpAmountsQuery.Create();
+        var testResult = _bus.Send(testQuery, cancellationToken);
+        
+        return Ok(GetStartUpResponse.From(await actuatorResult, await testResult));
     }
 
     public class GetStartUpResponse
@@ -34,9 +39,8 @@ public class StartUpController : ControllerBase
         public int TestResultWithErrorAmount { get; set; }
         public int TestResultWithoutErrorAmount { get; set; }
         
-        private GetStartUpResponse()
-        {
-        }
+        private GetStartUpResponse(){}
+        
         private GetStartUpResponse( int actuatorAmount, int testResultAmount, int testErrorAmount, 
             int testResultWithErrorAmount, int testResultWithoutErrorAmount)
         {
@@ -46,11 +50,10 @@ public class StartUpController : ControllerBase
             TestResultWithErrorAmount = testResultWithErrorAmount;
             TestResultWithoutErrorAmount = testResultWithoutErrorAmount;
         }
-
-        public static GetStartUpResponse From(GetStartUpAmountsDto result)
+        public static GetStartUpResponse From(GetActuatorStartUpAmountsDto actuatorResult, GetTestStartUpAmountsDto testResult)
         {
-            return new GetStartUpResponse(result.ActuatorAmount, result.TestResultAmount, result.TestErrorAmount,
-                result.TestResultWithErrorAmount, result.TestResultWithoutErrorAmount);
+            return new GetStartUpResponse(actuatorResult.ActuatorAmount, testResult.TestResultAmount, testResult.TestErrorAmount,
+                testResult.TestResultWithErrorAmount, testResult.TestResultWithoutErrorAmount);
         }
     }
 }

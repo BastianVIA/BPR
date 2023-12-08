@@ -1,9 +1,8 @@
-﻿@page "/TestStatistics"
-<h3>TestStatistics</h3>
+﻿@page "/TestErrors"
+<h3>Test Errors</h3>
 @using Frontend.Components
-@inherits TestStatisticsBase
+@inherits TestErrorsBase
 
-<h2>Search For Tests</h2>
 <RadzenRow JustifyContent="JustifyContent.SpaceBetween">
     <RadzenTemplateForm TItem="SearchObject" Data="@SearchTestError" Submit="@SearchTestErrors" Style="width: 90%;">
         <RadzenRow Style="margin-bottom: 32px;" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.End">
