@@ -23,7 +23,7 @@
                     @FormatTimeInterval(context.StartIntervalAsDate, context.EndIntervalAsDate, SelectedTimeIntervalBaseTable)
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Errors")>
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Tests Failed")>
                 <HeaderTemplate>
                     <div title="The Total Actuator Tests Failed">Total Tests Failed</div>
                 </HeaderTemplate>
@@ -41,11 +41,8 @@
                      <div title="@errorCode.ErrorMessage">@($"Error {errorCode.ErrorCode}")</div>
                 </HeaderTemplate>
                 <Template>
-                    @GetItemErrorCount(context, errorCode)
-                </Template>
-                <Template Context="dataItem">
-                    <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(dataItem, $"ErrorCode{errorCode}"))">
-                        @dataItem[$"ErrorCode{errorCode}"]
+                    <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(context, errorCode.ErrorCode))">
+                        @GetItemErrorCount(context, errorCode)
                     </div>
                 </Template>
             </RadzenDataGridColumn>

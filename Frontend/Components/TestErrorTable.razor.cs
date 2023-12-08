@@ -66,6 +66,22 @@ namespace Frontend.Components
             }
             StateHasChanged();
         }
+        
+        public async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode)
+        {
+            var errorCount = dataItem.listOfErrors.Find(test => test.ErrorCode == errorCode).AmountOfErrors;
+            var totalFailedTests = dataItem.TotalErrors;
+            var percentage = totalFailedTests > 0 ? (errorCount / (float)totalFailedTests) * 100 : 0;
+            
+            await DialogService.OpenAsync<TestErrorChart>(
+                "Error Percentage",
+                new Dictionary<string, object>()
+                {
+                    { "Percentage", percentage },
+                    { "ErrorCodeName", $"Error {errorCode}" }
+                },
+                new DialogOptions() { Width = "800px", Height = "600px" });
+        }
 
         private bool IsTimeInterval(string columnName)
         {
