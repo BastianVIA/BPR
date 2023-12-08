@@ -105,7 +105,7 @@ public class NSwagProxy : INetwork
     }
 
     public async Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? wrkOrderNumber, string? tester,
-        int? bay, int? errorCode, DateTime startDate, DateTime endDate, int timeIntervalBetweenRowsAsMinutes)
+        int? bay, int? errorCode, DateTime startDate, DateTime? endDate, int timeIntervalBetweenRowsAsMinutes)
     {
         var sd = await Send(async () =>
             await _client.GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes, startDate, endDate,

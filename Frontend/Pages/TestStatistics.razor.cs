@@ -24,7 +24,7 @@ public class TestStatisticsBase : ComponentBase
         public int? Bay { get; set; }
         public int? ErrorCode { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
     public async Task OnChange()

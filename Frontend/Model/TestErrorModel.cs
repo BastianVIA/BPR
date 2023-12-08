@@ -16,7 +16,7 @@ namespace Frontend.Model
         }
 
         public async Task<TestErrorResponse> GetTestErrorsWithFilter(int? workOrderNumber, string? tester, int? bay,
-            int? errorCode, DateTime startDate, DateTime endDate, int timeIntervalBetweenRowsAsMinutes)
+            int? errorCode, DateTime startDate, DateTime? endDate, int timeIntervalBetweenRowsAsMinutes)
         {
             var networkResponse = await _network.GetTestErrorWithFilter(workOrderNumber, tester, bay, errorCode,
                 startDate, endDate, timeIntervalBetweenRowsAsMinutes);
