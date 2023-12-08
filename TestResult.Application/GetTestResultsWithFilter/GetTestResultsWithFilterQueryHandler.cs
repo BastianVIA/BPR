@@ -17,7 +17,7 @@ public class GetTestResultsWithFilterQueryHandler : IQueryHandler<GetTestResults
     {
             var actuatorTests =
                 await _testResultRepository.GetActuatorsTestDetails(request.WorkOrderNumber, request.SerialNumber,
-                    request.Tester, request.Bay);
+                    request.Tester, request.Bay, request.StartDate, request.EndDate);
         
             return GetTestResultsWithFilterDto.From(actuatorTests);
     }

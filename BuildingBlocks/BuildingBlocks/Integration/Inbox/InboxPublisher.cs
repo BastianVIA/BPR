@@ -23,7 +23,10 @@ public class InboxPublisher
 
     internal async Task PublishPendingAsync(IDbTransaction dbTransaction, CancellationToken cancellationToken)
     {
-        await ProcessMessage(dbTransaction, _inbox, cancellationToken);
+        while (!cancellationToken.IsCancellationRequested && await ProcessMessage(dbTransaction, _inbox, cancellationToken))
+        {
+            
+        }
     }
 
     internal async Task PublishFailingAsync(IDbTransaction dbTransaction, CancellationToken cancellationToken)
@@ -31,7 +34,7 @@ public class InboxPublisher
         await ProcessMessage(dbTransaction, _failingInbox, cancellationToken);
     }
 
-    private async Task ProcessMessage(IDbTransaction dbTransaction, IInbox inbox, CancellationToken cancellationToken)
+    private async Task<bool> ProcessMessage(IDbTransaction dbTransaction, IInbox inbox, CancellationToken cancellationToken)
     {
         var serializer = new InboxMessageSerializer();
         var messages = await inbox.GetUnProcessedMessages();
@@ -64,5 +67,6 @@ public class InboxPublisher
             await inbox.Update(message);
             await dbTransaction.CommitAsync(cancellationToken);
         }
+        return false;
     }
 }
