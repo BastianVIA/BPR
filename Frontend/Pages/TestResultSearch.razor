@@ -22,6 +22,14 @@
                 <RadzenLabel Text="Bay"/>
                 <RadzenNumeric ShowUpDown="false" Name="Bay" @bind-Value=@SearchTestResult.Bay class="w-100"/>
             </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="Start Date"/>
+                <RadzenDatePicker ShowSeconds="false" ShowTime="true" DateFormat="yyyy/MM/dd/HH" Name="StartDate" @bind-Value=@SearchTestResult.StartDate class="w-100"/>
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenLabel Text="End Date"/>
+                <RadzenDatePicker ShowSeconds="false" ShowTime="true" DateFormat="yyyy/MM/dd/HH" Name="EndDate" @bind-Value=@SearchTestResult.EndDate class="w-100"/>
+            </RadzenColumn>
         </RadzenRow>
         <RadzenRow Style="margin-bottom: 16px;">
             <RadzenButton ButtonType="ButtonType.Submit" Text="Search"/>

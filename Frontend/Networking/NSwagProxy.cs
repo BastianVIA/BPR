@@ -54,9 +54,9 @@ public class NSwagProxy : INetwork
     }
 
     public async Task<GetTestResultsWithFilterResponse> GetTestResultWithFilter(int? woNo, int? serialNo,
-        string? tester, int? bay)
+        string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        return await Send(async () => await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay));
+        return await Send(async () => await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, startDate, endDate));
     }
 
     public async Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,

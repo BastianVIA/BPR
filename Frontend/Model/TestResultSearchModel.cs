@@ -11,9 +11,9 @@ public class TestResultSearchModelModel : ITestResultSearchModel
     {
         _network = network;
     }
-    public async Task<List<TestResult>> GetTestResultsWithFilter(int? woNo, int? serialNo, string? tester, int? bay)
+    public async Task<List<TestResult>> GetTestResultsWithFilter(int? woNo, int? serialNo, string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        var response = await _network.GetTestResultWithFilter(woNo, serialNo, tester, bay);
+        var response = await _network.GetTestResultWithFilter(woNo, serialNo, tester, bay, startDate,endDate);
         var list = new List<TestResult>();
         foreach (var testResult in response.ActuatorTest)
         {
