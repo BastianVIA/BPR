@@ -32,7 +32,7 @@ public class TestResultSearchModelModel : ITestResultSearchModel
             list.Add(new TestResult()
             {
                 WorkOrderNumber = testResult.WorkOrderNumber,
-                SerialNumber = testResult.WorkOrderNumber,
+                SerialNumber = testResult.SerialNumber,
                 Bay = testResult.Bay,
                 Tester = testResult.Tester,
                 MaxServoPosition = testResult.MaxServoPosition,
@@ -43,6 +43,7 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 TimeOccured = testResult.TimeOccured,
                 TestErrors = errors
             });
+            
         }
         return list;
     }

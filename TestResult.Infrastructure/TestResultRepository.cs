@@ -19,7 +19,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
     }
 
     public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo,
-        string? tester, int? bay)
+        string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
         var queryBuilder = Query().Include(t => t.TestErrors).AsQueryable();
         if (woNo != null)
@@ -40,6 +40,16 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         if (bay != null)
         {
             queryBuilder = queryBuilder.Where(m => m.Bay == bay);
+        }
+
+        if (startDate is not null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.TimeOccured > startDate);
+        }
+
+        if (endDate is not null)
+        {
+            queryBuilder = queryBuilder.Where(m => m.TimeOccured < endDate);
         }
 
         var actuatorTestModels = await queryBuilder.ToListAsync();
