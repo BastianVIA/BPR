@@ -1,6 +1,7 @@
 ﻿using Frontend.Entities;
 using Frontend.Util;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Frontend.Components
 {
@@ -8,78 +9,92 @@ namespace Frontend.Components
     {
         [Parameter] public TestErrorResponse TestErrors { get; set; } = new();
         [Parameter] public string SelectedTimeIntervalBaseTable { get; set; }
-        public List<string> Filters { get; set; } = new List<string>();
-        public List<string> ErrorCodes { get; set; }
-        public Dictionary<int, string> ErrorCodeMessages { get; set; } = new Dictionary<int, string>();
+        private List<string> Filters { get; set; } = new();
+        protected SortOrder? TimeIntervalSortingOrder { get; set; }
+        protected Dictionary<int, SortOrder?> ErrorColumnsSortingOrder = new();
 
-        protected override void OnParametersSet()
+        protected void AddColumnToSortingOrderDictionary(int errorCode)
         {
-            base.OnParametersSet();
-            InitializeErrorCodes();
-            InitializeErrorMessages();
+            ErrorColumnsSortingOrder.TryAdd(errorCode, null);
         }
 
-        private void InitializeErrorCodes()
+        private void SetColumnSortingOrder(int errorCode, SortOrder? sortOrder)
         {
-            ErrorCodes = TestErrors.PossibleErrorCodes
-                .Select(ec => ec.ErrorCode.ToString())
-                .ToList();
+            TimeIntervalSortingOrder = null;
+            ResetColumSortingOrders();
+            ErrorColumnsSortingOrder[errorCode] = sortOrder;
         }
 
-        private void InitializeErrorMessages()
+        private void ResetColumSortingOrders()
         {
-            ErrorCodeMessages = TestErrors.PossibleErrorCodes
-                .ToDictionary(ec => ec.ErrorCode, ec => ec.ErrorMessage);
+            foreach (var kv in ErrorColumnsSortingOrder)
+            {
+                ErrorColumnsSortingOrder[kv.Key] = null;
+            }
         }
 
-        public bool ShouldShowColumn(string columnName)
+        protected void OnSort(DataGridColumnSortEventArgs<GetTestErrorsWithFilterSingleLine> args)
+        {
+            var column = args.Column.ColumnPickerTitle;
+            var direction = args.SortOrder;
+
+            if (IsTimeInterval(column))
+            {
+                ResetColumSortingOrders();
+                TestErrors.DataLines = TestErrors.DataLines.OrderBy(a => a.StartIntervalAsDate
+                    ).ToList();
+
+                if (direction == SortOrder.Descending)
+                {
+                    TestErrors.DataLines.Reverse();
+                }
+                TimeIntervalSortingOrder = direction;
+                return;
+            }
+
+            if (!IsErrorColumn(column)) return;
+            
+            var errorCode = int.Parse(column.Replace("Error ", ""));
+            TestErrors.DataLines = TestErrors.DataLines.OrderBy(a =>
+                a.listOfErrors.FirstOrDefault(b => b.ErrorCode == errorCode)?.AmountOfErrors ?? 0).ToList();
+            
+            SetColumnSortingOrder(errorCode, direction);
+            if (direction == SortOrder.Descending)
+            {
+                TestErrors.DataLines.Reverse();
+            }
+            StateHasChanged();
+        }
+
+        private bool IsTimeInterval(string columnName)
+        {
+            return columnName.Equals("Time Interval");
+        }
+
+        private bool IsErrorColumn(string columnName)
+        {
+            return !(columnName.Equals("Total Error Codes") || columnName.Equals("Total Tests") ||
+                     columnName.Equals("Time Interval"));
+        }
+
+        protected bool ShouldShowColumn(string columnName)
         {
             return Filters.Contains(columnName);
         }
 
-        public void UpdateFilters(List<string> filters)
+        protected int GetItemErrorCount(GetTestErrorsWithFilterSingleLine item, GetTestErrorsWithFilterErrorCodeAndMessage error)
+        {
+            var rowItem = item.listOfErrors.FirstOrDefault(e => e.ErrorCode == error.ErrorCode);
+            return rowItem?.AmountOfErrors ?? 0;
+        }
+
+        protected void UpdateFilters(List<string>? filters)
         {
             Filters = filters ?? new List<string>();
             StateHasChanged();
         }
 
-        public List<Dictionary<string, object>> PivotDataLines(List<GetTestErrorsWithFilterSingleLine> dataLines,
-            string intervalBase)
-        {
-            var pivotedList = new List<Dictionary<string, object>>();
-            foreach (var line in dataLines)
-            {
-                var timeInterval = FormatTimeInterval(line.StartIntervalAsDate, line.EndIntervalAsDate, intervalBase);
-
-                var pivotRow = new Dictionary<string, object>
-                {
-                    { "TimeInterval", timeInterval },
-                    { "TotalErrors", line.TotalErrors },
-                    { "TotalTests", line.TotalTests }
-                };
-
-                foreach (var code in ErrorCodes)
-                {
-                    var errorCount = line.listOfErrors.FirstOrDefault(e => e.ErrorCode.ToString() == code)
-                        ?.AmountOfErrors ?? 0;
-                    pivotRow.Add($"ErrorCode{code}", errorCount);
-
-                    if (ErrorCodeMessages.TryGetValue(int.Parse(code), out var errorMessage))
-                    {
-                        pivotRow.Add($"ErrorMessage{code}", errorMessage);
-                    }
-                    else
-                    {
-                        pivotRow.Add($"ErrorMessage{code}", "No message available");
-                    }
-                }
-
-                pivotedList.Add(pivotRow);
-            }
-
-            return pivotedList;
-        }
-        private string FormatTimeInterval(DateTime start, DateTime end, string intervalBase)
+        protected string FormatTimeInterval(DateTime start, DateTime end, string intervalBase)
         {
             switch (intervalBase)
             {
