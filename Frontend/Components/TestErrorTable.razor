@@ -5,7 +5,6 @@
 @using System.Collections.Generic
 @inject ITestErrorModel TestErrorModel
 @inherits TestErrorTableBase
-
 <TestErrorTableFilter OnNewFilter="@UpdateFilters"/>
 
 <h3>Test Error Table</h3>
@@ -24,7 +23,7 @@
                     @dataItem["TimeInterval"]
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn Width="110px" TItem="Dictionary<string, object>" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")>
+            <RadzenDataGridColumn Sortable="true" Width="110px" TItem="Dictionary<string, object>" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")>
                 <HeaderTemplate>
                     <div title="The Total Actuators Tested">Total Tests</div>
                 </HeaderTemplate>
@@ -32,7 +31,7 @@
                     @dataItem["TotalTests"].ToString()
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn Width="130px" TItem="Dictionary<string, object>" Property="TotalErrors" Title="Total Tests Failed" Visible=@ShouldShowColumn("Total Tests Failed")>
+            <RadzenDataGridColumn  Width="130px" TItem="Dictionary<string, object>" Property="TotalErrors" Title="Total Tests Failed" Visible=@ShouldShowColumn("Total Tests Failed")>
                 <HeaderTemplate>
                     <div title="The Total Actuator Tests Failed">Total Tests Failed</div>
                 </HeaderTemplate>
@@ -42,14 +41,16 @@
             </RadzenDataGridColumn>
             @foreach (var errorCode in ErrorCodes)
             {
-                <RadzenDataGridColumn Width="120px" TItem="Dictionary<string, object>" Property=@($"ErrorCode{errorCode}") Visible=@ShouldShowColumn($"Error Code")>
+                <RadzenDataGridColumn Sortable="true" Width="120px" TItem="Dictionary<string, object>" Property=@($"ErrorCode{errorCode}") Visible=@ShouldShowColumn($"Error Code")>
                     <HeaderTemplate>
                         <div title="@ErrorCodeMessages[int.Parse(errorCode)]">
                             @($"ErrorCode {errorCode}")
                         </div>
                     </HeaderTemplate>
                     <Template Context="dataItem">
-                        @dataItem[$"ErrorCode{errorCode}"]
+                        <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(dataItem, $"ErrorCode{errorCode}"))">
+                            @dataItem[$"ErrorCode{errorCode}"]
+                        </div>
                     </Template>
                 </RadzenDataGridColumn>
             }
