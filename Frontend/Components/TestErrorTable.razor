@@ -16,12 +16,23 @@
     <RadzenDataGrid ColumnWidth="150px" Data="@TestErrors.DataLines" TItem="GetTestErrorsWithFilterSingleLine" PageSize="50" PagerHorizontalAlign="HorizontalAlign.Left" AllowPaging="true" PagerPosition="PagerPosition.TopAndBottom" AllowSorting="true" Sort="@OnSort">
         <Columns>
             <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Title="Time Interval" Visible=@ShouldShowColumn("Time Interval") SortOrder="@TimeIntervalSortingOrder">
+                <HeaderTemplate>
+                    <div title="The Time Interval For Tests">Time Interval</div>
+                </HeaderTemplate>
                 <Template>
                     @FormatTimeInterval(context.StartIntervalAsDate, context.EndIntervalAsDate, SelectedTimeIntervalBaseTable)
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Errors")/>
-        <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")/>
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Errors")>
+                <HeaderTemplate>
+                    <div title="The Total Actuator Tests Failed">Total Tests Failed</div>
+                </HeaderTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")>
+                <HeaderTemplate>
+                    <div title="The Total Actuators Tested">Total Tests</div>
+                </HeaderTemplate>
+            </RadzenDataGridColumn>
         @foreach (var errorCode in TestErrors.PossibleErrorCodes)
         {
             AddColumnToSortingOrderDictionary(errorCode.ErrorCode);
@@ -31,6 +42,11 @@
                 </HeaderTemplate>
                 <Template>
                     @GetItemErrorCount(context, errorCode)
+                </Template>
+                <Template Context="dataItem">
+                    <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(dataItem, $"ErrorCode{errorCode}"))">
+                        @dataItem[$"ErrorCode{errorCode}"]
+                    </div>
                 </Template>
             </RadzenDataGridColumn>
         }

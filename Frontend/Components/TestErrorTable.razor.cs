@@ -9,6 +9,7 @@ namespace Frontend.Components
     {
         [Parameter] public TestErrorResponse TestErrors { get; set; } = new();
         [Parameter] public string SelectedTimeIntervalBaseTable { get; set; }
+        [Inject] public DialogService DialogService { get; set; }
         private List<string> Filters { get; set; } = new();
         protected SortOrder? TimeIntervalSortingOrder { get; set; }
         protected Dictionary<int, SortOrder?> ErrorColumnsSortingOrder = new();
