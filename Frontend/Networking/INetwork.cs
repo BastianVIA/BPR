@@ -14,4 +14,6 @@ public interface INetwork
          string? tester, int? bay, DateTime? startDate, DateTime? endDate);
      Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
          int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol);
+     Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid);
+     Task<GetPCBAChangesForActuatorResponse> GetComponentHistory(int woNo, int serialNo);
 }

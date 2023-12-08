@@ -32,6 +32,24 @@ public class NSwagProxy : INetwork
         }
     }
 
+    private async Task Send(Func<Task> func)
+    {
+        try
+        {
+            await func();
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Result.Detail);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Message);
+        }
+    }
+
     public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo)
     {
         return await Send(async () => await _client.GetActuatorDetailsAsync(woNo, serialNo));
@@ -72,7 +90,6 @@ public class NSwagProxy : INetwork
         using MemoryStream memoryStream = new();
         await response.Stream.CopyToAsync(memoryStream);
         return memoryStream.ToArray();
-
     }
 
     public async Task<GetTestErrorForTestersResponse> GetTestErrorForTesters(List<string> testers, TesterTimePeriodEnum timePeriod)
@@ -83,5 +100,21 @@ public class NSwagProxy : INetwork
     public async Task<GetAllTestersResponse> GetAllCellNames()
     {
         return await Send(async () => await _client.GetAllTestersAsync());
+    }
+
+    public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)
+    {
+        PutActuatorPCBARequest body = new PutActuatorPCBARequest
+        {
+            WorkOrderNumber = woNo,
+            SerialNumber = serialNo,
+            PcbaUid = pcbaUid
+        };
+        await Send(async () => await _client.PutNewPCBAInActuatorAsync(body));
+    }
+
+    public async Task<GetPCBAChangesForActuatorResponse> GetComponentHistory(int woNo, int serialNo)
+    {
+        return await Send(async () => await _client.GetPCBAChangesForActuatorAsync(woNo, serialNo));
     }
 }
