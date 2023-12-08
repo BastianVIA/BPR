@@ -10,7 +10,7 @@ public class TestErrorTableFiltersBase : ComponentBase
     {
         "Time Interval",
         "Error Code",
-        "Total Errors",
+        "Total Tests Failed",
         "Total Tests"
     };
 
