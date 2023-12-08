@@ -1,23 +1,7 @@
 ﻿@using Frontend.Entities
-@using Radzen
-@using Radzen.Blazor
 @inherits PCBAInformationBase
 
 <RadzenRow>
-    <RadzenTemplateForm TItem="Actuator" Data=@Actuator>
-        <RadzenRow>
-            <RadzenColumn>
-                <WorkOrderNumberInputValidator Actuator="@Actuator"/>
-            </RadzenColumn>
-            <RadzenColumn>
-                <SerialNumberInputValidator Actuator="@Actuator"/>
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenTemplateForm>
-</RadzenRow>
-
-<RadzenRow>
-    
     @if (!string.IsNullOrEmpty(Actuator.PCBA.PCBAUid))
     {
         <RadzenCard Style="max-width: 600px; margin-top: 30px;">
