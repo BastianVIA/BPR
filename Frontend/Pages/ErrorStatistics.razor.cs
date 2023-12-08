@@ -7,9 +7,8 @@ using Radzen.Blazor;
 
 namespace Frontend.Pages;
 
-public class TesterErrorsBase : ComponentBase
+public class ErrorStatisticsBase : ComponentBase
 {
-    public RadzenChart Chart { get; set; }
     [Inject] private ITesterErrorsModel TesterErrorsModel { get; set; }
 
     private Dictionary<TesterTimePeriodEnum, string> _dateFormatMap = new()

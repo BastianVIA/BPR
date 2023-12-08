@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TestResult.Application.GetTestErrorsWithFilter;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.TestResult;
 
 [ApiController]
 public class GetTestErrorsWithFilterController : ControllerBase
@@ -15,7 +15,7 @@ public class GetTestErrorsWithFilterController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetTestErrorsWithFilter")]
+    [Route("api/[controller]")]
     [Tags("Test Result")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTestErrorsWithFilterResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

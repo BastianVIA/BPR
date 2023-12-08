@@ -13,6 +13,7 @@ public static class ModelServices
         serviceCollection.AddScoped<IUpdateActuatorsPCBAModel, UpdateActuatorsPCBAModel>();
         serviceCollection.AddScoped<IActuatorComponentHistoryModel, ActuatorComponentHistoryModel>();
         serviceCollection.AddScoped<ITestErrorModel, TestErrorModel>();
+        serviceCollection.AddScoped<IStartUpAmountsModel, StartUpAmountsModel>();
 
         return serviceCollection;
     }

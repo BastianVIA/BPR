@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.Configuration;
 
 [ApiController]
 public class GetConfigurationController : ControllerBase
@@ -13,7 +13,7 @@ public class GetConfigurationController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/configuration")]
+    [Route("api/[controller]")]
     [Tags("Configuration")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ConfigurationResponse))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]

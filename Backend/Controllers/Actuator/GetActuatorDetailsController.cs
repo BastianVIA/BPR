@@ -2,7 +2,7 @@
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.Actuator;
 
 [ApiController]
 public class GetActuatorDetailsController : ControllerBase
@@ -15,7 +15,7 @@ public class GetActuatorDetailsController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("api/GetActuatorDetails/{woNo}/{serialNo}")]
+    [Route("api/[controller]/{woNo}/{serialNo}")]
     [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorDetailsResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

@@ -22,4 +22,5 @@ public interface INetwork
         string? configNo, string? articleName, string? articleNo, string? comProtocol);
     Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? wrkOrderNumber, string? tester,
         int? bay, int? errorCode, DateTime startDate, DateTime? endDate, int timeIntervalBetweenRowsAsMinutes);
+    Task<GetStartUpResponse> GetStartUpAmounts();
 }

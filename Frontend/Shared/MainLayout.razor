@@ -17,11 +17,10 @@
     <RadzenSidebar Style="width:auto">
         <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)">
             <RadzenPanelMenuItem Text="Home" Icon="home" Path=""/>
-            <RadzenPanelMenuItem Text="PCBA" Icon="pageview" Path="PCBAInfo"/>
             <RadzenPanelMenuItem Text="Actuator" Icon="pageview" Path="ActuatorSearch"/>
-            <RadzenPanelMenuItem Text="TesterErrors" Icon="pageview" Path="TesterErrors"/>
-            <RadzenPanelMenuItem Text="TestResult" Icon="pageview" Path="TestResultSearch"/>
-            <RadzenPanelMenuItem Text="Test Stats" Icon="pageview" Path="TestStatistics"/>
+            <RadzenPanelMenuItem Text="Test Result" Icon="list" Path="TestResultSearch"/>
+            <RadzenPanelMenuItem Text="Error Statistics" Icon="assessment" Path="ErrorStatistics"/>
+            <RadzenPanelMenuItem Text="Test Errors" Icon="highlight_off" Path="TestErrors"/>
         </RadzenPanelMenu>
     </RadzenSidebar>
     <RadzenBody @ref="body">

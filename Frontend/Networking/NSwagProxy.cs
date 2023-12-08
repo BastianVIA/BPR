@@ -57,7 +57,7 @@ public class NSwagProxy : INetwork
 
     public async Task<ConfigurationResponse> GetConfiguration()
     {
-        return await Send(async () => await _client.ConfigurationAsync());
+        return await Send(async () => await _client.GetConfigurationAsync());
     }
 
     public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid,
@@ -67,7 +67,7 @@ public class NSwagProxy : INetwork
     {
         return await Send(async () =>
             await _client.GetActuatorsWithFilterAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-                productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
+                productionDateCode, comProtocol, articleNo, configNo, software, createdTimeStart,
                 createdTimeEnd));
     }
 
@@ -84,8 +84,8 @@ public class NSwagProxy : INetwork
         string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
     {
         var response = await Send(async () =>
-            await _client.GetActuatorsWithFilterAsCsvAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-                productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
+            await _client.GetActuatorWithFilterAsCsvAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
+                productionDateCode, comProtocol, articleNo, configNo, software, createdTimeStart,
                 createdTimeEnd, columnsToInclude));
 
         using MemoryStream memoryStream = new();
@@ -111,6 +111,11 @@ public class NSwagProxy : INetwork
             await _client.GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes, startDate, endDate,
                 wrkOrderNumber, tester, bay, errorCode));
         return sd;
+    }
+
+    public async Task<GetStartUpResponse> GetStartUpAmounts()
+    {
+        return await Send(async () => await _client.GetStartUpAmountsAsync());
     }
 
     public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)

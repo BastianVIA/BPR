@@ -1,4 +1,5 @@
 ﻿using Backend.Controllers;
+using Backend.Controllers.Configuration;
 using Backend.Tests.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

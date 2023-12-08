@@ -3,7 +3,7 @@ using Application.GetActuatorsWithFilterAsCSV;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers;
+namespace Backend.Controllers.Actuator;
 
 [ApiController]
 public class GetActuatorWithFilterAsCsvController : ControllerBase
@@ -16,7 +16,7 @@ public class GetActuatorWithFilterAsCsvController : ControllerBase
     }
 
     [HttpGet]
-    [Route("api/GetActuatorsWithFilterAsCsv")]
+    [Route("api/[controller]")]
     [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileResult))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]

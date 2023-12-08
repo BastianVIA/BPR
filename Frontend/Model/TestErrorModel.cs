@@ -77,12 +77,18 @@ public class TestErrorModel : ITestErrorModel
         {
             throw new ArgumentException("No time difference between start and end");
         }
-
-
-        var timeDifferance = endDateForValidation - startDate;
-        if (TimeSpan.FromMinutes(timeIntervalBetweenRowsAsMinutes) > timeDifferance)
+        
+        var timeDifference = endDateForValidation - startDate;
+        var interval = TimeSpan.FromMinutes(timeIntervalBetweenRowsAsMinutes);
+        if (interval > timeDifference)
         {
-            throw new ArgumentException("Time Interval to large for Dates ");
+            throw new ArgumentException("Time Interval too large for Dates ");
         }
+
+        if (timeDifference / interval > 1000)
+        {
+            throw new ArgumentException("Time Interval too small for the selected start date");
+        }
+        
     }
 }

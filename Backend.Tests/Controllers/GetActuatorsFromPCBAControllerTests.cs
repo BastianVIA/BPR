@@ -1,6 +1,7 @@
 ﻿using Application.GetActuatorFromPCBA;
 using AutoFixture;
 using Backend.Controllers;
+using Backend.Controllers.Actuator;
 using BuildingBlocks.Application;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

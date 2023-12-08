@@ -31,9 +31,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
     public async Task<List<TestError>> GetTestErrorsWithFilter(int? woNo, string? tester,
         int? bay, int? errorCode, DateTime? startDate, DateTime? endDate)
     {
-        var queryBuilder = Query()
-            .Include(model => model.ErrorCodeModel)
-            .AsQueryable();
+        var queryBuilder = Query().Include(model => model.ErrorCodeModel).AsQueryable();
         if (woNo != null)
         {
             var testResultIds = await QueryOther<TestResultModel>()
@@ -67,7 +65,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
             queryBuilder = queryBuilder.Where(model => model.TimeOccured > startDate);
         }
 
-        queryBuilder = queryBuilder.OrderBy(model => model.TimeOccured);
+        //queryBuilder = queryBuilder.Include(model => model.ErrorCodeModel).AsQueryable();
 
         var errorModels = await queryBuilder.ToListAsync();
         return ToDomain(errorModels);
@@ -77,9 +75,14 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         DateTime endDate)
     {
         var testErrors = await Query().Where(model => model.TimeOccured > startDate && model.TimeOccured < endDate)
-            .Where(model => testers.Contains(model.Tester))
+            .Where(model => testers.Contains(model.Tester)).Include(model => model.ErrorCodeModel)
             .ToListAsync();
         return ToDomain(testErrors);
+    }
+
+    public async Task<int> GetTotalTestErrorAmounts()
+    {
+        return Query().Count();
     }
 
     private List<TestError> ToDomain(List<TestErrorModel> models)
