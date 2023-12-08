@@ -34,12 +34,12 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FileResponse> GetActuatorWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<FileResponse> GetActuatorWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
@@ -74,22 +74,22 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetAllTestersResponse> GetAllTestersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<GetTestErrorForTestersResponse> GetTestErrorForTestersAsync(System.Collections.Generic.IEnumerable<string> testers, TesterTimePeriodEnum timePeriod, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber = null, string tester = null, int? bay = null, int? errorCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime? endDate = null, int? workOrderNumber = null, string tester = null, int? bay = null, int? errorCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<GetTestResultsWithFilterResponse> GetTestResultsWithFilterAsync(int? workOrderNumber = null, int? serialNumber = null, string tester = null, int? bay = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetAllTestersResponse> GetAllTestersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -322,7 +322,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<GetActuatorWithFilterResponse> GetActuatorsWithFilterAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetActuatorsWithFilter?");
@@ -357,10 +357,6 @@ namespace Frontend.Service
             if (articleNumber != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("ArticleNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (articleName != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("ArticleName") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleName, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (configNo != null)
             {
@@ -462,7 +458,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FileResponse> GetActuatorWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string articleName = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<FileResponse> GetActuatorWithFilterAsCsvAsync(int? workOrderNumber = null, int? serialNumber = null, string pCBAUid = null, string itemNumber = null, int? manufacturerNumber = null, int? productionDateCode = null, string communicationProtocol = null, string articleNumber = null, string configNo = null, string software = null, System.DateTime? startDate = null, System.DateTime? endDate = null, System.Collections.Generic.IEnumerable<CsvProperties> propertiesToIncludeInFile = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetActuatorWithFilterAsCsv?");
@@ -497,10 +493,6 @@ namespace Frontend.Service
             if (articleNumber != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("ArticleNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (articleName != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("ArticleName") + "=").Append(System.Uri.EscapeDataString(ConvertToString(articleName, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (configNo != null)
             {
@@ -1088,6 +1080,93 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetAllTestersResponse> GetAllTestersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetAllTesters");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GetAllTestersResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 500)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("Server Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<GetTestErrorForTestersResponse> GetTestErrorForTestersAsync(System.Collections.Generic.IEnumerable<string> testers, TesterTimePeriodEnum timePeriod, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (testers == null)
@@ -1184,7 +1263,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime endDate, int? workOrderNumber = null, string tester = null, int? bay = null, int? errorCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<GetTestErrorsWithFilterResponse> GetTestErrorsWithFilterAsync(int timeIntervalBetweenRowsAsMinutes, System.DateTime startDate, System.DateTime? endDate = null, int? workOrderNumber = null, string tester = null, int? bay = null, int? errorCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (timeIntervalBetweenRowsAsMinutes == null)
                 throw new System.ArgumentNullException("timeIntervalBetweenRowsAsMinutes");
@@ -1192,14 +1271,14 @@ namespace Frontend.Service
             if (startDate == null)
                 throw new System.ArgumentNullException("startDate");
 
-            if (endDate == null)
-                throw new System.ArgumentNullException("endDate");
-
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetTestErrorsWithFilter?");
             urlBuilder_.Append(System.Uri.EscapeDataString("TimeIntervalBetweenRowsAsMinutes") + "=").Append(System.Uri.EscapeDataString(ConvertToString(timeIntervalBetweenRowsAsMinutes, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             urlBuilder_.Append(System.Uri.EscapeDataString("StartDate") + "=").Append(System.Uri.EscapeDataString(startDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            urlBuilder_.Append(System.Uri.EscapeDataString("EndDate") + "=").Append(System.Uri.EscapeDataString(endDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            if (endDate != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("EndDate") + "=").Append(System.Uri.EscapeDataString(endDate.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
             if (workOrderNumber != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("WorkOrderNumber") + "=").Append(System.Uri.EscapeDataString(ConvertToString(workOrderNumber, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -1363,93 +1442,6 @@ namespace Frontend.Service
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<GetTestResultsWithFilterResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new ApiException<ProblemDetails>("Server Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>Success</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetAllTestersResponse> GetAllTestersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/GetAllTesters");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetAllTestersResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

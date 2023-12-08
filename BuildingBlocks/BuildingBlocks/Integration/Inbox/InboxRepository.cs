@@ -29,10 +29,17 @@ public class InboxRepository<TEntity> : BaseRepository<TEntity>, IFailingInbox
 
     public async Task<IEnumerable<InboxMessage>> GetUnProcessedMessages()
     {
-        var messages = await Query().AsNoTracking().Where(message => message.ProcessedDate == null)
-            .OrderBy(message => message.OccurredOn)
-            .ToListAsync();
-        return ToDomain(messages);
+        try
+        {
+            var messages = await Query().AsNoTracking().Where(message => message.ProcessedDate == null)
+                .ToListAsync();
+            return ToDomain(messages);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async Task Update(InboxMessage inboxMessage)

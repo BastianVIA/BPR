@@ -67,7 +67,7 @@ public class NSwagProxy : INetwork
     {
         return await Send(async () =>
             await _client.GetActuatorsWithFilterAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-                productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
+                productionDateCode, comProtocol, articleNo, configNo, software, createdTimeStart,
                 createdTimeEnd));
     }
 
@@ -85,7 +85,7 @@ public class NSwagProxy : INetwork
     {
         var response = await Send(async () =>
             await _client.GetActuatorWithFilterAsCsvAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-                productionDateCode, comProtocol, articleNo, articleName, configNo, software, createdTimeStart,
+                productionDateCode, comProtocol, articleNo, configNo, software, createdTimeStart,
                 createdTimeEnd, columnsToInclude));
 
         using MemoryStream memoryStream = new();
