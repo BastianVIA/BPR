@@ -56,15 +56,15 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         {
             queryBuilder = queryBuilder.Where(model => model.ErrorCode == errorCode);
         }
-
-        if (errorCode != null)
-        {
-            queryBuilder = queryBuilder.Where(model => model.TimeOccured > startDate);
-        }
-
-        if (errorCode != null)
+        
+        if (endDate != null)
         {
             queryBuilder = queryBuilder.Where(model => model.TimeOccured < endDate);
+        }
+
+        if (startDate != null)
+        {
+            queryBuilder = queryBuilder.Where(model => model.TimeOccured > startDate);
         }
 
         queryBuilder = queryBuilder.OrderBy(model => model.TimeOccured);

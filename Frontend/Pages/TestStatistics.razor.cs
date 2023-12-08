@@ -24,7 +24,7 @@ public class TestStatisticsBase : ComponentBase
         public int? Bay { get; set; }
         public int? ErrorCode { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
     public async Task OnChange()
@@ -46,6 +46,10 @@ public class TestStatisticsBase : ComponentBase
                 ConvertSelectionToMinutes());
         }
         catch (NetworkException e)
+        {
+            AlertService.FireEvent(AlertStyle.Danger, e.Message);
+        }
+        catch (ArgumentException e)
         {
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
         }
