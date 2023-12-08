@@ -19,6 +19,10 @@ public class BaseRepository<TEntity> where TEntity : class
     {
         return _dbContext.Set<TEntity>().AsQueryable();
     }
+    protected IQueryable<TEntity> QueryLocal()
+    {
+        return _dbContext.Set<TEntity>().Local.AsQueryable();
+    }
 
     protected IQueryable<T> QueryOtherLocal<T>() where T : class
     {

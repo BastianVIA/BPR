@@ -5,6 +5,7 @@ using Infrastructure.Configuration;
 using LINTest;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using TECHLineService;
 using TestResult.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGenNewtonsoftSupport();
 builder.Services.AddLINTestServices(builder.Configuration);
+builder.Services.AddTECHLineServices();
 
 var app = builder.Build();
 

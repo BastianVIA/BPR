@@ -16,8 +16,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
     public async Task CreateActuator(Actuator actuator)
     {
         var pcba = await getPcbaModel(actuator.PCBA.Uid);
+        var article = await getArticle(actuator.ArticleNumber);
         var actuatorModel = FromDomain(actuator);
         actuatorModel.PCBA = pcba;
+        actuatorModel.Article = article;
         await AddAsync(actuatorModel, actuator.GetDomainEvents());
     }
 
@@ -188,5 +190,17 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         }
 
         return pcba;
+    }
+
+    private async Task<ArticleModel> getArticle(string actuatorArticleNumber)
+    {
+        var article = await QueryOtherLocal<ArticleModel>()
+            .FirstOrDefaultAsync(a => a.ArticleName == actuatorArticleNumber);
+        if (article == null)
+        {
+            article = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleName == actuatorArticleNumber);
+        }
+
+        return article;
     }
 }

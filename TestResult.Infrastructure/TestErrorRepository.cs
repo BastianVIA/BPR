@@ -21,8 +21,10 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         }
 
         var testResult = await GetTestResultModel(testError.WorkOrderNumber.Value, testError.SerialNumber.Value);
+        var errorCode = await GetTestErrorCodeModel(testError.ErrorCode);
         var testErrorModel = FromDomain(testError);
         testErrorModel.TestResultId = testResult.Id;
+        testErrorModel.ErrorCodeModel = errorCode;
         await AddAsync(testErrorModel, testError.GetDomainEvents());
     }
 
@@ -124,5 +126,17 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
                              t => t.WorkOrderNumber == workOrderNo && t.SerialNumber == serialNo);
 
         return testResult;
+    }
+    
+    private async Task<TestErrorCodeModel> GetTestErrorCodeModel(int errorCode)
+    {
+        var testErrorCodeModel = await QueryOtherLocal<TestErrorCodeModel>()
+            .FirstOrDefaultAsync(e => e.ErrorCode == errorCode);
+        if (testErrorCodeModel == null)
+        {
+            testErrorCodeModel = await QueryOther<TestErrorCodeModel>().FirstAsync(e => e.ErrorCode == errorCode);
+        }
+
+        return testErrorCodeModel;
     }
 }
