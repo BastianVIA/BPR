@@ -82,14 +82,18 @@ public class CSVHandler
             { "UniqueID from Actuator", (model, value) => model.PCBAUid = value },
             { "From AxArtNo", (model, value) => model.ArticleNumber = value },
             { "From AxArtName", (model, value) => model.ArticleName = value },
-            {
-                "LINTest has finished. EndOfTest", (model, value) =>
+            { "LINTest has finished. EndOfTest", (model, value) =>
                 {
                     model.LINTestPassed = true;
                     model.CreatedTime = ParseDateTime(value);
                 }
             },
-            { "Tester", (model, value) => model.Tester = value },
+            { "Tester", (model, value) =>
+                {
+                    var tester = ExtractTesterSubstring(value);
+                    model.Tester = tester;
+                }
+            },
             { "Bay", (model, value) => model.Bay = Int32.Parse(value) },
             { "Min Servo Position", (model, value) => model.MinServoPosition = value },
             { "Min.Servo.Position", (model, value) => model.MinServoPosition = value },
@@ -114,5 +118,19 @@ public class CSVHandler
             Console.WriteLine(e);
             throw new ArgumentException($"Could not parse datetime trying to read CSV file with date: {dateTimeString}");
         }
+    }
+    
+    private static string ExtractTesterSubstring(string input)
+    {
+        int firstCommaIndex = input.IndexOf(',');
+        int secondCommaIndex = input.IndexOf(',', firstCommaIndex + 1);
+        
+        if (firstCommaIndex != -1 && secondCommaIndex != -1)
+        {
+            string result = input.Substring(firstCommaIndex + 1, secondCommaIndex - firstCommaIndex - 1);
+            return result.Trim();
+        }
+        
+        return input;
     }
 }

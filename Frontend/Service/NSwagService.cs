@@ -76,16 +76,16 @@ namespace Frontend.Service
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo);
+        System.Threading.Tasks.Task<GetPCBAChangesForActuatorResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo);
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        GetActuatorFromPCBAResponse GetPCBAChangesForActuator(int woNo, int serialNo);
+        GetPCBAChangesForActuatorResponse GetPCBAChangesForActuator(int woNo, int serialNo);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetPCBAChangesForActuatorResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken);
 
         /// <returns>Created</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -755,14 +755,14 @@ namespace Frontend.Service
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo)
+        public virtual System.Threading.Tasks.Task<GetPCBAChangesForActuatorResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo)
         {
             return GetPCBAChangesForActuatorAsync(woNo, serialNo, System.Threading.CancellationToken.None);
         }
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual GetActuatorFromPCBAResponse GetPCBAChangesForActuator(int woNo, int serialNo)
+        public virtual GetPCBAChangesForActuatorResponse GetPCBAChangesForActuator(int woNo, int serialNo)
         {
             return System.Threading.Tasks.Task.Run(async () => await GetPCBAChangesForActuatorAsync(woNo, serialNo, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -770,7 +770,7 @@ namespace Frontend.Service
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GetActuatorFromPCBAResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetPCBAChangesForActuatorResponse> GetPCBAChangesForActuatorAsync(int woNo, int serialNo, System.Threading.CancellationToken cancellationToken)
         {
             if (woNo == null)
                 throw new System.ArgumentNullException("woNo");
@@ -820,7 +820,7 @@ namespace Frontend.Service
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetActuatorFromPCBAResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetPCBAChangesForActuatorResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1786,6 +1786,31 @@ namespace Frontend.Service
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPCBAChangesForActuatorChange
+    {
+        [Newtonsoft.Json.JsonProperty("workOrderNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int WorkOrderNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("serialNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int SerialNumber { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("oldPCBAUid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string OldPCBAUid { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("removalTime", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime RemovalTime { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetPCBAChangesForActuatorResponse
+    {
+        [Newtonsoft.Json.JsonProperty("changes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GetPCBAChangesForActuatorChange> Changes { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetTestErrorsWithFilterErrorCodeAndAmount
     {
         [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1871,6 +1896,9 @@ namespace Frontend.Service
         [Newtonsoft.Json.JsonProperty("timeOccured", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.DateTime TimeOccured { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("testErrors", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GetTestResultsWithFilterTestError> TestErrors { get; set; }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -1878,6 +1906,26 @@ namespace Frontend.Service
     {
         [Newtonsoft.Json.JsonProperty("actuatorTest", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<GetTestResultWithFilterActuator> ActuatorTest { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetTestResultsWithFilterTestError
+    {
+        [Newtonsoft.Json.JsonProperty("tester", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Tester { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("bay", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Bay { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("errorCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ErrorCode { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("errorMessage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ErrorMessage { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("timeOccured", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime TimeOccured { get; set; }
 
     }
 

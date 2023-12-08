@@ -44,12 +44,7 @@ public class GetActuatorsWithFilterController : ControllerBase
 
         internal static GetActuatorWithFilterResponse From(GetActuatorsWithFilterDto result)
         {
-            List<GetActuatorWithFilterActuator> actuators = new List<GetActuatorWithFilterActuator>();
-            foreach (var actuator in result.ActuatorDtos)
-            {
-                actuators.Add(GetActuatorWithFilterActuator.From(actuator));
-            }
-
+            var actuators = result.ActuatorDtos.Select(actuator => GetActuatorWithFilterActuator.From(actuator)).ToList();
             return new GetActuatorWithFilterResponse(actuators);
         }
     }
@@ -58,7 +53,7 @@ public class GetActuatorsWithFilterController : ControllerBase
     {
         public int WorkOrderNumber { get; private set; }
         public int SerialNumber { get; private set; }
-        public GetActuatorWithFilterPCBA PCBA { get; private set; }
+        public GetActuatorsWithFilterController.GetActuatorWithFilterPCBA PCBA { get; private set; }
         public string CommunicationProtocol { get; private set; }
         public string ArticleNumber { get; private set; }
         public string ArticleName { get; private set; }

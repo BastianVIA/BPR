@@ -8,10 +8,12 @@ public static class ModelServices
     {
         serviceCollection.AddScoped<IActuatorDetailsModel, ActuatorDetailsModel>();
         serviceCollection.AddScoped<IActuatorSearchModel, ActuatorSearchModel>();
-        serviceCollection.AddScoped<ITestErrorModel, TestErrorModel>();
         serviceCollection.AddScoped<ITestResultSearchModel, TestResultSearchModelModel>();
         serviceCollection.AddScoped<IActuatorSearchCsvModel, ActuatorSearchCsvModel>();
-        
+        serviceCollection.AddScoped<IUpdateActuatorsPCBAModel, UpdateActuatorsPCBAModel>();
+        serviceCollection.AddScoped<IActuatorComponentHistoryModel, ActuatorComponentHistoryModel>();
+        serviceCollection.AddScoped<ITestErrorModel, TestErrorModel>();
+
         return serviceCollection;
     }
 }

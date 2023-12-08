@@ -32,6 +32,24 @@ public class NSwagProxy : INetwork
         }
     }
 
+    private async Task Send(Func<Task> func)
+    {
+        try
+        {
+            await func();
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Result.Detail);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Message);
+        }
+    }
+
     public async Task<GetActuatorDetailsResponse> GetActuatorDetails(int woNo, int serialNo)
     {
         return await Send(async () => await _client.GetActuatorDetailsAsync(woNo, serialNo));
@@ -54,10 +72,9 @@ public class NSwagProxy : INetwork
     }
 
     public async Task<GetTestResultsWithFilterResponse> GetTestResultWithFilter(int? woNo, int? serialNo,
-        string? tester, int? bay)
+        string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        return await Send(async () =>
-            await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, DateTime.Now, DateTime.Today));
+        return await Send(async () => await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, startDate,endDate));
     }
 
     public async Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
@@ -82,5 +99,21 @@ public class NSwagProxy : INetwork
             await _client.GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes, startDate, endDate,
                 wrkOrderNumber, tester, bay, errorCode));
         return sd;
+    }
+
+    public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)
+    {
+        PutActuatorPCBARequest body = new PutActuatorPCBARequest
+        {
+            WorkOrderNumber = woNo,
+            SerialNumber = serialNo,
+            PcbaUid = pcbaUid
+        };
+        await Send(async () => await _client.PutNewPCBAInActuatorAsync(body));
+    }
+
+    public async Task<GetPCBAChangesForActuatorResponse> GetComponentHistory(int woNo, int serialNo)
+    {
+        return await Send(async () => await _client.GetPCBAChangesForActuatorAsync(woNo, serialNo));
     }
 }

@@ -64,9 +64,19 @@ public class GetTestResultsWithFilterController : ControllerBase
             public string MaxBuslinkPosition { get; set; }
             public string ServoStroke { get; set; }
             public DateTime TimeOccured { get; set; }
+            public List<GetTestResultsWithFilterTestError> TestErrors { get; set; }
 
             internal static GetTestResultWithFilterActuator From(TestResultsWithFilterDTO result)
             {
+                var errors = result.TestErrors.Select(error => new GetTestResultsWithFilterTestError
+                    {
+                        Tester = error.Tester,
+                        Bay = error.Bay,
+                        ErrorCode = error.ErrorCode,
+                        ErrorMessage = error.ErrorMessage,
+                        TimeOccured = error.TimeOccured
+                    })
+                    .ToList();
                 return new GetTestResultWithFilterActuator
                 {
                     WorkOrderNumber = result.WorkOrderNumber,
@@ -78,9 +88,19 @@ public class GetTestResultsWithFilterController : ControllerBase
                     MinBuslinkPosition = result.MinBuslinkPosition,
                     MaxBuslinkPosition = result.MaxBuslinkPosition,
                     ServoStroke = result.ServoStroke,
-                    TimeOccured = result.TimeOccured
+                    TimeOccured = result.TimeOccured,
+                    TestErrors = errors
                 };
             }
         }
     }
+}
+
+public class GetTestResultsWithFilterTestError
+{
+    public string Tester { get; set; }
+    public int Bay { get; set; }
+    public int ErrorCode { get; set; }
+    public string ErrorMessage { get; set; }
+    public DateTime TimeOccured { get; set; }
 }

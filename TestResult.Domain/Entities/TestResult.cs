@@ -16,10 +16,10 @@ public class TestResult : Entity
     public string MaxBuslinkPosition { get; private set; }
     public string ServoStroke { get; private set; }
     public DateTime TimeOccured { get; private set; }
-
-
+    public List<TestError>? TestErrors { get; private set; }
+    
     public TestResult(Guid id, int woNo, int serialNo, string tester, int bay, string minServoPosition, 
-        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke, DateTime timeOccured)
+        string maxServoPosition, string minBuslinkPosition, string maxBuslinkPosition, string servoStroke, DateTime timeOccured, List<TestError>? testErrors = null)
     {
         Id = id;
         Tester = tester;
@@ -32,6 +32,7 @@ public class TestResult : Entity
         MaxBuslinkPosition = maxBuslinkPosition;
         ServoStroke = servoStroke;
         TimeOccured = timeOccured;
+        TestErrors = testErrors;
     }
 
     public static TestResult Create(int workOrderNo, int serialNo, string tester, int bay, string? minServoPosition, 
