@@ -90,7 +90,16 @@ public class NSwagProxy : INetwork
         using MemoryStream memoryStream = new();
         await response.Stream.CopyToAsync(memoryStream);
         return memoryStream.ToArray();
+    }
 
+    public async Task<GetTestErrorForTestersResponse> GetTestErrorForTesters(List<string> testers, TesterTimePeriodEnum timePeriod)
+    {
+        return await Send(async () => await _client.GetTestErrorForTestersAsync(testers, timePeriod));
+    }
+
+    public async Task<GetAllTestersResponse> GetAllCellNames()
+    {
+        return await Send(async () => await _client.GetAllTestersAsync());
     }
 
     public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)

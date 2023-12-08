@@ -43,7 +43,6 @@ public class TestResultSearchModelModel : ITestResultSearchModel
                 TimeOccured = testResult.TimeOccured,
                 TestErrors = errors
             });
-            
         }
         return list;
     }

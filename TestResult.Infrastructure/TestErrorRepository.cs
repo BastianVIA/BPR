@@ -64,9 +64,18 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         }
 
         queryBuilder = queryBuilder.OrderBy(model => model.TimeOccured);
-        
+
         var errorModels = await queryBuilder.ToListAsync();
         return ToDomain(errorModels);
+    }
+
+    public async Task<List<TestError>> GetAllErrorsForTesterSince(List<string> testers, DateTime startDate, DateTime endDate)
+    {
+        var testErrors = await Query().Where(model => model.TimeOccured > startDate && model.TimeOccured < endDate)
+            .Where(model => testers.Contains(model.Tester))
+            .ToListAsync();
+        return ToDomain(testErrors);
+        
     }
 
     private List<TestError> ToDomain(List<TestErrorModel> models)
