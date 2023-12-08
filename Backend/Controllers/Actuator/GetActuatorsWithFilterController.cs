@@ -44,12 +44,7 @@ public class GetActuatorsWithFilterController : ControllerBase
 
         internal static GetActuatorWithFilterResponse From(GetActuatorsWithFilterDto result)
         {
-            List<GetActuatorWithFilterActuator> actuators = new List<GetActuatorWithFilterActuator>();
-            foreach (var actuator in result.ActuatorDtos)
-            {
-                actuators.Add(GetActuatorWithFilterActuator.From(actuator));
-            }
-
+            var actuators = result.ActuatorDtos.Select(actuator => GetActuatorWithFilterActuator.From(actuator)).ToList();
             return new GetActuatorWithFilterResponse(actuators);
         }
     }
