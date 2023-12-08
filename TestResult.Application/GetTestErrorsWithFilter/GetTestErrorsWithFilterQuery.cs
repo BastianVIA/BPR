@@ -7,7 +7,7 @@ public class GetTestErrorsWithFilterQuery : IQuery<GetTestErrorsWithFilterDto>
 {
     [Required] public int TimeIntervalBetweenRowsAsMinutes { get; set; }
     [Required] public DateTime StartDate { get; set; }
-    [Required] public DateTime EndDate { get; set; }
+    public DateTime? EndDate { get; set; }  
     public int? WorkOrderNumber { get; set; }
     public string? Tester { get; set; }
     public int? Bay { get; set; }
@@ -27,7 +27,7 @@ public class GetTestErrorsWithFilterQuery : IQuery<GetTestErrorsWithFilterDto>
     }
 
     public static GetTestErrorsWithFilterQuery Create(int timeIntervalBetweenRowsAsMinutes, DateTime startDat,
-        DateTime endDate, int? woNo= null, string? tester= null, int? bay= null, int? errorCode = null)
+        DateTime? endDate, int? woNo= null, string? tester= null, int? bay= null, int? errorCode = null)
     {
         return new GetTestErrorsWithFilterQuery
         {

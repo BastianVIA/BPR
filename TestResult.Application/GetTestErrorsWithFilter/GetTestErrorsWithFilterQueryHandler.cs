@@ -52,7 +52,7 @@ public class
             dataLines.Add(singleLine);
 
             startOfInterval = endOfInterval;
-        } while (startOfInterval < request.EndDate);
+        } while (startOfInterval <= (request.EndDate ?? DateTime.Now));
 
         List<int> possibleErrorCodes = uniqueErrorCodes.ToList();
 

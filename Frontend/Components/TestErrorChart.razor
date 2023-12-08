@@ -1,0 +1,14 @@
+﻿@inherits TestErrorChartBase
+
+<div class="container" style="padding: 0;">
+    <div style="text-align: center; margin-top: 20px;">
+        @foreach (var item in _errorPercentageData)
+        { <div><strong>@item.ErrorType: </strong> @item.Percentage.ToString("0.00")%</div>
+           }
+    </div>
+    <RadzenChart SeriesClick=@OnSeriesClick>
+        <RadzenPieSeries Data="@_errorPercentageData" Title="Error Percentage" CategoryProperty="ErrorType" ValueProperty="Percentage">
+            <RadzenSeriesDataLabels Visible="@showDataLabels"/>
+        </RadzenPieSeries>
+    </RadzenChart>
+</div>

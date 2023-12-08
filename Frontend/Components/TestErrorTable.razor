@@ -3,6 +3,7 @@
 @using Frontend.Networking
 @using Frontend.Model
 @using System.Collections.Generic
+@using Frontend.Util
 @inject ITestErrorModel TestErrorModel
 @inherits TestErrorTableBase
 
@@ -12,38 +13,40 @@
 
 @if (TestErrors?.PossibleErrorCodes?.Any() == true)
 {
-    var pivotedData = PivotDataLines(TestErrors.DataLines.ToList(), SelectedTimeIntervalBaseTable);
-
-    <RadzenDataGrid Data="@pivotedData" TItem="Dictionary<string, object>" AutoGenerateColumns="false">
+    <RadzenDataGrid ColumnWidth="150px" Data="@TestErrors.DataLines" TItem="GetTestErrorsWithFilterSingleLine" PageSize="50" PagerHorizontalAlign="HorizontalAlign.Left" AllowPaging="true" PagerPosition="PagerPosition.TopAndBottom" AllowSorting="true" Sort="@OnSort">
         <Columns>
-            <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TimeInterval" Title="Time Interval" Visible=@ShouldShowColumn("Time Interval")>
-                <Template Context="dataItem">
-                    @dataItem["TimeInterval"]
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Title="Time Interval" Visible=@ShouldShowColumn("Time Interval") SortOrder="@TimeIntervalSortingOrder">
+                <HeaderTemplate>
+                    <div title="The Time Interval For Tests">Time Interval</div>
+                </HeaderTemplate>
+                <Template>
+                    @FormatTimeInterval(context.StartIntervalAsDate, context.EndIntervalAsDate, SelectedTimeIntervalBaseTable)
                 </Template>
             </RadzenDataGridColumn>
-            @foreach (var errorCode in ErrorCodes)
-            {
-                <RadzenDataGridColumn TItem="Dictionary<string, object>" Property=@($"ErrorCode{errorCode}") Visible=@ShouldShowColumn($"Error Code")>
-                    <HeaderTemplate>
-                        <div title="@ErrorCodeMessages[int.Parse(errorCode)]">
-                            @($"Error Code {errorCode}")
-                        </div>
-                    </HeaderTemplate>
-                    <Template Context="dataItem">
-                        @dataItem[$"ErrorCode{errorCode}"]
-                    </Template>
-                </RadzenDataGridColumn>
-            }
-            <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Errors")>
-                <Template Context="dataItem">
-                    @dataItem["TotalErrors"].ToString()
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Tests Failed")>
+                <HeaderTemplate>
+                    <div title="The Total Actuator Tests Failed">Total Tests Failed</div>
+                </HeaderTemplate>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" Frozen="true" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")>
+                <HeaderTemplate>
+                    <div title="The Total Actuators Tested">Total Tests</div>
+                </HeaderTemplate>
+            </RadzenDataGridColumn>
+        @foreach (var errorCode in TestErrors.PossibleErrorCodes)
+        {
+            AddColumnToSortingOrderDictionary(errorCode.ErrorCode);
+            <RadzenDataGridColumn TItem="GetTestErrorsWithFilterSingleLine" SortOrder="@ErrorColumnsSortingOrder[errorCode.ErrorCode]" Title="@($"Error {errorCode.ErrorCode}")" Visible="@ShouldShowColumn("Error Code")">
+                <HeaderTemplate>
+                     <div title="@errorCode.ErrorMessage">@($"Error {errorCode.ErrorCode}")</div>
+                </HeaderTemplate>
+                <Template>
+                    <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(context, errorCode.ErrorCode))">
+                        @GetItemErrorCount(context, errorCode)
+                    </div>
                 </Template>
             </RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")>
-                <Template Context="dataItem">
-                    @dataItem["TotalTests"].ToString()
-                </Template>
-            </RadzenDataGridColumn>
+        }
         </Columns>
     </RadzenDataGrid>
 }

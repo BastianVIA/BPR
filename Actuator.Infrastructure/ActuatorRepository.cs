@@ -16,8 +16,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
     public async Task CreateActuator(Actuator actuator)
     {
         var pcba = await getPcbaModel(actuator.PCBA.Uid);
+        var article = await getArticle(actuator.ArticleNumber);
         var actuatorModel = FromDomain(actuator);
         actuatorModel.PCBA = pcba;
+        actuatorModel.Article = article;
         await AddAsync(actuatorModel, actuator.GetDomainEvents());
     }
 
@@ -43,11 +45,16 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         actuatorFromDb.PCBA = pcba;
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
-    
-    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode,  string? communicationProtocol, string? articleNumber, string? articleName, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
+
+    public async Task<List<Actuator>> GetActuatorsWithFilter(int? woNo, int? serialNo, string? pcbaUid,
+        string? pcbaItemNumber, int? pcbaManufacturerNumber, int? pcbaProductionDateCode, string? communicationProtocol,
+        string? articleNumber, string? configNo, string? software, DateTime? startDate, DateTime? endDate)
     {
-        var queryBuilder = Query().Include(model => model.PCBA).AsQueryable();
-        
+        var queryBuilder = Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .AsQueryable();
+
         if (woNo != null)
         {
             queryBuilder = queryBuilder.Where(model => model.WorkOrderNumber == woNo);
@@ -86,11 +93,6 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         if (articleNumber != null)
         {
             queryBuilder = queryBuilder.Where(model => model.ArticleNumber == articleNumber);
-        }
-
-        if (articleName != null)
-        {
-            queryBuilder = queryBuilder.Where(model => model.ArticleName == articleName);
         }
 
         if (configNo != null)
@@ -144,7 +146,8 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             software: actuatorModel.PCBA.Software,
             productionDateCode: actuatorModel.PCBA.ProductionDateCode,
             configNo: actuatorModel.PCBA.ConfigNo);
-        return new Actuator(actuatorId, pcba, actuatorModel.ArticleNumber, actuatorModel.ArticleName, actuatorModel.CommunicationProtocol, actuatorModel.CreatedTime);
+        return new Actuator(actuatorId, pcba, actuatorModel.ArticleNumber, actuatorModel.Article.ArticleName,
+            actuatorModel.CommunicationProtocol, actuatorModel.CreatedTime);
     }
 
     private List<Actuator> ToDomain(List<ActuatorModel> actuatorModels)
@@ -165,15 +168,20 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
             Uid = actuator.PCBA.Uid,
             ManufacturerNumber = actuator.PCBA.ManufacturerNumber
         };
+        var articleModel = new ArticleModel()
+        {
+            ArticleNumber = actuator.ArticleNumber,
+            ArticleName = actuator.ArticleName
+        };
         var actuatorModel = new ActuatorModel()
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,
             SerialNumber = actuator.Id.SerialNumber,
             PCBA = pcbaModel,
             ArticleNumber = actuator.ArticleNumber,
-            ArticleName = actuator.ArticleName,
             CommunicationProtocol = actuator.CommunicationProtocol,
-            CreatedTime = actuator.CreatedTime
+            CreatedTime = actuator.CreatedTime,
+            Article = articleModel
         };
         return actuatorModel;
     }
@@ -187,5 +195,17 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         }
 
         return pcba;
+    }
+
+    private async Task<ArticleModel> getArticle(string actuatorArticleNumber)
+    {
+        var article = await QueryOtherLocal<ArticleModel>()
+            .FirstOrDefaultAsync(a => a.ArticleNumber == actuatorArticleNumber);
+        if (article == null)
+        {
+            article = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleNumber == actuatorArticleNumber);
+        }
+
+        return article;
     }
 }
