@@ -1,4 +1,5 @@
 ﻿using Frontend.Service;
+using Frontend.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace Frontend.Components;

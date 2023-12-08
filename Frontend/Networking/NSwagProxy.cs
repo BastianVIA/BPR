@@ -1,5 +1,5 @@
 ﻿using Frontend.Exceptions;
-using Frontend.Service;
+using Frontend.Services;
 
 namespace Frontend.Networking;
 
@@ -19,6 +19,24 @@ public class NSwagProxy : INetwork
         try
         {
             return await func();
+        }
+        catch (ApiException<ProblemDetails> e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Result.Detail);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw new NetworkException(e.Message);
+        }
+    }
+
+    private async Task Send(Func<Task> func)
+    {
+        try
+        {
+            await func();
         }
         catch (ApiException<ProblemDetails> e)
         {
@@ -73,5 +91,16 @@ public class NSwagProxy : INetwork
         await response.Stream.CopyToAsync(memoryStream);
         return memoryStream.ToArray();
 
+    }
+
+    public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)
+    {
+        PutActuatorPCBARequest body = new PutActuatorPCBARequest
+        {
+            WorkOrderNumber = woNo,
+            SerialNumber = serialNo,
+            PcbaUid = pcbaUid
+        };
+        await Send(async () => await _client.PutNewPCBAInActuatorAsync(body));
     }
 }
