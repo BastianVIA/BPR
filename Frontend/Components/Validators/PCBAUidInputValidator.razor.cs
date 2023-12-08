@@ -1,9 +1,9 @@
 ﻿using Frontend.Entities;
 using Microsoft.AspNetCore.Components;
 
-namespace Frontend.Pages;
+namespace Frontend.Components.Validators;
 
-public class PCBAInformationBase : ComponentBase
+public class PCBAUidInputValidatorBase : ComponentBase
 {
     [Parameter] public Actuator Actuator { get; set; }
 }

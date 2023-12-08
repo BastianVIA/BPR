@@ -1,9 +1,9 @@
 ﻿using Frontend.Entities;
 using Microsoft.AspNetCore.Components;
 
-namespace Frontend.Pages;
+namespace Frontend.Components.Validators;
 
-public class ActuatorInformationBase : ComponentBase
+public class ManufacturerNumberInputValidatorBase : ComponentBase
 {
     [Parameter] public Actuator Actuator { get; set; }
 }
