@@ -195,10 +195,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
     private async Task<ArticleModel> getArticle(string actuatorArticleNumber)
     {
         var article = await QueryOtherLocal<ArticleModel>()
-            .FirstOrDefaultAsync(a => a.ArticleName == actuatorArticleNumber);
+            .FirstOrDefaultAsync(a => a.ArticleNumber == actuatorArticleNumber);
         if (article == null)
         {
-            article = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleName == actuatorArticleNumber);
+            article = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleNumber == actuatorArticleNumber);
         }
 
         return article;
