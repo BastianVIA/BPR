@@ -8,23 +8,33 @@ namespace BuildingBlocks.Integration.Inbox;
 public class InboxPublisher
 {
     private readonly IInbox _inbox;
+    private readonly IFailingInbox _failingInbox;
     private readonly ISender _sender;
     private readonly ILogger<InboxPublisher> _logger;
-    private readonly IDbTransaction _dbTransaction;
 
-    public InboxPublisher(IInbox inbox, ISender sender, ILogger<InboxPublisher> logger, IDbTransaction dbTransaction)
+    public InboxPublisher(IInbox inbox, ISender sender, ILogger<InboxPublisher> logger, IFailingInbox failingInbox)
     {
         _inbox = inbox;
         _sender = sender;
         _logger = logger;
-        _dbTransaction = dbTransaction;
+        _failingInbox = failingInbox;
     }
 
 
-    internal async Task PublishPendingAsync(CancellationToken cancellationToken)
+    internal async Task PublishPendingAsync(IDbTransaction dbTransaction, CancellationToken cancellationToken)
+    {
+        await ProcessMessage(dbTransaction, _inbox, cancellationToken);
+    }
+
+    internal async Task PublishFailingAsync(IDbTransaction dbTransaction, CancellationToken cancellationToken)
+    {
+        await ProcessMessage(dbTransaction, _failingInbox, cancellationToken);
+    }
+
+    private async Task ProcessMessage(IDbTransaction dbTransaction, IInbox inbox, CancellationToken cancellationToken)
     {
         var serializer = new InboxMessageSerializer();
-        var messages = await _inbox.GetUnProcessedMessages();
+        var messages = await inbox.GetUnProcessedMessages();
 
         foreach (var message in messages)
         {
@@ -51,9 +61,8 @@ public class InboxPublisher
                 message.Failed("Deserialize Message Failed");
             }
 
-            await _inbox.Update(message);
-            await _dbTransaction.CommitAsync(cancellationToken);
+            await inbox.Update(message);
+            await dbTransaction.CommitAsync(cancellationToken);
         }
-
     }
 }
