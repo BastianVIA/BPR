@@ -1,6 +1,6 @@
-﻿using Frontend.Entities;
-using Frontend.Util;
+﻿using Frontend.Util;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Frontend.Components
 {
@@ -8,29 +8,11 @@ namespace Frontend.Components
     {
         [Parameter] public TestErrorResponse TestErrors { get; set; } = new();
         [Parameter] public string SelectedTimeIntervalBaseTable { get; set; }
-        public List<string> Filters { get; set; } = new List<string>();
+        [Inject] public DialogService DialogService { get; set; }
+
+        public List<string> Filters { get; set; } = new();
         public List<string> ErrorCodes { get; set; }
-        public Dictionary<int, string> ErrorCodeMessages { get; set; } = new Dictionary<int, string>();
-
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-            InitializeErrorCodes();
-            InitializeErrorMessages();
-        }
-
-        private void InitializeErrorCodes()
-        {
-            ErrorCodes = TestErrors.PossibleErrorCodes
-                .Select(ec => ec.ErrorCode.ToString())
-                .ToList();
-        }
-
-        private void InitializeErrorMessages()
-        {
-            ErrorCodeMessages = TestErrors.PossibleErrorCodes
-                .ToDictionary(ec => ec.ErrorCode, ec => ec.ErrorMessage);
-        }
+        public Dictionary<int, string> ErrorCodeMessages { get; set; } = new();
 
         public bool ShouldShowColumn(string columnName)
         {
@@ -79,6 +61,41 @@ namespace Frontend.Components
 
             return pivotedList;
         }
+
+        public async Task ShowErrorDetails(Dictionary<string, object> dataItem, string errorCodeKey)
+        {
+            var errorCount = Convert.ToInt32(dataItem[errorCodeKey]);
+            var totalFailedTests = Convert.ToInt32(dataItem["TotalErrors"]);
+            var percentage = totalFailedTests > 0 ? (errorCount / (float)totalFailedTests) * 100 : 0;
+
+            var errorCodeNumberString = errorCodeKey.Replace("ErrorCode", "");
+            if (int.TryParse(errorCodeNumberString, out var errorCodeNumber))
+            {
+                ErrorCodeMessages.TryGetValue(errorCodeNumber, out var errorCodeName);
+                errorCodeName ??= "Unknown Error";
+
+                await DialogService.OpenAsync<TestErrorChart>(
+                    "Error Percentage",
+                    new Dictionary<string, object>()
+                    {
+                        { "Percentage", percentage },
+                        { "ErrorCodeName", errorCodeName }
+                    },
+                    new DialogOptions() { Width = "800px", Height = "600px" });
+            }
+            else
+            {
+                throw new InvalidDataException();
+            }
+        }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            InitializeErrorCodes();
+            InitializeErrorMessages();
+        }
+
         private string FormatTimeInterval(DateTime start, DateTime end, string intervalBase)
         {
             switch (intervalBase)
@@ -96,6 +113,19 @@ namespace Frontend.Components
                 default:
                     return $"{start:HH:mm} - {end:HH:mm}";
             }
+        }
+
+        private void InitializeErrorCodes()
+        {
+            ErrorCodes = TestErrors.PossibleErrorCodes
+                .Select(ec => ec.ErrorCode.ToString())
+                .ToList();
+        }
+
+        private void InitializeErrorMessages()
+        {
+            ErrorCodeMessages = TestErrors.PossibleErrorCodes
+                .ToDictionary(ec => ec.ErrorCode, ec => ec.ErrorMessage);
         }
     }
 }
