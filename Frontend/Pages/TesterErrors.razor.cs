@@ -90,7 +90,6 @@ public class TesterErrorsBase : ComponentBase
         SelectedTesters ??= new List<string>();
         var selectedTime = _stringEnumMap[SelectedTimePeriod];
         DataSets = await TesterErrorsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
-        Mod();
     }
 
     public TimeSpan FormatXAxisStep()
@@ -117,17 +116,6 @@ public class TesterErrorsBase : ComponentBase
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-    private void Mod()
-    {
-        foreach (var error in DataSets[0].Errors)
-        {
-            error.ErrorCount = new Random().Next(20, 30);
-        }
-
-        DataSets[0].Errors[2].ErrorCount = 50;
-    }
-
     public async Task OnApply()
     {
         
