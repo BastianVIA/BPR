@@ -1,5 +1,4 @@
-﻿using LINTest.LinakDB;
-using LINTest.Services;
+﻿using LINTest.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,7 +21,6 @@ public static class Config
         services.AddSingleton<FileProcessor>();
         services.AddSingleton<CsvDataService>();
         services.AddSingleton<FileProcessingStateManager>();
-        services.AddScoped<IPCBAService, PCBADAO>();
         
         services.AddSingleton<FileProcessorOptions>(serviceProvider => 
             configuration.GetSection("LINTest:FileProcessor").Get<FileProcessorOptions>());

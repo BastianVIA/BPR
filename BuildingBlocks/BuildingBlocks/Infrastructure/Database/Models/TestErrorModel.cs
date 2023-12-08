@@ -7,6 +7,7 @@ public class TestErrorModel
     public string Tester { get; set; }
     public int Bay { get; set; }
     public int ErrorCode { get; set; }
-    public string ErrorMessage { get; set; }
     public DateTime TimeOccured { get; set; }
+    public TestErrorCodeModel ErrorCodeModel { get; set; }
+
 }

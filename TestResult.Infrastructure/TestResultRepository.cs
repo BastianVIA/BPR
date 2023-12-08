@@ -21,7 +21,10 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
     public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo,
         string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        var queryBuilder = Query().Include(t => t.TestErrors).AsQueryable();
+        var queryBuilder = Query()
+            .Include(t => t.TestErrors)
+            .ThenInclude(t => t.ErrorCodeModel)
+            .AsQueryable();
         if (woNo != null)
         {
             queryBuilder = queryBuilder.Where(m => m.WorkOrderNumber == woNo);
@@ -88,7 +91,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
 
     private Domain.Entities.TestResult ToDomain(TestResultModel testResultModel)
     {
-        var list = testResultModel.TestErrors.Select(error => new TestError(error.Id, error.Tester, error.Bay, error.ErrorCode, error.ErrorMessage, error.TimeOccured)).ToList();
+        var list = testResultModel.TestErrors.Select(error => new TestError(error.Id, error.Tester, error.Bay, error.ErrorCode, error.ErrorCodeModel.ErrorMessage, error.TimeOccured)).ToList();
 
         return new Domain.Entities.TestResult(testResultModel.Id, testResultModel.WorkOrderNumber,
             testResultModel.SerialNumber, testResultModel.Tester, testResultModel.Bay, testResultModel.MinServoPosition,
