@@ -49,6 +49,10 @@ public class TestStatisticsBase : ComponentBase
         {
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
         }
+        catch (ArgumentException e)
+        {
+            AlertService.FireEvent(AlertStyle.Danger, e.Message);
+        }
     }
 
     public int ConvertSelectionToMinutes()
