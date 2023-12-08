@@ -1,6 +1,4 @@
-﻿using Infrastructure;
-
-namespace BuildingBlocks.Infrastructure.Database.Models;
+﻿namespace BuildingBlocks.Infrastructure.Database.Models;
 
 public class ActuatorPCBAHistoryModel
 {

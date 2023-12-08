@@ -1,5 +1,4 @@
 ﻿using BuildingBlocks.Infrastructure.Database.Models;
-using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 public class ApplicationDbContext : DbContext

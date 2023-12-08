@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace Infrastructure;
+namespace BuildingBlocks.Infrastructure.Database.Models;
 
 public class PCBAModel
 {

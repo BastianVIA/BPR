@@ -74,7 +74,8 @@ public class NSwagProxy : INetwork
     public async Task<GetTestResultsWithFilterResponse> GetTestResultWithFilter(int? woNo, int? serialNo,
         string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
-        return await Send(async () => await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, startDate,endDate));
+        return await Send(async () =>
+            await _client.GetTestResultsWithFilterAsync(woNo, serialNo, tester, bay, startDate, endDate));
     }
 
     public async Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
@@ -92,7 +93,8 @@ public class NSwagProxy : INetwork
         return memoryStream.ToArray();
     }
 
-    public async Task<GetTestErrorForTestersResponse> GetTestErrorForTesters(List<string> testers, TesterTimePeriodEnum timePeriod)
+    public async Task<GetTestErrorForTestersResponse> GetTestErrorForTesters(List<string> testers,
+        TesterTimePeriodEnum timePeriod)
     {
         return await Send(async () => await _client.GetTestErrorForTestersAsync(testers, timePeriod));
     }
@@ -100,6 +102,15 @@ public class NSwagProxy : INetwork
     public async Task<GetAllTestersResponse> GetAllCellNames()
     {
         return await Send(async () => await _client.GetAllTestersAsync());
+    }
+
+    public async Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? wrkOrderNumber, string? tester,
+        int? bay, int? errorCode, DateTime startDate, DateTime endDate, int timeIntervalBetweenRowsAsMinutes)
+    {
+        var sd = await Send(async () =>
+            await _client.GetTestErrorsWithFilterAsync(timeIntervalBetweenRowsAsMinutes, startDate, endDate,
+                wrkOrderNumber, tester, bay, errorCode));
+        return sd;
     }
 
     public async Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid)

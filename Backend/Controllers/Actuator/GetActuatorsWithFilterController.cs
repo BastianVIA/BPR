@@ -53,7 +53,7 @@ public class GetActuatorsWithFilterController : ControllerBase
     {
         public int WorkOrderNumber { get; private set; }
         public int SerialNumber { get; private set; }
-        public GetActuatorWithFilterPCBA PCBA { get; private set; }
+        public GetActuatorsWithFilterController.GetActuatorWithFilterPCBA PCBA { get; private set; }
         public string CommunicationProtocol { get; private set; }
         public string ArticleNumber { get; private set; }
         public string ArticleName { get; private set; }

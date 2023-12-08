@@ -1,6 +1,7 @@
 using Actuator.Tests.Util;
 using AutoFixture;
 using BuildingBlocks.Infrastructure;
+using BuildingBlocks.Infrastructure.Database.Models;
 using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;

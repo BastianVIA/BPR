@@ -1,0 +1,53 @@
+﻿@page "/test-errors"
+@using Frontend.Entities
+@using Frontend.Networking
+@using Frontend.Model
+@using System.Collections.Generic
+@inject ITestErrorModel TestErrorModel
+@inherits TestErrorTableBase
+
+<TestErrorTableFilter OnNewFilter="@UpdateFilters"/>
+
+<h3>Test Error Table</h3>
+
+@if (TestErrors?.PossibleErrorCodes?.Any() == true)
+{
+    var pivotedData = PivotDataLines(TestErrors.DataLines.ToList(), SelectedTimeIntervalBaseTable);
+
+    <RadzenDataGrid Data="@pivotedData" TItem="Dictionary<string, object>" AutoGenerateColumns="false">
+        <Columns>
+            <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TimeInterval" Title="Time Interval" Visible=@ShouldShowColumn("Time Interval")>
+                <Template Context="dataItem">
+                    @dataItem["TimeInterval"]
+                </Template>
+            </RadzenDataGridColumn>
+            @foreach (var errorCode in ErrorCodes)
+            {
+                <RadzenDataGridColumn TItem="Dictionary<string, object>" Property=@($"ErrorCode{errorCode}") Visible=@ShouldShowColumn($"Error Code")>
+                    <HeaderTemplate>
+                        <div title="@ErrorCodeMessages[int.Parse(errorCode)]">
+                            @($"Error Code {errorCode}")
+                        </div>
+                    </HeaderTemplate>
+                    <Template Context="dataItem">
+                        @dataItem[$"ErrorCode{errorCode}"]
+                    </Template>
+                </RadzenDataGridColumn>
+            }
+            <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TotalErrors" Title="Total Error Codes" Visible=@ShouldShowColumn("Total Errors")>
+                <Template Context="dataItem">
+                    @dataItem["TotalErrors"].ToString()
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Dictionary<string, object>" Property="TotalTests" Title="Total Tests" Visible=@ShouldShowColumn("Total Tests")>
+                <Template Context="dataItem">
+                    @dataItem["TotalTests"].ToString()
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+else
+{
+    <div>No data available.</div>
+}

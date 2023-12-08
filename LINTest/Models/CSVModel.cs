@@ -1,6 +1,4 @@
-﻿using LINTest.Models;
-
-namespace Backend.Model;
+﻿namespace LINTest.Models;
 
 public class CSVModel
 {

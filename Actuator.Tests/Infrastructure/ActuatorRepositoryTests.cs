@@ -3,6 +3,7 @@ using AutoFixture;
 using BuildingBlocks.Exceptions;
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database.Migrations;
+using BuildingBlocks.Infrastructure.Database.Models;
 using Domain.Entities;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;

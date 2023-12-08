@@ -1,4 +1,3 @@
-using Backend.Model;
 using BuildingBlocks.Exceptions;
 using BuildingBlocks.Integration;
 using LINTest.Handlers;

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure;
+﻿namespace BuildingBlocks.Infrastructure.Database.Models;
 
 public class ActuatorModel
 {
