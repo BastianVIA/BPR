@@ -8,14 +8,12 @@
 <RadzenTooltip/>
 
 <RadzenLayout>
-    
     <RadzenHeader>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
             <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)"/>
             <RadzenLabel Text="TECHLINE"/>
         </RadzenStack>
     </RadzenHeader>
-
     <RadzenSidebar Style="width:auto">
         <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)">
             <RadzenPanelMenuItem Text="Home" Icon="home" Path=""/>
@@ -23,10 +21,8 @@
             <RadzenPanelMenuItem Text="Actuator" Icon="pageview" Path="ActuatorSearch"/>
             <RadzenPanelMenuItem Text="TestResult" Icon="pageview" Path="TestResultSearch"/>
             <RadzenPanelMenuItem Text="Test Stats" Icon="pageview" Path="TestStatistics"/>
-
         </RadzenPanelMenu>
     </RadzenSidebar>
-
     <RadzenBody @ref="body">
         <ChildContent>
             <RadzenContentContainer Name="main">

@@ -1,5 +1,4 @@
-﻿using Frontend.Entities;
-using Frontend.Exceptions;
+﻿using Frontend.Exceptions;
 using Frontend.Model;
 using Frontend.Service.AlertService;
 using Frontend.Util;
@@ -13,8 +12,8 @@ public class TestStatisticsBase : ComponentBase
     [Inject] public ITestErrorModel TestErrorModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public DialogService DialogService { get; set; }
-    public TestErrorResponse TestErrors { get; set; } = new TestErrorResponse();
-    protected SearchObject SearchTestError { get; set; } = new SearchObject();
+    public TestErrorResponse TestErrors { get; set; } = new();
+    protected SearchObject SearchTestError { get; set; } = new();
     public string SelectedTimeIntervalBase { get; set; } = "Hourly";
     public List<string> timeIntervalBases = new List<string> { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
 

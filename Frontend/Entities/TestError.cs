@@ -7,5 +7,4 @@ public class TestError
     public int ErrorCode { get; set; }
     public string ErrorMessage { get; set; }
     public DateTime TimeOccured { get; set; }
-    
 }

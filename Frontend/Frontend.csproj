@@ -7,34 +7,32 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Shared\NavMenu.razor" />
-      <Content Remove="Pages\Index.razor" />
-      <Content Remove="Pages\Counter.razor" />
-      <Content Remove="Pages\FetchData.razor" />
-      <Content Remove="Pages\Error.cshtml" />
-      <Content Update="Pages\ActuatorInformation.razor">
-        <DependentUpon>InformationContainer.razor</DependentUpon>
-      </Content>
-      <Content Update="Pages\PCBAInformation.razor">
-        <DependentUpon>InformationContainer.razor</DependentUpon>
-      </Content>
+        <Content Remove="Shared\NavMenu.razor"/>
+        <Content Remove="Pages\Index.razor"/>
+        <Content Remove="Pages\Counter.razor"/>
+        <Content Remove="Pages\FetchData.razor"/>
+        <Content Remove="Pages\Error.cshtml"/>
+        <Content Update="Pages\ActuatorInformation.razor">
+            <DependentUpon>InformationContainer.razor</DependentUpon>
+        </Content>
+        <Content Update="Pages\PCBAInformation.razor">
+            <DependentUpon>InformationContainer.razor</DependentUpon>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Data\WeatherForecastService.cs" />
-      <Compile Remove="Pages\Error.cshtml.cs" />
-      <Compile Update="Pages\InformationContainer.razor.cs">
-        <DependentUpon>InformationContainer.razor</DependentUpon>
-      </Compile>
+        <Compile Remove="Data\WeatherForecastService.cs"/>
+        <Compile Remove="Pages\Error.cshtml.cs"/>
+        <Compile Update="Pages\InformationContainer.razor.cs">
+            <DependentUpon>InformationContainer.razor</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Radzen.Blazor" Version="4.15.14" />
+        <PackageReference Include="Radzen.Blazor" Version="4.15.14"/>
     </ItemGroup>
-
-
 </Project>
