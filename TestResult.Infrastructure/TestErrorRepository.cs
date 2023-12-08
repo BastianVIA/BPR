@@ -26,8 +26,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
     }
 
     public async Task<List<TestError>> GetTestErrorsWithFilter(int? woNo, string? tester,
-        int? bay, int? errorCode,
-        DateTime? startDate, DateTime? endDate)
+        int? bay, int? errorCode, DateTime? startDate, DateTime? endDate)
     {
         var queryBuilder = Query();
         if (woNo != null)
