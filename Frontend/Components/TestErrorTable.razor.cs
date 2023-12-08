@@ -69,7 +69,7 @@ namespace Frontend.Components
         
         public async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode)
         {
-            var errorCount = dataItem.listOfErrors.Find(test => test.ErrorCode == errorCode).AmountOfErrors;
+            var errorCount = dataItem.listOfErrors.FirstOrDefault(test => test.ErrorCode == errorCode)?.AmountOfErrors ?? 0;
             var totalFailedTests = dataItem.TotalErrors;
             var percentage = totalFailedTests > 0 ? (errorCount / (float)totalFailedTests) * 100 : 0;
             
