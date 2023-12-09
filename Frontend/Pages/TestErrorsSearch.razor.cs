@@ -7,15 +7,15 @@ using Radzen;
 
 namespace Frontend.Pages;
 
-public class TestErrorsBase : ComponentBase
+public class TestErrorsSearchBase : ComponentBase
 {
-    [Inject] public ITestErrorModel TestErrorModel { get; set; }
+    [Inject] public ITestErrorsSearchModel TestErrorsSearchModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public DialogService DialogService { get; set; }
-    public TestErrorResponse TestErrors { get; set; } = new();
+    protected TestErrorResponse TestErrors { get; set; } = new();
     protected SearchObject SearchTestError { get; set; } = new();
-    public string SelectedTimeIntervalBase { get; set; } = "Hourly";
-    public List<string> timeIntervalBases = new List<string> { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
+    protected string SelectedTimeIntervalBase { get; set; } = "Hourly";
+    protected List<string> timeIntervalBases = new() { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
 
     protected class SearchObject
     {
@@ -27,16 +27,16 @@ public class TestErrorsBase : ComponentBase
         public DateTime? EndDate { get; set; }
     }
 
-    public async Task OnChange()
+    protected async Task OnChange()
     {
         await SearchTestErrors();
     }
 
-    public async Task SearchTestErrors()
+    protected async Task SearchTestErrors()
     {
         try
         {
-            TestErrors = await TestErrorModel.GetTestErrorsWithFilter(
+            TestErrors = await TestErrorsSearchModel.GetTestErrorsWithFilter(
                 SearchTestError.WorkOrderNumber,
                 SearchTestError.Tester,
                 SearchTestError.Bay,
@@ -55,7 +55,7 @@ public class TestErrorsBase : ComponentBase
         }
     }
 
-    public int ConvertSelectionToMinutes()
+    private int ConvertSelectionToMinutes()
     {
         switch (SelectedTimeIntervalBase)
         {
