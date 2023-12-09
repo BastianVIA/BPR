@@ -24,7 +24,7 @@ public class ErrorStatisticsBase : ComponentBase
 
     private Dictionary<string, TesterTimePeriodEnum> _stringEnumMap = new()
     {
-        { "This Year",TesterTimePeriodEnum.This_Year},
+        {"This Year",TesterTimePeriodEnum.This_Year},
         {"Last Full Year", TesterTimePeriodEnum.Last_Full_Year},
         {"This Month", TesterTimePeriodEnum.This_Month},
         {"Last Full Month", TesterTimePeriodEnum.Last_Full_Month},
@@ -43,10 +43,10 @@ public class ErrorStatisticsBase : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         SetTimePeriodOptions();
-        await SetCellOptions();
+        await SetTesterOptions();
     }
     
-    private async Task SetCellOptions()
+    private async Task SetTesterOptions()
     {
         TesterOptions = await ErrorStatisticsModel.GetAllCellNames();
     }
