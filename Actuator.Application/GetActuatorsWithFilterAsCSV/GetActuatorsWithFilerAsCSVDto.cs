@@ -47,7 +47,7 @@ public class GetActuatorsWithFilerAsCSVSingleLine
     {
     }
 
-    public static GetActuatorsWithFilerAsCSVSingleLine From(ActuatorDTO actuatorDto)
+    public static GetActuatorsWithFilerAsCSVSingleLine From(ActuatorDto actuatorDto)
     {
         return new GetActuatorsWithFilerAsCSVSingleLine
         {

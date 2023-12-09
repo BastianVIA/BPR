@@ -4,29 +4,29 @@ namespace Application.GetActuatorsWithFilter;
 
 public class GetActuatorsWithFilterDto
 {
-    public List<ActuatorDTO> ActuatorDtos { get; }
+    public List<ActuatorDto> ActuatorDtos { get; }
 
     private GetActuatorsWithFilterDto() { }
 
-    private GetActuatorsWithFilterDto(List<ActuatorDTO> actuatorDtos)
+    private GetActuatorsWithFilterDto(List<ActuatorDto> actuatorDtos)
     {
         ActuatorDtos = actuatorDtos;
     }
 
     internal static GetActuatorsWithFilterDto From(List<Actuator> actuators)
     {
-        List<ActuatorDTO> actuatorDtos = new List<ActuatorDTO>();
+        List<ActuatorDto> actuatorDtos = new List<ActuatorDto>();
 
         foreach (var actuator in actuators)
         {
-            actuatorDtos.Add(ActuatorDTO.From(actuator));
+            actuatorDtos.Add(ActuatorDto.From(actuator));
         }
 
         return new GetActuatorsWithFilterDto(actuatorDtos);
     }
 }
 
-public class ActuatorDTO
+public class ActuatorDto
 {
     public int WorkOrderNumber { get; private set; }
     public int SerialNumber { get; private set; }
@@ -37,9 +37,9 @@ public class ActuatorDTO
     public string ArticleName { get; private set; }
     public DateTime CreatedTime { get; private set; }
 
-    internal static ActuatorDTO From(Actuator actuator)
+    internal static ActuatorDto From(Actuator actuator)
     {
-        return new ActuatorDTO
+        return new ActuatorDto
         {
             WorkOrderNumber = actuator.Id.WorkOrderNumber,
             SerialNumber = actuator.Id.SerialNumber,
