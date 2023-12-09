@@ -15,16 +15,16 @@ public class TableFiltersBase : ComponentBase
     private Dictionary<string, CsvProperties> _enumMap = new();
     protected override Task OnInitializedAsync()
     {
-        InitEnumMap(FilterOptionsEnums);
+        InitEnumMap();
         FilterOptions = EnumListToStringList(FilterOptionsEnums);
         CurrentFilters = EnumListToStringList(InitFilters);
         OnChange();
         return base.OnInitializedAsync();
     }
 
-    private void InitEnumMap(List<CsvProperties> enumList)
+    private void InitEnumMap()
     {
-        _enumMap = enumList.ToDictionary(EnumToString);
+        _enumMap = FilterOptionsEnums.ToDictionary(EnumToString);
     }
 
     private List<string> EnumListToStringList(List<CsvProperties> enumList)

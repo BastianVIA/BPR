@@ -9,29 +9,23 @@ namespace Frontend.Pages;
 
 public class TestResultSearchBase : ComponentBase
 {
-    protected class SearchObject
-    {
-        public int? WorkOrderNumber { get; set; }
-        public int? SerialNumber { get; set; }
-        public string? Tester { get; set; }
-        public int? Bay { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
-    }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public ITestResultSearchModel TestResultSearchModel { get; set; }
     [Inject] public DialogService DialogService { get; set; }
     protected SearchObject SearchTestResult { get; } = new();
     protected List<TestResult> TestResults { get; set; } = new();
-
+    
+    // Base constructor used by Blazor
     public TestResultSearchBase()
     {
         
     }
-
-    public TestResultSearchBase(ITestResultSearchModel testResultSearchModel)
+    
+    // Overloaded constructor, to inject model, needed by tests
+    public TestResultSearchBase(ITestResultSearchModel testResultSearchModel, IAlertService alertService)
     {
         TestResultSearchModel = testResultSearchModel;
+        AlertService = alertService;
     }
     protected async Task Search()
     {
@@ -50,5 +44,15 @@ public class TestResultSearchBase : ComponentBase
         await DialogService.OpenAsync<TestResultDetails>($"Test Details",
             new Dictionary<string, object> { { "TestResult", testResult } },
             new DialogOptions() { Width = "90%", Height = "80%"});
+    }
+    
+    protected class SearchObject
+    {
+        public int? WorkOrderNumber { get; set; }
+        public int? SerialNumber { get; set; }
+        public string? Tester { get; set; }
+        public int? Bay { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

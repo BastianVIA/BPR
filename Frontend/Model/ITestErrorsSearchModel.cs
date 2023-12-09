@@ -5,6 +5,6 @@ namespace Frontend.Model;
 
 public interface ITestErrorsSearchModel
 {
-    Task<TestErrorResponse> GetTestErrorsWithFilter(int? wrkOrderNumber, string? tester,
+    public Task<TestErrorResponse> GetTestErrorsWithFilter(int? woNo, string? tester,
         int? bay, int? errorCode, DateTime startDate, DateTime? endDate, int timeIntervalBetweenRowsAsMinutes);
 }

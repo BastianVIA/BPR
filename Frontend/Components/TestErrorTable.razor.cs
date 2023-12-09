@@ -66,8 +66,8 @@ namespace Frontend.Components
             }
             StateHasChanged();
         }
-        
-        public async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode, string errorMessage)
+
+        protected async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode, string errorMessage)
         {
             var errorCount = dataItem.listOfErrors.FirstOrDefault(test => test.ErrorCode == errorCode)?.AmountOfErrors ?? 0;
             if (errorCount == 0) return;

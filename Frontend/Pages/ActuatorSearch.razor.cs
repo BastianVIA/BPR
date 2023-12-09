@@ -10,33 +10,10 @@ namespace Frontend.Pages;
 
 public class ActuatorSearchBase : ComponentBase
 {
-    protected class SearchObject
-    {
-        public int? WorkOrderNumber { get; set; }
-        public int? SerialNumber { get; set; }
-        public string? ArticleNumber { get; set; }
-        public string? ArticleName { get; set; }
-        public string? CommunicationProtocol { get; set; }
-        public DateTime? CreatedTimeStart { get; set; }
-        public DateTime? CreatedTimeEnd { get; set; }
-        public string? PCBAUid { get; set; }
-        public string? PCBAItemNumber { get; set; }
-        public int? PCBAManufacturerNumber { get; set; }
-        public int? PCBAProductionDateCode { get; set; }
-        public string? PCBASoftware { get; set; }
-        public string? PCBAConfigNumber { get; set; }
-    }
-
     [Inject] public IActuatorSearchModel SearchModel { get; set; }
-
     [Inject] public IActuatorSearchCsvModel SearchCsvModel { get; set; }
-    
-    [Inject] public IActuatorDetailsModel DetailsModel { get; set; }
-
     [Inject] public IAlertService AlertService { get; set; }
-
     [Inject] public DialogService DialogService { get; set; }
-    
     [Inject] public NavigationManager NavigationManager { get; set; }
 
     // Radzen needs a class to specify the data object
@@ -52,9 +29,11 @@ public class ActuatorSearchBase : ComponentBase
     }
 
     // Overloaded constructor for unit testing
-    public ActuatorSearchBase(IActuatorSearchModel model)
+    public ActuatorSearchBase(IActuatorSearchModel model, IActuatorSearchCsvModel searchCsvModel, IAlertService alertService)
     {
         SearchModel = model;
+        SearchCsvModel = searchCsvModel;
+        AlertService = alertService;
     }
 
     protected async Task SearchActuators()
@@ -97,7 +76,7 @@ public class ActuatorSearchBase : ComponentBase
         await SearchActuators();
     }
 
-    public async Task DownloadActuators()
+    protected async Task DownloadActuators()
     {
         var file = await SearchCsvModel.GetActuatorWithFilter(_selectedFilters,
             SearchActuator.WorkOrderNumber,
@@ -118,5 +97,22 @@ public class ActuatorSearchBase : ComponentBase
         string dataUri = $"data:text/csv;base64,{base64String}";
 
         NavigationManager.NavigateTo(dataUri, forceLoad: true);
+    }
+    
+    protected class SearchObject
+    {
+        public int? WorkOrderNumber { get; set; }
+        public int? SerialNumber { get; set; }
+        public string? ArticleNumber { get; set; }
+        public string? ArticleName { get; set; }
+        public string? CommunicationProtocol { get; set; }
+        public DateTime? CreatedTimeStart { get; set; }
+        public DateTime? CreatedTimeEnd { get; set; }
+        public string? PCBAUid { get; set; }
+        public string? PCBAItemNumber { get; set; }
+        public int? PCBAManufacturerNumber { get; set; }
+        public int? PCBAProductionDateCode { get; set; }
+        public string? PCBASoftware { get; set; }
+        public string? PCBAConfigNumber { get; set; }
     }
 }

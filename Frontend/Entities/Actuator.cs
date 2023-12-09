@@ -8,11 +8,8 @@ public class Actuator
     public string? ArticleName { get; set; }
     public string? CommunicationProtocol { get; set; }
     public DateTime? CreatedTime { get; set; }
-    public DateTime? CreatedTimeStart { get; set; }
-    public DateTime? CreatedTimeEnd { get; set; }
     public PCBA PCBA { get; } = new();
-
-
+    
     // Actuator
     public Actuator WithWorkOrderNumber(int woNo)
     {

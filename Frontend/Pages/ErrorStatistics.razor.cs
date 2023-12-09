@@ -40,6 +40,16 @@ public class ErrorStatisticsBase : ComponentBase
     protected string SelectedTimePeriod { get; set; } = "Today";
     protected List<TesterErrorsSet> DataSets { get; set; } = new();
     
+    
+    public ErrorStatisticsBase()
+    {
+        
+    }
+
+    public ErrorStatisticsBase(IErrorStatisticsModel errorStatisticsModel)
+    {
+        ErrorStatisticsModel = errorStatisticsModel;
+    }
     protected override async Task OnInitializedAsync()
     {
         SetTimePeriodOptions();
