@@ -1,6 +1,6 @@
 using Application.CreatePCBA;
 using AutoFixture;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 
@@ -10,17 +10,17 @@ public class CreatePCBACommandHandlerTests
 {
     private Fixture _fixture = new();
     private IPCBARepository _pcbaRepository = Substitute.For<IPCBARepository>();
-    private CreatePCBACommandHandler _commandHandler;
+    private CreateOrUpdatePCBACommandHandler _commandHandler;
 
     public CreatePCBACommandHandlerTests()
     {
-        _commandHandler = new CreatePCBACommandHandler(_pcbaRepository);
+        _commandHandler = new CreateOrUpdatePCBACommandHandler(_pcbaRepository);
     }
 
     [Fact]
     public async Task Handle_ShouldPassCreatePCBAToRepository_WhenCalled()
     {
-        var request = _fixture.Create<CreatePCBACommand>();
+        var request = _fixture.Create<CreateOrUpdatePCBACommand>();
         
         _pcbaRepository.UpdatePCBA(Arg.Any<Domain.Entities.PCBA>()).Throws<KeyNotFoundException>();
 
@@ -32,7 +32,7 @@ public class CreatePCBACommandHandlerTests
     [Fact]
     public async Task Handle_ThrowsException_OnError()
     {
-        var request = _fixture.Create<CreatePCBACommand>();
+        var request = _fixture.Create<CreateOrUpdatePCBACommand>();
         
         _pcbaRepository.UpdatePCBA(Arg.Any<Domain.Entities.PCBA>()).Throws<Exception>();
 
@@ -42,7 +42,7 @@ public class CreatePCBACommandHandlerTests
     [Fact]
     public async Task Handle_ShouldPassUpdatePCBAToRepository_WhenCalled()
     {
-        var request = _fixture.Create<CreatePCBACommand>();
+        var request = _fixture.Create<CreateOrUpdatePCBACommand>();
 
         await _commandHandler.Handle(request, CancellationToken.None);
 

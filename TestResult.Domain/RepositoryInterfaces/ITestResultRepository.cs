@@ -1,4 +1,4 @@
-namespace TestResult.Domain.Repositories;
+namespace TestResult.Domain.RepositoryInterfaces;
 
 public interface ITestResultRepository
 {

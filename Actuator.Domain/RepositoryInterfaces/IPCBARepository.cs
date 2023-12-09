@@ -1,6 +1,6 @@
 using Domain.Entities;
 
-namespace Domain.Repositories;
+namespace Domain.RepositoryInterfaces;
 
 public interface IPCBARepository
 {
