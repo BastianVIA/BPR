@@ -11,7 +11,8 @@ public static class CsvWriterHelper
     {
         using var memoryStream = new MemoryStream();
         using var writer = new StreamWriter(memoryStream);
-        var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture));
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";" };
+        var csv = new CsvWriter(writer, config);
 
         var classMap = new DefaultClassMap<T>();
         foreach (var propertyName in includedProperties)
