@@ -67,9 +67,11 @@ namespace Frontend.Components
             StateHasChanged();
         }
         
-        public async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode)
+        public async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode, string errorMessage)
         {
             var errorCount = dataItem.listOfErrors.FirstOrDefault(test => test.ErrorCode == errorCode)?.AmountOfErrors ?? 0;
+            if (errorCount == 0) return;
+            
             var totalFailedTests = dataItem.TotalErrors;
             var percentage = totalFailedTests > 0 ? (errorCount / (float)totalFailedTests) * 100 : 0;
             
@@ -78,7 +80,7 @@ namespace Frontend.Components
                 new Dictionary<string, object>()
                 {
                     { "Percentage", percentage },
-                    { "ErrorCodeName", $"Error {errorCode}" }
+                    { "ErrorCodeName", errorMessage }
                 },
                 new DialogOptions() { Width = "800px", Height = "600px" });
         }
