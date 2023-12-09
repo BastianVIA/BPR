@@ -43,7 +43,7 @@ public class TestErrorsSearchModel : ITestErrorsSearchModel
                 TotalErrors = responseItem.TotalErrors,
                 StartIntervalAsDate = responseItem.StartIntervalAsDate,
                 TotalTests = responseItem.TotalTests,
-                listOfErrors = errorCodeList
+                ListOfErrors = errorCodeList
             };
 
             dataLinesList.Add(singleLine);
