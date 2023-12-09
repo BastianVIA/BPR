@@ -1,7 +1,7 @@
 namespace Frontend.Entities;
 
 [Serializable]
-public class PCBA : Component
+public class PCBA
 {
     public string? PCBAUid { get; set; }
     public string? ItemNumber { get; set; }
