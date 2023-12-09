@@ -3,13 +3,12 @@ using Frontend.Entities;
 using Frontend.Model;
 using Frontend.Service;
 using Microsoft.AspNetCore.Components;
-using Radzen.Blazor;
 
 namespace Frontend.Pages;
 
 public class ErrorStatisticsBase : ComponentBase
 {
-    [Inject] private ITesterErrorsModel TesterErrorsModel { get; set; }
+    [Inject] private IErrorStatisticsModel ErrorStatisticsModel { get; set; }
 
     private Dictionary<TesterTimePeriodEnum, string> _dateFormatMap = new()
     {
@@ -49,7 +48,7 @@ public class ErrorStatisticsBase : ComponentBase
     
     private async Task SetCellOptions()
     {
-        TesterOptions = await TesterErrorsModel.GetAllCellNames();
+        TesterOptions = await ErrorStatisticsModel.GetAllCellNames();
     }
     
     private void SetTimePeriodOptions()
@@ -84,7 +83,7 @@ public class ErrorStatisticsBase : ComponentBase
     {
         SelectedTesters ??= new List<string>();
         var selectedTime = _stringEnumMap[SelectedTimePeriod];
-        DataSets = await TesterErrorsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
+        DataSets = await ErrorStatisticsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
     }
 
     public TimeSpan FormatXAxisStep()
