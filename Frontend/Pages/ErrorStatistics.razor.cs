@@ -8,7 +8,7 @@ namespace Frontend.Pages;
 
 public class ErrorStatisticsBase : ComponentBase
 {
-    [Inject] private IErrorStatisticsModel ErrorStatisticsModel { get; set; }
+    [Inject] public IErrorStatisticsModel ErrorStatisticsModel { get; set; }
 
     private Dictionary<TesterTimePeriodEnum, string> _dateFormatMap = new()
     {
@@ -86,7 +86,7 @@ public class ErrorStatisticsBase : ComponentBase
         DataSets = await ErrorStatisticsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
     }
 
-    public TimeSpan FormatXAxisStep()
+    protected TimeSpan FormatXAxisStep()
     {
         switch (SelectedTimePeriod)
         {
