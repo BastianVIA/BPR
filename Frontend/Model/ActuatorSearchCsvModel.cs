@@ -19,7 +19,7 @@ public class ActuatorSearchCsvModel : IActuatorSearchCsvModel
     {
         var networkResponse = await _network.GetActuatorWithFilterAsCsv(columnsToInclude, woNo, serialNo, pcbaUid, itemNo,
             manufacturerNo,
-            productionDateCode, createdTimeStart, createdTimeEnd, software, configNo, articleName, articleNo,
+            productionDateCode, createdTimeStart, createdTimeEnd, software, configNo, articleNo,
             comProtocol);
         return networkResponse;
     }

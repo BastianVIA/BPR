@@ -16,7 +16,7 @@ public class ActuatorSearchModel : IActuatorSearchModel
         int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
     {
         var networkResponse = await _network.GetActuatorWithFilter(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-            productionDateCode, createdTimeStart, createdTimeEnd,software,configNo,articleName,articleNo,comProtocol);
+            productionDateCode, createdTimeStart, createdTimeEnd,software,configNo,articleNo,comProtocol);
 
         var actuators = new List<Actuator>();
         foreach (var responseItem in networkResponse.Actuators)
