@@ -2,7 +2,7 @@
 using BuildingBlocks.Application;
 using TestResult.Application.GetNumberOfTestResultsForTimeInterval;
 using TestResult.Domain.Entities;
-using TestResult.Domain.Repositories;
+using TestResult.Domain.RepositoryInterfaces;
 
 namespace TestResult.Application.GetTestErrorsWithFilter;
 

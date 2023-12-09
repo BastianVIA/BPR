@@ -8,18 +8,18 @@ namespace Application.CreatePCBAAndActuator;
 public class CreatePCBAAndActuatorCommandHandler : ICommandHandler<CreatePCBAAndActuatorCommand>
 {
     private ICommandBus _bus;
-    private readonly IPCBAService _pcbadao;
+    private readonly IPCBAService _pcbaService;
 
-    public CreatePCBAAndActuatorCommandHandler(ICommandBus bus, IPCBAService pcbadao)
+    public CreatePCBAAndActuatorCommandHandler(ICommandBus bus, IPCBAService pcbaService)
     {
         _bus = bus;
-        _pcbadao = pcbadao;
+        _pcbaService = pcbaService;
     }
 
     public Task Handle(CreatePCBAAndActuatorCommand request, CancellationToken cancellationToken)
     {
-        var pcba = _pcbadao.GetPCBA(request.PCBAUid);
-        var pcbaCommand = CreatePCBACommand.Create(pcba.Uid.ToString(), pcba.ManufacturerNumber, pcba.ItemNumber, pcba.Software,
+        var pcba = _pcbaService.GetPCBA(request.PCBAUid);
+        var pcbaCommand = CreateOrUpdatePCBACommand.Create(pcba.Uid.ToString(), pcba.ManufacturerNumber, pcba.ItemNumber, pcba.Software,
             pcba.ProductionDateCode, pcba.ConfigNo);
         _bus.Send(pcbaCommand, cancellationToken);
         

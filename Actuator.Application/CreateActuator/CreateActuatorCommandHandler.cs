@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.Application;
 using BuildingBlocks.Infrastructure.Database.Transaction;
 using Domain.Entities;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace Application.CreateActuator;
 

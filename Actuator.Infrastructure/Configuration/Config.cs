@@ -1,7 +1,7 @@
 ﻿using Application;
 using Microsoft.Extensions.DependencyInjection;
 using BuildingBlocks.Registration;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace Infrastructure.Configuration;
 

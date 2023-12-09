@@ -18,23 +18,23 @@ public class CsvDataService
     }
 
     public async Task ProcessCsvData(string filePath, IIntegrationEventPublisher publisher,
-        CancellationToken stoppingToken)
+        CancellationToken cancellationToken)
     {
         var csvModel = CSVHandler.ReadCSV(filePath);
         var isValidCsvData = IsValidCsvData(csvModel, filePath);
+        if (!isValidCsvData)
+        {
+            _logger.LogError($"File with path {filePath} does not have valid CSV data");
+            return;
+        }
         try
         {
-            if (!isValidCsvData)
+            if (csvModel.LINTestPassed)
             {
-                await SendInvalidTestEventAsync(csvModel, publisher, stoppingToken);
-                _logger.LogError($"File with path {filePath} does not have valid CSV data");
-            }
-            else if (csvModel.LINTestPassed)
-            {
-                await SendTestSucceededEventAsync(csvModel, publisher, stoppingToken);
+                await SendTestSucceededEventAsync(csvModel, publisher, cancellationToken);
                 foreach (var testError in csvModel.TestErrors)
                 {
-                    await SendTestFailedEventAsync(testError, publisher, stoppingToken);
+                    await SendTestFailedEventAsync(testError, publisher, cancellationToken);
                 }
             }
         }
@@ -82,7 +82,7 @@ public class CsvDataService
     }
 
     private async Task SendTestSucceededEventAsync(CSVModel csvModel, IIntegrationEventPublisher publisher,
-        CancellationToken stoppingToken)
+        CancellationToken cancellationToken)
     {
         var eventToSend = new ActuatorTestSucceededIntegrationEvent(
             int.Parse(csvModel.WorkOrderNumber),
@@ -99,20 +99,7 @@ public class CsvDataService
             csvModel.MinBuslinkPosition,
             csvModel.MaxBuslinkPosition,
             csvModel.ServoStroke);
-        await publisher.PublishAsync(eventToSend, stoppingToken);
+        await publisher.PublishAsync(eventToSend, cancellationToken);
     }
-
-    private async Task SendInvalidTestEventAsync(CSVModel csvModel, IIntegrationEventPublisher publisher,
-        CancellationToken stoppingToken)
-    {
-        var eventToSend = new ActuatorTestInvalidIntegrationTest(
-            int.Parse(csvModel.WorkOrderNumber),
-            int.Parse(csvModel.SerialNumber),
-            csvModel.PCBAUid,
-            csvModel.ArticleNumber,
-            csvModel.ArticleName,
-            csvModel.CommunicationProtocol,
-            csvModel.CreatedTime);
-        await publisher.PublishAsync(eventToSend, stoppingToken);
-    }
+    
 }

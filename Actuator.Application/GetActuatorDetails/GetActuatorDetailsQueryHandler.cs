@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Application;
 using Domain.Entities;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace Application.GetActuatorDetails;
 

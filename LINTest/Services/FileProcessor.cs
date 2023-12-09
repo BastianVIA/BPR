@@ -34,7 +34,7 @@ public class FileProcessor
         _logger.LogInformation($"CSV folder path is set to {_csvFolderPath}.");
     }
 
-    public string[] GetCsvFiles(DateTime lastProcessed)
+    public string[] GetCsvFileNamesSince(DateTime lastProcessed)
     {
         try
         {
