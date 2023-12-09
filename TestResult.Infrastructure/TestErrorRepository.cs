@@ -120,12 +120,12 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         return testErrorModel;
     }
 
-    private async Task<TestResultModel> GetTestResultModel(int workOrderNo, int serialNo)
+    private async Task<TestResultModel> GetTestResultModel(int woNo, int serialNo)
     {
         var testResult = QueryOtherLocal<TestResultModel>().FirstOrDefault(
-                             t => t.WorkOrderNumber == workOrderNo && t.SerialNumber == serialNo)
+                             t => t.WorkOrderNumber == woNo && t.SerialNumber == serialNo)
                          ?? await QueryOther<TestResultModel>().FirstAsync(
-                             t => t.WorkOrderNumber == workOrderNo && t.SerialNumber == serialNo);
+                             t => t.WorkOrderNumber == woNo && t.SerialNumber == serialNo);
 
         return testResult;
     }
