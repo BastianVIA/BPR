@@ -41,7 +41,7 @@
                      <div title="@errorCode.ErrorMessage">@($"Error {errorCode.ErrorCode}")</div>
                 </HeaderTemplate>
                 <Template>
-                    <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(context, errorCode.ErrorCode))">
+                    <div class="hover-highlight" @onclick="@(() => ShowErrorDetails(context, errorCode.ErrorCode, errorCode.ErrorMessage))">
                         @GetItemErrorCount(context, errorCode)
                     </div>
                 </Template>
