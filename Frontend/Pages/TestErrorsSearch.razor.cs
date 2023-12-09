@@ -11,20 +11,22 @@ public class TestErrorsSearchBase : ComponentBase
 {
     [Inject] public ITestErrorsSearchModel TestErrorsSearchModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }
-    [Inject] public DialogService DialogService { get; set; }
     protected TestErrorResponse TestErrors { get; set; } = new();
     protected SearchObject SearchTestError { get; set; } = new();
     protected string SelectedTimeIntervalBase { get; set; } = "Hourly";
     protected List<string> timeIntervalBases = new() { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
-
-    protected class SearchObject
+    
+    // Base constructor used by Blazor
+    public TestErrorsSearchBase()
     {
-        public int? WorkOrderNumber { get; set; }
-        public string? Tester { get; set; }
-        public int? Bay { get; set; }
-        public int? ErrorCode { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        
+    }
+    
+    // Overloaded constructor, to inject model and alert service, needed by tests
+    public TestErrorsSearchBase(ITestErrorsSearchModel testErrorsSearchModel, IAlertService alertService)
+    {
+        TestErrorsSearchModel = testErrorsSearchModel;
+        AlertService = alertService;
     }
 
     protected async Task OnChange()
@@ -72,5 +74,15 @@ public class TestErrorsSearchBase : ComponentBase
             default:
                 throw new InvalidDataException();
         }
+    }
+    
+    protected class SearchObject
+    {
+        public int? WorkOrderNumber { get; set; }
+        public string? Tester { get; set; }
+        public int? Bay { get; set; }
+        public int? ErrorCode { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }
