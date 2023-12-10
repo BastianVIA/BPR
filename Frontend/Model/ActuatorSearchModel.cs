@@ -25,6 +25,7 @@ public class ActuatorSearchModel : IActuatorSearchModel
                 .WithWorkOrderNumber(responseItem.WorkOrderNumber)
                 .WithSerialNumber(responseItem.SerialNumber)
                 .WithArticleNumber(responseItem.ArticleNumber)
+                .WithArticleName(responseItem.ArticleName)
                 .WithCommunicationProtocol(responseItem.CommunicationProtocol)
                 .WithCreatedTime(responseItem.CreatedTime)
                 .WithSoftware(responseItem.Pcba.Software)
