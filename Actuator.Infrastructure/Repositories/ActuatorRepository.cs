@@ -25,8 +25,11 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task<Actuator> GetActuator(CompositeActuatorId id)
     {
-        var actuatorModel = await Query().Include(model => model.PCBA).FirstOrDefaultAsync(a =>
-            a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
+        var actuatorModel = await Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .FirstOrDefaultAsync(a =>
+                a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
         if (actuatorModel == null)
         {
             throw new KeyNotFoundException(
@@ -38,11 +41,15 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task UpdateActuator(Actuator actuator)
     {
-        var actuatorFromDb = await Query().Include(model => model.PCBA).FirstAsync(a =>
+        var actuatorFromDb = await Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .FirstAsync(a =>
             a.WorkOrderNumber == actuator.Id.WorkOrderNumber && a.SerialNumber == actuator.Id.SerialNumber);
         var pcba = await getPcbaModel(actuator.PCBA.Uid);
-
         actuatorFromDb.PCBA = pcba;
+        var article = await getArticle(actuator.ArticleNumber);
+        actuatorFromDb.Article = article;
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
@@ -121,7 +128,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo = null)
     {
-        var query = Query().Include(model => model.PCBA).Where(model => model.PCBA.Uid == requestUid);
+        var query = Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .Where(model => model.PCBA.Uid == requestUid);
         if (requestManufacturerNo != null)
         {
             query = query.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNo);
@@ -199,8 +209,8 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     private async Task<ArticleModel> getArticle(string actuatorArticleNumber)
     {
-        var article = await QueryOtherLocal<ArticleModel>()
-            .FirstOrDefaultAsync(a => a.ArticleNumber == actuatorArticleNumber);
+        var article = QueryOtherLocal<ArticleModel>()
+            .FirstOrDefault(a => a.ArticleNumber == actuatorArticleNumber);
         if (article == null)
         {
             article = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleNumber == actuatorArticleNumber);
