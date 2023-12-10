@@ -29,29 +29,29 @@ public class LINTestBackgroundService : BackgroundService
         _configManager = configurationManager;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        while (!cancellationToken.IsCancellationRequested)
         {
             DateTime lastProcessedFileTime =
                 _fileProcessingStateManager.LoadLastProcessedDateTime() ?? DateTime.MinValue;
             using var scope = _serviceProvider.CreateScope();
             var publisher = scope.ServiceProvider.GetRequiredService<IIntegrationEventPublisher>();
 
-            var allFiles = _fileProcessor.GetCsvFiles(lastProcessedFileTime);
+            var namesOfUnprocessedFiles = _fileProcessor.GetCsvFileNamesSince(lastProcessedFileTime);
             
             var numberOfFilesProcessed =
-                await ProcessingFiles(stoppingToken, allFiles, lastProcessedFileTime, publisher);
+                await ProcessFiles(cancellationToken, namesOfUnprocessedFiles, lastProcessedFileTime, publisher);
 
             _logger.LogInformation($"{numberOfFilesProcessed} new files have been processed.");
 
-            await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(_configManager.RunIntervalInSeconds), cancellationToken);
         }
 
         _logger.LogError("BackgroundService LINTest stopped");
     }
 
-    private async Task<int> ProcessingFiles(CancellationToken stoppingToken, string[] allFiles,
+    private async Task<int> ProcessFiles(CancellationToken cancellationToken, string[] allFiles,
         DateTime lastProcessedFileTime,
         IIntegrationEventPublisher publisher)
     {
@@ -64,12 +64,13 @@ public class LINTestBackgroundService : BackgroundService
             .OrderBy(file => file.LastWriteTime)
             .ToList();
 
+
         for (int i = 0; i < filesToProcess.Count; i++)
         {
             try
             {
                 _logger.LogInformation($"Processing file: {filesToProcess[i].Path}, last editied at {filesToProcess[i].LastWriteTime}");
-                await _csvDataService.ProcessCsvData(filesToProcess[i].Path, publisher, stoppingToken);
+                await _csvDataService.ProcessCsvData(filesToProcess[i].Path, publisher, cancellationToken);
                 
                 _fileProcessingStateManager.SaveLastProcessedDateTime(filesToProcess[i].LastWriteTime);
             }

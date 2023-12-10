@@ -1,6 +1,6 @@
 using BuildingBlocks.Application;
 using BuildingBlocks.Infrastructure.Database.Transaction;
-using TestResult.Domain.Repositories;
+using TestResult.Domain.RepositoryInterfaces;
 
 namespace TestResult.Application.CreateTestResult;
 

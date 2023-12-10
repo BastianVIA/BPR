@@ -21,16 +21,16 @@ public class InboxPublisherBackgroundService : BackgroundService
             .Value);
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
                 using var scope = _scopeFactory.CreateScope();
                 var publisher = scope.ServiceProvider.GetRequiredService<InboxPublisher>();
                 var transaction = scope.ServiceProvider.GetRequiredService<IDbTransaction>();
-                await publisher.PublishPendingAsync(transaction, stoppingToken);
+                await publisher.PublishPendingAsync(transaction, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ public class InboxPublisherBackgroundService : BackgroundService
                 _logger.LogError(ex, ex.Message);
             }
 
-            await Task.Delay(TimeSpan.FromSeconds(intervalAsSeconds), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(intervalAsSeconds), cancellationToken);
         }
     }
 }

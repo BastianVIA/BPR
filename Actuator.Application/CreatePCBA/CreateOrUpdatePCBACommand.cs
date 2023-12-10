@@ -2,7 +2,7 @@ using BuildingBlocks.Application;
 
 namespace Application.CreatePCBA;
 
-public class CreatePCBACommand : ICommand
+public class CreateOrUpdatePCBACommand : ICommand
 {
     public string Uid { get; private set; }
 
@@ -12,7 +12,7 @@ public class CreatePCBACommand : ICommand
     public int ProductionDateCode { get; private set; }
     public string ConfigNo { get; private set; }
 
-    private CreatePCBACommand(string pcbaUid, int manufacturerNo, string itemNumber, string software,
+    private CreateOrUpdatePCBACommand(string pcbaUid, int manufacturerNo, string itemNumber, string software,
         int productionDateCode, string configNo)
     {
         Uid = pcbaUid;
@@ -23,9 +23,9 @@ public class CreatePCBACommand : ICommand
         ConfigNo = configNo;
     }
 
-    public static CreatePCBACommand Create(string pcbaUid, int manufacturerNo, string itemNumber, string software,
+    public static CreateOrUpdatePCBACommand Create(string pcbaUid, int manufacturerNo, string itemNumber, string software,
         int productionDateCode, string configNo)
     {
-        return new CreatePCBACommand(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo);
+        return new CreateOrUpdatePCBACommand(pcbaUid, manufacturerNo, itemNumber, software, productionDateCode, configNo);
     }
 }
