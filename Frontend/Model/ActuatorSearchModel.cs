@@ -13,10 +13,10 @@ public class ActuatorSearchModel : IActuatorSearchModel
     }
 
     public async Task<List<Actuator>> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid, string? itemNo, int? manufacturerNo,
-        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
+        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,string? software, string? configNo, string? articleNo, string? comProtocol)
     {
         var networkResponse = await _network.GetActuatorWithFilter(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-            productionDateCode, createdTimeStart, createdTimeEnd,software,configNo,articleName,articleNo,comProtocol);
+            productionDateCode, createdTimeStart, createdTimeEnd,software,configNo,articleNo,comProtocol);
 
         var actuators = new List<Actuator>();
         foreach (var responseItem in networkResponse.Actuators)
@@ -25,7 +25,6 @@ public class ActuatorSearchModel : IActuatorSearchModel
                 .WithWorkOrderNumber(responseItem.WorkOrderNumber)
                 .WithSerialNumber(responseItem.SerialNumber)
                 .WithArticleNumber(responseItem.ArticleNumber)
-                .WithArticleName(responseItem.ArticleName)
                 .WithCommunicationProtocol(responseItem.CommunicationProtocol)
                 .WithCreatedTime(responseItem.CreatedTime)
                 .WithSoftware(responseItem.Pcba.Software)
