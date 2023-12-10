@@ -15,7 +15,6 @@ public class ActuatorSearchBase : ComponentBase
         public int? WorkOrderNumber { get; set; }
         public int? SerialNumber { get; set; }
         public string? ArticleNumber { get; set; }
-        public string? ArticleName { get; set; }
         public string? CommunicationProtocol { get; set; }
         public DateTime? CreatedTimeStart { get; set; }
         public DateTime? CreatedTimeEnd { get; set; }
@@ -72,7 +71,6 @@ public class ActuatorSearchBase : ComponentBase
                 SearchActuator.CreatedTimeEnd,
                 SearchActuator.PCBASoftware,
                 SearchActuator.PCBAConfigNumber,
-                SearchActuator.ArticleName,
                 SearchActuator.ArticleNumber,
                 SearchActuator.CommunicationProtocol
             );
@@ -110,7 +108,6 @@ public class ActuatorSearchBase : ComponentBase
             SearchActuator.CreatedTimeEnd,
             SearchActuator.PCBASoftware,
             SearchActuator.PCBAConfigNumber,
-            SearchActuator.ArticleName,
             SearchActuator.ArticleNumber,
             SearchActuator.CommunicationProtocol);
 

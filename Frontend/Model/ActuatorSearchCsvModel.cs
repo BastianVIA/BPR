@@ -15,11 +15,10 @@ public class ActuatorSearchCsvModel : IActuatorSearchCsvModel
     public async Task<byte[]> GetActuatorWithFilter(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
         string? pcbaUid, string? itemNo,
         int? manufacturerNo, int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,
-        string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
+        string? software, string? configNo, string? articleNo, string? comProtocol)
     {
         var networkResponse = await _network.GetActuatorWithFilterAsCsv(columnsToInclude, woNo, serialNo, pcbaUid, itemNo,
-            manufacturerNo,
-            productionDateCode, createdTimeStart, createdTimeEnd, software, configNo, articleName, articleNo,
+            manufacturerNo, productionDateCode, createdTimeStart, createdTimeEnd, software, configNo, articleNo,
             comProtocol);
         return networkResponse;
     }

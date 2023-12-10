@@ -61,9 +61,8 @@ public class NSwagProxy : INetwork
     }
 
     public async Task<GetActuatorWithFilterResponse> GetActuatorWithFilter(int? woNo, int? serialNo, string? pcbaUid,
-        string? itemNo, int? manufacturerNo,
-        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,
-        string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
+        string? itemNo, int? manufacturerNo, int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,
+        string? software, string? configNo, string? articleNo, string? comProtocol)
     {
         return await Send(async () =>
             await _client.GetActuatorsWithFilterAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
@@ -81,12 +80,12 @@ public class NSwagProxy : INetwork
     public async Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
         string? pcbaUid, string? itemNo,
         int? manufacturerNo, int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd,
-        string? software, string? configNo, string? articleName, string? articleNo, string? comProtocol)
+        string? software, string? configNo, string? articleNo, string? comProtocol)
     {
         var response = await Send(async () =>
             await _client.GetActuatorWithFilterAsCsvAsync(woNo, serialNo, pcbaUid, itemNo, manufacturerNo,
-                productionDateCode, comProtocol, articleNo, configNo, software, createdTimeStart,
-                createdTimeEnd, columnsToInclude));
+                productionDateCode, comProtocol, articleNo, configNo, software, createdTimeStart, createdTimeEnd,
+                columnsToInclude));
 
         using MemoryStream memoryStream = new();
         await response.Stream.CopyToAsync(memoryStream);
