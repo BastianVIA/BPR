@@ -1,7 +1,7 @@
 ﻿using Application.CreateActuator;
 using AutoFixture;
 using BuildingBlocks.Infrastructure.Database.Transaction;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 

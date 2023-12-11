@@ -3,7 +3,7 @@ using BuildingBlocks.Infrastructure.Database;
 using BuildingBlocks.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using TestResult.Domain.Entities;
-using TestResult.Domain.Repositories;
+using TestResult.Domain.RepositoryInterfaces;
 
 namespace TestResult.Infrastructure;
 

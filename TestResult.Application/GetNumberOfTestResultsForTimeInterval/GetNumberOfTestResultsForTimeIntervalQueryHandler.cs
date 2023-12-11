@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.Application;
-using TestResult.Domain.Repositories;
+using TestResult.Domain.RepositoryInterfaces;
 
 namespace TestResult.Application.GetNumberOfTestResultsForTimeInterval;
 

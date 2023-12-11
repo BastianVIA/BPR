@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.Domain;
 using Domain.Entities;
 using Domain.Events;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace Application.NewPCBAInActuator;
 

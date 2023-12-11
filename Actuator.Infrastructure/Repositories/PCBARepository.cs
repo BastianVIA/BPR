@@ -2,7 +2,7 @@ using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
 using BuildingBlocks.Infrastructure.Database.Models;
 using Domain.Entities;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;

@@ -1,7 +1,7 @@
 ﻿using System.Net.NetworkInformation;
 using Application.GetActuatorFromPCBA;
 using AutoFixture;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 using NSubstitute;
 
 namespace Actuator.Tests.Application.GetActuatorFromPCBA;

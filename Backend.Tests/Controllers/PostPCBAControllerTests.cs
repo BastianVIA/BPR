@@ -29,7 +29,7 @@ public class PostPCBAControllerTests
     [Fact]
     public async Task CreateAsync_ReturnsBadRequest_WhenPCBACreationFailed()
     {
-        _bus.Send(Arg.Any<CreatePCBACommand>(), Arg.Any<CancellationToken>()).ThrowsAsync<Exception>();
+        _bus.Send(Arg.Any<CreateOrUpdatePCBACommand>(), Arg.Any<CancellationToken>()).ThrowsAsync<Exception>();
 
         var request = new PostPCBAController.PostPCBARequest();
         var result = await _controller.CreateAsync(request, CancellationToken.None);

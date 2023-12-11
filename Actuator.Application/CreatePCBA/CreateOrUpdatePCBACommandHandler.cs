@@ -1,19 +1,19 @@
 using BuildingBlocks.Application;
 using Domain.Entities;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace Application.CreatePCBA;
 
-public class CreatePCBACommandHandler : ICommandHandler<CreatePCBACommand>
+public class CreateOrUpdatePCBACommandHandler : ICommandHandler<CreateOrUpdatePCBACommand>
 {
     private IPCBARepository _pcbaRepository;
 
-    public CreatePCBACommandHandler(IPCBARepository pcbaRepository)
+    public CreateOrUpdatePCBACommandHandler(IPCBARepository pcbaRepository)
     {
         _pcbaRepository = pcbaRepository;
     }
     
-    public async Task Handle(CreatePCBACommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateOrUpdatePCBACommand request, CancellationToken cancellationToken)
     {
         var pcba = new PCBA(request.Uid, request.ManufacturerNumber, request.ItemNumber, request.Software, request.ProductionDateCode, request.ConfigNo);
         try

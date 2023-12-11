@@ -1,6 +1,6 @@
 using TestResult.Domain.Entities;
 
-namespace TestResult.Domain.Repositories;
+namespace TestResult.Domain.RepositoryInterfaces;
 
 public interface ITestErrorRepository
 {

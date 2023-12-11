@@ -12,15 +12,14 @@ public class ActuatorSearchBase : ComponentBase
 {
     [Inject] public IActuatorSearchModel SearchModel { get; set; }
     [Inject] public IActuatorSearchCsvModel SearchCsvModel { get; set; }
+    [Inject] public IActuatorDetailsModel DetailsModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }
     [Inject] public DialogService DialogService { get; set; }
     [Inject] public NavigationManager NavigationManager { get; set; }
 
     // Radzen needs a class to specify the data object
     protected SearchObject SearchActuator { get; } = new();
-
-    public List<Actuator> actuators = new();
-
+    protected List<Actuator> Actuators { get; set; } = new();
     private List<CsvProperties> _selectedFilters = new();
 
     // Blazor page needs an empty constructor
@@ -40,7 +39,7 @@ public class ActuatorSearchBase : ComponentBase
     {
         try
         {
-            actuators = await SearchModel.GetActuatorWithFilter(
+            Actuators = await SearchModel.GetActuatorWithFilter(
                 SearchActuator.WorkOrderNumber,
                 SearchActuator.SerialNumber,
                 SearchActuator.PCBAUid,
@@ -51,7 +50,6 @@ public class ActuatorSearchBase : ComponentBase
                 SearchActuator.CreatedTimeEnd,
                 SearchActuator.PCBASoftware,
                 SearchActuator.PCBAConfigNumber,
-                SearchActuator.ArticleName,
                 SearchActuator.ArticleNumber,
                 SearchActuator.CommunicationProtocol
             );
@@ -59,7 +57,7 @@ public class ActuatorSearchBase : ComponentBase
         catch (NetworkException e)
         {
             AlertService.FireEvent(AlertStyle.Danger, e.Message);
-            actuators = new List<Actuator>();
+            Actuators = new List<Actuator>();
         }
     }
 
@@ -89,7 +87,6 @@ public class ActuatorSearchBase : ComponentBase
             SearchActuator.CreatedTimeEnd,
             SearchActuator.PCBASoftware,
             SearchActuator.PCBAConfigNumber,
-            SearchActuator.ArticleName,
             SearchActuator.ArticleNumber,
             SearchActuator.CommunicationProtocol);
 
@@ -104,7 +101,6 @@ public class ActuatorSearchBase : ComponentBase
         public int? WorkOrderNumber { get; set; }
         public int? SerialNumber { get; set; }
         public string? ArticleNumber { get; set; }
-        public string? ArticleName { get; set; }
         public string? CommunicationProtocol { get; set; }
         public DateTime? CreatedTimeStart { get; set; }
         public DateTime? CreatedTimeEnd { get; set; }

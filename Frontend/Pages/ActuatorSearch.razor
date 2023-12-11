@@ -1,6 +1,9 @@
 ﻿@page "/ActuatorSearch"
 @using Frontend.Components
 @inherits ActuatorSearchBase
+
+<PageTitle>Actuator Search</PageTitle>
+
 <h3>Actuator Search</h3>
 
 <RadzenRow JustifyContent="JustifyContent.SpaceBetween">
@@ -19,10 +22,6 @@
                         <RadzenColumn>
                             <RadzenLabel Text="Serial Number"/>
                             <RadzenNumeric ShowUpDown="false" Name="SerialNumber" @bind-Value=@SearchActuator.SerialNumber class="w-100"/>
-                        </RadzenColumn>
-                        <RadzenColumn>
-                            <RadzenLabel Text="Article Name"/>
-                            <RadzenTextBox Name="ArticleName" @bind-Value=@SearchActuator.ArticleName class="w-100"/>
                         </RadzenColumn>
                         <RadzenColumn>
                             <RadzenLabel Text="Article Number"/>

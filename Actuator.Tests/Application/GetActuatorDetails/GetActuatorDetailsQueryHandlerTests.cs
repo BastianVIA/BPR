@@ -1,7 +1,7 @@
 ﻿using Application.GetActuatorDetails;
 using AutoFixture;
 using Domain.Entities;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 

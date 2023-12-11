@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.Application;
-using Domain.Repositories;
+using Domain.RepositoryInterfaces;
 
 namespace Application.GetActuatorFromPCBA;
 
