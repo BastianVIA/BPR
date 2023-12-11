@@ -13,7 +13,7 @@
     </RadzenColumn>
 </RadzenStack>
 
-<RadzenDataGrid ColumnWidth="270px" TItem="Actuator" Data="@Actuators" RowSelect="@SelectActuator" PageSize="50" PagerHorizontalAlign="HorizontalAlign.Left" AllowPaging="true" AllowSorting="true" PagerPosition="PagerPosition.TopAndBottom">
+<RadzenDataGrid ColumnWidth="270px" TItem="Actuator"  Data="@Actuators" RowSelect="@SelectActuator" PageSize="50" PagerHorizontalAlign="HorizontalAlign.Left" AllowPaging="true" AllowSorting="true" PagerPosition="PagerPosition.TopAndBottom">
     <Columns>
         <RadzenDataGridColumn TItem="Actuator" Property="WorkOrderNumber" Title="Work Order Number" Visible="@ShouldShowColumn(CsvProperties.Work_Order_Number)"/>
         <RadzenDataGridColumn TItem="Actuator" Property="SerialNumber" Title="Serial Number" Visible="@ShouldShowColumn(CsvProperties.Serial_Number)"/>

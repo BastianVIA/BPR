@@ -16,10 +16,10 @@ Hvis `Headless` er sat til **false** i `.runsettings` vises de kørende tests li
 Erstat <u>**urlPath**</u> med den side du vil åbne en codegen session for.<br>
 
 Eks:``
-bin/Debug/net7.0/playwright.ps1 codegen localhost:5002/PCBAInfo
+bin/Debug/net7.0/playwright.ps1 codegen localhost:5002/ActuatorSearch
 ``
 ```bash
-bin/Debug/net7.0/playwright.ps1 codegen urlPath
+bin/Debug/net7.0/playwright.ps1 codegen localhost:5002/ActuatorSearch
 ```
 
 
