@@ -21,7 +21,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         }
 
         var testResult = await GetTestResultModel(testError.WorkOrderNumber.Value, testError.SerialNumber.Value);
-        var errorCode = await GetTestErrorCodeModel(testError.ErrorCode);
+        var errorCode = await GetTestErrorCodeModel(testError.ErrorCode, testError.ErrorMessage);
         var testErrorModel = FromDomain(testError);
         testErrorModel.TestResultId = testResult.Id;
         testErrorModel.ErrorCodeModel = errorCode;
@@ -54,7 +54,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         {
             queryBuilder = queryBuilder.Where(model => model.ErrorCode == errorCode);
         }
-        
+
         if (endDate != null)
         {
             queryBuilder = queryBuilder.Where(model => model.TimeOccured < endDate);
@@ -120,6 +120,37 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         return testErrorModel;
     }
 
+    private async Task<TestErrorCodeModel> GetTestErrorCodeModel(int errorCode, string? errorMessage)
+    {
+        TestErrorCodeModel? errorCodeModel;
+
+        try
+        {
+            errorCodeModel = await QueryOtherLocal<TestErrorCodeModel>()
+                .FirstOrDefaultAsync(e => e.ErrorCode == errorCode);
+            
+            if (errorCodeModel == null)
+            {
+                errorCodeModel = await QueryOther<TestErrorCodeModel>().FirstAsync(e => e.ErrorCode == errorCode);
+            }
+        }
+        catch (Exception e)
+        {
+            if (errorMessage is null)
+            {
+                throw new ArgumentException($"Could not find message for Error code {errorCode}");
+            }
+
+            errorCodeModel = new TestErrorCodeModel
+            {
+                ErrorCode = errorCode,
+                ErrorMessage = errorMessage
+            };
+        }
+
+        return errorCodeModel;
+    }
+
     private async Task<TestResultModel> GetTestResultModel(int workOrderNo, int serialNo)
     {
         var testResult = QueryOtherLocal<TestResultModel>().FirstOrDefault(
@@ -128,17 +159,5 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
                              t => t.WorkOrderNumber == workOrderNo && t.SerialNumber == serialNo);
 
         return testResult;
-    }
-    
-    private async Task<TestErrorCodeModel> GetTestErrorCodeModel(int errorCode)
-    {
-        var testErrorCodeModel = await QueryOtherLocal<TestErrorCodeModel>()
-            .FirstOrDefaultAsync(e => e.ErrorCode == errorCode);
-        if (testErrorCodeModel == null)
-        {
-            testErrorCodeModel = await QueryOther<TestErrorCodeModel>().FirstAsync(e => e.ErrorCode == errorCode);
-        }
-
-        return testErrorCodeModel;
     }
 }
