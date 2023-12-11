@@ -62,7 +62,7 @@ public class GetPcbaForActuatorTests : PageTest
 
 
     [Test]
-    public async Task GetActuatorWithFilter_ShouldOnlyReturnActuatorsWithExpectedWorkOrderNumber_WhenWorkOrderNumberMatches()
+    public async Task GetActuatorWithFilter_ShouldOnlyReturnListWithRightWO_WhenWOMatches()
     {
         var expected = "31209343";
         await Page.Locator("input[name=\"WorkOrderNumber\"]").FillAsync(expected);
