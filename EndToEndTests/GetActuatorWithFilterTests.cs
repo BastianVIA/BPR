@@ -3,11 +3,11 @@ using Microsoft.Playwright.NUnit;
 
 namespace EndToEndTests;
 
-public class GetPcbaForActuatorTests : PageTest
+public class GetActuatorWithFilterTests : PageTest
 {
     private TestController _testController;
 
-    public GetPcbaForActuatorTests()
+    public GetActuatorWithFilterTests()
     {
         _testController = new TestController();
     }
@@ -44,32 +44,36 @@ public class GetPcbaForActuatorTests : PageTest
     }
 
     [Test]
-    public async Task GetActuatorWithFilter_ShouldReturnsPCBAUidForActuatorWithRightWOAndSerial_WhenMatchFound()
+    public async Task GetActuatorWithFilter_ShouldReturnsSingleActuator_WhenWOAndSerialHasMatch()
     {
         var expectedUid = "455711";
-        var woNo = "825705";
-        var serialNo = "9";
+        var woNo = "30686571";
+        var serialNo = "33";
         await Page.Locator("input[name=\"WorkOrderNumber\"]").FillAsync(woNo);
         await Page.Locator("input[name=\"SerialNumber\"]").FillAsync(serialNo);
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
         
         var rowSelector = ".rz-grid-table > tbody > tr:nth-child(1)";
+        var rowsSelector = ".rz-grid-table > tbody > tr";
 
+        //var allRows = await Page.QuerySelectorAllAsync(rowsSelector);
+        await Page.GetByRole(AriaRole.Cell, new() { Name = "30686571" }).First.WaitForAsync(new() { State = WaitForSelectorState.Visible});
+        var rows = await Page.Locator(".rz-grid-table > tbody > tr").AllAsync();
+        Assert.AreEqual(1, rows.Count);
         await Expect(Page.Locator(rowSelector)).ToContainTextAsync(woNo);
         await Expect(Page.Locator(rowSelector)).ToContainTextAsync(serialNo);
-        await Expect(Page.Locator(rowSelector)).ToContainTextAsync(expectedUid);
     }
 
 
     [Test]
     public async Task GetActuatorWithFilter_ShouldOnlyReturnListWithRightWO_WhenWOMatches()
     {
-        var expected = "31209343";
+        var expected = "30686571";
         await Page.Locator("input[name=\"WorkOrderNumber\"]").FillAsync(expected);
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
         
         var colSelector = ".rz-grid-table > tbody > tr > td:nth-child(1)";
-       
+        await Page.GetByRole(AriaRole.Cell, new() { Name = "30686571" }).First.WaitForAsync(new() { State = WaitForSelectorState.Visible});
         var woNoCol = await Page.QuerySelectorAllAsync(colSelector);
         foreach (var row in woNoCol)
         {

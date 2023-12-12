@@ -49,7 +49,7 @@ public class TestController
     {
         var startInfo = GetStartInfo("Backend");
         _backendProcess = Process.Start(startInfo)!;
-        Thread.Sleep(500);
+        Thread.Sleep(2000);
         if (_backendProcess.HasExited)
         {
             throw new Exception("Backend could not start");
