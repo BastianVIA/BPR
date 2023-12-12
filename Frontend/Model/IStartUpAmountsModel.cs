@@ -4,5 +4,5 @@ namespace Frontend.Model;
 
 public interface IStartUpAmountsModel
 {
-    public Task<StartUpAmounts> GetStartUpAmounts();
+    Task<StartUpAmounts> GetStartUpAmounts();
 }

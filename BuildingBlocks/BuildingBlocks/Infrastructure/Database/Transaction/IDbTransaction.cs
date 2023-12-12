@@ -2,5 +2,5 @@
 
 public interface IDbTransaction
 {
-    Task CommitAsync(CancellationToken cancellationToken);
+    public Task CommitAsync(CancellationToken cancellationToken);
 }

@@ -35,7 +35,7 @@ public class TestResult : Entity
         TestErrors = testErrors;
     }
 
-    public static TestResult Create(int workOrderNo, int serialNo, string tester, int bay, string? minServoPosition, 
+    public static TestResult Create(int woNo, int serialNo, string tester, int bay, string? minServoPosition, 
         string? maxServoPosition, string? minBuslinkPosition, string? maxBuslinkPosition, string? servoStroke, 
         DateTime timeOccured)
     {
@@ -46,7 +46,7 @@ public class TestResult : Entity
         servoStroke??= "N/A";
         
         var id = Guid.NewGuid();
-        var testResult = new TestResult(id, workOrderNo, serialNo, tester, bay, minServoPosition, maxServoPosition, 
+        var testResult = new TestResult(id, woNo, serialNo, tester, bay, minServoPosition, maxServoPosition, 
             minBuslinkPosition, maxBuslinkPosition, servoStroke, timeOccured);
         
         testResult.AddDomainEvent(new TestResultCreatedDomainEvent(testResult.Id));

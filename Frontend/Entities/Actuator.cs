@@ -9,8 +9,7 @@ public class Actuator
     public string? CommunicationProtocol { get; set; }
     public DateTime? CreatedTime { get; set; }
     public PCBA PCBA { get; } = new();
-
-
+    
     // Actuator
     public Actuator WithWorkOrderNumber(int woNo)
     {

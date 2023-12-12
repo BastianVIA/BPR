@@ -49,7 +49,7 @@ public class ActuatorTableBase : ComponentBase
         OnActuatorSelected.InvokeAsync(actuator);
     }
 
-    public void DownloadCsv()
+    protected void DownloadCsv()
     {
         OnDownloadSelected.InvokeAsync();
     }

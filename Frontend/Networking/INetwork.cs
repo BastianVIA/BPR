@@ -17,9 +17,10 @@ public interface INetwork
     Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid);
     Task<GetPCBAChangesForActuatorResponse> GetComponentHistory(int woNo, int serialNo);
     Task<byte[]> GetActuatorWithFilterAsCsv(List<CsvProperties> columnsToInclude, int? woNo, int? serialNo,
-        string? pcbaUid, string? itemNo, int? manufacturerNo, int? productionDateCode, DateTime? createdTimeStart,
-        DateTime? createdTimeEnd, string? software, string? configNo, string? articleNo, string? comProtocol);
-    Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? wrkOrderNumber, string? tester,
+        string? pcbaUid, string? itemNo, int? manufacturerNo,
+        int? productionDateCode, DateTime? createdTimeStart, DateTime? createdTimeEnd, string? software,
+        string? configNo, string? articleNo, string? comProtocol);
+    Task<GetTestErrorsWithFilterResponse> GetTestErrorWithFilter(int? woNo, string? tester,
         int? bay, int? errorCode, DateTime startDate, DateTime? endDate, int timeIntervalBetweenRowsAsMinutes);
     Task<GetStartUpResponse> GetStartUpAmounts();
 }
