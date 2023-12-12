@@ -16,7 +16,7 @@ public class ActuatorSearchModelTests
     }
 
     [Fact]
-    public async Task GetActuatorsByPCBA_ReturnsEmptyList_WhenNoMatchesFound()
+    public async Task GetActuatorsWithFilter_ReturnsEmptyList_WhenNoMatchesFound()
     {
         // Arrange
         var nonExistingUid = "THIsUiDDoesnOtEixst12345";
@@ -24,18 +24,31 @@ public class ActuatorSearchModelTests
             .With(a => a.Actuators, new List<GetActuatorWithFilterActuator>())
             .Create();
 
-        _network.GetActuatorWithFilter(Arg.Any<int?>(), 
+        _network.GetActuatorWithFilter(
+                Arg.Any<int?>(), 
                 Arg.Any<int?>(), 
                 Arg.Any<string?>(),
                 Arg.Any<string?>(),
                 Arg.Any<int?>(),
-                Arg.Any<int?>())
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
         var result = await _model.GetActuatorWithFilter(null,
             null, 
             nonExistingUid,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null);
@@ -54,7 +67,7 @@ public class ActuatorSearchModelTests
         var expectedResponse = _fixture.Build<GetActuatorWithFilterResponse>()
             .With(a => a.Actuators, _fixture.Build<GetActuatorWithFilterActuator>()
                 .With(a => a.Pcba, _fixture.Build<GetActuatorWithFilterPCBA>()
-                    .With(p => p.PcbaUid, expectedUid)
+                    .With(p => p.Uid, expectedUid)
                     .Create())
                 .CreateMany(noOfActuators)
                 .ToList())
@@ -65,7 +78,13 @@ public class ActuatorSearchModelTests
                 Arg.Any<string?>(),
                 Arg.Any<string?>(),
                 Arg.Any<int?>(),
-                Arg.Any<int?>())
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
@@ -74,20 +93,31 @@ public class ActuatorSearchModelTests
             expectedUid,
             null,
             null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null);
         
         // Assert
         Assert.NotEmpty(result);
         Assert.Single(result);
-        Assert.Equal(expectedResponse.Actuators.First().Pcba.PcbaUid, result[0].PCBA.PCBAUid);
+        Assert.Equal(expectedResponse.Actuators.First().Pcba.Uid, result[0].PCBA.PCBAUid);
 
-        await _network.Received(1).GetActuatorWithFilter(
+        await _network.Received(1).GetActuatorWithFilter(Arg.Any<int?>(), 
             Arg.Any<int?>(), 
-            Arg.Any<int?>(), 
-            expectedUid,
+            Arg.Any<string?>(),
             Arg.Any<string?>(),
             Arg.Any<int?>(),
-            Arg.Any<int?>());
+            Arg.Any<int?>(),
+            Arg.Any<DateTime?>(),
+            Arg.Any<DateTime?>(),
+            Arg.Any<string?>(),
+            Arg.Any<string?>(),
+            Arg.Any<string?>(),
+            Arg.Any<string?>());
     }
 
     [Fact]
@@ -99,7 +129,7 @@ public class ActuatorSearchModelTests
         var expectedResponse = _fixture.Build<GetActuatorWithFilterResponse>()
             .With(a => a.Actuators, _fixture.Build<GetActuatorWithFilterActuator>()
                 .With(a => a.Pcba, _fixture.Build<GetActuatorWithFilterPCBA>()
-                    .With(p => p.PcbaUid, expectedUid)
+                    .With(p => p.Uid, expectedUid)
                     .Create())
                 .CreateMany(noOfActuators)
                 .ToList())
@@ -111,13 +141,25 @@ public class ActuatorSearchModelTests
                 Arg.Any<string?>(),
                 Arg.Any<string?>(),
                 Arg.Any<int?>(),
-                Arg.Any<int?>())
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
         var result = await _model.GetActuatorWithFilter(null,
             null, 
             expectedUid,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null);

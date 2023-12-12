@@ -78,7 +78,7 @@ public class NSwagProxyTests
         // Arrange
         var expected = _fixture.Create<ConfigurationResponse>();
 
-        _client.ConfigurationAsync(Arg.Any<CancellationToken>())
+        _client.GetConfigurationAsync(Arg.Any<CancellationToken>())
             .Returns(expected);
         
         // Act

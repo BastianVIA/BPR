@@ -18,8 +18,8 @@ public class ActuatorSearchBase : ComponentBase
     [Inject] public NavigationManager NavigationManager { get; set; }
 
     // Radzen needs a class to specify the data object
-    protected SearchObject SearchActuator { get; } = new();
-    protected List<Actuator> Actuators { get; set; } = new();
+    public SearchObject SearchActuator { get; } = new();
+    public List<Actuator> Actuators { get; set; } = new();
     private List<CsvProperties> _selectedFilters = new();
 
     // Blazor page needs an empty constructor
@@ -35,7 +35,7 @@ public class ActuatorSearchBase : ComponentBase
         AlertService = alertService;
     }
 
-    protected async Task SearchActuators()
+    public async Task SearchActuators()
     {
         try
         {
@@ -96,7 +96,7 @@ public class ActuatorSearchBase : ComponentBase
         NavigationManager.NavigateTo(dataUri, forceLoad: true);
     }
     
-    protected class SearchObject
+    public class SearchObject
     {
         public int? WorkOrderNumber { get; set; }
         public int? SerialNumber { get; set; }

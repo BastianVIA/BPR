@@ -1,18 +1,21 @@
 ﻿using Frontend.Entities;
 using Frontend.Model;
 using Frontend.Pages;
+using Frontend.Service.AlertService;
 
 namespace Frontend.UnitTest.ViewModel;
 
-public class ActuatorInfoTests
+public class ActuatorSearchTests
 {
     private Fixture _fixture = new();
     private IActuatorSearchModel _model = Substitute.For<IActuatorSearchModel>();
+    private IActuatorSearchCsvModel _csvModel = Substitute.For<IActuatorSearchCsvModel>();
+    private IAlertService _alertService = Substitute.For<IAlertService>();
     private ActuatorSearchBase _viewModel;
 
-    public ActuatorInfoTests()
+    public ActuatorSearchTests()
     {
-        _viewModel = new ActuatorSearchBase(_model);
+        _viewModel = new ActuatorSearchBase(_model, _csvModel, _alertService);
     }
 
     [Fact]
@@ -20,17 +23,23 @@ public class ActuatorInfoTests
     {
         var expected = new List<Actuator>();
 
-        _model.GetActuatorWithFilter(Arg.Any<int>(), 
-                Arg.Any<int>(), 
-                Arg.Any<string>(),
-                Arg.Any<string>(),
-                Arg.Any<int>(),
-                Arg.Any<int>())
+        _model.GetActuatorWithFilter(Arg.Any<int?>(), 
+                Arg.Any<int?>(), 
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expected);
         
         await _viewModel.SearchActuators();
         
-        Assert.True(_viewModel.actuators.Count == 0);
+        Assert.True(_viewModel.Actuators.Count == 0);
     }
 
     [Fact]
@@ -42,20 +51,26 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>()
         };
 
-        _model.GetActuatorWithFilter(Arg.Any<int>(), 
-                Arg.Any<int>(), 
-                Arg.Any<string>(),
-                Arg.Any<string>(),
-                Arg.Any<int>(),
-                Arg.Any<int>())
+        _model.GetActuatorWithFilter(Arg.Any<int?>(), 
+                Arg.Any<int?>(), 
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expected);
         
         // Act
         await _viewModel.SearchActuators();
         
         // Assert
-        Assert.NotEmpty(_viewModel.actuators);
-        Assert.True(_viewModel.actuators.Count == 1);
+        Assert.NotEmpty(_viewModel.Actuators);
+        Assert.True(_viewModel.Actuators.Count == 1);
     }
 
     [Fact]
@@ -63,26 +78,32 @@ public class ActuatorInfoTests
     {
         // Arrange
         var expectedUid = _fixture.Create<string>();
-        _viewModel.SearchActuator.PCBA.PCBAUid = expectedUid;
+        _viewModel.SearchActuator.PCBAUid = expectedUid;
         var expectedList = new List<Actuator>
         {
             _fixture.Create<Actuator>().WithPCBAUid(expectedUid)
         };
         
-        _model.GetActuatorWithFilter(Arg.Any<int>(), 
-                Arg.Any<int>(), 
-                Arg.Any<string>(),
-                Arg.Any<string>(),
-                Arg.Any<int>(),
-                Arg.Any<int>())
+        _model.GetActuatorWithFilter(Arg.Any<int?>(), 
+                Arg.Any<int?>(), 
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedList);
         
         // Act
         await _viewModel.SearchActuators();
         
         // Assert
-        Assert.NotEmpty(_viewModel.actuators);
-        Assert.Equal(expectedUid, _viewModel.actuators.First().PCBA.PCBAUid);
+        Assert.NotEmpty(_viewModel.Actuators);
+        Assert.Equal(expectedUid, _viewModel.Actuators.First().PCBA.PCBAUid);
     }
 
     [Fact]
@@ -91,20 +112,26 @@ public class ActuatorInfoTests
         // Arrange
         var expectedList = _fixture.CreateMany<Actuator>().ToList();
 
-        _model.GetActuatorWithFilter(Arg.Any<int>(), 
-                Arg.Any<int>(), 
-                Arg.Any<string>(),
-                Arg.Any<string>(),
-                Arg.Any<int>(),
-                Arg.Any<int>())
+        _model.GetActuatorWithFilter(Arg.Any<int?>(), 
+                Arg.Any<int?>(), 
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedList);
 
         // Act
         await _viewModel.SearchActuators();
         
         // Assert
-        Assert.NotEmpty(_viewModel.actuators);
-        Assert.True(_viewModel.actuators.Count > 1);
+        Assert.NotEmpty(_viewModel.Actuators);
+        Assert.True(_viewModel.Actuators.Count > 1);
     }
 
     [Fact]
@@ -112,7 +139,7 @@ public class ActuatorInfoTests
     {
         // Arrange
         var expectedUid = _fixture.Create<string>();
-        _viewModel.SearchActuator.PCBA.PCBAUid = expectedUid;
+        _viewModel.SearchActuator.PCBAUid = expectedUid;
 
         var expectedList = new List<Actuator>
         {
@@ -121,20 +148,26 @@ public class ActuatorInfoTests
             _fixture.Create<Actuator>().WithPCBAUid(expectedUid)
         };
         
-        _model.GetActuatorWithFilter(Arg.Any<int>(), 
-                Arg.Any<int>(), 
-                Arg.Any<string>(),
-                Arg.Any<string>(),
-                Arg.Any<int>(),
-                Arg.Any<int>())
+        _model.GetActuatorWithFilter(Arg.Any<int?>(), 
+                Arg.Any<int?>(), 
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedList);
 
         // Act
         await _viewModel.SearchActuators();
         
         // Assert
-        Assert.NotEmpty(_viewModel.actuators);
-        foreach (var actuator in _viewModel.actuators)
+        Assert.NotEmpty(_viewModel.Actuators);
+        foreach (var actuator in _viewModel.Actuators)
         {
             Assert.Equal(expectedUid, actuator.PCBA.PCBAUid);
         }
