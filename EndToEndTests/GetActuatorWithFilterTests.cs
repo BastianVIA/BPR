@@ -55,10 +55,9 @@ public class GetActuatorWithFilterTests : PageTest
         
         var rowSelector = ".rz-grid-table > tbody > tr:nth-child(1)";
         var rowsSelector = ".rz-grid-table > tbody > tr";
-
-        //var allRows = await Page.QuerySelectorAllAsync(rowsSelector);
+        
         await Page.GetByRole(AriaRole.Cell, new() { Name = "30686571" }).First.WaitForAsync(new() { State = WaitForSelectorState.Visible});
-        var rows = await Page.Locator(".rz-grid-table > tbody > tr").AllAsync();
+        var rows = await Page.Locator(rowsSelector).AllAsync();
         Assert.AreEqual(1, rows.Count);
         await Expect(Page.Locator(rowSelector)).ToContainTextAsync(woNo);
         await Expect(Page.Locator(rowSelector)).ToContainTextAsync(serialNo);
@@ -73,7 +72,8 @@ public class GetActuatorWithFilterTests : PageTest
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
         
         var colSelector = ".rz-grid-table > tbody > tr > td:nth-child(1)";
-        await Page.GetByRole(AriaRole.Cell, new() { Name = "30686571" }).First.WaitForAsync(new() { State = WaitForSelectorState.Visible});
+        await Page.GetByRole(AriaRole.Cell, new() { Name = "30686571" })
+            .First.WaitForAsync(new() { State = WaitForSelectorState.Visible});
         var woNoCol = await Page.QuerySelectorAllAsync(colSelector);
         foreach (var row in woNoCol)
         {
