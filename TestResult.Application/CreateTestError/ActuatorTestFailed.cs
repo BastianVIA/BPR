@@ -8,12 +8,12 @@ namespace TestResult.Application.CreateTestError;
 public class ActuatorTestFailed : IIntegrationEventListener<ActuatorTestFailedIntegrationEvent>
 {
     private readonly IInbox _inbox;
-    private readonly IDbTransaction _transaction;
+    private readonly IDbTransaction _dbTransaction;
 
-    public ActuatorTestFailed(IInbox inbox, IDbTransaction transaction)
+    public ActuatorTestFailed(IInbox inbox, IDbTransaction dbTransaction)
     {
         _inbox = inbox;
-        _transaction = transaction;
+        _dbTransaction = dbTransaction;
     }
 
     public async Task Handle(ActuatorTestFailedIntegrationEvent notification, CancellationToken cancellationToken)
@@ -34,6 +34,6 @@ public class ActuatorTestFailed : IIntegrationEventListener<ActuatorTestFailedIn
  
         await _inbox.Add(InboxMessage.Create(testErrorCommand, notification.Id));
         
-        await _transaction.CommitAsync(cancellationToken);
+        await _dbTransaction.CommitAsync(cancellationToken);
     }
 }

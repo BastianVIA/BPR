@@ -16,11 +16,11 @@ public class CreateTestErrorCommand : ICommand
     {
     }
 
-    private CreateTestErrorCommand(int workOrderNumber, int serialNumber, string tester, int bay, int errorCode, 
+    private CreateTestErrorCommand(int woNo, int serialNo, string tester, int bay, int errorCode, 
         string errorMessage, DateTime timeOccured)
     {
-        WorkOrderNumber = workOrderNumber;
-        SerialNumber = serialNumber;
+        WorkOrderNumber = woNo;
+        SerialNumber = serialNo;
         Tester = tester;
         Bay = bay;
         ErrorCode = errorCode;
@@ -28,9 +28,9 @@ public class CreateTestErrorCommand : ICommand
         TimeOccured = timeOccured;
     }
 
-    public static CreateTestErrorCommand Create(int workOrderNumber, int serialNumber, string tester, int bay,
+    public static CreateTestErrorCommand Create(int woNo, int serialNo, string tester, int bay,
         int errorCode, string errorMessage, DateTime timeOccured)
     {
-        return new CreateTestErrorCommand(workOrderNumber, serialNumber, tester, bay, errorCode, errorMessage, timeOccured);
+        return new CreateTestErrorCommand(woNo, serialNo, tester, bay, errorCode, errorMessage, timeOccured);
     }
 }

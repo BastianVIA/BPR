@@ -7,36 +7,38 @@ using Radzen;
 
 namespace Frontend.Pages;
 
-public class TestErrorsBase : ComponentBase
+public class TestErrorsSearchBase : ComponentBase
 {
-    [Inject] public ITestErrorModel TestErrorModel { get; set; }
+    [Inject] public ITestErrorsSearchModel TestErrorsSearchModel { get; set; }
     [Inject] public IAlertService AlertService { get; set; }
-    [Inject] public DialogService DialogService { get; set; }
-    public TestErrorResponse TestErrors { get; set; } = new();
+    protected TestErrorResponse TestErrors { get; set; } = new();
     protected SearchObject SearchTestError { get; set; } = new();
-    public string SelectedTimeIntervalBase { get; set; } = "Hourly";
-    public List<string> timeIntervalBases = new List<string> { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
-
-    protected class SearchObject
+    protected string SelectedTimeIntervalBase { get; set; } = "Hourly";
+    protected List<string> timeIntervalBases = new() { "Hourly", "Daily", "Weekly", "Monthly", "Yearly" };
+    
+    // Base constructor used by Blazor
+    public TestErrorsSearchBase()
     {
-        public int? WorkOrderNumber { get; set; }
-        public string? Tester { get; set; }
-        public int? Bay { get; set; }
-        public int? ErrorCode { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        
+    }
+    
+    // Overloaded constructor, to inject model and alert service, needed by tests
+    public TestErrorsSearchBase(ITestErrorsSearchModel testErrorsSearchModel, IAlertService alertService)
+    {
+        TestErrorsSearchModel = testErrorsSearchModel;
+        AlertService = alertService;
     }
 
-    public async Task OnChange()
+    protected async Task OnChange()
     {
         await SearchTestErrors();
     }
 
-    public async Task SearchTestErrors()
+    protected async Task SearchTestErrors()
     {
         try
         {
-            TestErrors = await TestErrorModel.GetTestErrorsWithFilter(
+            TestErrors = await TestErrorsSearchModel.GetTestErrorsWithFilter(
                 SearchTestError.WorkOrderNumber,
                 SearchTestError.Tester,
                 SearchTestError.Bay,
@@ -55,7 +57,7 @@ public class TestErrorsBase : ComponentBase
         }
     }
 
-    public int ConvertSelectionToMinutes()
+    private int ConvertSelectionToMinutes()
     {
         switch (SelectedTimeIntervalBase)
         {
@@ -72,5 +74,15 @@ public class TestErrorsBase : ComponentBase
             default:
                 throw new InvalidDataException();
         }
+    }
+    
+    protected class SearchObject
+    {
+        public int? WorkOrderNumber { get; set; }
+        public string? Tester { get; set; }
+        public int? Bay { get; set; }
+        public int? ErrorCode { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

@@ -57,7 +57,7 @@ namespace Frontend.Components
             
             var errorCode = int.Parse(column.Replace("Error ", ""));
             TestErrors.DataLines = TestErrors.DataLines.OrderBy(a =>
-                a.listOfErrors.FirstOrDefault(b => b.ErrorCode == errorCode)?.AmountOfErrors ?? 0).ToList();
+                a.ListOfErrors.FirstOrDefault(b => b.ErrorCode == errorCode)?.AmountOfErrors ?? 0).ToList();
             
             SetColumnSortingOrder(errorCode, direction);
             if (direction == SortOrder.Descending)
@@ -66,10 +66,10 @@ namespace Frontend.Components
             }
             StateHasChanged();
         }
-        
-        public async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode, string errorMessage)
+
+        protected async Task ShowErrorDetails(GetTestErrorsWithFilterSingleLine dataItem, int errorCode, string errorMessage)
         {
-            var errorCount = dataItem.listOfErrors.FirstOrDefault(test => test.ErrorCode == errorCode)?.AmountOfErrors ?? 0;
+            var errorCount = dataItem.ListOfErrors.FirstOrDefault(test => test.ErrorCode == errorCode)?.AmountOfErrors ?? 0;
             if (errorCount == 0) return;
             
             var totalFailedTests = dataItem.TotalErrors;
@@ -103,7 +103,7 @@ namespace Frontend.Components
 
         protected int GetItemErrorCount(GetTestErrorsWithFilterSingleLine item, GetTestErrorsWithFilterErrorCodeAndMessage error)
         {
-            var rowItem = item.listOfErrors.FirstOrDefault(e => e.ErrorCode == error.ErrorCode);
+            var rowItem = item.ListOfErrors.FirstOrDefault(e => e.ErrorCode == error.ErrorCode);
             return rowItem?.AmountOfErrors ?? 0;
         }
 

@@ -3,13 +3,12 @@ using Frontend.Entities;
 using Frontend.Model;
 using Frontend.Service;
 using Microsoft.AspNetCore.Components;
-using Radzen.Blazor;
 
 namespace Frontend.Pages;
 
 public class ErrorStatisticsBase : ComponentBase
 {
-    [Inject] private ITesterErrorsModel TesterErrorsModel { get; set; }
+    [Inject] public IErrorStatisticsModel ErrorStatisticsModel { get; set; }
 
     private Dictionary<TesterTimePeriodEnum, string> _dateFormatMap = new()
     {
@@ -25,7 +24,7 @@ public class ErrorStatisticsBase : ComponentBase
 
     private Dictionary<string, TesterTimePeriodEnum> _stringEnumMap = new()
     {
-        { "This Year",TesterTimePeriodEnum.This_Year},
+        {"This Year",TesterTimePeriodEnum.This_Year},
         {"Last Full Year", TesterTimePeriodEnum.Last_Full_Year},
         {"This Month", TesterTimePeriodEnum.This_Month},
         {"Last Full Month", TesterTimePeriodEnum.Last_Full_Month},
@@ -41,15 +40,25 @@ public class ErrorStatisticsBase : ComponentBase
     protected string SelectedTimePeriod { get; set; } = "Today";
     protected List<TesterErrorsSet> DataSets { get; set; } = new();
     
+    
+    public ErrorStatisticsBase()
+    {
+        
+    }
+
+    public ErrorStatisticsBase(IErrorStatisticsModel errorStatisticsModel)
+    {
+        ErrorStatisticsModel = errorStatisticsModel;
+    }
     protected override async Task OnInitializedAsync()
     {
         SetTimePeriodOptions();
-        await SetCellOptions();
+        await SetTesterOptions();
     }
     
-    private async Task SetCellOptions()
+    private async Task SetTesterOptions()
     {
-        TesterOptions = await TesterErrorsModel.GetAllCellNames();
+        TesterOptions = await ErrorStatisticsModel.GetAllCellNames();
     }
     
     private void SetTimePeriodOptions()
@@ -84,10 +93,10 @@ public class ErrorStatisticsBase : ComponentBase
     {
         SelectedTesters ??= new List<string>();
         var selectedTime = _stringEnumMap[SelectedTimePeriod];
-        DataSets = await TesterErrorsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
+        DataSets = await ErrorStatisticsModel.GetTestErrorsForTesters(SelectedTesters, selectedTime);
     }
 
-    public TimeSpan FormatXAxisStep()
+    protected TimeSpan FormatXAxisStep()
     {
         switch (SelectedTimePeriod)
         {

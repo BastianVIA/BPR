@@ -8,12 +8,12 @@ namespace TestResult.Application.CreateTestResult;
 public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucceededIntegrationEvent>
 {
     private readonly IInbox _inbox;
-    private readonly IDbTransaction _transaction;
+    private readonly IDbTransaction _dbTransaction;
 
-    public ActuatorTestSucceeded(IInbox inbox, IDbTransaction transaction)
+    public ActuatorTestSucceeded(IInbox inbox, IDbTransaction dbTransaction)
     {
         _inbox = inbox;
-        _transaction = transaction;
+        _dbTransaction = dbTransaction;
     }
 
     public async Task Handle(ActuatorTestSucceededIntegrationEvent notification, CancellationToken cancellationToken)
@@ -36,6 +36,6 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
         }
         await _inbox.Add(InboxMessage.Create(testResultCommand, notification.Id));
         
-        await _transaction.CommitAsync(cancellationToken);
+        await _dbTransaction.CommitAsync(cancellationToken);
     }
 }

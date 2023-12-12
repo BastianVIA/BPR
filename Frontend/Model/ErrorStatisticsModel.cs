@@ -1,15 +1,14 @@
-﻿using System.Globalization;
-using Frontend.Entities;
+﻿using Frontend.Entities;
 using Frontend.Networking;
 using Frontend.Service;
 
 namespace Frontend.Model;
 
-public class TesterErrorsModel : ITesterErrorsModel
+public class ErrorStatisticsModel : IErrorStatisticsModel
 {
     private INetwork _network;
 
-    public TesterErrorsModel(INetwork network)
+    public ErrorStatisticsModel(INetwork network)
     {
         _network = network;
     }

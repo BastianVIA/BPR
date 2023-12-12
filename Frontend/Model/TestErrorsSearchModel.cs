@@ -3,11 +3,11 @@ using Frontend.Util;
 
 namespace Frontend.Model;
 
-public class TestErrorModel : ITestErrorModel
+public class TestErrorsSearchModel : ITestErrorsSearchModel
 {
     private INetwork _network;
 
-    public TestErrorModel(INetwork network)
+    public TestErrorsSearchModel(INetwork network)
     {
         _network = network;
     }
@@ -43,7 +43,7 @@ public class TestErrorModel : ITestErrorModel
                 TotalErrors = responseItem.TotalErrors,
                 StartIntervalAsDate = responseItem.StartIntervalAsDate,
                 TotalTests = responseItem.TotalTests,
-                listOfErrors = errorCodeList
+                ListOfErrors = errorCodeList
             };
 
             dataLinesList.Add(singleLine);

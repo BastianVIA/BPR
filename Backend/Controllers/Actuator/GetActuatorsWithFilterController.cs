@@ -60,7 +60,7 @@ public class GetActuatorWithFilterActuator
     public string ArticleName { get; private set; }
     public DateTime CreatedTime { get; private set; }
 
-    internal static GetActuatorWithFilterActuator From(ActuatorDTO result)
+    internal static GetActuatorWithFilterActuator From(ActuatorDto result)
     {
         return new GetActuatorWithFilterActuator
         {
