@@ -21,8 +21,10 @@ public class ActuatorSearchBaseTests
     [Fact]
     public async Task SearchActuators_ShouldSetActuatorListEmpty_WhenNoMatchesFound()
     {
+        // Arrange
         var expected = new List<Actuator>();
-
+        _viewModel.SearchActuator.PCBAUid = "ThisUidDoeNotExistInTheSystem";
+        
         _model.GetActuatorWithFilter(Arg.Any<int?>(), 
                 Arg.Any<int?>(), 
                 Arg.Any<string?>(),
@@ -37,8 +39,10 @@ public class ActuatorSearchBaseTests
                 Arg.Any<string?>())
             .Returns(expected);
         
+        // Act
         await _viewModel.SearchActuators();
         
+        // Assert
         Assert.True(_viewModel.Actuators.Count == 0);
     }
 
