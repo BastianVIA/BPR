@@ -72,7 +72,7 @@ public class GetActuatorWithFilterTests : PageTest
         await Page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
         
         var colSelector = ".rz-grid-table > tbody > tr > td:nth-child(1)";
-        await Page.GetByRole(AriaRole.Cell, new() { Name = "30686571" })
+        await Page.GetByRole(AriaRole.Cell, new() { Name = expected })
             .First.WaitForAsync(new() { State = WaitForSelectorState.Visible});
         var woNoCol = await Page.QuerySelectorAllAsync(colSelector);
         foreach (var row in woNoCol)
