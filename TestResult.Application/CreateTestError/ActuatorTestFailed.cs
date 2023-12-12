@@ -26,7 +26,13 @@ public class ActuatorTestFailed : IIntegrationEventListener<ActuatorTestFailedIn
             notification.ErrorCode,
             notification.ErrorMessage,
             notification.TimeOccured);
-        await _inbox.Add(InboxMessage.From(testErrorCommand, notification.Id));
+        
+        if (await _inbox.IdenticalMessageAlreadyExists(notification.Id, testErrorCommand))
+        {
+            return;
+        }
+ 
+        await _inbox.Add(InboxMessage.Create(testErrorCommand, notification.Id));
         
         await _transaction.CommitAsync(cancellationToken);
     }

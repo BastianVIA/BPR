@@ -6,4 +6,5 @@ public interface IInbox
     Task Add(InboxMessage inboxMessage);
     Task<IEnumerable<InboxMessage>> GetUnProcessedMessages();
     Task Update(InboxMessage inboxMessage);
+    Task<bool> IdenticalMessageAlreadyExists(Guid integrationEventId, object toExecuteMessage);
 }

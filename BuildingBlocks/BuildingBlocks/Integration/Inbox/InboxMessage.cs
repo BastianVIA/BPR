@@ -72,7 +72,7 @@ public class InboxMessage : Entity
         IsFailing = true;
     }
 
-    public static InboxMessage From(ICommand cmd, Guid integrationEventId)
+    public static InboxMessage Create(ICommand cmd, Guid integrationEventId)
     {
         if (cmd is null)
         {
