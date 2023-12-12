@@ -1,4 +1,5 @@
-﻿using Frontend.Model;
+﻿using Frontend.Entities;
+using Frontend.Model;
 using Frontend.Networking;
 using Frontend.Service;
 
@@ -63,14 +64,13 @@ public class ActuatorSearchModelTests
     {
         // Arrange
         var noOfActuators = 1;
-        var expectedUid = _fixture.Create<string>();
+        var woNo = _fixture.Create<int>();
+        var serialNo = _fixture.Create<int>();
         var expectedResponse = _fixture.Build<GetActuatorWithFilterResponse>()
-            .With(a => a.Actuators, 
+            .With(a => a.Actuators,
                 _fixture.Build<GetActuatorWithFilterActuator>()
-                    .With(a => a.Pcba, 
-                        _fixture.Build<GetActuatorWithFilterPCBA>()
-                            .With(p => p.Uid, expectedUid)
-                            .Create())
+                    .With(a => a.WorkOrderNumber, woNo)
+                    .With(a => a.SerialNumber, serialNo)
                     .CreateMany(noOfActuators)
                     .ToList())
             .Create();
@@ -79,14 +79,16 @@ public class ActuatorSearchModelTests
             .Returns(expectedResponse);
         
         // Act
-        var result = await _model.GetActuatorWithFilter(null, null, expectedUid, null, null, null, null, null, null, null, null, null);
+        var result = await _model.GetActuatorWithFilter(woNo,serialNo, null, null, null, null, null, null, null, null, null, null);
         
         // Assert
         Assert.NotEmpty(result);
         Assert.Single(result);
-        Assert.Equal(expectedResponse.Actuators.First().Pcba.Uid, result[0].PCBA.PCBAUid);
+        Assert.Equal(expectedResponse.Actuators.First().WorkOrderNumber, woNo);
+        Assert.Equal(expectedResponse.Actuators.First().SerialNumber, serialNo);
+        Assert.NotNull(expectedResponse.Actuators.First().Pcba.Uid);
 
-        await _network.Received(1).GetActuatorWithFilter(Arg.Any<int?>(), Arg.Any<int?>(), expectedUid, Arg.Any<string?>(), Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>());
+        await _network.Received(1).GetActuatorWithFilter(woNo, serialNo, Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>());
     }
 
     [Fact]
