@@ -59,18 +59,20 @@ public class ActuatorSearchModelTests
     }
 
     [Fact]
-    public async Task GetActuatorsByPCBA_ReturnsListOfOneActuator_WhenOneMatchExists()
+    public async Task GetActuatorsWithFilter_ReturnsListOfOneActuator_WhenOneMatchExists()
     {
         // Arrange
         var noOfActuators = 1;
         var expectedUid = _fixture.Create<string>();
         var expectedResponse = _fixture.Build<GetActuatorWithFilterResponse>()
-            .With(a => a.Actuators, _fixture.Build<GetActuatorWithFilterActuator>()
-                .With(a => a.Pcba, _fixture.Build<GetActuatorWithFilterPCBA>()
-                    .With(p => p.Uid, expectedUid)
-                    .Create())
-                .CreateMany(noOfActuators)
-                .ToList())
+            .With(a => a.Actuators, 
+                _fixture.Build<GetActuatorWithFilterActuator>()
+                    .With(a => a.Pcba, 
+                        _fixture.Build<GetActuatorWithFilterPCBA>()
+                            .With(p => p.Uid, expectedUid)
+                            .Create())
+                    .CreateMany(noOfActuators)
+                    .ToList())
             .Create();
 
         _network.GetActuatorWithFilter(Arg.Any<int?>(), 
