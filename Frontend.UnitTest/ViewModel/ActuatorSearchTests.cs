@@ -19,7 +19,7 @@ public class ActuatorSearchTests
     }
 
     [Fact]
-    public async Task SearchActuators_ShouldReturnEmptyList_WhenNoMatchesFound()
+    public async Task SearchActuators_ShouldSetActuatorListEmpty_WhenNoMatchesFound()
     {
         var expected = new List<Actuator>();
 
