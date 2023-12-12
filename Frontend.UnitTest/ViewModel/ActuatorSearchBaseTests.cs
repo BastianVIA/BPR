@@ -5,7 +5,7 @@ using Frontend.Service.AlertService;
 
 namespace Frontend.UnitTest.ViewModel;
 
-public class ActuatorSearchTests
+public class ActuatorSearchBaseTests
 {
     private Fixture _fixture = new();
     private IActuatorSearchModel _model = Substitute.For<IActuatorSearchModel>();
@@ -13,7 +13,7 @@ public class ActuatorSearchTests
     private IAlertService _alertService = Substitute.For<IAlertService>();
     private ActuatorSearchBase _viewModel;
 
-    public ActuatorSearchTests()
+    public ActuatorSearchBaseTests()
     {
         _viewModel = new ActuatorSearchBase(_model, _csvModel, _alertService);
     }
