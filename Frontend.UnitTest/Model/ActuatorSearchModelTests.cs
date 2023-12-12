@@ -75,51 +75,18 @@ public class ActuatorSearchModelTests
                     .ToList())
             .Create();
 
-        _network.GetActuatorWithFilter(Arg.Any<int?>(), 
-                Arg.Any<int?>(), 
-                Arg.Any<string?>(),
-                Arg.Any<string?>(),
-                Arg.Any<int?>(),
-                Arg.Any<int?>(),
-                Arg.Any<DateTime?>(),
-                Arg.Any<DateTime?>(),
-                Arg.Any<string?>(),
-                Arg.Any<string?>(),
-                Arg.Any<string?>(),
-                Arg.Any<string?>())
+        _network.GetActuatorWithFilter(Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
-        var result = await _model.GetActuatorWithFilter(null,
-            null, 
-            expectedUid,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null);
+        var result = await _model.GetActuatorWithFilter(null, null, expectedUid, null, null, null, null, null, null, null, null, null);
         
         // Assert
         Assert.NotEmpty(result);
         Assert.Single(result);
         Assert.Equal(expectedResponse.Actuators.First().Pcba.Uid, result[0].PCBA.PCBAUid);
 
-        await _network.Received(1).GetActuatorWithFilter(Arg.Any<int?>(), 
-            Arg.Any<int?>(), 
-            Arg.Any<string?>(),
-            Arg.Any<string?>(),
-            Arg.Any<int?>(),
-            Arg.Any<int?>(),
-            Arg.Any<DateTime?>(),
-            Arg.Any<DateTime?>(),
-            Arg.Any<string?>(),
-            Arg.Any<string?>(),
-            Arg.Any<string?>(),
-            Arg.Any<string?>());
+        await _network.Received(1).GetActuatorWithFilter(Arg.Any<int?>(), Arg.Any<int?>(), expectedUid, Arg.Any<string?>(), Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>());
     }
 
     [Fact]
