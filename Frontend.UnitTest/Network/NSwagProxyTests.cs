@@ -116,4 +116,18 @@ public class NSwagProxyTests
         // Act/Assert
         await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
     }
+    
+    [Fact]
+    public async Task GetActuatorsWithFilter_ThrowsNetworkException_OnApiException()
+    {
+        // Arrange
+        var woNo = _fixture.Create<int>();
+        var serialNumber = _fixture.Create<int>();
+
+        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+            .ThrowsAsync<ApiException>();
+
+        // Act/Assert
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+    }
 }
