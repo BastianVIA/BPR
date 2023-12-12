@@ -118,16 +118,24 @@ public class NSwagProxyTests
     }
     
     [Fact]
-    public async Task GetActuatorsWithFilter_ThrowsNetworkException_OnApiException()
+    public async Task GetActuatorsWithFilter_ThrowsNetworkException_WhenGivenNoSearchParameters()
     {
         // Arrange
-        var woNo = _fixture.Create<int>();
-        var serialNumber = _fixture.Create<int>();
-
-        _client.GetActuatorDetailsAsync(Arg.Any<int>(), Arg.Any<int>())
+        _client.GetActuatorsWithFilterAsync(Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>())
             .ThrowsAsync<ApiException>();
 
         // Act/Assert
-        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorWithFilter(null, null, null, null, null, null, null, null, null, null, null, null));
     }
 }

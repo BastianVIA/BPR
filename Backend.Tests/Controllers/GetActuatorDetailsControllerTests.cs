@@ -65,6 +65,6 @@ public class GetActuatorDetailsControllerTests
         var result = await _controller.GetAsync(woNo, serialNo, CancellationToken.None) as ObjectResult;
         var response = result.Value;
         Assert.NotNull(result);
-        Assert.IsType<GetActuatorDetailsController.GetActuatorDetailsResponse>(response);
+        Assert.IsType<GetActuatorDetailsResponse>(response);
     }
 }

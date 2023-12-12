@@ -6,4 +6,9 @@ public class NetworkException : Exception
     {
         
     }
+
+    public NetworkException() : base()
+    {
+        
+    }
 }

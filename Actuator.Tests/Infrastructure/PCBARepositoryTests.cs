@@ -104,7 +104,7 @@ public class PCBARepositoryTests
         var init = _fixture.Create<PCBA>();
         
         await SetupPCBA(init);
-        var newPCBA = new PCBA(init.Uid, 123, "", "", 1);
+        var newPCBA = new PCBA(init.Uid, 123, "", "", 1, "");
         
         await _repository.UpdatePCBA(newPCBA);
         var result = await _dbContext.PCBAs.FirstOrDefaultAsync(p => p.Uid == newPCBA.Uid);
@@ -120,7 +120,7 @@ public class PCBARepositoryTests
         
         await SetupPCBA(init);
         var beforeCount = _dbContext.PCBAs.Count();
-        var newPCBA = new PCBA(init.Uid, 123, "", "", 1);
+        var newPCBA = new PCBA(init.Uid, 123, "", "", 1, "");
         
         await _repository.UpdatePCBA(newPCBA);
         var result = _dbContext.PCBAs.First();

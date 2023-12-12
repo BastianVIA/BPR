@@ -29,7 +29,7 @@ public class ActuatorRepositoryTests
     {
         var countBefore = _dbContext.Actuators.Count();
         var actuator = _fixture.Create<Domain.Entities.Actuator>();
-        var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA);
+        var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA, actuator.ArticleNumber, actuator.ArticleName, actuator.CommunicationProtocol, actuator.CreatedTime);
 
         _dbContext.PCBAs.Add(new PCBAModel
         {
@@ -52,7 +52,7 @@ public class ActuatorRepositoryTests
     public async Task Create_AddsRightObject()
     {
         var actuator = _fixture.Create<Domain.Entities.Actuator>();
-        var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA);
+        var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA, actuator.ArticleNumber, actuator.ArticleName, actuator.CommunicationProtocol, actuator.CreatedTime);
         _dbContext.PCBAs.Add(new PCBAModel
         {
             Uid = actuator.PCBA.Uid,
@@ -162,7 +162,7 @@ public class ActuatorRepositoryTests
         var init = CreateActuator();
         
         await SetupActuator(init);
-        var newActuator = Domain.Entities.Actuator.Create(init.Id, _fixture.Create<PCBA>());
+        var newActuator = Domain.Entities.Actuator.Create(init.Id, _fixture.Create<PCBA>(), init.ArticleNumber, init.ArticleName, init.CommunicationProtocol, init.CreatedTime);
       
         await SetupPCBA(newActuator.PCBA);
         await _repository.UpdateActuator(newActuator);
@@ -180,7 +180,7 @@ public class ActuatorRepositoryTests
         
         await SetupActuator(init);
         var beforeCount = _dbContext.Actuators.Count();
-        var newActuator = Domain.Entities.Actuator.Create(init.Id, _fixture.Create<PCBA>());
+        var newActuator = Domain.Entities.Actuator.Create(init.Id, _fixture.Create<PCBA>(), init.ArticleNumber, init.ArticleName, init.CommunicationProtocol, init.CreatedTime);
       
         await SetupPCBA(newActuator.PCBA);
         await _repository.UpdateActuator(newActuator);
@@ -231,7 +231,7 @@ public class ActuatorRepositoryTests
 
     private Domain.Entities.Actuator CreateActuator()
     {
-        return Domain.Entities.Actuator.Create(_fixture.Create<CompositeActuatorId>(), _fixture.Create<PCBA>());
+        return Domain.Entities.Actuator.Create(_fixture.Create<CompositeActuatorId>(), _fixture.Create<PCBA>(), _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<DateTime>());
     }
 
 
