@@ -44,6 +44,18 @@ public class ActuatorSearchBaseTests
         
         // Assert
         Assert.True(_viewModel.Actuators.Count == 0);
+        await _model.Received(1).GetActuatorWithFilter(Arg.Any<int?>(),
+            Arg.Any<int?>(),
+            _viewModel.SearchActuator.PCBAUid,
+            Arg.Any<string?>(),
+            Arg.Any<int?>(),
+            Arg.Any<int?>(),
+            Arg.Any<DateTime?>(),
+            Arg.Any<DateTime?>(),
+            Arg.Any<string?>(),
+            Arg.Any<string?>(),
+            Arg.Any<string?>(),
+            Arg.Any<string?>());
     }
 
     [Fact]
