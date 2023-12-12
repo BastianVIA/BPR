@@ -2,5 +2,5 @@
 
 public interface IUpdateActuatorsPCBAModel
 {
-    public Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid);
+    Task UpdateActuatorsPCBA(int woNo, int serialNo, string pcbaUid);
 }
