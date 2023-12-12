@@ -18,6 +18,7 @@ public class TestController
         catch (Exception e)
         {
             Console.WriteLine(e);
+            KillProcesses();
             Environment.Exit(0);
         }
     }
@@ -69,8 +70,8 @@ public class TestController
 
     private void KillProcesses()
     {
-        _backendProcess!.Kill();
-        _frontendProcess!.Kill();
+        _backendProcess?.Kill();
+        _frontendProcess?.Kill();
     }
 
     public void TestDone()
