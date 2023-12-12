@@ -19,7 +19,7 @@ Eks:``
 bin/Debug/net7.0/playwright.ps1 codegen localhost:5002/ActuatorSearch
 ``
 ```bash
-bin/Debug/net7.0/playwright.ps1 codegen localhost:5002/ActuatorSearch
+bin/Debug/net7.0/playwright.ps1 codegen localhost:5002/urlPath
 ```
 
 
