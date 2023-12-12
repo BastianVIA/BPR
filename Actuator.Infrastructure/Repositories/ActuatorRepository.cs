@@ -16,7 +16,7 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
     public async Task CreateActuator(Actuator actuator)
     {
         var pcba = await getPcbaModel(actuator.PCBA.Uid);
-        var article = await getArticle(actuator.ArticleNumber);
+        var article = await getArticle(actuator.ArticleNumber, actuator.ArticleName);
         var actuatorModel = FromDomain(actuator);
         actuatorModel.PCBA = pcba;
         actuatorModel.Article = article;
@@ -25,8 +25,11 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task<Actuator> GetActuator(CompositeActuatorId id)
     {
-        var actuatorModel = await Query().Include(model => model.PCBA).FirstOrDefaultAsync(a =>
-            a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
+        var actuatorModel = await Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .FirstOrDefaultAsync(a =>
+                a.WorkOrderNumber == id.WorkOrderNumber && a.SerialNumber == id.SerialNumber);
         if (actuatorModel == null)
         {
             throw new KeyNotFoundException(
@@ -38,11 +41,15 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task UpdateActuator(Actuator actuator)
     {
-        var actuatorFromDb = await Query().Include(model => model.PCBA).FirstAsync(a =>
-            a.WorkOrderNumber == actuator.Id.WorkOrderNumber && a.SerialNumber == actuator.Id.SerialNumber);
+        var actuatorFromDb = await Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .FirstAsync(a =>
+                a.WorkOrderNumber == actuator.Id.WorkOrderNumber && a.SerialNumber == actuator.Id.SerialNumber);
         var pcba = await getPcbaModel(actuator.PCBA.Uid);
-
         actuatorFromDb.PCBA = pcba;
+        var article = await getArticle(actuator.ArticleNumber, actuator.ArticleName);
+        actuatorFromDb.Article = article;
         await UpdateAsync(actuatorFromDb, actuator.GetDomainEvents());
     }
 
@@ -121,7 +128,10 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
 
     public async Task<List<Actuator>> GetActuatorsFromPCBAAsync(string requestUid, int? requestManufacturerNo = null)
     {
-        var query = Query().Include(model => model.PCBA).Where(model => model.PCBA.Uid == requestUid);
+        var query = Query()
+            .Include(model => model.PCBA)
+            .Include(model => model.Article)
+            .Where(model => model.PCBA.Uid == requestUid);
         if (requestManufacturerNo != null)
         {
             query = query.Where(model => model.PCBA.ManufacturerNumber == requestManufacturerNo);
@@ -197,15 +207,33 @@ public class ActuatorRepository : BaseRepository<ActuatorModel>, IActuatorReposi
         return pcba;
     }
 
-    private async Task<ArticleModel> getArticle(string actuatorArticleNumber)
+    private async Task<ArticleModel> getArticle(string articleNumber, string? articleName)
     {
-        var article = await QueryOtherLocal<ArticleModel>()
-            .FirstOrDefaultAsync(a => a.ArticleNumber == actuatorArticleNumber);
-        if (article == null)
+        ArticleModel? articleModel;
+        try
         {
-            article = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleNumber == actuatorArticleNumber);
+            articleModel = QueryOtherLocal<ArticleModel>()
+                .FirstOrDefault(a => a.ArticleNumber == articleNumber);
+            if (articleModel == null)
+            {
+                articleModel = await QueryOther<ArticleModel>().FirstAsync(a => a.ArticleNumber == articleNumber);
+            }
+        }
+        catch (Exception e)
+        {
+            if (articleName is null)
+            {
+                throw new ArgumentException($"Could not find message for article with number {articleNumber}");
+            }
+
+            articleModel = new ArticleModel
+            {
+                ArticleNumber = articleNumber,
+                ArticleName = articleName
+            };
         }
 
-        return article;
+
+        return articleModel;
     }
 }
