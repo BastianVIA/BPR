@@ -60,7 +60,7 @@ public class ActuatorSearchModelTests
     }
 
     [Fact]
-    public async Task GetActuatorsWithFilter_ReturnsListOfOneActuator_WhenOneMatchExists()
+    public async Task GetActuatorsWithFilter_ReturnsListOfOneActuator_WhenGivenWOandSerialNoHasMatch()
     {
         // Arrange
         var noOfActuators = 1;
