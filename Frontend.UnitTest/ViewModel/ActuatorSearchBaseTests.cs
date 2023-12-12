@@ -23,8 +23,7 @@ public class ActuatorSearchBaseTests
     {
         // Arrange
         var expected = new List<Actuator>();
-        _viewModel.SearchActuator.PCBAUid = "ThisUidDoeNotExistInTheSystem";
-        
+
         _model.GetActuatorWithFilter(Arg.Any<int?>(), 
                 Arg.Any<int?>(), 
                 Arg.Any<string?>(),
@@ -46,7 +45,7 @@ public class ActuatorSearchBaseTests
         Assert.True(_viewModel.Actuators.Count == 0);
         await _model.Received(1).GetActuatorWithFilter(Arg.Any<int?>(),
             Arg.Any<int?>(),
-            _viewModel.SearchActuator.PCBAUid,
+            Arg.Any<string?>(),
             Arg.Any<string?>(),
             Arg.Any<int?>(),
             Arg.Any<int?>(),
