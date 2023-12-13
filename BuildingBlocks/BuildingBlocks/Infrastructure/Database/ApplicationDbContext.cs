@@ -67,6 +67,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<TestResultModel>()
             .HasMany(t => t.TestErrors)
             .WithOne()
-            .HasForeignKey(t => t.TestResultId);
+            .HasForeignKey(t => t.TestResultId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

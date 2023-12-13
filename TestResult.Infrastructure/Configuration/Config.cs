@@ -2,6 +2,7 @@ using BuildingBlocks.Registration;
 using Microsoft.Extensions.DependencyInjection;
 using TestResult.Application;
 using TestResult.Domain.RepositoryInterfaces;
+using TestResult.Infrastructure.Repositories;
 
 namespace TestResult.Infrastructure.Configuration;
 
