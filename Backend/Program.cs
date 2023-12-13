@@ -10,14 +10,13 @@ using TestResult.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // Add services to the container.
 
 builder.Services.AddCore(builder.Configuration);
+builder.Services.AddLINTestServices(builder.Configuration);
 builder.Services.AddInbox();
 builder.Services.AddActuatorServices();
 builder.Services.AddTestResultServices();
@@ -29,7 +28,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGenNewtonsoftSupport();
-builder.Services.AddLINTestServices(builder.Configuration);
+
 builder.Services.AddTECHLineServices();
 
 var app = builder.Build();
