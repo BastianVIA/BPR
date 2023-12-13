@@ -7,8 +7,11 @@ public static class Config
 {
     public static IServiceCollection AddLINTestServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<FileProcessorOptions>(_ => 
-            configuration.GetSection("LINTest:FileProcessor").Get<FileProcessorOptions>()!);
+        services.AddSingleton<FileProcessorOptions>(serviceProvider => 
+            configuration.GetSection("LINTest:FileProcessor").Get<FileProcessorOptions>());
+
+        services.AddSingleton<LastTimeProcessedOptions>(serviceProvider => 
+            configuration.GetSection("LINTest:LastTimeProcessed").Get<LastTimeProcessedOptions>());
         
         services.AddSingleton<ConfigurationManager>();
         services.AddHostedService<LINTestBackgroundService>();

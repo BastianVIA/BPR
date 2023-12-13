@@ -7,7 +7,7 @@ public class FileProcessingStateManager
 {
     private readonly string _lastProcessedDateTimePath;
     
-    public FileProcessingStateManager(FileProcessorOptions options)
+    public FileProcessingStateManager(LastTimeProcessedOptions options)
     {
         _lastProcessedDateTimePath = options.LastProcessedDateTimePath ?? throw new ArgumentNullException(nameof(options.LastProcessedDateTimePath));
     }
