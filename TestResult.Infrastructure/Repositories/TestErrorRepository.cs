@@ -136,8 +136,8 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
 
         try
         {
-            errorCodeModel = await QueryOtherLocal<TestErrorCodeModel>()
-                .FirstOrDefaultAsync(e => e.ErrorCode == errorCode);
+            errorCodeModel = QueryOtherLocal<TestErrorCodeModel>()
+                .FirstOrDefault(e => e.ErrorCode == errorCode);
             
             if (errorCodeModel == null)
             {

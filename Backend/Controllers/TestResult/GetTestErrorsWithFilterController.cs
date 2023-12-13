@@ -18,7 +18,7 @@ public class GetTestErrorsWithFilterController : ControllerBase
     [Route("api/[controller]")]
     [Tags("Test Result")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetTestErrorsWithFilterResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(
         [FromQuery] GetTestErrorsWithFilterQuery query,
