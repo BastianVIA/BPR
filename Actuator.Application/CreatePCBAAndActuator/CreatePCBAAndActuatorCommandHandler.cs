@@ -26,5 +26,6 @@ public class CreatePCBAAndActuatorCommandHandler : ICommandHandler<CreatePCBAAnd
         var actuatorCommand = CreateOrUpdateActuatorCommand.Create(request.WorkOrderNumber, request.SerialNumber,
             request.PCBAUid, request.ArticleNumber, request.ArticleName,
             request.CommunicationProtocol, request.CreatedTime);
-        return _bus.Send(actuatorCommand, cancellationToken);    }
+        return _bus.Send(actuatorCommand, cancellationToken);    
+    }
 }

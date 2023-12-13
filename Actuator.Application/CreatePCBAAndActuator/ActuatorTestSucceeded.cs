@@ -27,7 +27,12 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
             notification.ArticleName,
             notification.CommunicationProtocol,
             notification.CreatedTime);
-        await _inbox.Add(InboxMessage.From(createPcbaAndActuatorCommand, notification.Id));
+        
+        if (await _inbox.IdenticalMessageAlreadyExists(notification.Id, createPcbaAndActuatorCommand))
+        {
+            return;
+        }
+        await _inbox.Add(InboxMessage.Create(createPcbaAndActuatorCommand, notification.Id));
         await _dbTransaction.CommitAsync(cancellationToken);
     }
 }

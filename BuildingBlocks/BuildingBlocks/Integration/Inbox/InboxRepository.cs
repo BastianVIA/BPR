@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database;
+using BuildingBlocks.Infrastructure.Database.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Integration.Inbox;
@@ -50,6 +51,12 @@ public class InboxRepository<TEntity> : BaseRepository<TEntity>, IFailingInbox
         toUpdate.FailureReason = inboxMessage.FailureReason;
         toUpdate.IsFailing = inboxMessage.IsFailing;
         await UpdateAsync(toUpdate, inboxMessage.GetDomainEvents());
+    }
+
+    public async Task<bool> IdenticalMessageAlreadyExists(Guid integrationEventId, object toExecuteMessage)
+    {
+        var messageTypeAsString = toExecuteMessage.GetType().AssemblyQualifiedName;
+        return 0 != await Query().CountAsync(model => model.IntegrationEventId == integrationEventId && model.MessageType != messageTypeAsString);
     }
 
     private TEntity FromDomain(InboxMessage inboxMessage)
