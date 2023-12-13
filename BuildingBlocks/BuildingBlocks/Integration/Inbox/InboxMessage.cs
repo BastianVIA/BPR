@@ -53,7 +53,7 @@ public class InboxMessage : Entity
     {
         FailureReason = failureReason;
         FailedAttempts++;
-        if (FailedAttempts > 1 && !IsFailing)
+        if (FailedAttempts > 10 && !IsFailing)
         {
             ProcessedDate = DateTime.Now;
             AddDomainEvent(new InboxMessageExitedFailLimitDomainEvent(Id));

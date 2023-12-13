@@ -19,7 +19,6 @@ public class GetAllTestersController : ControllerBase
     [Route("api/[controller]")]
     [Tags("Test Result")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetAllTestersResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
     {

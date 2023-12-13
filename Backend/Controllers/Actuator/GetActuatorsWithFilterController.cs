@@ -18,7 +18,7 @@ public class GetActuatorsWithFilterController : ControllerBase
     [Route("api/[controller]")]
     [Tags("Actuator")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetActuatorWithFilterResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(
         [FromQuery] GetActuatorsWithFilterQuery query,
