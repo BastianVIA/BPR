@@ -71,6 +71,13 @@ public class GlobalExceptionFilter
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     problemDetails.Detail = "A null reference exception occurred.";
                     break;
+                
+                case ArgumentException argumentException:
+                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    problemDetails.Title = "Validation error";
+                    problemDetails.Status = (int)HttpStatusCode.BadRequest;
+                    problemDetails.Detail = argumentException.Message;
+                    break;
 
                 default:
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

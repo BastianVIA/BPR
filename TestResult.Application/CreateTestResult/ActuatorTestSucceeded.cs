@@ -29,7 +29,12 @@ public class ActuatorTestSucceeded : IIntegrationEventListener<ActuatorTestSucce
             notification.MaxBuslinkPosition,
             notification.ServoStroke,
             notification.CreatedTime);
-        await _inbox.Add(InboxMessage.From(testResultCommand, notification.Id));
+        
+        if (await _inbox.IdenticalMessageAlreadyExists(notification.Id, testResultCommand))
+        {
+            return;
+        }
+        await _inbox.Add(InboxMessage.Create(testResultCommand, notification.Id));
         
         await _dbTransaction.CommitAsync(cancellationToken);
     }

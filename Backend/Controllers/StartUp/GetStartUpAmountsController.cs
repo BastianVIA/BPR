@@ -18,7 +18,6 @@ public class GetStartUpAmountsController : ControllerBase
     [Route("api/[controller]")]
     [Tags("StartUp")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetStartUpResponse))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
     {
