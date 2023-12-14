@@ -42,7 +42,6 @@ public class PCBADAO : IPCBAService
             pcbaToReturn.ProductionDateCode = dataReader.GetInt32(4);
             pcbaToReturn.ConfigNo = dataReader.GetString(5);
         }
-        
         return pcbaToReturn;
     }
 }
