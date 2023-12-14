@@ -21,8 +21,7 @@ public class CsvDataService
         CancellationToken cancellationToken)
     {
         var csvModel = CSVHandler.ReadCSV(filePath);
-        var isValidCsvData = IsValidCsvData(csvModel, filePath);
-        if (!isValidCsvData)
+        if (!IsValidCsvData(csvModel, filePath))
         {
             _logger.LogError($"File with path {filePath} does not have valid CSV data");
             return;

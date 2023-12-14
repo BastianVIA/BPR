@@ -42,8 +42,8 @@ public class CSVHandler
         return record;
     }
 
-    private static void ProcessKey(CSVModel record, Dictionary<string, Action<CSVModel, string>> keyActions, string key,
-        string value, string timestamp)
+    private static void ProcessKey(CSVModel record, Dictionary<string, Action<CSVModel, 
+            string>> keyActions, string key, string value, string timestamp)
     {
         if (key == "LINTest has finished. EndOfTest")
         {
@@ -122,12 +122,12 @@ public class CSVHandler
     
     private static string ExtractTesterSubstring(string input)
     {
-        int firstCommaIndex = input.IndexOf(',');
-        int secondCommaIndex = input.IndexOf(',', firstCommaIndex + 1);
+        var firstCommaIndex = input.IndexOf(',');
+        var secondCommaIndex = input.IndexOf(',', firstCommaIndex + 1);
         
         if (firstCommaIndex != -1 && secondCommaIndex != -1)
         {
-            string result = input.Substring(firstCommaIndex + 1, secondCommaIndex - firstCommaIndex - 1);
+            var result = input.Substring(firstCommaIndex + 1, secondCommaIndex - firstCommaIndex - 1);
             return result.Trim();
         }
         
