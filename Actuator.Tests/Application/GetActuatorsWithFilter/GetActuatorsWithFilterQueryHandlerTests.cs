@@ -22,11 +22,12 @@ public class GetActuatorsWithFilterQueryHandlerTests
     public async Task Handle_ReturnsGetActuatorsWithFilterDtoWithManyActuators_WhenWOHasManyMatches()
     {
         // Arrange
-        var wo = _fixture.Create<int>();
-        var request = _fixture.Create<GetActuatorsWithFilterQuery>();
+        var request = _fixture.Build<GetActuatorsWithFilterQuery>()
+            .With(q => q.WorkOrderNumber, _fixture.Create<int>())
+            .Create();
         var noOfActuatorsToReturn = 3;
         var expected = new List<Domain.Entities.Actuator>();
-        expected.AddMany(() => EntityCreator.CreateActuator(woNo: wo), noOfActuatorsToReturn);
+        expected.AddMany(() => EntityCreator.CreateActuator(woNo: request.WorkOrderNumber), noOfActuatorsToReturn);
         
         _repository.GetActuatorsWithFilter(Arg.Any<int>(), Arg.Any<int?>(), Arg.Any<string?>(), Arg.Any<string>(),
             Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(),
@@ -37,19 +38,9 @@ public class GetActuatorsWithFilterQueryHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.NotEmpty(result.ActuatorDtos);
-        foreach (var dtos in result.ActuatorDtos)   
+        foreach (var dto in result.ActuatorDtos)   
         {
-            Assert.Equal(wo, dtos.WorkOrderNumber);
+            Assert.Equal(request.WorkOrderNumber, dto.WorkOrderNumber);
         }
-    }
-
-
-    private Domain.Entities.Actuator CreateActuatorWithWO(int wo)
-    {
-        return Domain.Entities.Actuator.Create(CompositeActuatorId.From(wo, _fixture.Create<int>()),
-            PCBA.Create(_fixture.Create<string>(), _fixture.Create<int>(), _fixture.Create<string>(),
-                _fixture.Create<string>(), _fixture.Create<int>(), _fixture.Create<string>()),
-            _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<string>(),
-            _fixture.Create<DateTime>());
     }
 }
