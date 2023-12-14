@@ -37,19 +37,9 @@ public class GetActuatorsWithFilterQueryHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.NotEmpty(result.ActuatorDtos);
-        foreach (var dtos in result.ActuatorDtos)   
+        foreach (var dto in result.ActuatorDtos)   
         {
-            Assert.Equal(wo, dtos.WorkOrderNumber);
+            Assert.Equal(wo, dto.WorkOrderNumber);
         }
-    }
-
-
-    private Domain.Entities.Actuator CreateActuatorWithWO(int wo)
-    {
-        return Domain.Entities.Actuator.Create(CompositeActuatorId.From(wo, _fixture.Create<int>()),
-            PCBA.Create(_fixture.Create<string>(), _fixture.Create<int>(), _fixture.Create<string>(),
-                _fixture.Create<string>(), _fixture.Create<int>(), _fixture.Create<string>()),
-            _fixture.Create<string>(), _fixture.Create<string>(), _fixture.Create<string>(),
-            _fixture.Create<DateTime>());
     }
 }
