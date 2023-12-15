@@ -2,12 +2,16 @@
 using BuildingBlocks.Infrastructure.Database.Models;
 using Domain.Entities;
 
-namespace Backend.Tests.Util;
+namespace Actuator.Tests.Util;
 
 public static class EntityCreator
 {
     private static Fixture _fixture = new();
-    public static Domain.Entities.Actuator CreateActuator(int? woNo = null, int? serialNo = null, string? pcbaUid = null, int? manufacturerNo = null, string? itemNumber = null, string? software = null, int? prodDateCode = null, string? configNo = null, string? artNo = null, string? artName = null, string? commProtocol = null, DateTime? createdTime = null)
+
+    public static Domain.Entities.Actuator CreateActuator(int? woNo = null, int? serialNo = null,
+        string? pcbaUid = null, int? manufacturerNo = null, string? itemNumber = null, string? software = null,
+        int? prodDateCode = null, string? configNo = null, string? artNo = null, string? artName = null,
+        string? commProtocol = null, DateTime? createdTime = null)
     {
         return Domain.Entities.Actuator.Create(
             CompositeActuatorId.From(
@@ -26,7 +30,15 @@ public static class EntityCreator
             createdTime ?? _fixture.Create<DateTime>());
     }
 
-    public static ActuatorModel CreateActuatorModel(int? woNo = null, int? serialNo = null, string? comProto = null, string? artNo = null, DateTime? createdTime = null, PCBAModel? pcbaModel = null, ArticleModel? article = null)
+    public static Domain.Entities.PCBA CreatePCBA(int prodDateCode, int manuNo, string? software = null,
+        string? itemNumber = null,
+        string? configNo = null, string? uid = null)
+    {
+        return PCBA.Create(uid, manuNo, itemNumber, software, prodDateCode, configNo);
+    }
+
+    public static ActuatorModel CreateActuatorModel(int? woNo = null, int? serialNo = null, string? comProto = null,
+        string? artNo = null, DateTime? createdTime = null, PCBAModel? pcbaModel = null, ArticleModel? article = null)
     {
         return new ActuatorModel()
         {
@@ -40,7 +52,8 @@ public static class EntityCreator
         };
     }
 
-    public static PCBAModel CreatePCBAModel(string? software = null, string? itemNumber = null,int? manuNo = null, string? configNo = null, int? prodDateCode = null, string? uid = null)
+    public static PCBAModel CreatePCBAModel(string? software = null, string? itemNumber = null, int? manuNo = null,
+        string? configNo = null, int? prodDateCode = null, string? uid = null)
     {
         return new PCBAModel()
         {
@@ -52,7 +65,7 @@ public static class EntityCreator
             ProductionDateCode = prodDateCode ?? _fixture.Create<int>()
         };
     }
-    
+
     public static ArticleModel CreateArticleModel(string? artNo = null, string? artName = null)
     {
         return new ArticleModel()
