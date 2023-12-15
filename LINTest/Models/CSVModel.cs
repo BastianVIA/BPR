@@ -20,4 +20,3 @@ public class CSVModel
         public string ServoStroke { get; set; }
         public List<TestErrorModel> TestErrors { get; set; } = new();
 }
-
