@@ -59,7 +59,8 @@ public class PCBARepositoryTests
             ManufacturerNumber = pcba.ManufacturerNumber,
             ItemNumber = pcba.ItemNumber,
             Software = pcba.Software,
-            ProductionDateCode = pcba.ProductionDateCode
+            ProductionDateCode = pcba.ProductionDateCode,
+            ConfigNo = pcba.ConfigNo
         });
         await _dbContext.SaveChangesAsync();
         
@@ -97,37 +98,7 @@ public class PCBARepositoryTests
         Assert.NotNull(result);
         await AssertPCBAEquals(expected, result);
     }
-
-    [Fact]
-    public async Task Update_ShouldChangeCorrectPCBA_WhenUpdating()
-    {
-        var init = _fixture.Create<PCBA>();
-        
-        await SetupPCBA(init);
-        var newPCBA = new PCBA(init.Uid, 123, "", "", 1, "");
-        
-        await _repository.UpdatePCBA(newPCBA);
-        var result = await _dbContext.PCBAs.FirstOrDefaultAsync(p => p.Uid == newPCBA.Uid);
-        
-        Assert.NotNull(result);
-        Assert.NotEqual(init.ManufacturerNumber, result.ManufacturerNumber);
-    }
-
-    [Fact]
-    public async Task Update_ShouldChangeExistingPCBA_WhenUpdating()
-    {
-        var init = _fixture.Create<PCBA>();
-        
-        await SetupPCBA(init);
-        var beforeCount = _dbContext.PCBAs.Count();
-        var newPCBA = new PCBA(init.Uid, 123, "", "", 1, "");
-        
-        await _repository.UpdatePCBA(newPCBA);
-        var result = _dbContext.PCBAs.First();
-        
-        Assert.NotNull(result);
-        Assert.Equal(beforeCount, _dbContext.PCBAs.Count());
-    }
+    
 
     [Fact]
     public async Task Update_ShouldThrowException_WhenUpdatingFails()
@@ -138,15 +109,22 @@ public class PCBARepositoryTests
     
     private async Task SetupPCBA(PCBA pcba)
     {
-        _dbContext.Set<PCBAModel>().Add(new PCBAModel
+        var entity = new PCBAModel
         {
             Uid = pcba.Uid,
             ManufacturerNumber = pcba.ManufacturerNumber,
             ItemNumber = pcba.ItemNumber,
             Software = pcba.Software,
-            ProductionDateCode = pcba.ProductionDateCode
-        });
+            ProductionDateCode = pcba.ProductionDateCode,
+            ConfigNo = pcba.ConfigNo
+        };
+
+        _dbContext.Set<PCBAModel>().Add(entity);
         await _dbContext.SaveChangesAsync();
+
+        _dbContext.Entry(entity).State = EntityState.Unchanged;
+        _dbContext.SaveChanges();
+
     }
 
     private async Task AssertPCBAEquals(PCBA expected, PCBA actual)

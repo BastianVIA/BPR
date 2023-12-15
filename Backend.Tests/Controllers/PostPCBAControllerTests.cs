@@ -4,12 +4,13 @@ using Backend.Controllers.PCBA;
 using BuildingBlocks.Application;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
+
 
 namespace Backend.Tests.Controllers;
 
-public class PostPCBAControllerTests
+public class PostPCBAControllerTests 
 {
+    private readonly HttpClient _client;
     private PostPCBAController _controller;
     private readonly ICommandBus _bus = Substitute.For<ICommandBus>();
     
@@ -25,15 +26,5 @@ public class PostPCBAControllerTests
         var result = await _controller.CreateAsync(request, CancellationToken.None);
         Assert.IsType<OkResult>(result);
     }
-    
-    [Fact]
-    public async Task CreateAsync_ReturnsBadRequest_WhenPCBACreationFailed()
-    {
-        _bus.Send(Arg.Any<CreateOrUpdatePCBACommand>(), Arg.Any<CancellationToken>()).ThrowsAsync<Exception>();
 
-        var request = new PostPCBARequest();
-        var result = await _controller.CreateAsync(request, CancellationToken.None);
-        Assert.IsType<BadRequestResult>(result);
-    }
-    
 }

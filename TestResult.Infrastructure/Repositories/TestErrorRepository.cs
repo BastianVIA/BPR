@@ -64,9 +64,7 @@ public class TestErrorRepository : BaseRepository<TestErrorModel>, ITestErrorRep
         {
             queryBuilder = queryBuilder.Where(model => model.TimeOccured > startDate);
         }
-
-        //queryBuilder = queryBuilder.Include(model => model.ErrorCodeModel).AsQueryable();
-
+        
         var errorModels = await queryBuilder.ToListAsync();
         return ToDomain(errorModels);
     }

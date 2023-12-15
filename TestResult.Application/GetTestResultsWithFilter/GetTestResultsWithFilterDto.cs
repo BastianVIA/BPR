@@ -15,7 +15,7 @@ public class GetTestResultsWithFilterDto
         TestResultDtos = testResultDtos;
     }
 
-    internal static GetTestResultsWithFilterDto From(List<TestResult.Domain.Entities.TestResult> testResult)
+    public static GetTestResultsWithFilterDto From(List<TestResult.Domain.Entities.TestResult> testResult)
     {
         List<TestResultsWithFilterDTO> testResultDtos = new List<TestResultsWithFilterDTO>();
         foreach (var actuatorTest in testResult)
