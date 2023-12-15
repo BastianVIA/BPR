@@ -18,7 +18,7 @@ public class TestResultRepository : BaseRepository<TestResultModel>, ITestResult
         await AddAsync(FromDomain(testResult), testResult.GetDomainEvents());
     }
 
-    public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestDetails(int? woNo, int? serialNo,
+    public async Task<List<Domain.Entities.TestResult>> GetActuatorsTestWithFilter(int? woNo, int? serialNo,
         string? tester, int? bay, DateTime? startDate, DateTime? endDate)
     {
         var queryBuilder = Query()

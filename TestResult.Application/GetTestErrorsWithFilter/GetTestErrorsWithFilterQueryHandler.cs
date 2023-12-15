@@ -21,14 +21,11 @@ public class
     public async Task<GetTestErrorsWithFilterDto> Handle(GetTestErrorsWithFilterQuery request,
         CancellationToken cancellationToken)
     {
-        var timer = new Stopwatch();
-        timer.Start();
+
         var errorsMatchingFilter = await _errorRepository.GetTestErrorsWithFilter(request.WorkOrderNumber,
             request.Tester, request.Bay,
             request.ErrorCode, request.StartDate, request.EndDate);
         
-        timer.Stop();
-        Console.WriteLine("------------------- Time elapsed: " + timer.Elapsed);
         HashSet<int> uniqueErrorCodes = new HashSet<int>();
         Dictionary<int, string> errorCodeToMessage = new();
 
@@ -52,7 +49,7 @@ public class
             dataLines.Add(singleLine);
 
             startOfInterval = endOfInterval;
-        } while (startOfInterval <= (request.EndDate ?? DateTime.Now));
+        } while (startOfInterval < (request.EndDate ?? DateTime.Now));
 
         List<int> possibleErrorCodes = uniqueErrorCodes.ToList();
 
