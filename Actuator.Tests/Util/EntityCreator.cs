@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using BuildingBlocks.Infrastructure.Database.Models;
 using Domain.Entities;
 
 namespace Backend.Tests.Util;
@@ -23,5 +24,41 @@ public static class EntityCreator
             artName ?? _fixture.Create<string>(),
             commProtocol ?? _fixture.Create<string>(),
             createdTime ?? _fixture.Create<DateTime>());
+    }
+
+    public static ActuatorModel CreateActuatorModel(int? woNo = null, int? serialNo = null, string? comProto = null, string? artNo = null, DateTime? createdTime = null, PCBAModel? pcbaModel = null, ArticleModel? article = null)
+    {
+        return new ActuatorModel()
+        {
+            ArticleNumber = artNo ?? _fixture.Create<string>(),
+            Article = article ?? CreateArticleModel(),
+            CommunicationProtocol = comProto ?? _fixture.Create<string>(),
+            CreatedTime = createdTime ?? _fixture.Create<DateTime>(),
+            SerialNumber = serialNo ?? _fixture.Create<int>(),
+            WorkOrderNumber = woNo ?? _fixture.Create<int>(),
+            PCBA = pcbaModel ?? CreatePCBAModel()
+        };
+    }
+
+    public static PCBAModel CreatePCBAModel(string? software = null, string? itemNumber = null,int? manuNo = null, string? configNo = null, int? prodDateCode = null, string? uid = null)
+    {
+        return new PCBAModel()
+        {
+            ConfigNo = configNo ?? _fixture.Create<string>(),
+            ItemNumber = itemNumber ?? _fixture.Create<string>(),
+            ManufacturerNumber = manuNo ?? _fixture.Create<int>(),
+            Uid = uid ?? _fixture.Create<string>(),
+            Software = software ?? _fixture.Create<string>(),
+            ProductionDateCode = prodDateCode ?? _fixture.Create<int>()
+        };
+    }
+    
+    public static ArticleModel CreateArticleModel(string? artNo = null, string? artName = null)
+    {
+        return new ArticleModel()
+        {
+            ArticleNumber = artNo ?? _fixture.Create<string>(),
+            ArticleName = artName ?? _fixture.Create<string>()
+        };
     }
 }

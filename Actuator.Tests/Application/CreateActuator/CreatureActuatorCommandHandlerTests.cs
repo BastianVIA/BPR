@@ -1,6 +1,7 @@
 ﻿using Application.CreateActuator;
 using AutoFixture;
 using BuildingBlocks.Infrastructure.Database.Transaction;
+using Domain.Entities;
 using Domain.RepositoryInterfaces;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
@@ -12,8 +13,8 @@ public class CreatureActuatorCommandHandlerTests
     private Fixture _fixture = new();
     private IActuatorRepository _actuatorRepository = Substitute.For<IActuatorRepository>();
     private IPCBARepository _pcbaRepository = Substitute.For<IPCBARepository>();
-    private CreateActuatorCommandHandler _commandHandler;
     private IDbTransaction _dbTransaction = Substitute.For<IDbTransaction>();
+    private CreateActuatorCommandHandler _commandHandler;
     
     public CreatureActuatorCommandHandlerTests()
     {
@@ -23,8 +24,13 @@ public class CreatureActuatorCommandHandlerTests
     [Fact]
     public async Task Handle_ShouldPassAnActuatorToRepository_WhenCalled()
     {
+        // Arrange
+        var pcba = _fixture.Create<PCBA>();
         var request = _fixture.Create<CreateActuatorCommand>();
 
+        _pcbaRepository.GetPCBA(Arg.Any<string>())
+            .Returns(pcba);
+        // Act
         await _commandHandler.Handle(request, CancellationToken.None);
 
         await _actuatorRepository.Received(1).CreateActuator(Arg.Any<Domain.Entities.Actuator>());
@@ -35,8 +41,8 @@ public class CreatureActuatorCommandHandlerTests
     {
         var request = _fixture.Create<CreateActuatorCommand>();
 
-        _actuatorRepository.CreateActuator(Arg.Any<Domain.Entities.Actuator>()).Throws<Exception>();
+        _actuatorRepository.CreateActuator(Arg.Any<Domain.Entities.Actuator>()).Throws<NullReferenceException>();
 
-        await Assert.ThrowsAsync<Exception>(() => _commandHandler.Handle(request, CancellationToken.None));
+        await Assert.ThrowsAsync<NullReferenceException>(() => _commandHandler.Handle(request, CancellationToken.None));
     }
 }
