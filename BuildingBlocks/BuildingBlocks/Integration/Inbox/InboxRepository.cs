@@ -56,7 +56,7 @@ public class InboxRepository<TEntity> : BaseRepository<TEntity>, IFailingInbox
     public async Task<bool> IdenticalMessageAlreadyExists(Guid integrationEventId, object toExecuteMessage)
     {
         var messageTypeAsString = toExecuteMessage.GetType().AssemblyQualifiedName;
-        return 0 != await Query().CountAsync(model => model.IntegrationEventId == integrationEventId && model.MessageType != messageTypeAsString);
+        return 0 != await Query().CountAsync(model => model.IntegrationEventId == integrationEventId && model.MessageType == messageTypeAsString);
     }
 
     private TEntity FromDomain(InboxMessage inboxMessage)

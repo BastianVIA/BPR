@@ -78,7 +78,7 @@ public class NSwagProxyTests
         // Arrange
         var expected = _fixture.Create<ConfigurationResponse>();
 
-        _client.ConfigurationAsync(Arg.Any<CancellationToken>())
+        _client.GetConfigurationAsync(Arg.Any<CancellationToken>())
             .Returns(expected);
         
         // Act
@@ -115,5 +115,27 @@ public class NSwagProxyTests
         
         // Act/Assert
         await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorDetails(woNo, serialNumber));
+    }
+    
+    [Fact]
+    public async Task GetActuatorsWithFilter_ThrowsNetworkException_WhenGivenNoSearchParameters()
+    {
+        // Arrange
+        _client.GetActuatorsWithFilterAsync(Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<int?>(),
+                Arg.Any<int?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>())
+            .ThrowsAsync<ApiException>();
+
+        // Act/Assert
+        await Assert.ThrowsAsync<NetworkException>(() => _network.GetActuatorWithFilter(null, null, null, null, null, null, null, null, null, null, null, null));
     }
 }

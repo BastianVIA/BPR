@@ -7,7 +7,7 @@ public class FileProcessingStateManager
 {
     private readonly string _lastProcessedDateTimePath;
     
-    public FileProcessingStateManager(StateManagerOptions options)
+    public FileProcessingStateManager(LastTimeProcessedOptions options)
     {
         _lastProcessedDateTimePath = options.LastProcessedDateTimePath ?? throw new ArgumentNullException(nameof(options.LastProcessedDateTimePath));
     }
@@ -36,7 +36,6 @@ public class FileProcessingStateManager
         var jsonData = JsonConvert.SerializeObject(lastProcessed, Formatting.Indented, new JsonSerializerSettings()
         {
             DateTimeZoneHandling = DateTimeZoneHandling.Local
- 
         });
         File.WriteAllText(_lastProcessedDateTimePath, jsonData);
     }

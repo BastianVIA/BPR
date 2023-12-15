@@ -1,4 +1,5 @@
-﻿using Frontend.Model;
+﻿using Frontend.Entities;
+using Frontend.Model;
 using Frontend.Networking;
 using Frontend.Service;
 
@@ -16,7 +17,7 @@ public class ActuatorSearchModelTests
     }
 
     [Fact]
-    public async Task GetActuatorsByPCBA_ReturnsEmptyList_WhenNoMatchesFound()
+    public async Task GetActuatorsWithFilter_ReturnsEmptyList_WhenNoMatchesFound()
     {
         // Arrange
         var nonExistingUid = "THIsUiDDoesnOtEixst12345";
@@ -24,18 +25,31 @@ public class ActuatorSearchModelTests
             .With(a => a.Actuators, new List<GetActuatorWithFilterActuator>())
             .Create();
 
-        _network.GetActuatorWithFilter(Arg.Any<int?>(), 
+        _network.GetActuatorWithFilter(
+                Arg.Any<int?>(), 
                 Arg.Any<int?>(), 
                 Arg.Any<string?>(),
                 Arg.Any<string?>(),
                 Arg.Any<int?>(),
-                Arg.Any<int?>())
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
         var result = await _model.GetActuatorWithFilter(null,
             null, 
             nonExistingUid,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null);
@@ -46,48 +60,35 @@ public class ActuatorSearchModelTests
     }
 
     [Fact]
-    public async Task GetActuatorsByPCBA_ReturnsListOfOneActuator_WhenOneMatchExists()
+    public async Task GetActuatorsWithFilter_ReturnsListOfOneActuator_WhenGivenWOandSerialNoHasMatch()
     {
         // Arrange
         var noOfActuators = 1;
-        var expectedUid = _fixture.Create<string>();
+        var woNo = _fixture.Create<int>();
+        var serialNo = _fixture.Create<int>();
         var expectedResponse = _fixture.Build<GetActuatorWithFilterResponse>()
-            .With(a => a.Actuators, _fixture.Build<GetActuatorWithFilterActuator>()
-                .With(a => a.Pcba, _fixture.Build<GetActuatorWithFilterPCBA>()
-                    .With(p => p.PcbaUid, expectedUid)
-                    .Create())
-                .CreateMany(noOfActuators)
-                .ToList())
+            .With(a => a.Actuators,
+                _fixture.Build<GetActuatorWithFilterActuator>()
+                    .With(a => a.WorkOrderNumber, woNo)
+                    .With(a => a.SerialNumber, serialNo)
+                    .CreateMany(noOfActuators)
+                    .ToList())
             .Create();
 
-        _network.GetActuatorWithFilter(Arg.Any<int?>(), 
-                Arg.Any<int?>(), 
-                Arg.Any<string?>(),
-                Arg.Any<string?>(),
-                Arg.Any<int?>(),
-                Arg.Any<int?>())
+        _network.GetActuatorWithFilter(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
-        var result = await _model.GetActuatorWithFilter(null,
-            null, 
-            expectedUid,
-            null,
-            null,
-            null);
+        var result = await _model.GetActuatorWithFilter(woNo,serialNo, null, null, null, null, null, null, null, null, null, null);
         
         // Assert
         Assert.NotEmpty(result);
         Assert.Single(result);
-        Assert.Equal(expectedResponse.Actuators.First().Pcba.PcbaUid, result[0].PCBA.PCBAUid);
+        Assert.Equal(expectedResponse.Actuators.First().WorkOrderNumber, woNo);
+        Assert.Equal(expectedResponse.Actuators.First().SerialNumber, serialNo);
+        Assert.NotNull(expectedResponse.Actuators.First().Pcba.Uid);
 
-        await _network.Received(1).GetActuatorWithFilter(
-            Arg.Any<int?>(), 
-            Arg.Any<int?>(), 
-            expectedUid,
-            Arg.Any<string?>(),
-            Arg.Any<int?>(),
-            Arg.Any<int?>());
+        await _network.Received(1).GetActuatorWithFilter(woNo, serialNo, Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<int?>(), Arg.Any<int?>(), Arg.Any<DateTime?>(), Arg.Any<DateTime?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>(), Arg.Any<string?>());
     }
 
     [Fact]
@@ -99,7 +100,7 @@ public class ActuatorSearchModelTests
         var expectedResponse = _fixture.Build<GetActuatorWithFilterResponse>()
             .With(a => a.Actuators, _fixture.Build<GetActuatorWithFilterActuator>()
                 .With(a => a.Pcba, _fixture.Build<GetActuatorWithFilterPCBA>()
-                    .With(p => p.PcbaUid, expectedUid)
+                    .With(p => p.Uid, expectedUid)
                     .Create())
                 .CreateMany(noOfActuators)
                 .ToList())
@@ -111,13 +112,25 @@ public class ActuatorSearchModelTests
                 Arg.Any<string?>(),
                 Arg.Any<string?>(),
                 Arg.Any<int?>(),
-                Arg.Any<int?>())
+                Arg.Any<int?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<DateTime?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>(),
+                Arg.Any<string?>())
             .Returns(expectedResponse);
         
         // Act
         var result = await _model.GetActuatorWithFilter(null,
             null, 
             expectedUid,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null);

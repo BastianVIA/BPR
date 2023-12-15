@@ -17,7 +17,7 @@ public class InboxPublisherBackgroundService : BackgroundService
     {
         _logger = logger;
         _scopeFactory = scopeFactory;
-        intervalAsSeconds = Convert.ToInt32(configuration.GetSection("BackgroundServices:InboxPublisherIntervalInSeconds")
+        intervalAsSeconds = Convert.ToInt32(configuration.GetSection("Inbox:InboxPublisherIntervalInSeconds")
             .Value);
     }
 

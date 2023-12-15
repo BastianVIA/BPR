@@ -21,7 +21,7 @@ public class PostPCBAControllerTests
     [Fact]
     public async Task CreateAsync_ReturnsOK_WhenPCBACreated()
     {
-        var request = new PostPCBAController.PostPCBARequest{Uid = "123"};
+        var request = new PostPCBARequest{Uid = "123"};
         var result = await _controller.CreateAsync(request, CancellationToken.None);
         Assert.IsType<OkResult>(result);
     }
@@ -31,7 +31,7 @@ public class PostPCBAControllerTests
     {
         _bus.Send(Arg.Any<CreateOrUpdatePCBACommand>(), Arg.Any<CancellationToken>()).ThrowsAsync<Exception>();
 
-        var request = new PostPCBAController.PostPCBARequest();
+        var request = new PostPCBARequest();
         var result = await _controller.CreateAsync(request, CancellationToken.None);
         Assert.IsType<BadRequestResult>(result);
     }

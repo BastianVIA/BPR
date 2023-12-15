@@ -1,7 +1,6 @@
 ﻿namespace LINTest.Services;
 
-public class StateManagerOptions
+public class LastTimeProcessedOptions
 {
     public string LastProcessedDateTimePath { get; set; }
-
 }

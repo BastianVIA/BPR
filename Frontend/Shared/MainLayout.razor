@@ -26,15 +26,25 @@
     <RadzenBody @ref="body">
         <ChildContent>
             <RadzenContentContainer Name="main">
-                @Body
-                <AlertBox/>
+                <ErrorBoundary @ref="errorBoundary">
+                    @Body
+                </ErrorBoundary>
             </RadzenContentContainer>
         </ChildContent>
     </RadzenBody>
+    <RadzenFooter>
+        <AlertBox />
+    </RadzenFooter>
 </RadzenLayout>
 
 @code{
     protected RadzenBody body;
-
+    ErrorBoundary errorBoundary;
     bool sidebarExpanded = true;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+
 }
