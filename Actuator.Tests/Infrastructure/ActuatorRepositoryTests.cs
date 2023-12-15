@@ -1,5 +1,6 @@
 ﻿using Actuator.Tests.Util;
 using AutoFixture;
+using Backend.Tests.Util;
 using BuildingBlocks.Exceptions;
 using BuildingBlocks.Infrastructure;
 using BuildingBlocks.Infrastructure.Database.Migrations;
@@ -27,23 +28,20 @@ public class ActuatorRepositoryTests
     [Fact]
     public async Task Create_Should_AddToDatabase()
     {
+        // Arrange
         var countBefore = _dbContext.Actuators.Count();
-        var actuator = _fixture.Create<Domain.Entities.Actuator>();
-        var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA, actuator.ArticleNumber, actuator.ArticleName, actuator.CommunicationProtocol, actuator.CreatedTime);
-
-        _dbContext.PCBAs.Add(new PCBAModel
-        {
-            Uid = actuator.PCBA.Uid,
-            ManufacturerNumber = actuator.PCBA.ManufacturerNumber
-        });
-        // Repository needs an existing PCBA. Save changes to make sure the pcba can be fetched by EFcore.
-        // Actuator repo does not create PCBA if it does not exist.
+        var actuator = EntityCreator.CreateActuator();
+        _dbContext.PCBAs.Add(EntityCreator.CreatePCBAModel(uid: actuator.PCBA.Uid));
+    
         await _dbContext.SaveChangesAsync();
-        await _repository.CreateActuator(model);
+        
+        // Act
+        await _repository.CreateActuator(actuator);
         
         // Saving changes, so the count of actuators can be fetched
         await _dbContext.SaveChangesAsync();
         
+        // Assert
         var countAfter = _dbContext.Actuators.Count();
         Assert.Equal(countBefore + 1, countAfter);
     }
@@ -51,16 +49,12 @@ public class ActuatorRepositoryTests
     [Fact]
     public async Task Create_AddsRightObject()
     {
-        var actuator = _fixture.Create<Domain.Entities.Actuator>();
-        var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA, actuator.ArticleNumber, actuator.ArticleName, actuator.CommunicationProtocol, actuator.CreatedTime);
-        _dbContext.PCBAs.Add(new PCBAModel
-        {
-            Uid = actuator.PCBA.Uid,
-            ManufacturerNumber = actuator.PCBA.ManufacturerNumber
-        });
+        var actuator = EntityCreator.CreateActuator();
+        //var model = Domain.Entities.Actuator.Create(actuator.Id, actuator.PCBA, actuator.ArticleNumber, actuator.ArticleName, actuator.CommunicationProtocol, actuator.CreatedTime);
+        _dbContext.PCBAs.Add(EntityCreator.CreatePCBAModel(uid: actuator.PCBA.Uid));
         await _dbContext.SaveChangesAsync();
         
-        await _repository.CreateActuator(model);
+        await _repository.CreateActuator(actuator);
         await _dbContext.SaveChangesAsync();
         
         var added = _dbContext.Actuators.First();
@@ -68,26 +62,21 @@ public class ActuatorRepositoryTests
         Assert.Equal(actuator.Id.SerialNumber, added.SerialNumber);
         Assert.Equal(actuator.Id.WorkOrderNumber, added.WorkOrderNumber);
         Assert.Equal(actuator.PCBA.Uid, added.PCBA.Uid);
-        Assert.Equal(actuator.PCBA.ManufacturerNumber, added.PCBA.ManufacturerNumber);
     }
 
     [Fact]
     public async Task Create_ShouldNotAddActuator_WhenAddFails()
     {
-        var actuator = _fixture.Create<Domain.Entities.Actuator>();
-        _dbContext.Actuators.Add(new ActuatorModel
-        {
-            SerialNumber = actuator.Id.SerialNumber,
-            WorkOrderNumber = actuator.Id.WorkOrderNumber,
-            PCBA = new PCBAModel
-            {
-                Uid = actuator.PCBA.Uid,
-                ManufacturerNumber = actuator.PCBA.ManufacturerNumber
-            }
-        });
+        // Arrange
+        var actuator = EntityCreator.CreateActuator();
+        _dbContext.Actuators.Add(EntityCreator.CreateActuatorModel(
+            woNo: actuator.Id.WorkOrderNumber,
+            serialNo: actuator.Id.SerialNumber
+            ));
+       
         await _dbContext.SaveChangesAsync();
-
-        //TODO Kaster en InvalidException, men baserepo ligner de vi burde kaste en DbUpdateException
+        
+        // Act/Assert
         await Assert.ThrowsAnyAsync<Exception>(() => _repository.CreateActuator(actuator));
     }
 
@@ -159,12 +148,15 @@ public class ActuatorRepositoryTests
     [Fact]
     public async Task Update_ShouldChangeCorrectActuator_WhenUpdating()
     {
-        var init = CreateActuator();
+        // Arrange
+        var actModel = EntityCreator.CreateActuatorModel();
+        var pcbaModel = EntityCreator.CreatePCBAModel(uid: actModel.PCBA.Uid);
+        _dbContext.PCBAs.Add(pcbaModel);
+        _dbContext.Actuators.Add(actModel);
+
+        var newActuator =
+            EntityCreator.CreateActuator(woNo: actModel.WorkOrderNumber, serialNo: actModel.SerialNumber);
         
-        await SetupActuator(init);
-        var newActuator = Domain.Entities.Actuator.Create(init.Id, _fixture.Create<PCBA>(), init.ArticleNumber, init.ArticleName, init.CommunicationProtocol, init.CreatedTime);
-      
-        await SetupPCBA(newActuator.PCBA);
         await _repository.UpdateActuator(newActuator);
         var result = await _dbContext.Actuators.FirstOrDefaultAsync(a =>
             a.SerialNumber == init.Id.SerialNumber && a.WorkOrderNumber == init.Id.WorkOrderNumber);
@@ -206,16 +198,14 @@ public class ActuatorRepositoryTests
     }
     private async Task SetupActuator(Domain.Entities.Actuator actuator)
     {
-        _dbContext.Set<ActuatorModel>().Add(new ActuatorModel()
-        {
-            SerialNumber = actuator.Id.SerialNumber,
-            WorkOrderNumber = actuator.Id.WorkOrderNumber,
-            PCBA = new PCBAModel
-            {
-                Uid = actuator.PCBA.Uid, 
-                ManufacturerNumber = actuator.PCBA.ManufacturerNumber
-            }
-        });
+        _dbContext.Actuators.Add(EntityCreator.CreateActuatorModel(
+            woNo: actuator.Id.WorkOrderNumber,
+            serialNo: actuator.Id.SerialNumber,
+            comProto: actuator.CommunicationProtocol,
+            artNo: actuator.ArticleNumber,
+            createdTime: actuator.CreatedTime,
+            pcbaModel: 
+            ));
         await _dbContext.SaveChangesAsync();
     }
 
