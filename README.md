@@ -30,6 +30,7 @@ Dette laver en tom "ActuatorDB" med korrekt struktur for systemet.
 ### CSV Logs
 1. Lave en ny mappe under LINTEST ved navn "CSVLogs"
 2. Placer udleverede CSV filer i mappen
+3. Hvis der står noget i LINTests.lastTimeForProcessedData.json, så skal dette slettes
 
 # Run
 Der kræves ikke mere setup, nu kan både backenden og frontenden køres.
