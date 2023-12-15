@@ -37,3 +37,6 @@ Der kræves ikke mere setup, nu kan både backenden og frontenden køres.
 
 # Note
 Dette projekt er et C# projekt, for optimal repræsentation af projektstrukturen anbefales det at projektet åbnes i en IDE, som understøtter Solution View. Teamet bruger og anbefaler derfor Rider 
+
+# Link to BPRUtilities
+https://github.com/BastianVIA/BPRUtilities
