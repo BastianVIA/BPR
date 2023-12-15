@@ -17,15 +17,15 @@ Velkommen til LINAK Actuator Tracking System. Dette projekt har til formål at f
 For at køre systemet lokalt skal en MSSQL server køre på localhost. 
 #### LINAK-DB
 Den udleverede LINAK-DB.bak skal restores.
-Dette kan for eksepel gøres gennem SQL server management, med Restore Database.
+Dette kan for eksempel gøres gennem SQL server management, med Restore Database.
 
 #### EF Core
-1. Open terminalen og naviget til "BPR\BuildingBlocks\BuildingBlocks"
-2. Kør følgende komando
+1. Åben terminalen og navigér til "BPR\BuildingBlocks\BuildingBlocks"
+2. Kør følgende kommando
 ```
 dotnet ef -s ../../Backend database update
 ```
-Dette laver en top "ActuatorDB" med korrekt struktur for systmet.
+Dette laver en tom "ActuatorDB" med korrekt struktur for systemet.
 
 ### CSV Logs
 1. Lave en ny mappe under LINTEST ved navn "CSVLogs"
