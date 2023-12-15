@@ -14,9 +14,10 @@ Velkommen til LINAK Actuator Tracking System. Dette projekt har til formål at f
 
 ## Backend Setup
 ### Database
-For at køre systemet lokalt skal en MSQL server køre på localhost. 
-#### Configuration
-Udleverede database "LINAKDatabaseConnection" skal hentes og køre på localhost under navnet "LINAK-DB"
+For at køre systemet lokalt skal en MSSQL server køre på localhost. 
+#### LINAK-DB
+Den udleverede LINAK-DB.bak skal restores.
+Dette kan for eksepel gøres gennem SQL server management, med Restore Database.
 
 #### EF Core
 1. Open terminalen og naviget til "BPR\BuildingBlocks\BuildingBlocks"
