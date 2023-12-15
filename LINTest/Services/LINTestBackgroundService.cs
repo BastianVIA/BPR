@@ -65,7 +65,7 @@ public class LINTestBackgroundService : BackgroundService
             .ToList();
 
 
-        for (int i = 0; i < filesToProcess.Count; i++)
+        for (var i = 0; i < filesToProcess.Count; i++)
         {
             try
             {
