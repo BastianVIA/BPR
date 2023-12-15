@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using TestResult.Domain.Entities;
 using TestResult.Domain.RepositoryInterfaces;
 
-namespace TestResult.Infrastructure;
+namespace TestResult.Infrastructure.Repositories;
 
 public class TestResultRepository : BaseRepository<TestResultModel>, ITestResultRepository
 {
